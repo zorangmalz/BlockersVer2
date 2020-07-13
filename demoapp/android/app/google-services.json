@@ -1,0 +1,32 @@
+{
+    "project_info": {
+        "project_number": "422661399134",
+        "firebase_url": "https://zorangmalz.firebaseio.com",
+        "project_id": "zorangmalz",
+        "storage_bucket": "zorangmalz.appspot.com"
+    },
+    "client": [{
+        "client_info": {
+            "mobilesdk_app_id": "1:422661399134:android:9b29344dae41cd8f114acf",
+            "android_client_info": {
+                "package_name": "com.demoapp"
+            }
+        },
+        "oauth_client": [{
+            "client_id": "422661399134-7jn43t0fd4q81jp3vhd66c8l2sfisjme.apps.googleusercontent.com",
+            "client_type": 3
+        }],
+        "api_key": [{
+            "current_key": "AIzaSyBO2cQOUOZCpfC4RQ6ExewFD5taKXgZpvg"
+        }],
+        "services": {
+            "appinvite_service": {
+                "other_platform_oauth_client": [{
+                    "client_id": "422661399134-7jn43t0fd4q81jp3vhd66c8l2sfisjme.apps.googleusercontent.com",
+                    "client_type": 3
+                }]
+            }
+        }
+    }],
+    "configuration_version": "1"
+}
