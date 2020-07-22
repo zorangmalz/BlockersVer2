@@ -1,0 +1,6 @@
+module Pods_blockers_blockersTests {
+  umbrella header "Pods-blockers-blockersTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
