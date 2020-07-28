@@ -14,6 +14,12 @@ BlockersVer2
    2. react-native-countdown : https://www.npmjs.com/package/react-native-countdown-component
    
       - 인증코드 발송 3:00 사용할 때 적용함
+   
+   3. react-native-image-picker : https://github.com/react-native-community/react-native-image-picker
+      
+      - 오류 안드로이드에서 이미지 피커가 작동 안되는 경우
+        
+        https://github.com/react-native-community/react-native-image-picker/issues/1259
 
 ## android build 에러
    1. app:stripDebugDebugSymbols FAILED : https://github.com/facebook/react-native/issues/28404
