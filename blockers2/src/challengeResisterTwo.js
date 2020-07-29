@@ -57,9 +57,12 @@ const challenge = StyleSheet.create({
 export default function ChallengeResisterTwo({navigation}) {
     const username = "박지훈";
     const phoneNumber = "010-4337-6670";
+    const [addressnumber, setAdressnumber] = useState('');
+    const [address, setAddress] = useState('');
+    const [detailaddress, setDetailaddress] = useState('');
 
-    const [money, setMoney] = useState('10000');
-    const Money = parseInt(money);
+    const [money, setMoney] = useState('');
+    const Money = money.length === 0 ? 0 : parseInt(money);
     const totalmoney = Money+12500;
     function onYesorNo(state, action) {
         switch(action.type) {
@@ -270,8 +273,8 @@ export default function ChallengeResisterTwo({navigation}) {
                                 marginBottom: 8
                             }}>
                                 <Text style={{fontSize:14, fontWeight: 'bold'}}>우편번호</Text>
-                                <TextInput placeholder="36917" placeholderTextColor="#C6C6C6" style={{width:"36%", height: 40, borderRadius: 5, borderWidth: 1, borderColor: '#C6C6C6', marginLeft: 27}}/>
-                                <TouchableOpacity style={{marginLeft: 16}}>
+                                <TextInput onChangeText={text => setAdressnumber(text)} placeholder="36917" placeholderTextColor="#C6C6C6" style={{width:"36%", height: 40, borderRadius: 5, borderWidth: 1, borderColor: '#C6C6C6', marginLeft: 27}}/>
+                                <TouchableOpacity style={{marginLeft: 16}} onPress={() => navigation.navigate('주소찾기')}>
                                     <View style={{
                                         alignItems: 'center',
                                         justifyContent: 'center',
@@ -293,8 +296,8 @@ export default function ChallengeResisterTwo({navigation}) {
                             }}>
                                 <Text style={{fontSize:14, fontWeight: 'bold', alignSelf: 'flex-start'}}>주소</Text>
                                 <View style={{marginLeft: 54}}>
-                                    <TextInput placeholder="경북 문경시 문경읍 온천1길 29" placeholderTextColor="#C6C6C6" style={{ width: 251, height: 40, borderRadius: 5, borderWidth: 1, borderColor: '#C6C6C6' }} />
-                                    <TextInput placeholder="1동 202호 (대원퀸즈빌)" placeholderTextColor="#C6C6C6" style={{ width: 251, height: 40, borderRadius: 5, borderWidth: 1, borderColor: '#C6C6C6', marginTop: 8 }} />
+                                    <TextInput onChangeText={text => setAddress(text)} placeholder="경북 문경시 문경읍 온천1길 29" placeholderTextColor="#C6C6C6" style={{ width: 251, height: 40, borderRadius: 5, borderWidth: 1, borderColor: '#C6C6C6' }} />
+                                    <TextInput onChangeText={text => setDetailaddress(text)} placeholder="1동 202호 (대원퀸즈빌)" placeholderTextColor="#C6C6C6" style={{ width: 251, height: 40, borderRadius: 5, borderWidth: 1, borderColor: '#C6C6C6', marginTop: 8 }} />
                                 </View>
                             </View>
                         </View>
@@ -310,9 +313,9 @@ export default function ChallengeResisterTwo({navigation}) {
                     }}>
                         <TouchableOpacity onPress={onOneCheck}>
                             <View style={{
-                                width: 19, 
-                                height: 19, 
-                                borderWidth: 1, 
+                                width: 19,
+                                height: 19,
+                                borderWidth: 1,
                                 borderColor: '#5CC27B',
                                 justifyContent: 'center',
                                 alignItems: 'center'
@@ -320,7 +323,7 @@ export default function ChallengeResisterTwo({navigation}) {
                                 <Image source={OneCheck} />
                             </View>
                         </TouchableOpacity>
-                        <Text style={[challenge.largeText, {fontWeight:'normal', marginLeft: 8}]}>내용을 충분히 읽고 이해했습니다.</Text>
+                        <Text style={[challenge.largeText, { fontWeight: 'normal', marginLeft: 8 }]}>내용을 충분히 읽고 이해했습니다.</Text>
                     </View>
                     <View style={{
                         marginTop: 16.5,
@@ -331,9 +334,9 @@ export default function ChallengeResisterTwo({navigation}) {
                     }}>
                         <TouchableOpacity onPress={onTwoCheck}>
                             <View style={{
-                                width: 19, 
-                                height: 19, 
-                                borderWidth: 1, 
+                                width: 19,
+                                height: 19,
+                                borderWidth: 1,
                                 borderColor: '#5CC27B',
                                 justifyContent: 'center',
                                 alignItems: 'center'
@@ -341,7 +344,7 @@ export default function ChallengeResisterTwo({navigation}) {
                                 <Image source={TwoCheck} />
                             </View>
                         </TouchableOpacity>
-                        <Text style={[challenge.largeText, {fontWeight:'normal', marginLeft: 8, textDecorationLine: 'underline'}]}>개인정보 처리 약관</Text>
+                        <Text style={[challenge.largeText, { fontWeight: 'normal', marginLeft: 8, textDecorationLine: 'underline' }]}>개인정보 처리 약관</Text>
                     </View>
                     <View style={{
                         marginTop: 16.5,
@@ -427,17 +430,39 @@ export default function ChallengeResisterTwo({navigation}) {
                     }
                 </ScrollView>
                 <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => {
-                    (checkOne===true)&&(checkTwo===true)&&(checkThree===true)&&(YesorNo>=1)&&(Money>=10000)&&(Money<=100000) ? 
-                    navigation.navigate('PasswordChange')
-                    :
-                    ''
+                    {
+                        YesorNo === 1 ? (
+                            (checkOne === true) && (checkTwo === true) && (checkThree === true) && (YesorNo >= 1) && (Money >= 10000) && (Money <= 100000) ?
+                                navigation.navigate('PasswordChange')
+                                :
+                                '')
+                            :
+                            ((checkOne === true) && (checkTwo === true) && (checkThree === true) && (YesorNo >= 1) && (Money >= 10000) && (Money <= 100000) && (addressnumber.length > 0) && (address.length > 0) && (detailaddress.length > 0) ?
+                                navigation.navigate('PasswordChange')
+                                :
+                                ''
+                            )
+                    }
                 }}>
-                    <View style={{ 
-                        width: "100%", 
-                        height: 60, 
-                        backgroundColor: (checkOne===true)&&(checkTwo===true)&&(checkThree===true)&&(YesorNo>=1)&&(Money>=10000)&&(Money<=100000) ? '#5cc27b' : '#c6c6c6', 
-                        justifyContent: 'center', 
-                        alignItems: 'center' }}>
+                    <View style={{
+                        width: "100%",
+                        height: 60,
+                        backgroundColor:
+                            YesorNo === 1 ? (
+                                (checkOne === true) && (checkTwo === true) && (checkThree === true) && (YesorNo >= 1) && (Money >= 10000) && (Money <= 100000) ?
+                                    '#5cc27b'
+                                    :
+                                    '#c6c6c6'
+                            )
+                                :
+                                ((checkOne === true) && (checkTwo === true) && (checkThree === true) && (YesorNo >= 1) && (Money >= 10000) && (Money <= 100000) && (addressnumber.length > 0) && (address.length > 0) && (detailaddress.length > 0) ?
+                                    '#5cc27b'
+                                    :
+                                    '#c6c6c6'
+                                ),
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
                         <Text style={{ fontSize: 18, color: '#ffffff' }}>등록하기</Text>
                     </View>
                 </TouchableOpacity>

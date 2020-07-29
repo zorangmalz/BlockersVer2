@@ -10,11 +10,21 @@ import {
     TextInput,
     Image,
 } from 'react-native';
+import Clipboard from '@react-native-community/clipboard'
 
 export default function WalletCharge({navigation}) {
     const [value, onChangeText] = useState('')
     const [check, setCheck] = useState(false)
     const checkColor = check===true ? "#5CC27B" : "#FFFFFF";
+    const [copiedText, setCopiedText] = useState('');
+    const copyToClipboard = () => {
+        Clipboard.setString('우리은행 1002-550-568544')
+    }
+
+    const fetchCopiedText = async () => {
+        const text = await Clipboard.getString()
+        setCopiedText(text)
+    }
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -38,7 +48,7 @@ export default function WalletCharge({navigation}) {
                     }}>입금 계좌 안내</Text>
                     <View style={{ marginLeft: 32, marginTop: 16, flexDirection: 'row', alignItems: 'center' }}>
                         <Text style={{ fontSize: 16, fontWeight: 'normal', color: '#333333' }}>우리은행 1002-550-568544</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={copyToClipboard}>
                             <Image style={{ marginLeft: 5 }} source={require('./icon/copy.png')} />
                         </TouchableOpacity>
                     </View>

@@ -8,6 +8,7 @@ import {
     StatusBar,
     StyleSheet,
     Image,
+    Alert
 } from 'react-native';
 
 const challenge = StyleSheet.create({
@@ -59,19 +60,36 @@ const challenge = StyleSheet.create({
 export default function ChallengeMain({navigation}) {
     const num = 1;
     const [ChallengeToken, setChallengeToken] = useState(false);
+    const [userlogined, setUserlogined] = useState(true);
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
                 <ScrollView style={{ paddingTop: 27 }}>
-                    {ChallengeToken === false ?
+                    {userlogined === false ?
                         <View style={challenge.box}>
                             <View>
                                 <Text style={challenge.largeText}>Step 01</Text>
                                 <Text style={challenge.mediumText}>예상 상금 | 10,000</Text>
                                 <Text style={challenge.smallText}>인증 횟수 | 4회 인증 주기 | 주 1회</Text>
                             </View>
-                            <TouchableOpacity style={{ alignSelf: 'center' }} onPress={() => navigation.navigate('ChallengeResisterOne')}>
+                            <TouchableOpacity style={{ alignSelf: 'center' }} onPress={() => 
+                                userlogined === true ?
+                                navigation.navigate('ChallengeResisterOne')
+                                :
+                                Alert.alert(
+                                    '로그인이 필요한서비스입니다.',
+                                    '로그인하고 다양한 혜택을 만나보세요',
+                                    [
+                                        {
+                                            text: '취소', onPress: () => console.log('취소')
+                                        },
+                                        {
+                                            text: '로그인', onPress: () => navigation.navigate('회원가입')
+                                        }
+                                    ]
+                                )
+                            }>
                                 <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 2, alignItems: 'center', justifyContent: 'center' }}>
                                     <Text style={{ fontSize: 12, fontWeight: 'bold' }}>신청하기</Text>
                                 </View>
@@ -175,7 +193,34 @@ export default function ChallengeMain({navigation}) {
                             <Text style={challenge.mediumText}>예상 상금 | 10,000</Text>
                             <Text style={challenge.smallText}>인증 횟수 | 4회 인증 주기 | 주 1회</Text>
                         </View>
-                        <TouchableOpacity style={{ alignSelf: 'center' }}>
+                        <TouchableOpacity style={{ alignSelf: 'center' }} onPress={() =>
+                            userlogined === true ?
+                                Alert.alert(
+                                    '이전 챌린지를 완료하셔야합니다.',
+                                    '이전 챌린지로 참가신청 하시겠습니까?',
+                                    [
+                                        {
+                                            text: '취소', onPress: () => console.log('취소')
+                                        },
+                                        {
+                                            text: '참가하기', onPress: () => navigation.navigate('ChallengeResisterOne')
+                                        }
+                                    ]
+                                )
+                                :
+                                Alert.alert(
+                                    '로그인이 필요한서비스입니다.',
+                                    '로그인하고 다양한 혜택을 만나보세요',
+                                    [
+                                        {
+                                            text: '취소', onPress: () => console.log('취소')
+                                        },
+                                        {
+                                            text: '로그인', onPress: () => navigation.navigate('회원가입')
+                                        }
+                                    ]
+                                )
+                        }>
                             <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 2, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontSize: 12, fontWeight: 'bold' }}>신청하기</Text>
                             </View>
@@ -194,7 +239,7 @@ export default function ChallengeMain({navigation}) {
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => setChallengeToken(!ChallengeToken)}>
+                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => setUserlogined(!userlogined)}>
                     <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff' }}>DB 연결 전 임시 버튼</Text>
                     </View>

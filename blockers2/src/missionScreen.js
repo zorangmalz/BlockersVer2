@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     View,
     Text,
@@ -7,6 +7,7 @@ import {
     StatusBar,
     TouchableOpacity,
     StyleSheet,
+    Alert
 } from 'react-native';
 
 const mission = StyleSheet.create({
@@ -37,17 +38,35 @@ const mission = StyleSheet.create({
     }
 });
 
-export default function MissionScreen({navigation}) {
+export default function MissionScreen({ navigation }) {
     const num = 1;
+    const [userlogined, setUserlogined] = useState(false);
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{backgroundColor:'#FFFFFF', flex:1}}>
-                <ScrollView style={{paddingTop: 27}}>
+            <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
+                <ScrollView style={{ paddingTop: 27 }}>
                     <View style={mission.box}>
                         <Text style={mission.largeText}>Mission {num}</Text>
                         <Text style={mission.smallText}>Set your Goal for smoking cessation</Text>
-                        <TouchableOpacity style={{alignSelf: 'flex-end'}}>
+                        <TouchableOpacity onPress={() => {
+                            userlogined == true ?
+                            navigation.navigate('로그인')
+                            :
+                            Alert.alert(
+                                '로그인이 필요한서비스입니다.',
+                                '로그인하고 다양한 혜택을 만나보세요',
+                                [
+                                    {
+                                        text: '취소', onPress: () => console.log('취소')
+                                    },
+                                    {
+                                        text: '로그인', onPress: () => navigation.navigate('회원가입')
+                                    }
+                                ]
+                            )
+                        }
+                        } style={{ alignSelf: 'flex-end' }}>
                             <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 3, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ fontSize: 12, fontWeight: 'normal' }}>Start</Text>
                             </View>

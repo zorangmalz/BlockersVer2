@@ -14,7 +14,7 @@ export default function SplashScreen ({navigation}) {
     useEffect(()=>{
         setTimeout(()=>{
             setAnimating(false);
-            navigation.navigate('HomeScreen')
+            navigation.navigate('Home')
         }, 3000);
     }, []);
 

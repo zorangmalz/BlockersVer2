@@ -10,239 +10,28 @@ import {
   TextInput,
   Image,
   TouchableOpacity,
-  Dimensions
+  Alert,
 } from 'react-native';
 
-
-
-export default function ContentsBuy({ navigation }) {
-
-
-  return (
-    <>
-      <StatusBar barStyle="light-content" />
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollContainer}>
-
-          <Text style={[styles.fontText, {
-            fontSize: 21,
-            color: '#707070',
-            fontWeight: 'bold',
-            alignSelf: 'flex-start',
-            marginTop: 15,
-          }]}>주문방법</Text>
-          <View style={{
-            marginTop: 15,
-            marginBottom: 15,
-            marginLeft: 10
-          }}>
-
-          </View>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Text style={[styles.fontText, {
-              color: '#707070',
-              fontWeight: 'bold',
-              alignSelf: 'flex-start',
-              marginBottom: 10,
-              marginTop: 10,
-
-            }]}>이름</Text>
-            <View style={{ alignSelf: 'flex-start', flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
-              <TextInput
-
-
-                placeholder="박지훈"
-                textAlign="left"
-                onSubmitEditing={Keyboard.dismiss}
-                style={{
-                  width: 267,
-                  height: 36,
-                  marginRight: 5,
-                  borderWidth: 1,
-                  borderColor: '#707070',
-                  fontSize: 15,
-                  borderRadius: 5
-                }}
-              />
-            </View>
-          </View>
-
-
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Text style={[styles.fontText, {
-              color: '#707070',
-              fontWeight: 'bold',
-              alignSelf: 'flex-start',
-              marginBottom: 10
-            }]}>전화번호</Text>
-            <View style={{ alignSelf: 'flex-start', flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
-              <TextInput
-
-                keyboardType="number-pad"
-                placeholder="010-9037-3600"
-                textAlign="left"
-                onSubmitEditing={Keyboard.dismiss}
-                style={{
-                  width: 267,
-                  height: 40,
-                  marginRight: 5,
-                  borderWidth: 1,
-                  borderColor: '#707070',
-                  fontSize: 15,
-                  borderRadius: 5
-                }}
-              />
-            </View>
-          </View>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Text style={[styles.fontText, {
-              color: '#707070',
-              fontWeight: 'bold',
-              alignSelf: 'flex-start',
-              marginBottom: 10
-            }]}>우편번호</Text>
-            <View style={{ alignSelf: 'flex-start', flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
-              <TextInput
-
-                keyboardType="number-pad"
-                placeholder="36917"
-                textAlign="left"
-                onSubmitEditing={Keyboard.dismiss}
-                style={{
-                  width: 135,
-                  height: 40,
-                  marginRight: 5,
-                  borderWidth: 1,
-                  borderColor: '#707070',
-                  fontSize: 15,
-                  borderRadius: 5
-                }}
-              />
-            </View>
-            <View style={{ backgroundColor: '#ffb83d', width: 59, height: 25, marginTop: 6, marginRight: 20 }}>
-              <Text style={{ fontSize: 15, color: 'white', textAlign: "center" }}>주소찾기</Text>
-            </View>
-          </View>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Text style={[styles.fontText, {
-              color: '#707070',
-              fontWeight: 'bold',
-              alignSelf: 'flex-start',
-              marginBottom: 10
-            }]}>주소</Text>
-            <View style={{ alignSelf: 'flex-start', flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
-              <TextInput
-
-                keyboardType="number-pad"
-                placeholder="경북 문경시 문경읍 온천1길 29"
-                textAlign="left"
-                onSubmitEditing={Keyboard.dismiss}
-                style={{
-                  width: 267,
-                  height: 40,
-                  marginRight: 5,
-                  borderWidth: 1,
-                  borderColor: '#707070',
-                  fontSize: 15,
-                  borderRadius: 5
-                }}
-              />
-            </View>
-          </View>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Text></Text>
-            <TextInput
-
-              keyboardType="number-pad"
-              placeholder="1동 202호 (대원퀸즈빌)"
-              textAlign="left"
-              onSubmitEditing={Keyboard.dismiss}
-              style={{
-                width: 267,
-                height: 40,
-                marginRight: 5,
-                borderWidth: 1,
-                borderColor: '#707070',
-                fontSize: 15,
-                borderRadius: 5,
-                marginBottom: 20
-
-              }}
-            />
-          </View>
-          <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-            <Text style={[styles.fontText, {
-              color: '#707070',
-              fontWeight: 'bold',
-              alignSelf: 'flex-start',
-              marginBottom: 10
-            }]}>배송메세지</Text>
-            <View style={{ alignSelf: 'flex-start', flexDirection: 'row', justifyContent: 'center', marginBottom: 20 }}>
-              <TextInput
-
-                keyboardType="number-pad"
-                placeholder="집앞에 놔 주세용~"
-                textAlign="left"
-                onSubmitEditing={Keyboard.dismiss}
-                style={{
-                  width: 267,
-                  height: 40,
-                  marginRight: 5,
-                  borderWidth: 1,
-                  borderColor: '#707070',
-                  fontSize: 15,
-                  borderRadius: 5
-                }}
-              />
-            </View>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Image style={{ width: 90, height: 90 }} source={require("./icon/icecream.jpg")}></Image>
-            <View>
-              <Text>
-                녹차맛 아이스크림 150g
-          </Text>
-              <Text>
-                녹차맛 아이스크림 150g
-          </Text><Text>
-                녹차맛 아이스크림 150g
-          </Text><Text>
-                녹차맛 아이스크림 150g
-          </Text>
-            </View>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text>
-              최종 결제금액
-              </Text>
-            <Text>
-              5,120원
-              </Text>
-          </View>
-        </ScrollView>
-        <View style={{ flexDirection: "row", position: "absolute", bottom: 0 }}>
-          <View style={[styles.buttonStyle, { backgroundColor: '#5cc27b', width: "100%", height: 60, }]}>
-            <Text style={{ fontSize: 23, color: 'white' }}>결제하기</Text>
-          </View>
-        </View>
-      </SafeAreaView>
-    </>
-  );
-};
-
-
-
-
-const styles = StyleSheet.create({
+const contents = StyleSheet.create({
+  title: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    opacity: 0.8,
+    color: '#000000'
+  },
+  textinput: {
+    width: "75%",
+    height: 40,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#999999',
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#999999'
+  },
   viewContainer: {
     backgroundColor: 'white',
-  },
-  scrollContainer: {
-    backgroundColor: "#ffffff",
-    paddingRight: 18,
-    paddingLeft: 18,
   },
   box: {
     marginTop: 10,
@@ -266,9 +55,161 @@ const styles = StyleSheet.create({
   buttonStyle: {
     alignItems: 'center',
     justifyContent: 'center',
-
     backgroundColor: '#48d1cc'
   }
 });
 
-//상태변화
+export default function ContentsBuy({ navigation }) {
+  const [moneyEnough, setMoneyEnough] = useState(false);
+  return (
+    <>
+      <StatusBar barStyle="light-content" />
+      <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+        <ScrollView
+          contentInsetAdjustmentBehavior="automatic">
+          <View style={{ alignItems: 'center', flexDirection: "row", justifyContent: "space-between", marginLeft: 16, marginRight: 16, marginTop: 32}}>
+            <Text style={contents.title} >이름</Text>
+              <TextInput
+                placeholder="박지훈"
+                textAlign="left"
+                onSubmitEditing={Keyboard.dismiss}
+                style={contents.textinput}
+              />
+          </View>
+          <View style={{ alignItems: 'center', flexDirection: "row", justifyContent: "space-between", marginLeft: 16, marginRight: 16, marginTop: 8}}>
+            <Text style={contents.title} >전화번호</Text>
+              <TextInput
+                placeholder="010 - 4697 - 9554"
+                textAlign="left"
+                onSubmitEditing={Keyboard.dismiss}
+                style={contents.textinput}
+              />
+          </View>
+          <View style={{ alignItems: 'center', flexDirection: "row", justifyContent: "space-between", marginLeft: 16, marginRight: 16, marginTop: 8 }}>
+            <Text style={contents.title} >우편번호</Text>
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              width: "75%"
+            }}>
+              <TextInput
+                placeholder="36917"
+                textAlign="left"
+                onSubmitEditing={Keyboard.dismiss}
+                style={[contents.textinput, { width: "50%", alignSelf: 'flex-start' }]}
+              />
+              <TouchableOpacity onPress={() => navigation.navigate('주소찾기')} style={{
+                width: 64,
+                height: 24,
+                borderRadius: 5,
+                backgroundColor: '#ffb83d',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginLeft: 16
+              }}>
+                <Text style={{
+                  fontSize: 12,
+                  fontWeight: 'bold',
+                  color: '#ffffff',
+                }}>주소찾기</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{ alignItems: 'center', flexDirection: "row", justifyContent: "space-between", marginLeft: 16, marginRight: 16, marginTop: 8}}>
+            <Text style={contents.title} >주소</Text>
+              <TextInput
+                placeholder="경상북도 문경시 문경읍 온천1길 29"
+                textAlign="left"
+                onSubmitEditing={Keyboard.dismiss}
+                style={contents.textinput}
+              />
+          </View>
+          <View style={{ alignItems: 'center', flexDirection: "row", justifyContent: "space-between", marginLeft: 16, marginRight: 16, marginTop: 8}}>
+            <Text style={contents.title} ></Text>
+              <TextInput
+                placeholder="1동 202호 (대원퀸즈빌)"
+                textAlign="left"
+                onSubmitEditing={Keyboard.dismiss}
+                style={contents.textinput}
+              />
+          </View>
+          <View style={{ alignItems: 'center', flexDirection: "row", justifyContent: "space-between", marginLeft: 16, marginRight: 16, marginTop: 8, marginBottom: 16}}>
+            <Text style={contents.title}>배송메시지</Text>
+              <TextInput
+                textAlign="left"
+                onSubmitEditing={Keyboard.dismiss}
+                style={contents.textinput}
+              />
+          </View>
+          <View style={{ 
+            flexDirection: "row", 
+            alignItems: 'center', 
+            justifyContent: 'flex-start',
+            width: "100%",
+            padding: 16,
+            borderTopWidth: 1,
+            borderBottomWidth: 1,
+            borderColor: '#E5E5E5'
+          }}>
+            <Image style={{ width: 90, height: 90, borderRadius: 10, marginRight: 32 }} source={require("./icon/icecream.jpg")}></Image>
+            <View>
+              <Text style={contents.title}>녹차맛 아이스크림 150g</Text>
+              <Text style={{
+                fontSize: 14,
+                fontWeight: 'bold',
+                color: '#999999',
+                marginTop: 8,
+              }}>3,400원</Text>
+              <Text
+                style={{
+                  fontSize: 12,
+                  fontWeight: 'bold',
+                  color: '#ffb83d',
+                  marginTop: 8
+                }}
+              >+ 배송비 2,500원</Text>
+              <Text style={{
+                fontSize: 12,
+                fontWeight: 'bold',
+                color: '#5cc27b',
+                marginTop: 4
+              }}>- 회원 할인 680원</Text>
+            </View>
+          </View>
+          <Text
+            style={{
+              marginTop: 16,
+              marginLeft: 16,
+              fontSize: 14,
+              fontWeight: 'bold',
+              color: '#999999'
+            }}
+          >최종 결제금액</Text>
+        </ScrollView>
+        <TouchableOpacity style={{ flexDirection: "row", position: "absolute", bottom: 0 }}
+          onPress={() => 
+            moneyEnough === true ?
+            navigation.navigate('ContentsComplete')
+            :
+            Alert.alert(
+              '잔액이 부족합니다.',
+              '충전하시겠습니까?',
+              [
+                {
+                  text: '취소', onPress: () => navigation.goback()
+                },
+                {
+                  text: '충전하기', onPress: () => navigation.navigate('입금')
+                }
+              ]
+            )
+          }
+        >
+          <View style={[contents.buttonStyle, { backgroundColor: '#5cc27b', width: "100%", height: 60, }]}>
+            <Text style={{ fontSize: 18, color: 'white' }}>결제하기</Text>
+          </View>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </>
+  );
+};

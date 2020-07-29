@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -9,7 +9,7 @@ import {
     Image,
     StyleSheet,
     FlatList,
-    Button
+    Alert,
 } from 'react-native';
 
 
@@ -20,20 +20,19 @@ const style = StyleSheet.create({
         paddingRight: 14
     },
     item: {
-        padding: 10,
-        fontSize: 20,
-        height: 50,
-        marginTop: 15,
+        paddingLeft: 10,
+        fontSize: 16,
+        marginTop: 32,
+        paddingBottom: 8,
         borderBottomWidth: 1,
         borderColor: "#DDDDDD"
     },
     containerStatus: {
-        margin: 15,
-        flex: 3,
+        padding: 16,
+        marginTop: 20,
         backgroundColor: "#333953",
         height: 140,
         borderRadius: 10,
-
     },
     box: {
         marginTop: 10,
@@ -57,69 +56,141 @@ const style = StyleSheet.create({
     buttonStyle: {
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 7,
-        backgroundColor: '#48d1cc'
+        borderRadius: 10,
     }
 })
 
-export default function MyPageScreen({navigation}) {
+export default function MyPageScreen({ navigation }) {
+    const [userlogined, setUserlogined] = useState(true);
     const num = 1;
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
-                <ScrollView style={style.container}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "4%", paddingRight: "4%" }}>
                     <View
-                        accessibilityRole="header"
                         style={{
-                            flex: 1,
+                            height: 44,
                             flexDirection: 'row',
                             paddingTop: 4,
-                            justifyContent: 'space-between',
+                            justifyContent: "flex-start",
                             alignItems: 'center',
                         }}
                     >
                         <Text style={{ fontSize: 24 }}>
-
-                            <Text style={{ fontWeight: 'bold', color: '#5CC27B' }}> MyPage</Text>
+                            <Text style={{ fontWeight: 'bold', color: '#5CC27B' }}>My Page</Text>
                         </Text>
-                        <Image source={require('./icon/alram.png')} />
                     </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                        <TouchableOpacity style={{ marginLeft: 8 }} onPress={() => {
+                            userlogined === true ?
+                            navigation.navigate('Setting')
+                            :
+                            Alert.alert(
+                                '로그인이 필요한서비스입니다.',
+                                '로그인하고 다양한 혜택을 만나보세요',
+                                [
+                                    {
+                                        text: '둘러보기', onPress: () => console.log('둘러보기')
+                                    },
+                                    {
+                                        text: '로그인', onPress: () => navigation.navigate('회원가입')
+                                    }
+                                ]
+                            )
+                        }
+                        }>
+                            <Image source={require('./icon/setting.png')} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <ScrollView style={style.container}>
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     </View>
-                    <View style={style.containerStatus}>
-                        <View style={{ flexDirection: 'row' }}>
-                            <Text style={{ padding: 10, fontSize: 20, fontFamily: "HelveticaNeue", fontWeight: "bold", margin: 10, color: "white" }}>김현명님</Text>
-                            <Text style={{ padding: 10, fontSize: 15, fontFamily: "arial", fontWeight: "bold", margin: 10, color: "white", marginLeft: 150 }}>Transaction</Text>
-                        </View>
-                        <View style={{ flexDirection: "row" }}>
-                        </View>
-                        <Text style={{ marginLeft: 15, fontSize: 20, fontFamily: "arial", fontWeight: "bold", color: "white" }}>100,000 Block</Text>
-                        <View style={{ flexDirection: "row" }}>
-                            <View style={[style.buttonStyle, { backgroundColor: 'white', width: 54, height: 28, marginRight: 10, marginLeft: 218 }]}>
-                                <Text style={{ fontSize: 16, color: 'black' }}>출금</Text>
+                    {userlogined === true ?
+                        <View style={style.containerStatus}>
+                            <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                                <Text style={{ fontSize: 17, fontFamily: "HelveticaNeue", fontWeight: "bold", color: "white" }}>김현명님</Text>
+                                <TouchableOpacity onPress={() => navigation.navigate('Transaction')}>
+                                    <Text style={{ textDecorationLine: 'underline', fontSize: 9, fontFamily: "arial", fontWeight: "bold", color: "white" }}>Transaction</Text>
+                                </TouchableOpacity>
                             </View>
-                            <View style={[style.buttonStyle, { backgroundColor: '#5cc27b', width: 54, height: 28, marginRight: 10, marginLeft: 4 }]}>
-                                <Text style={{ fontSize: 16, color: 'white' }}>충전</Text>
+                            <Text style={{ marginTop: 16, fontSize: 20, fontFamily: "arial", fontWeight: "bold", color: "white" }}>100,000 Block</Text>
+                            <View style={{ flexDirection: "row", marginTop: 2, justifyContent: 'flex-end', alignItems: 'center' }}>
+                                <TouchableOpacity onPress={() => navigation.navigate('WalletWithDrawal')} style={[style.buttonStyle, { backgroundColor: 'white', width: 54, height: 32 }]}>
+                                    <Text style={{ fontSize: 12, color: 'black', fontWeight: 'bold' }}>출금</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => navigation.navigate('입금')} style={[style.buttonStyle, { backgroundColor: '#5cc27b', width: 54, height: 32, marginLeft: 8 }]}>
+                                    <Text style={{ fontSize: 12, color: 'white', fontWeight: 'bold' }}>충전</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
+                        :
+                        <TouchableOpacity style={[style.containerStatus, {alignItems: 'center', justifyContent: 'center'}]} onPress={() => 
+                            Alert.alert(
+                                '로그인이 필요한서비스입니다.',
+                                '로그인하고 다양한 혜택을 만나보세요',
+                                [
+                                    {
+                                        text: '둘러보기', onPress: () => console.log('둘러보기')
+                                    },
+                                    {
+                                        text: '로그인', onPress: () => navigation.navigate('회원가입')
+                                    }
+                                ]
+                            )
+                        }>
+                            <Text style={{ fontSize: 24, fontFamily: "arial", fontWeight: "bold", color: "white" }}>로그인이 필요한 서비스입니다.</Text>
+                        </TouchableOpacity>
+                    }
+                    <View style={style.container}>
+                        <FlatList
+                            data={[
+                                { key: '개인정보', name: 'Profile' },
+                                { key: '공지사항', name: '공지사항' },
+                                { key: '내가 쓴 글', name: '내가 쓴글' },
+                                { key: '이용약관', name: '이용약관' },
+                            ]}
+                            renderItem={({ item }) => (<TouchableOpacity
+                                onPress={() => {
+                                    userlogined === true ?
+                                        navigation.navigate(item.name)
+                                        :
+                                        Alert.alert(
+                                            '로그인이 필요한서비스입니다.',
+                                            '로그인하고 다양한 혜택을 만나보세요',
+                                            [
+                                                {
+                                                    text: '둘러보기', onPress: () => console.log('둘러보기')
+                                                },
+                                                {
+                                                    text: '로그인', onPress: () => navigation.navigate('회원가입')
+                                                }
+                                            ]
+                                        )
+                                    }
+                                }>
+                                <Text style={style.item}>{item.key}</Text>
+                            </TouchableOpacity>)}
+                        />
                     </View>
-                    <View>
-                        <View style={style.container}>
-                            <FlatList
-                                data={[
-                                    { key: '개인정보', name: 'personal'},
-                                    { key: '공지사항', name: '공지사항' },
-                                    { key: '내가 쓴 글' },
-                                    { key: '이용약관' },
-                                ]}
-                                renderItem={({ item }) => (<TouchableOpacity
-                                onPress={() => navigation.navigate(item.name)} 
-                                >
-                                    <Text style={style.item}>{item.key}</Text>
-                                </TouchableOpacity>)}
-                            />
-                        </View>
+                    <View style={{
+                        marginTop: "25%",
+                        width: "50%",
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        alignSelf: 'center'
+                    }}>
+                        <TouchableOpacity>
+                            <Image style={{ width: 30, height: 30 }} source={require('./icon/facebook.png')} />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Image style={{ width: 30, height: 30 }} source={require('./icon/twitter.png')} />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Image style={{ width: 30, height: 30 }} source={require('./icon/medium.png')} />
+                        </TouchableOpacity>
                     </View>
                 </ScrollView>
             </SafeAreaView>

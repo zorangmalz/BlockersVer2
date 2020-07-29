@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -10,6 +10,7 @@ import {
     StyleSheet,
     TouchableWithoutFeedback,
     VirtualizedList,
+    TouchableHighlight
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 
@@ -52,33 +53,90 @@ const resource = StyleSheet.create({
 export default function HomeScreen({navigation}) {
     const DATA=[];
     const num = 1;
-    const month = new Date().getMonth()+1;
-    const day = new Date().getDate();
-    const hours = new Date().getHours();
-    const min = new Date().getMinutes();
-    const sec = new Date().getSeconds();
-    const [viewopacity, setViewOpacity] = useState(30);
+    const [month, setMonth] = useState('00');
+    const [day, setDay] = useState();
+    const [hour, setHour] = useState();
+    const [min, setMin] = useState();
+    const [sec, setSec] = useState();
+    const [timestart, setTimestart] = useState(false);
+    const [viewopacity, setViewOpacity] = useState(true);
     const [startButton, setStartButton] = useState(false);
 
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            headerRight: () => (
-                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <TouchableOpacity>
-                        <Image source={require('./icon/alram.png')} />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={{ marginLeft: 8, paddingRight: 14 }} onPress={() => navigation.navigate('Setting')}>
-                        <Image source={require('./icon/setting.png')} />
-                    </TouchableOpacity>
-                </View>
-            ),
-        });
-    }, [navigation])
+    const onButtonStart = () => {
+        setTimestart(true);
+        console.log(timestart)
+    }
+
+    var days = 0;
+    var hours = 0;
+    var mins = 0;
+    var secs = 0;
+    /** 
+    useEffect(() => {
+        let timer = setInterval(function () {
+                console.log("참")
+                secs = secs + 1;
+                if (secs === 59) {
+                    mins = mins + 1;
+                    secs = 0;
+                }
+                if (mins === 60) {
+                    hours = hours + 1;
+                    mins = 0;
+                }
+                if (hours === 24) {
+                    days = days + 1;
+                    hours = 0;
+                }
+                setDay(days);
+                setHour(hours);
+                setMin(mins);
+                setSec(days);
+            
+            if (timestart === false) {
+                clearInterval(timer);
+                setDay(0);
+                setHour(0);
+                setMin(0);
+                setSec(0);
+            }
+        }, 1000);
+        return () => {
+
+        }
+    }, [timestart]);
+    */
+
+    const onButtonClear = () => {
+        setTimestart(false);
+        console.log("클릭되었습니다");
+    }
 
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{backgroundColor:'#FFFFFF', flex:1}}>
+                <View accessibilityRole="header" style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "4%", paddingRight: "4%"}}>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            paddingTop: 4,
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontWeight: '100', color: '#979797' }}>Hello,</Text>
+                            <Text style={{ fontWeight: 'bold', color: '#5CC27B' }}> Blockers</Text>
+                        </Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                        <TouchableOpacity>
+                            <Image source={require('./icon/alram.png')} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
                 <ScrollView style={{marginBottom: 70}}>
                     <Swiper dotStyle={{ borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 250 }}>
                         {startButton ?
@@ -126,23 +184,31 @@ export default function HomeScreen({navigation}) {
                             </View>
                         }
                         <View>
-                            <TouchableWithoutFeedback style={{flexDirection: 'row'}} onPress={() => setViewOpacity(0)}>
-                                <View style={{
-                                    width: "100%",
-                                    zIndex: 1,
-                                    position: 'absolute',
-                                    height: 200,
-                                    backgroundColor: '#000000',
-                                    opacity: viewopacity,
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }} >
-                                    <Text style={{color: '#FFFFFF', fontSize: 24, fontWeight: 'bold'}}>터치해서 금연 시작하기</Text>
-                                </View>
-                            </TouchableWithoutFeedback>
-                            <View style={{zIndex:0, marginTop: 15}}>
-                                <TouchableOpacity style={{ alignSelf: 'flex-end', marginBottom: 9, marginRight: 20 }}>
-                                    <Text style={{ fontSize: 12, textDecorationLine: 'underline' }}>Reset</Text>
+                            {viewopacity === true ?
+                                <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={() => {
+                                    setViewOpacity(false);
+                                    setTimestart(true);
+                                    console.log(timestart);
+                                }}>
+                                    <View style={{
+                                        width: "100%",
+                                        zIndex: 1,
+                                        position: 'absolute',
+                                        height: 200,
+                                        backgroundColor: '#000000',
+                                        opacity: 30,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }} >
+                                        <Text style={{ color: '#FFFFFF', fontSize: 24, fontWeight: 'bold' }}>터치해서 금연 시작하기</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                :
+                                <View />
+                            }
+                            <View style={{ zIndex: 0, marginTop: 15 }}>
+                                <TouchableOpacity onPress={() => navigation.navigate('초기화')} style={{ alignItems: 'center'}}>
+                                    <Text style={{ fontSize: 12, textDecorationLine: 'underline', alignSelf: 'flex-end', paddingRight: 20, marginBottom: 10 }}>Reset</Text>
                                 </TouchableOpacity>
                                 <View style={{
                                     backgroundColor: '#5CC27B',
@@ -161,7 +227,7 @@ export default function HomeScreen({navigation}) {
                                             <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
                                         </View>
                                         <View style={date.viewcontainer}>
-                                            <Text style={date.largedate}>{hours}</Text>
+                                            <Text style={date.largedate}>{hour}</Text>
                                             <Text style={date.smalldate}>hours</Text>
                                         </View>
                                         <View style={{ justifyContent: 'space-evenly', alignItems: 'center', height: 32 }}>
@@ -211,9 +277,6 @@ export default function HomeScreen({navigation}) {
                         <TouchableOpacity>
                             <Image source={require('./icon/chatbot.png')} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('Wallet')}>
-                            <Image style={{width: 40, height: 32}} resizeMode="contain" source={require('./icon/wallet.png')} />
-                        </TouchableOpacity>
                     </View>
                     <View style={{
                         flexDirection: 'row',
@@ -243,7 +306,7 @@ export default function HomeScreen({navigation}) {
                         </View>
                         <TouchableOpacity style={{ marginTop: 40, marginRight: 20 }} onPress={()=> navigation.navigate('Challenge')}>
                             <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 3, alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 12, fontWeight: 'bold' }}>Start</Text>
+                                <Text style={{ fontSize: 12, fontWeight: 'normal' }}>Start</Text>
                             </View>
                         </TouchableOpacity>
                     </View>

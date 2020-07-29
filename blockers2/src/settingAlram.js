@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import {
     View,
     Text,
@@ -27,6 +27,10 @@ const setting = StyleSheet.create({
         opacity: 0.6
     }
 })
+
+let count = 1;
+let divide = count % 2;
+const alram = divide === 1 ? false : true;
 
 function alramOne({ navigation }) {
     return (
@@ -68,16 +72,93 @@ function alramOne({ navigation }) {
     )
 }
 
-let count = 1;
-let divide = count % 2;
-const alram = divide === 1 ? false : true;
+function allowing (state, action) {
+    switch (action.type) {
+        case 'allow':
+            return state = 1;
+        case 'notallow':
+            return state = 2;
+    }
+} 
 
 function alramTwo({ navigation }) {
-    const [alram, setAlram] = useState(false);
-    const alramSwitch = () => {
-        setAlram(previousState => !previousState);
-        count+=1;
+    const [state, dispatch] = useReducer(allowing, count);
+    const [alarm, setAlarm] = useState(false);
+    const alarmSwitch = () => {
+        console.log(count)
+        if(alarm === false) {
+            setAlarm(true);
+            dispatch({
+                type: 'allow'
+            });
+        } else {
+            setAlarm(false);
+            dispatch({
+                type: 'notallow'
+            })
+        }
     };
+
+    const [alarmcharge, setAlarmcharge] = useState(false);
+    const alarmchargeSwitch = () => {
+        {
+            alarm === true ?
+            setAlarmcharge(previousState => !previousState)
+            :
+            console.log('알람허용을 해주세요')
+        }
+    };
+
+    const [alarmveri, setAlarmveri] = useState(false);
+    const alarmveriSwitch = () => {
+        {
+            alarm === true ?
+            setAlarmveri(previousState => !previousState)
+            :
+            console.log('알람허용을 해주세요')
+        }
+    };
+
+    const [alarmhealth, setAlarmhealth] = useState(false);
+    const alarmhealthSwitch = () => {
+        {
+            alarm === true ?
+            setAlarmhealth(previousState => !previousState)
+            :
+            console.log('알람허용을 해주세요')
+        }
+    };
+
+    const [alarmchat, setAlarmchat] = useState(false);
+    const alarmchatSwitch = () => {
+        {
+            alarm === true ?
+            setAlarmchat(previousState => !previousState)
+            :
+            console.log('알람허용을 해주세요')
+        }
+    };
+
+    const [alarmadver, setAlarmadver] = useState(false);
+    const alarmadverSwitch = () => {
+        {
+            alarm === true ?
+            setAlarmadver(previousState => !previousState)
+            :
+            console.log('알람허용을 해주세요')
+        }
+    };
+
+    useEffect(() => {
+        if(alarm === false) {
+            setAlarmadver(false);
+            setAlarmchat(false);
+            setAlarmhealth(false);
+            setAlarmveri(false);
+            setAlarmcharge(false);
+        }
+    }, [alarm])
+
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -98,9 +179,30 @@ function alramTwo({ navigation }) {
                             </View>
                             <Switch
                                 trackColor={{ true: '#34C759', false: '#C6C6C6' }}
-                                thumbColor={alram ? '#FFFFFF' : '#f4f3f4'}
-                                onChange={alramSwitch}
-                                value={alram}
+                                thumbColor={alarm ? '#FFFFFF' : '#f4f3f4'}
+                                onChange={alarmSwitch}
+                                value={alarm}
+                                style={{ width: 51, height: 31 }}
+                            />
+                        </View>
+                        <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center', marginBottom: 32 }} />
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            marginLeft: 32,
+                            marginRight: 32,
+                            marginBottom: 16
+                        }}>
+                            <View>
+                                <Text style={[setting.title, { marginBottom: 16 }]}>입출금</Text>
+                                <Text style={setting.content}>입출금 알림을 전송합니다.</Text>
+                            </View>
+                            <Switch
+                                trackColor={{ true: '#34C759', false: '#C6C6C6' }}
+                                thumbColor={alarmcharge ? '#FFFFFF' : '#f4f3f4'}
+                                onValueChange={alarmchargeSwitch}
+                                value={alarmcharge}
                                 style={{ width: 51, height: 31 }}
                             />
                         </View>
@@ -119,9 +221,9 @@ function alramTwo({ navigation }) {
                             </View>
                             <Switch
                                 trackColor={{ true: '#34C759', false: '#C6C6C6' }}
-                                thumbColor={alram ? '#FFFFFF' : '#f4f3f4'}
-                                onValueChange={alramSwitch}
-                                value={alram}
+                                thumbColor={alarmveri ? '#FFFFFF' : '#f4f3f4'}
+                                onValueChange={alarmveriSwitch}
+                                value={alarmveri}
                                 style={{ width: 51, height: 31 }}
                             />
                         </View>
@@ -140,9 +242,9 @@ function alramTwo({ navigation }) {
                             </View>
                             <Switch
                                 trackColor={{ true: '#34C759', false: '#C6C6C6' }}
-                                thumbColor={alram ? '#FFFFFF' : '#f4f3f4'}
-                                onValueChange={alramSwitch}
-                                value={alram}
+                                thumbColor={alarmhealth ? '#FFFFFF' : '#f4f3f4'}
+                                onValueChange={alarmhealthSwitch}
+                                value={alarmhealth}
                                 style={{ width: 51, height: 31 }}
                             />
                         </View>
@@ -161,9 +263,9 @@ function alramTwo({ navigation }) {
                             </View>
                             <Switch
                                 trackColor={{ true: '#34C759', false: '#C6C6C6' }}
-                                thumbColor={alram ? '#FFFFFF' : '#f4f3f4'}
-                                onValueChange={alramSwitch}
-                                value={alram}
+                                thumbColor={alarmchat ? '#FFFFFF' : '#f4f3f4'}
+                                onValueChange={alarmchatSwitch}
+                                value={alarmchat}
                                 style={{ width: 51, height: 31 }}
                             />
                         </View>
@@ -182,9 +284,9 @@ function alramTwo({ navigation }) {
                             </View>
                             <Switch
                                 trackColor={{ true: '#34C759', false: '#C6C6C6' }}
-                                thumbColor={alram ? '#FFFFFF' : '#f4f3f4'}
-                                onValueChange={alramSwitch}
-                                value={alram}
+                                thumbColor={alarmadver ? '#FFFFFF' : '#f4f3f4'}
+                                onValueChange={alarmadverSwitch}
+                                value={alarmadver}
                                 style={{ width: 51, height: 31 }}
                             />
                         </View>

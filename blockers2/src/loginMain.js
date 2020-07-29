@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     View,
     Text,
@@ -16,7 +16,7 @@ const login = StyleSheet.create({
         marginRight: 16,
         marginTop: 8,
         marginBottom: 4,
-        borderBottomColor: 'rgba(0, 0, 0, 0.4)',
+        borderBottomColor: '#E5E5E5',
         borderBottomWidth: 1,
         textAlign: 'left',
         width: "90%",
@@ -59,20 +59,25 @@ const login = StyleSheet.create({
     }
 })
 
-export default function LoginMain() {
+export default function LoginMain({navigation}) {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <ScrollView style={{ paddingTop: 20 }}>
-                    <TextInput style={login.textinput} placeholder="이메일 주소" placeholderTextColor="var(--black-40)" />
+                    <TextInput value={email} onChangeText={text => setEmail(text)} style={login.textinput} placeholder="이메일 주소" placeholderTextColor="#999999" />
                     <Text style={login.text}>유효한 이메일을 입력해 주세요.</Text>
-                    <TextInput style={login.textinput} placeholder="비밀번호(영문, 숫자 포함 8자리)" placeholderTextColor="var(--black-40)" />
+                    <TextInput value={password} onChangeText={text => setPassword(text)} textContentType="password" secureTextEntry={true} style={login.textinput} placeholder="비밀번호(영문, 숫자 포함 8자리)" placeholderTextColor="#999999" />
                     <Text style={login.text}>8자리 이상 입력해주세요.</Text>
                     <TouchableOpacity activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16}]}>
                         <Text style={login.buttontext}>로그인</Text>
                     </TouchableOpacity>
-                    <Text style={login.signtext}>아이디/비밀번호 찾기</Text>
+                    <TouchableOpacity onPress={() => navigation.navigate('아이디/비밀번호 찾기')}>
+                        <Text style={login.signtext}>아이디/비밀번호 찾기</Text>
+                    </TouchableOpacity>
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
                     <TouchableOpacity activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#4a67ad'}]}>
                         <Text style={login.buttontext}>Facebook으로 시작하기</Text>

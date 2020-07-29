@@ -1,6 +1,7 @@
 
 import React, { useLayoutEffect } from 'react';
 import {
+    StyleSheet,
     StatusBar,
     SafeAreaView,
     ScrollView,
@@ -10,86 +11,142 @@ import {
     TouchableOpacity,
 } from 'react-native';
 
-const styles = {
+const community = StyleSheet.create({
     image: {
-        width: "100%"
+        width: "100%",
+        height: 134
     },
     board: {
         flex: 1,
-        height: 120,
+        paddingTop: 16,
+        paddingLeft: 16,
+        paddingBottom: 16,
         borderBottomWidth: 1,
-        borderColor: "#DDDDDD",
+        borderColor: "#E5E5E5",
     },
-    bigFont: {
-        marginLeft: 24,
-        marginTop: 8,
-        width: 73,
-        height: 22,
+    circle: {
+        width: 6,
+        height: 6,
+        borderRadius: 3,
+        backgroundColor: '#5cc27b',
+        marginRight: 8
+    },
+    title: {
         fontSize: 16,
         fontWeight: "bold"
+    },
+    content: {
+        fontSize: 14,
+        fontWeight: 'normal',
+        color: '#707070',
+        marginTop: 5,
+        marginLeft: 16
+    },
+    timethumbreply: {
+        fontSize: 12,
+        fontWeight: 'normal',
+    },
+    lowerbox: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        marginLeft: 16,
+        marginTop: 8
+    },
+    thumbandreply: {
+        width: 15,
+        height: 15,
     }
-}
-export default function CommunityHome({navigation}) {
-    useLayoutEffect(() => {
-        navigation.setOptions({
-          headerRight: () => (
-            <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-              <TouchableOpacity>
-                <Image source={require('./icon/alram.png')} />
-              </TouchableOpacity>
-            </View>
-          ),
-        });
-      }, [navigation])
+})
+
+export default function CommunityHome({ navigation }) {
+    var thumbnum = 10,
+        replynum = 5;
+
+    var content = "흡연 10년차 입니다.... 저번주부터 금연을…."
+    
     return (
         <>
-            <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
-                <ScrollView >
-                    <Image style={styles.image} source={require("./icon/noti.png")} />
-                    <View style={styles.board}>
-                        <Text style={styles.bigFont}>Hot 게시판</Text>
-                        <Text style={{ marginLeft: 24, marginTop: 8 }}>흡연 10년차다 시발</Text>
-                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                            <Text style={{ marginLeft: 24, marginTop: 8 }}>김현명</Text>
-                            <Text style={{ marginLeft: 24, marginTop: 8 }}>방금전</Text>
-                            <Image source={require("./icon/lightbulb.png")}></Image>
-                            <Image source={require("./icon/lightbulb.png")}></Image>
-                        </View>
+            <StatusBar barStyle="light-content" />
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "4%", paddingRight: "4%" }}>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            paddingTop: 4,
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontWeight: 'bold', color: '#5CC27B' }}>Community</Text>
+                        </Text>
                     </View>
-
-                    <View style={styles.board}>
-                        <Text style={styles.bigFont}>Hot 게시판</Text>
-                        <Text style={{ marginLeft: 24, marginTop: 8 }}>흡연 10년차다 시발</Text>
-                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                            <Text style={{ marginLeft: 24, marginTop: 8 }}>김현명</Text>
-                            <Text style={{ marginLeft: 24, marginTop: 8 }}>방금전</Text>
-                            <Image source={require("./icon/lightbulb.png")}></Image>
-                            <Image source={require("./icon/lightbulb.png")}></Image>
-                        </View>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                        <TouchableOpacity style={{ marginLeft: 8 }}>
+                            <Image source={require('./icon/alram.png')} />
+                        </TouchableOpacity>
                     </View>
-
-                    <View style={styles.board}>
-                        <Text style={styles.bigFont}>Hot 게시판</Text>
-                        <Text style={{ marginLeft: 24, marginTop: 8 }}>흡연 10년차다 시발</Text>
-                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                            <Text style={{ marginLeft: 24, marginTop: 8 }}>김현명</Text>
-                            <Text style={{ marginLeft: 24, marginTop: 8 }}>방금전</Text>
-                            <Image source={require("./icon/lightbulb.png")}></Image>
-                            <Image source={require("./icon/lightbulb.png")}></Image>
+                </View>
+                <ScrollView>
+                    <Image resizeMode="cover" style={community.image} source={require("./icon/noti.png")} />
+                    <TouchableOpacity onPress={() => navigation.navigate('자유게시판')} style={[community.board, { marginTop: 2 }]}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <View style={community.circle} />
+                            <Text style={community.title}>자유게시판</Text>
                         </View>
-                    </View>
-
-                    <View style={styles.board}>
-                        <Text style={styles.bigFont}>ot 게시판</Text>
-                        <Text style={{ marginLeft: 24, marginTop: 8 }}>흡연 10년차다 시발</Text>
-                        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-                            <Text style={{ marginLeft: 24, marginTop: 8 }}>김현명</Text>
-                            <Text style={{ marginLeft: 24, marginTop: 8 }}>방금전</Text>
-                            <Image source={require("./icon/lightbulb.png")}></Image>
-                            <Image source={require("./icon/lightbulb.png")}></Image>
+                        <Text style={community.content}>{content}</Text>
+                        <View style={community.lowerbox}>
+                            <Text style={[community.timethumbreply, {color: '#707070'}]}>방금전</Text>
+                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: "33%"}]} source={require("./icon/emptythumb.png")}></Image>
+                            <Text style={[community.timethumbreply, {color: '#7cce95', marginLeft: 4}]} >{thumbnum}</Text>
+                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: 16}]} source={require("./icon/reply.png")}></Image>
+                            <Text style={[community.timethumbreply, {color: '#ffb83d', marginLeft: 4}]}>{replynum}</Text>
                         </View>
-                    </View>
-
+                    </TouchableOpacity>
+                    <TouchableOpacity style={community.board}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <View style={community.circle} />
+                            <Text style={community.title}>HOT 게시판</Text>
+                        </View>
+                        <Text style={community.content}>{content}</Text>
+                        <View style={community.lowerbox}>
+                            <Text style={[community.timethumbreply, {color: '#707070'}]}>방금전</Text>
+                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: "33%"}]} source={require("./icon/emptythumb.png")}></Image>
+                            <Text style={[community.timethumbreply, {color: '#7cce95', marginLeft: 4}]} >{thumbnum}</Text>
+                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: 16}]} source={require("./icon/reply.png")}></Image>
+                            <Text style={[community.timethumbreply, {color: '#ffb83d', marginLeft: 4}]}>{replynum}</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={community.board}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <View style={community.circle} />
+                            <Text style={community.title}>정보게시판</Text>
+                        </View>
+                        <Text style={community.content}>{content}</Text>
+                        <View style={community.lowerbox}>
+                            <Text style={[community.timethumbreply, {color: '#707070'}]}>방금전</Text>
+                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: "33%"}]} source={require("./icon/emptythumb.png")}></Image>
+                            <Text style={[community.timethumbreply, {color: '#7cce95', marginLeft: 4}]} >{thumbnum}</Text>
+                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: 16}]} source={require("./icon/reply.png")}></Image>
+                            <Text style={[community.timethumbreply, {color: '#ffb83d', marginLeft: 4}]}>{replynum}</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={community.board}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                            <View style={community.circle} />
+                            <Text style={community.title}>성공게시판</Text>
+                        </View>
+                        <Text style={community.content}>{content}</Text>
+                        <View style={community.lowerbox}>
+                            <Text style={[community.timethumbreply, {color: '#707070'}]}>방금전</Text>
+                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: "33%"}]} source={require("./icon/emptythumb.png")}></Image>
+                            <Text style={[community.timethumbreply, {color: '#7cce95', marginLeft: 4}]} >{thumbnum}</Text>
+                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: 16}]} source={require("./icon/reply.png")}></Image>
+                            <Text style={[community.timethumbreply, {color: '#ffb83d', marginLeft: 4}]}>{replynum}</Text>
+                        </View>
+                    </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>
         </>

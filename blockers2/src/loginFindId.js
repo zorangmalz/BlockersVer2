@@ -1,29 +1,47 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     Text,
     ScrollView,
     SafeAreaView,
     StatusBar,
     StyleSheet,
+    TouchableOpacity,
 } from 'react-native';
+import Clipboard from '@react-native-community/clipboard'
 
 const login = StyleSheet.create({
     text: {
         fontSize: 40,
         fontWeight: 'normal',
-        alignSelf: 'center',
         color: '#5cc27b',
-        marginTop: 64
     }
 })
 
-export default function LoginFindId () {
+export default function LoginFindId ({navigation}) {
+    const emailId = "wise@blockers.io";
+    const [copiedId, setCopiedId] = useState('');
+    const copyToClipboard = () => {
+        Clipboard.setString(emailId);
+        setTimeout(() => {
+            navigation.navigate('로그인')
+        }, 2000)
+    }
+
+    const fetchCopiedText = async () => {
+        const text = await Clipboard.getString()
+        setCopiedId(text)
+    }
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView>
+            <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
                 <ScrollView>
-                    <Text style={login.text}>wise@blockers.me</Text>
+                    <TouchableOpacity onPress={copyToClipboard} style={{
+                        marginTop: 64,
+                        alignSelf: 'center'
+                    }}>
+                        <Text style={login.text}>{emailId}</Text>
+                    </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>
         </>

@@ -8,8 +8,8 @@ import {
     StatusBar,
     StyleSheet,
     Dimensions,
+    ScrollView
 } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 
 const welcome = StyleSheet.create({
     box: {

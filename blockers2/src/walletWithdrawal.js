@@ -15,6 +15,8 @@ export function WalletWithdrawal({navigation}) {
     const [money, onChangeMoney] = useState('')
     const [bank, onChangeBank] = useState('')
     const [account, onChangeAccount] = useState('')
+    const [check, setCheck] = useState(false)
+    const checkColor = check===true ? "#5CC27B" : "#FFFFFF";
     
     return (
         <>
@@ -29,14 +31,18 @@ export function WalletWithdrawal({navigation}) {
                         keyboardType="number-pad"
                         style={{ width: "85%", height: 50, borderBottomColor: '#5CC27B', borderBottomWidth: 2, alignSelf: 'center', fontSize: 21 }}
                     />
-                    <Text style={{ fontSize: 12, fontWeight: 'normal', color: '#ff0000', marginLeft: "7.5%", marginTop: 4 }}>출금 가능 금액: 120,000</Text>
+                    {money.length > 0 ?
+                        <Text style={{ fontSize: 12, fontWeight: 'normal', color: '#ff0000', marginLeft: "7.5%", marginTop: 4 }}>출금 가능 금액: 120,000</Text>
+                        :
+                        <Text />
+                    }
                     <TextInput
                         placeholder="은행"
                         placeholderTextColor="#B8B8B8"
                         keyboardType="email-address"
                         value={bank}
                         onChangeText={text=>onChangeBank(text)}
-                        style={{ width: "30%", height: 50, borderBottomColor: '#5CC27B', borderBottomWidth: 2, marginLeft: "7.5%", fontSize: 21, marginTop: 32 }}
+                        style={{ width: "30%", height: 50, borderBottomColor: '#5CC27B', borderBottomWidth: 2, marginLeft: "7.5%", fontSize: 21, marginTop: 28 }}
                     />
                     <TextInput
                         placeholder="계좌번호"
@@ -46,8 +52,27 @@ export function WalletWithdrawal({navigation}) {
                         keyboardType="number-pad"
                         style={{ width: "85%", height: 50, borderBottomColor: '#5CC27B', borderBottomWidth: 2, alignSelf: 'center', fontSize: 21, marginTop: 32 }}
                     />
+                    <View style={{ width: "90%", height: 170, backgroundColor: '#E6E6E6', alignSelf: 'center', paddingTop: 16, paddingBottom: 16, paddingRight: 32, paddingLeft: 32, marginBottom: 16, marginTop: 16 }} >
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 8 }}>
+                            <Image source={require('./icon/warning.png')} />
+                            <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#333333', marginLeft: 8 }}>출금시 주의사항</Text>
+                        </View>
+                        <View>
+                            <Text style={{ fontSize: 14, fontWeight: 'normal', color: '#333333', marginBottom: 5 }}>- 출금가능 금액 이하로 입력해주세요.</Text>
+                            <Text style={{ fontSize: 14, fontWeight: 'normal', color: '#333333', marginBottom: 5 }}>- 출금은 1-3일 내로 이루어 집니다.</Text>
+                            <Text style={{ fontSize: 14, fontWeight: 'normal', color: '#333333', marginBottom: 5 }}>- 계좌번호 오입력시 환불 불가능합니다.</Text>
+                        </View>
+                    </View>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'center' }}>
+                        <TouchableOpacity onPress={() => setCheck(!check)}>
+                            <View style={{ width: 20, height: 20, borderRadius: 10, borderWidth: 2, borderColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
+                                <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: checkColor }} />
+                            </View>
+                        </TouchableOpacity>
+                        <Text style={{ fontSize: 14, fontWeight: 'normal', color: '#333333', marginLeft: 8 }}>출금시 주의사항을 확인했습니다.</Text>
+                    </View>
                 </ScrollView>
-                {(money.length>0)&&(bank.length>0)&&(account.length>0) ?
+                {(money.length>0)&&(bank.length>0)&&(account.length>0)&&(check===true) ?
                     <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => navigation.navigate('WithDrawalPassword')}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff' }}>출금하기</Text>

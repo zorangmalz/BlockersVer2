@@ -7,7 +7,6 @@ import {
     SafeAreaView,
     TouchableOpacity,
     StyleSheet,
-    TextInput,
     Image,
 } from 'react-native';
 
@@ -55,10 +54,10 @@ export function WalletPassword ({navigation}) {
     const [three, setThree] = useState(false);
     const [four, setFour] = useState(false);
 
-    const OneImage = one === true ? require('./icon/passwordicon.png') : ''
-    const TwoImage = two === true ? require('./icon/passwordicon.png') : ''
-    const ThreeImage = three === true ? require('./icon/passwordicon.png') : ''
-    const FourImage = four === true ? require('./icon/passwordicon.png') : ''
+    const OneImage = one === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
+    const TwoImage = two === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
+    const ThreeImage = three === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
+    const FourImage = four === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
     function pass(count, action) {
         switch (action.type) {
             case 'plus':

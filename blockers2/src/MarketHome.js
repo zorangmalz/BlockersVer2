@@ -62,17 +62,6 @@ const styles = {
 }
 
 export default function MarketHome({ navigation }) {
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerRight: () => (
-        <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-          <TouchableOpacity>
-            <Image source={require('./icon/alram.png')} />
-          </TouchableOpacity>
-        </View>
-      ),
-    });
-  }, [navigation])
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
       <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
@@ -94,7 +83,7 @@ export default function MarketHome({ navigation }) {
           </Swiper>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <TouchableOpacity onPress={() => navigation.navigate('MarketContentsList')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Food')}>
             <View style={styles.ImageSquare}>
               <Image source={require("./icon/1.png")}></Image>
               <Text style={styles.textSub}>Category 1</Text>

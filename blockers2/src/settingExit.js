@@ -7,7 +7,8 @@ import {
     SafeAreaView,
     TouchableOpacity,
     StyleSheet,
-    Image
+    Image,
+    Modal
 } from 'react-native';
 
 const setting = StyleSheet.create({
@@ -30,6 +31,7 @@ const setting = StyleSheet.create({
 })
 
 export default function SettingExit({ navigation }) {
+    const [modalVisible, setModalVisible] = useState(false);
     const [agreeOne, setAgreeOne] = useState(true);
     const [agreeTwo, setAgreeTwo] = useState(true);
     const OneCheck = () => {setAgreeOne(!agreeOne)}
@@ -44,6 +46,39 @@ export default function SettingExit({ navigation }) {
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
                 <ScrollView>
+                    <Modal
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => setModalVisible(!modalVisible)}
+                    >
+                        <View style={{ position: 'absolute', top: "33%", justifyContent: 'space-between', borderColor: '#000000', borderWidth: 1, borderRadius: 10, alignSelf: 'center', width: 250, height: 170, alignItems: 'center', backgroundColor: '#ffffff' }}>
+                            <Text style={{
+                                fontSize: 16,
+                                fontWeight: 'bold',
+                                marginTop: 20
+                            }}>출금을 진행해주세요</Text>
+                            <View style={{
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{
+                                    fontSize: 12,
+                                    fontWeight: 'normal'
+                                }}>출금을 완료하지 않으면 탈퇴가 불가능합니다</Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderLeftWidth: 1, borderRightWidth: 0.5, borderBottomLeftRadius: 10, borderTopWidth: 1 }} onPress={() => setModalVisible(!modalVisible)}>
+                                    <Text>취소</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderRightWidth: 1, borderLeftWidth: 0.5, borderBottomRightRadius: 10, borderTopWidth: 1 }} onPress={() => {
+                                    navigation.navigate('ExitComplete');
+                                    setModalVisible(false);
+                                }}>
+                                    <Text>출금하기</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </Modal>
                     <Text style={{
                         fontSize: 18,
                         fontWeight: 'normal',
@@ -196,7 +231,7 @@ export default function SettingExit({ navigation }) {
                     </View>
                 </ScrollView>
                 {(agreeOne === true) && (agreeTwo === true) ?
-                    <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => navigation.navigate('ExitComplete')}>
+                    <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => setModalVisible(true)}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff' }}>탈퇴하기</Text>
                         </View>

@@ -29,39 +29,46 @@ export default function ChallengeVerification() {
 
     const options = {
         title: '사진가져오기',
+        customButtons: [
+            { name: 'button_id_1', title: 'CustomButton 1' },
+            { name: 'button_id_2', title: 'CustomButton 2' }
+        ],
         storageOptions: {
             skipBackup: true,
             path: 'images',
         }
     };
 
-    const showImagePicker1 = () => {
-        ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response =', response);
-
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.customButton);
-                Alert.alert(response.customButton);
-            } else {
+    const showCamera1 = () => {
+        ImagePicker.launchCamera(options, (response) => {
+            if (response.error) {
+                console.log('LaunchCamera Error: ', response.error);
+            }
+            else {
                 setImageOne(response.uri);
             }
         });
     };
 
-    const showImagePicker2 = () => {
-        ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response =', response);
-
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            } else if (response.error) {
-                console.log('ImagePicker Error: ', response.customButton);
-                Alert.alert(response.customButton);
-            } else {
+    const showCamera2 = () => {
+        ImagePicker.launchCamera(options, (response) => {
+            if (response.error) {
+                console.log('LaunchCamera Error: ', response.error);
+            }
+            else {
                 setImageTwo(response.uri);
             }
+        });
+    };
+
+    const showCameraRoll = () => {
+        ImagePicker.launchImageLibrary(options, (response) => {
+          if (response.error) {
+            console.log('LaunchImageLibrary Error: ', response.error);
+          }
+          else {
+            setImageTwo(response.uri);
+          }
         });
     };
 
@@ -80,9 +87,9 @@ export default function ChallengeVerification() {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <TouchableOpacity onPress={showImagePicker1}>
-                                <ImageBackground source={require('./icon/plus.png')} style={{ width: 164, height: 146, borderRadius: 14, borderWidth: 1, marginBottom: 8 }}>
-                                    {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 164, height: 146, borderRadius: 14, borderWidth: 1, marginBottom: 8 }} />}
+                            <TouchableOpacity style={{width: 164, height: 146, borderRadius: 14, borderWidth: 1, marginBottom: 8}} onPress={showCamera1}>
+                                <ImageBackground resizeMode="contain" source={require('./icon/plus.png')} style={{ width: 164, height: 146}}>
+                                    {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 164, height: 146, borderRadius: 14, borderWidth: 1}} />}
                                 </ImageBackground>
                             </TouchableOpacity>
                             <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#79808C' }}>입에 문 사진</Text>
@@ -91,9 +98,9 @@ export default function ChallengeVerification() {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <TouchableOpacity onPress={showImagePicker2}>
-                                <ImageBackground source={require('./icon/plus.png')} style={{ width: 164, height: 146, borderRadius: 14, borderWidth: 1, marginBottom: 8 }}>
-                                    <Image resizeMode="stretch" source={{ uri: imageTwo }} style={{ width: 164, height: 146, borderRadius: 14, borderWidth: 1, marginBottom: 8 }} />
+                            <TouchableOpacity style={{width: 164, height: 146, borderRadius: 14, borderWidth: 1, marginBottom: 8}} onPress={showCamera2}>
+                                <ImageBackground resizeMode="contain" source={require('./icon/plus.png')} style={{ width: 164, height: 146 }}>
+                                    {imageTwo&&<Image resizeMode="stretch" source={{ uri: imageTwo }} style={{ width: 164, height: 146, borderRadius: 14, borderWidth: 1, marginBottom: 8 }} />}
                                 </ImageBackground>
                             </TouchableOpacity>
                             <Text style={{fontSize: 16, fontWeight: 'bold', color: '#79808C'}}>입에 문 사진</Text>
