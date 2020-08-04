@@ -9,6 +9,8 @@ import {
     StyleSheet,
     Image,
 } from 'react-native';
+import auth from '@react-native-firebase/auth';
+import { NavigationContainer } from '@react-navigation/native';
 
 const password = StyleSheet.create({
     largeBox: {
@@ -53,11 +55,22 @@ export function WalletPassword ({navigation}) {
     const [two, setTwo] = useState(false);
     const [three, setThree] = useState(false);
     const [four, setFour] = useState(false);
-
+    const [initializing, setInitializing] = useState(true);
+    const [user, setUser] = useState();
+  
     const OneImage = one === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
     const TwoImage = two === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
     const ThreeImage = three === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
     const FourImage = four === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
+    function onAuthStateChanged(user) {
+        setUser(user);
+        if (initializing) setInitializing(false);
+      }
+      function move(){
+          user.password=passWord
+          console.log(user.password)
+          navigation.navigate("프로필 설정")
+      }
     function pass(count, action) {
         switch (action.type) {
             case 'plus':
@@ -187,6 +200,8 @@ export function WalletPassword ({navigation}) {
             console.log(passWord);
             console.log("4")
         }
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; 
     }, [count])
 
     return (
@@ -270,7 +285,7 @@ export function WalletPassword ({navigation}) {
                     </View>
                 </View>
                 {count===4 ?
-                    <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => navigation.popToTop()}>
+                    <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={move}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>다음</Text>
                         </View>

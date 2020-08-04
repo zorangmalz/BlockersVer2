@@ -65,6 +65,7 @@ import LoginFindId from './src/loginFindId';
 import ContentsComplete from './src/ContentsComplete';
 import ProfileNickname from './src/profileNickname';
 import LoginVerificationProfile from './src/loginVerificationProfile';
+import LoginPassword from "./src/loginPassword";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -495,6 +496,13 @@ const App = ({ navigation }) => {
         <Stack.Screen 
           name="아이디 찾기"
           component={LoginFindId}
+          options={{
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+         <Stack.Screen 
+          name="LoginPassword"
+          component={LoginPassword}
           options={{
             gestureDirection: 'vertical-inverted'
           }}

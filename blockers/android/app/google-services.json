@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "729209347504",
+    "firebase_url": "https://blockers-8a128.firebaseio.com",
+    "project_id": "blockers-8a128",
+    "storage_bucket": "blockers-8a128.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729209347504:android:5f640eb772abb696e2ca75",
+        "android_client_info": {
+          "package_name": "com.blockers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729209347504-uu57rajsk3d7j5utahu34d4d67tqcgdl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.blockers",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "729209347504-nffbltomro80vel8sgdp22h3s7bd34nf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaEwE7IMPPKilcNsroOlqcyZKziGLlKY0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729209347504-nffbltomro80vel8sgdp22h3s7bd34nf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

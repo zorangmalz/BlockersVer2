@@ -16,7 +16,7 @@ export default function SplashScreen({ navigation }) {
         setTimeout(() => {
             setAnimating(false);
             navigation.navigate('Home')
-        }, 3000);
+        }, 1000);
     }, []);
 
     return (

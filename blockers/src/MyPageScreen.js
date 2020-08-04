@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -11,7 +11,7 @@ import {
     FlatList,
     Alert,
 } from 'react-native';
-
+import auth from '@react-native-firebase/auth';
 
 const style = StyleSheet.create({
     container: {
@@ -63,7 +63,38 @@ const style = StyleSheet.create({
 })
 
 export default function MyPageScreen({ navigation }) {
-    const [userlogined, setUserlogined] = useState(true);
+    const [userlogined, setUserlogined] = useState(false);
+    const [initializing, setInitializing] = useState(true);
+  const [user, setUser] = useState("");
+
+  function onAuthStateChanged(user) {
+    setUser(user);
+    if (user){
+        const sexs="boy"
+        user.sex=sexs
+        console.log(user.sex)
+        console.log(user.password)
+        console.log(user.birth)
+        console.log(user,"herererererer")
+        setUserlogined(true)
+    }else{
+        setUserlogined(false)
+    }
+    
+    if (initializing) setInitializing(false);
+  }
+
+  useEffect(() => {
+      if(!user){
+          setUserlogined(false)
+  
+      }
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+  if (initializing) return null;
+
+
     const num = 1;
     return (
         <>
@@ -112,7 +143,7 @@ export default function MyPageScreen({ navigation }) {
                     {userlogined === true ?
                         <View style={style.containerStatus}>
                             <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                                <Text style={{ fontSize: 17, fontFamily: "HelveticaNeue", fontFamily: 'NunitoSans-Bold', color: "white" }}>김현명님</Text>
+                                <Text style={{ fontSize: 17, fontFamily: "HelveticaNeue", fontFamily: 'NunitoSans-Bold', color: "white" }}>{user.displayName}님</Text>
                                 <TouchableOpacity onPress={() => navigation.navigate('Transaction')}>
                                     <Text style={{ textDecorationLine: 'underline', fontSize: 9, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>Transaction</Text>
                                 </TouchableOpacity>

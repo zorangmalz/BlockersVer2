@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -11,6 +11,7 @@ import {
     TouchableHighlight,
     Clipboard
 } from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 const style = StyleSheet.create({
     container: {
@@ -59,14 +60,26 @@ const style = StyleSheet.create({
 })
 
 export default function ProfileMain({ navigation }) {
-    const name = "김현명";
-    const birthday = "1995.12.28"
-    const phonenumber = "010-4337-6607"
+    const [initializing, setInitializing] = useState(true);
+    const [user, setUser] = useState();
+
     const [recommend, setRecommend] = useState(true);
     const [copiedText, setCopiedText] = useState('')
     const copyToClipboard = () => {
         Clipboard.setString('hello world')
     }
+    function onAuthStateChanged(user) {
+        setUser(user);
+        if (initializing) setInitializing(false);
+      }
+    
+      useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+      }, []);
+    
+      if (initializing) return null;
+    
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -83,7 +96,7 @@ export default function ProfileMain({ navigation }) {
                             }}>
                                 <Text style={style.profile}>LV5</Text>
                                 <View style={{ flexDirection: "row", alignItems: 'center' }}>
-                                    <Text style={style.profile}>Blockers01</Text>
+                        <Text style={style.profile}>{user.nickName}</Text>
                                     <TouchableOpacity onPress={() => navigation.navigate('닉네임 변경')}>
                                         <Image source={require('./icon/pen.png')} style={{ width: 18, height: 18, marginLeft: 8 }} />
                                     </TouchableOpacity>
@@ -94,18 +107,18 @@ export default function ProfileMain({ navigation }) {
                     <View style={{ borderWidth: 0.5, borderColor: '#dddddd', width: "90%", alignSelf: 'center' }} />
                     <View style={style.container}>
                         <Text style={style.title}>이름</Text>
-                        <Text style={style.item}>{name}</Text>
+                        <Text style={style.item}>{user.displayName}</Text>
                     </View>
                     <View style={{ borderWidth: 0.5, borderColor: '#dddddd', width: "90%", alignSelf: 'center' }} />
                     <View style={style.container}>
                         <Text style={style.title}>생년월일</Text>
-                        <Text style={style.item}>{birthday}</Text>
+                        <Text style={style.item}>{user.birth}</Text>
                     </View>
                     <View style={{ borderWidth: 0.5, borderColor: '#dddddd', width: "90%", alignSelf: 'center' }} />
                     <View style={[style.container, { marginRight: 32 }]}>
                         <Text style={style.title}>휴대폰번호</Text>
                         <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-between' }}>
-                            <Text style={style.item}>{phonenumber}</Text>
+                            <Text style={style.item}></Text>
                             <TouchableOpacity style={[style.buttonStyle, { backgroundColor: '#5cc27b', width: 54, height: 28 }]}>
                                 <Text style={{ fontSize: 12, color: 'white', fontFamily: 'NunitoSans-Bold'}}>재인증</Text>
                             </TouchableOpacity>

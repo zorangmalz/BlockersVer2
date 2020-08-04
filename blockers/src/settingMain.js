@@ -9,6 +9,7 @@ import {
     StyleSheet,
     Modal
 } from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 const setting = StyleSheet.create({
     mainText : {
@@ -24,6 +25,13 @@ const setting = StyleSheet.create({
 
 export default function SettingMain({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
+    function signout(){
+        auth()
+  .signOut()
+  .then(() => console.log('User signed out!'));
+  navigation.popToTop();
+                                    setModalVisible(false);
+    }
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -45,10 +53,10 @@ export default function SettingMain({ navigation }) {
                                 <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderLeftWidth: 1, borderRightWidth: 0.5, borderBottomLeftRadius: 10, borderTopWidth: 1 }} onPress={() => setModalVisible(!modalVisible)}>
                                     <Text>취소</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderRightWidth: 1, borderLeftWidth: 0.5, borderBottomRightRadius: 10, borderTopWidth: 1 }} onPress={() => {
-                                    navigation.navigate('HomeScreen');
-                                    setModalVisible(false);
-                                }}>
+                                <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderRightWidth: 1, borderLeftWidth: 0.5, borderBottomRightRadius: 10, borderTopWidth: 1 }} 
+                                onPress={
+                                    signout
+                                }>
                                     <Text>로그아웃</Text>
                                 </TouchableOpacity>
                             </View>
