@@ -71,7 +71,8 @@ export function WalletPassword ({navigation}) {
         email:mail,
         password:pass,
         sex:"",
-        nickname:""
+        nickname:"",
+        SmokingTime:""
       })
     }
 

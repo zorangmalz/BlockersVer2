@@ -13,6 +13,10 @@ import {
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import moment from "moment"
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
+
 const WIDTH = Dimensions.get('window').width;
 
 const date = StyleSheet.create({
@@ -54,6 +58,8 @@ const resource = StyleSheet.create({
 })
 
 export default function HomeScreen({navigation}) {
+    const ref=firestore().collection("UserInfo");
+
     const DATA=[];
     const num = 1;
     const [month, setMonth] = useState('00');
@@ -64,23 +70,63 @@ export default function HomeScreen({navigation}) {
     const [timestart, setTimestart] = useState(false);
     const [viewopacity, setViewOpacity] = useState(true);
     const [startButton, setStartButton] = useState(false);
-    const [time,settime]=useState()
-
+    const [user,setUser]=useState()
+    const [initializing, setInitializing] = useState(true);
+    const [fullTime,setfullTime]=useState()
     const onButtonStart = () => {
         setTimestart(true);
         console.log(timestart)
     }
 
+    async function updateInfo(code){
+        var a=moment().toArray()
+        await ref.doc(code).update({
+          SmokingTime:a
+        })
+      }
+
+      function onAuthStateChanged(user) {
+        setUser(user);
+       
+        if (initializing) setInitializing(false);
+      }
+    
+function timeCounter(seconds){
+    
+    setDay(parseInt(seconds/86400))
+    setHour(parseInt(seconds%86400/3600))
+    setMin(parseInt(seconds%86400%3600/60))
+    setSec(parseInt(seconds%86400%3600%60))
+}
     useEffect(()=>{
-settime(moment().format("h:mm:ss a"))
-        console.log(time)
-        console.log(moment("20111031","YYYYMMDD").fromNow());
+       auth().onAuthStateChanged(onAuthStateChanged);
+    //    console.log(user)
+
+   
+        if(user){
+        ref.doc(user.uid).get().then(documentSnapshot=>{
+            if(documentSnapshot.exists){
+            setfullTime(documentSnapshot.data().SmokingTime)
+        // console.log(fullTime)
+        }
+        })
+        }
+        if(fullTime){
+            setViewOpacity(false) 
+        }else(
+            setViewOpacity(true)
+        )
+        var a=moment().toArray()
+        var b=moment(fullTime)
+        var c=(b.diff(a,"seconds"))*-1
+        timeCounter(c)
+        const interval=setInterval(()=>{
+            
+        },1000)
+        return()=>clearInterval(interval)
+ 
     })
 
-    var days = 0;
-    var hours = 0;
-    var mins = 0;
-    var secs = 0;
     /** 
     useEffect(() => {
         let timer = setInterval(function () {
@@ -198,6 +244,7 @@ settime(moment().format("h:mm:ss a"))
                                 <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={() => {
                                     setViewOpacity(false);
                                     setTimestart(true);
+                                    updateInfo(user.uid)
                                     console.log(timestart);
                                 }}>
                                     <View style={{
