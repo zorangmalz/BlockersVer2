@@ -12,7 +12,7 @@ import {
     Dimensions
 } from 'react-native';
 import Swiper from 'react-native-swiper';
-
+import moment from "moment"
 const WIDTH = Dimensions.get('window').width;
 
 const date = StyleSheet.create({
@@ -64,11 +64,18 @@ export default function HomeScreen({navigation}) {
     const [timestart, setTimestart] = useState(false);
     const [viewopacity, setViewOpacity] = useState(true);
     const [startButton, setStartButton] = useState(false);
+    const [time,settime]=useState()
 
     const onButtonStart = () => {
         setTimestart(true);
         console.log(timestart)
     }
+
+    useEffect(()=>{
+settime(moment().format("h:mm:ss a"))
+        console.log(time)
+        console.log(moment("20111031","YYYYMMDD").fromNow());
+    })
 
     var days = 0;
     var hours = 0;

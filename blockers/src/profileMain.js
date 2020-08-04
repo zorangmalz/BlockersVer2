@@ -12,6 +12,7 @@ import {
     Clipboard
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 const style = StyleSheet.create({
     container: {
@@ -62,17 +63,31 @@ const style = StyleSheet.create({
 export default function ProfileMain({ navigation }) {
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
-
+    
+    const [userName, setuserName] =useState();
+    const [userBirth, setuserBirth]=useState();
+    const [userPhone, setuserPhone]=useState();
+    const [userNick, setuserNick]=useState();
+    
     const [recommend, setRecommend] = useState(true);
     const [copiedText, setCopiedText] = useState('')
+    const ref=firestore().collection("UserInfo");
+
+
     const copyToClipboard = () => {
         Clipboard.setString('hello world')
     }
-    function onAuthStateChanged(user) {
+    async function onAuthStateChanged(user) {
         setUser(user);
+        await ref.doc(user.uid).get().then(documentSnapshot=>{
+            if(documentSnapshot.exists){
+            setuserNick(documentSnapshot.data().nickname)
+            setuserBirth(documentSnapshot.data().birth)
+        }
+        })
         if (initializing) setInitializing(false);
       }
-    
+   
       useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
@@ -96,7 +111,7 @@ export default function ProfileMain({ navigation }) {
                             }}>
                                 <Text style={style.profile}>LV5</Text>
                                 <View style={{ flexDirection: "row", alignItems: 'center' }}>
-                        <Text style={style.profile}>{user.nickName}</Text>
+                        <Text style={style.profile}>{userNick}</Text>
                                     <TouchableOpacity onPress={() => navigation.navigate('닉네임 변경')}>
                                         <Image source={require('./icon/pen.png')} style={{ width: 18, height: 18, marginLeft: 8 }} />
                                     </TouchableOpacity>
@@ -112,7 +127,7 @@ export default function ProfileMain({ navigation }) {
                     <View style={{ borderWidth: 0.5, borderColor: '#dddddd', width: "90%", alignSelf: 'center' }} />
                     <View style={style.container}>
                         <Text style={style.title}>생년월일</Text>
-                        <Text style={style.item}>{user.birth}</Text>
+                        <Text style={style.item}>{userBirth}</Text>
                     </View>
                     <View style={{ borderWidth: 0.5, borderColor: '#dddddd', width: "90%", alignSelf: 'center' }} />
                     <View style={[style.container, { marginRight: 32 }]}>

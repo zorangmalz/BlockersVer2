@@ -13,6 +13,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin,statusCodes } from '@react-native-community/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import firestore from '@react-native-firebase/firestore';
 
 const login = StyleSheet.create({
     textinput: {
@@ -70,26 +71,35 @@ export default function LoginSignup({navigation}) {
     const [code, setCode] = useState('')
     const [passState,setpassState]=useState(false)
     const [texts,setTexts]=useState("")
-    
+  
 
-    function signup(){
-        auth()
-      .createUserWithEmailAndPassword(email,password)
-      .then(() => {
-        console.log('User account created & signed in!');
-        navigation.navigate("WalletPassword")
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
+    async function signup(){
+        try{
+        await ref.where("email","==",email).get().then(function(querySnapshot){
+            querySnapshot.forEach(function(doc){
+                alert("Email already existed. type another one")
+            })
+        })
+        } catch{
+            auth()
+            .createUserWithEmailAndPassword(email,password)
+            .then(() => {
+              console.log('User account created & signed in!');
+              navigation.navigate("WalletPassword")
+            })
+            .catch(error => {
+              if (error.code === 'auth/email-already-in-use') {
+                console.log('That email address is already in use!');
+              }
+          
+              if (error.code === 'auth/invalid-email') {
+                console.log('That email address is invalid!');
+              }
+          
+              console.error(error);
+            });
         }
-    
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
-    
-        console.error(error);
-      });
+        
     }
 
     async function onGoogleButtonPress() {

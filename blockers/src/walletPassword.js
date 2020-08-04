@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { NavigationContainer } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
 const password = StyleSheet.create({
     largeBox: {
@@ -58,6 +59,24 @@ export function WalletPassword ({navigation}) {
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
   
+
+    //create userInfo
+    const ref=firestore().collection("UserInfo");
+
+
+    async function addInfo(mail,code,pass){
+      await ref.doc(code).set({
+        birth:"",
+        cellphone:"",
+        email:mail,
+        password:pass,
+        sex:"",
+        nickname:""
+      })
+    }
+
+
+
     const OneImage = one === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
     const TwoImage = two === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
     const ThreeImage = three === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
@@ -67,8 +86,7 @@ export function WalletPassword ({navigation}) {
         if (initializing) setInitializing(false);
       }
       function move(){
-          user.password=passWord
-          console.log(user.password)
+        addInfo(user.email,user.uid,passWord)
           navigation.navigate("프로필 설정")
       }
     function pass(count, action) {

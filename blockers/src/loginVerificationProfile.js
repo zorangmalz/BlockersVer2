@@ -11,6 +11,7 @@ import {
     ScrollView
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 const login = StyleSheet.create({
     rule: {
         fontSize: 12,
@@ -48,13 +49,24 @@ export default function LoginVerificationProfile({ navigation }) {
     const repeatchange = () => setRepeat(!repeat);
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
+
+
+    const ref=firestore().collection("UserInfo");
+
+
+    async function updateInfo(code,bir,se,nick){
+      await ref.doc(code).update({
+        birth:bir,
+        sex:se,
+        nickname:nick
+      })
+    }
+
+
+
     function onAuthStateChanged(user) {
         setUser(user);
-        user.nickName=nickname
-        user.sex=gender
-        user.birth=birthday
-        console.log(user.nickName,user.birth)
-        console.log(user.password)
+       
         if (initializing) setInitializing(false);
       }
     
@@ -64,6 +76,14 @@ export default function LoginVerificationProfile({ navigation }) {
       }, []);
 
       if (initializing) return null;
+
+
+
+      function move(){
+        updateInfo(user.uid,birthday,gender,nickname)
+        navigation.navigate("Home")
+      }
+
 
     return (
         <>
@@ -95,7 +115,7 @@ export default function LoginVerificationProfile({ navigation }) {
                         에 동의하게 됩니다.(마케팅 정보 수신동의 포함)</Text>
                     </View>
                 </ScrollView>
-                <TouchableOpacity onPress={()=>navigation.navigate("Home")} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                <TouchableOpacity onPress={move} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>시작하기</Text>
                     </View>
