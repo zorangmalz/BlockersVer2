@@ -10,6 +10,7 @@ import {
     StyleSheet,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import { GoogleSignin,statusCodes } from '@react-native-community/google-signin';
 
 const login = StyleSheet.create({
     textinput: {
@@ -71,11 +72,12 @@ export default function LoginMain({navigation}) {
         const googleCredential = auth.GoogleAuthProvider.credential(idToken);
       
         // Sign-in the user with the credential
-        return auth().signInWithCredential(googleCredential);
+        auth().signInWithCredential(googleCredential);
+        navigation.navigate("Home")
       }
     useEffect(()=>{
         GoogleSignin.configure({
-            webClientId: '729209347504-uu57rajsk3d7j5utahu34d4d67tqcgdl.apps.googleusercontent.com',
+            webClientId: '729209347504-nffbltomro80vel8sgdp22h3s7bd34nf.apps.googleusercontent.com',
           });
     })
     function logins(){
@@ -117,7 +119,7 @@ export default function LoginMain({navigation}) {
                     <TouchableOpacity activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#4a67ad'}]}>
                         <Text style={login.buttontext}>Facebook으로 시작하기</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#c45545'}]}>
+                    <TouchableOpacity onPress={onGoogleButtonPress} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#c45545'}]}>
                         <Text style={login.buttontext}>Gmail로 시작하기</Text>
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#f6e14b'}]}>

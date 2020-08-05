@@ -98,8 +98,14 @@ function timeCounter(seconds){
     setMin(parseInt(seconds%86400%3600/60))
     setSec(parseInt(seconds%86400%3600%60))
 }
+
+useEffect(() => {
+    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; // unsubscribe on unmount
+  }, []);
+
     useEffect(()=>{
-       auth().onAuthStateChanged(onAuthStateChanged);
+    //    auth().onAuthStateChanged(onAuthStateChanged);
     //    console.log(user)
 
    
@@ -107,6 +113,7 @@ function timeCounter(seconds){
         ref.doc(user.uid).get().then(documentSnapshot=>{
             if(documentSnapshot.exists){
             setfullTime(documentSnapshot.data().SmokingTime)
+            setViewOpacity(false)
         // console.log(fullTime)
         }
         })
@@ -126,42 +133,6 @@ function timeCounter(seconds){
         return()=>clearInterval(interval)
  
     })
-
-    /** 
-    useEffect(() => {
-        let timer = setInterval(function () {
-                console.log("참")
-                secs = secs + 1;
-                if (secs === 59) {
-                    mins = mins + 1;
-                    secs = 0;
-                }
-                if (mins === 60) {
-                    hours = hours + 1;
-                    mins = 0;
-                }
-                if (hours === 24) {
-                    days = days + 1;
-                    hours = 0;
-                }
-                setDay(days);
-                setHour(hours);
-                setMin(mins);
-                setSec(days);
-            
-            if (timestart === false) {
-                clearInterval(timer);
-                setDay(0);
-                setHour(0);
-                setMin(0);
-                setSec(0);
-            }
-        }, 1000);
-        return () => {
-
-        }
-    }, [timestart]);
-    */
 
     const onButtonClear = () => {
         setTimestart(false);

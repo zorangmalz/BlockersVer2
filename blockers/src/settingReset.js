@@ -9,6 +9,10 @@ import {
     TouchableOpacity,
     Modal,
 } from 'react-native';
+import { set } from 'react-native-reanimated';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 
 const setting = StyleSheet.create({
     largeText: {
@@ -57,6 +61,9 @@ export default function SettingReset({ navigation }) {
     const [habit, setHabit] = useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+    const [user, setUser] = useState();
+    const [uid,setuid]=useState();
+    const [initializing, setInitializing] = useState(true);
     var count = 4;
 
     const pushstress = () => {
@@ -90,6 +97,29 @@ export default function SettingReset({ navigation }) {
     const filterhabit = () => {
         setSelect(select.filter(info => info !== '습관'))
     }
+
+    function onAuthStateChanged(users) {
+        setUser(users);
+        setuid(user.uid)
+        if (initializing) setInitializing(false);
+      }
+      const ref=firestore().collection("UserInfo");
+
+    async function reset(){
+        setModalVisible(false)
+        if(user){
+            await ref.doc(uid).update({
+                SmokingTime:""
+              })
+        }
+        navigation.navigate("ResetComplete")
+    }
+    useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+      }, []);
+    
+      if (initializing) return null;
 
     useEffect(() => {
         stress === true ? count = count + 1 : count = count - 1;
@@ -143,9 +173,10 @@ export default function SettingReset({ navigation }) {
                                 <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderLeftWidth: 1, borderRightWidth: 0.5, borderBottomLeftRadius: 10, borderTopWidth: 1 }} onPress={() => setModalVisible(!modalVisible)}>
                                     <Text>취소</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderRightWidth: 1, borderLeftWidth: 0.5, borderBottomRightRadius: 10, borderTopWidth: 1 }} onPress={() => {navigation.navigate('ResetComplete');
-                                    setModalVisible(false);
-                                }}>
+                                <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderRightWidth: 1, borderLeftWidth: 0.5, borderBottomRightRadius: 10, borderTopWidth: 1 }} 
+                                onPress={
+                                    reset
+                                }>
                                     <Text>초기화</Text>
                                 </TouchableOpacity>
                             </View>
