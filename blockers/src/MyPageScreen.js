@@ -29,11 +29,11 @@ const style = StyleSheet.create({
         fontFamily: 'NunitoSans-Regular'
     },
     containerStatus: {
-        padding: 16,
         marginTop: 20,
-        backgroundColor: "#333953",
-        height: 140,
+        backgroundColor: "#85D29C",
+        height: 148,
         borderRadius: 10,
+        justifyContent: 'space-between'
     },
     box: {
         marginTop: 10,
@@ -57,42 +57,43 @@ const style = StyleSheet.create({
     buttonStyle: {
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 10,
-        fontFamily: 'NunitoSans-Regular'
+        fontFamily: 'NunitoSans-Regular',
+        width: "50%",
+        height: 43
     }
 })
 
 export default function MyPageScreen({ navigation }) {
     const [userlogined, setUserlogined] = useState(false);
     const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState("");
+    const [user, setUser] = useState("");
 
-  function onAuthStateChanged(user) {
-    setUser(user);
-    if (user){
-        const sexs="boy"
-        user.sex=sexs
-        console.log(user.sex)
-        console.log(user.password)
-        console.log(user.birth)
-        console.log(user,"herererererer")
-        setUserlogined(true)
-    }else{
-        setUserlogined(false)
+    function onAuthStateChanged(user) {
+        setUser(user);
+        if (user) {
+            const sexs = "boy"
+            user.sex = sexs
+            console.log(user.sex)
+            console.log(user.password)
+            console.log(user.birth)
+            console.log(user, "herererererer")
+            setUserlogined(true)
+        } else {
+            setUserlogined(false)
+        }
+
+        if (initializing) setInitializing(false);
     }
-    
-    if (initializing) setInitializing(false);
-  }
 
-  useEffect(() => {
-      if(!user){
-          setUserlogined(false)
-  
-      }
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, []);
-  if (initializing) return null;
+    useEffect(() => {
+        if (!user) {
+            setUserlogined(false)
+
+        }
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+    }, []);
+    if (initializing) return null;
 
 
     const num = 1;
@@ -130,7 +131,7 @@ export default function MyPageScreen({ navigation }) {
                                         text: '로그인', onPress: () => navigation.navigate('회원가입')
                                     }
                                 ]
-                            )
+                                )
                         }
                         }>
                             <Image source={require('./icon/setting.png')} />
@@ -142,18 +143,20 @@ export default function MyPageScreen({ navigation }) {
                     </View>
                     {userlogined === true ?
                         <View style={style.containerStatus}>
-                            <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                                <Text style={{ fontSize: 17, fontFamily: "HelveticaNeue", fontFamily: 'NunitoSans-Bold', color: "white" }}>{user.displayName}님</Text>
-                                <TouchableOpacity onPress={() => navigation.navigate('Transaction')}>
-                                    <Text style={{ textDecorationLine: 'underline', fontSize: 9, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>Transaction</Text>
-                                </TouchableOpacity>
+                            <View style={{ marginTop: 16, marginLeft: 16, marginRight: 16 }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', }}>
+                                    <Text style={{ fontSize: 16, fontFamily: "HelveticaNeue", fontFamily: 'NunitoSans-Bold', color: "white" }}>김현명님</Text>
+                                    <TouchableOpacity onPress={() => navigation.navigate('Transaction')}>
+                                        <Text style={{ textDecorationLine: 'underline', fontSize: 9, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>Transaction</Text>
+                                    </TouchableOpacity>
+                                </View>
+                                <Text style={{ marginTop: 5, fontSize: 24, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>100,000 Block</Text>
                             </View>
-                            <Text style={{ marginTop: 16, fontSize: 20, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>100,000 Block</Text>
-                            <View style={{ flexDirection: "row", marginTop: 2, justifyContent: 'flex-end', alignItems: 'center' }}>
-                                <TouchableOpacity onPress={() => navigation.navigate('WalletWithDrawal')} style={[style.buttonStyle, { backgroundColor: 'white', width: 54, height: 32 }]}>
-                                    <Text style={{ fontSize: 12, color: 'black', fontFamily: 'NunitoSans-Bold' }}>출금</Text>
+                            <View style={{ flexDirection: "row", marginTop: 2, justifyContent: 'flex-end', alignItems: 'center', }}>
+                                <TouchableOpacity onPress={() => navigation.navigate('WalletWithDrawal')} style={[style.buttonStyle, { backgroundColor: '#f0f0f0', borderBottomLeftRadius: 10 }]}>
+                                    <Text style={{ fontSize: 12, color: 'black', opacity: 0.6, fontFamily: 'NunitoSans-Bold' }}>출금</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('입금')} style={[style.buttonStyle, { backgroundColor: '#5cc27b', width: 54, height: 32, marginLeft: 8 }]}>
+                                <TouchableOpacity onPress={() => navigation.navigate('입금')} style={[style.buttonStyle, { backgroundColor: '#5cc27b', borderBottomRightRadius: 10 }]}>
                                     <Text style={{ fontSize: 12, color: 'white', fontFamily: 'NunitoSans-Bold' }}>충전</Text>
                                 </TouchableOpacity>
                             </View>
