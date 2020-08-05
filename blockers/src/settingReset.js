@@ -100,7 +100,7 @@ export default function SettingReset({ navigation }) {
 
     function onAuthStateChanged(users) {
         setUser(users);
-        setuid(user.uid)
+        
         if (initializing) setInitializing(false);
       }
       const ref=firestore().collection("UserInfo");

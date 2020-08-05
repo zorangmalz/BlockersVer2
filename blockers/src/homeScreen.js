@@ -103,13 +103,8 @@ useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
-
-    useEffect(()=>{
-    //    auth().onAuthStateChanged(onAuthStateChanged);
-    //    console.log(user)
-
-   
-        if(user){
+useEffect(()=>{
+    if(user){
         ref.doc(user.uid).get().then(documentSnapshot=>{
             if(documentSnapshot.exists){
             setfullTime(documentSnapshot.data().SmokingTime)
@@ -123,16 +118,23 @@ useEffect(() => {
         }else(
             setViewOpacity(true)
         )
-        var a=moment().toArray()
+},[user])
+    useEffect(()=>{
+    //    auth().onAuthStateChanged(onAuthStateChanged);
+    //    console.log(user)
+        
         var b=moment(fullTime)
-        var c=(b.diff(a,"seconds"))*-1
-        timeCounter(c)
+        console.log(fullTime)
         const interval=setInterval(()=>{
             
+            var a=moment().toArray()
+            
+            var c=(b.diff(a,"seconds"))*-1
+            timeCounter(c)
         },1000)
         return()=>clearInterval(interval)
  
-    })
+    },[fullTime])
 
     const onButtonClear = () => {
         setTimestart(false);
