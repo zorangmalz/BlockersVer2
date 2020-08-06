@@ -108,23 +108,24 @@ useEffect(()=>{
         ref.doc(user.uid).get().then(documentSnapshot=>{
             if(documentSnapshot.exists){
             setfullTime(documentSnapshot.data().SmokingTime)
-            setViewOpacity(false)
+            if(fullTime===""){
+                setViewOpacity(true) 
+                
+            }else{
+                
+                setViewOpacity(false)
+            }
         // console.log(fullTime)
         }
         })
-        }
-        if(fullTime){
-            setViewOpacity(false) 
-        }else(
-            setViewOpacity(true)
-        )
-},[user])
+        }      
+},[])
     useEffect(()=>{
     //    auth().onAuthStateChanged(onAuthStateChanged);
     //    console.log(user)
         
         var b=moment(fullTime)
-        console.log(fullTime)
+        
         const interval=setInterval(()=>{
             
             var a=moment().toArray()
@@ -167,7 +168,7 @@ useEffect(()=>{
                     </View>
                 </View>
                 <ScrollView style={{marginBottom: 70}}>
-                    <Swiper dotStyle={{ borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 225 }}>
+                    <Swiper dotStyle={{borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 225 }}>
                         {startButton ?
                             <View style={{marginTop: 8, width: "100%"}}>
                                 <Text style={{alignSelf:'center', fontSize: 16, fontFamily: 'NunitoSans-Bold', marginBottom: 16}}>Verification Period({month}/{day}~{month}/{day+2})</Text>
