@@ -128,7 +128,12 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-
+    android {
+        dexOptions {
+            incremental true
+            javaMaxHeapSize "2048M"
+        }
+    }
     defaultConfig {
         applicationId "com.blockers"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -195,7 +200,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.3.1'
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation project(':react-native-image-picker')
-
+    implementation 'com.android.support:multidex:1.0.3'
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'
     }
