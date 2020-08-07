@@ -109,10 +109,14 @@ useEffect(() => {
 useEffect(()=>{
     if(user){
         ref.doc(user.uid).get().then(documentSnapshot=>{
-            if(documentSnapshot.exists){
+            
+            if(!documentSnapshot.data().SmokingTime){
+                setcheck(false)
+            }else{
+            
             setfullTime(documentSnapshot.data().SmokingTime)
             setcheck(true)
-           
+           console.log(check,"check")
         // console.log(fullTime)
         }
         })
