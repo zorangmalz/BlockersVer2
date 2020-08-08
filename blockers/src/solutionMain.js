@@ -13,7 +13,7 @@ import {
 
 const welcome = StyleSheet.create({
     box: {
-        backgroundColor: '#000000',
+        backgroundColor: '#333953',
         opacity: 0.95,
         width: "100%",
         height: 180,
@@ -45,7 +45,7 @@ const welcome = StyleSheet.create({
     }
 })
 
-export default function WelcomeScreen({navigation}) {
+export default function SolutionMain({navigation}) {
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -62,11 +62,11 @@ export default function WelcomeScreen({navigation}) {
                     </TouchableOpacity>
                     <Text style={[welcome.largeText, { alignSelf: 'center', paddingTop: 8 }]}>Welcome Blockers</Text>
                     <View style={welcome.box}>
-                        <View style={{ width: 115 }}>
+                        <View style={{ width: 120 }}>
                             <Text style={welcome.smallText}>Blockers</Text>
                             <Text style={welcome.smallText}>평균 성공률</Text>
                         </View>
-                        <View style={{ justifyContent: 'center', alignItems: 'center', width: 115 }}>
+                        <View style={{ justifyContent: 'center', alignItems: 'center', width: 120 }}>
                             <Text style={welcome.smallText}>Blockers</Text>
                             <Text style={welcome.smallText}>평균 상금</Text>
                             <Image style={{ marginTop: 16, marginBottom: 5 }} source={require('./icon/money.png')} />
@@ -84,7 +84,7 @@ export default function WelcomeScreen({navigation}) {
                         alignSelf: 'center', 
                         marginTop: 45 
                     }}
-                        onPress={()=>navigation.navigate('SolutionScreen')}
+                        onPress={()=>navigation.navigate('SolutionSmoke')}
                     >
                         <View style={{ width: 150, height: 50, borderRadius: 28, backgroundColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ color: '#FFFFFF', fontSize: 16, fontFamily: 'NunitoSans-Bold', textAlign: 'center' }}>시작하기</Text>
