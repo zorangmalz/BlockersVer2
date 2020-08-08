@@ -9,7 +9,7 @@ import {
     TouchableOpacity,
     Modal,
 } from 'react-native';
-import { set } from 'react-native-reanimated';
+
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
@@ -65,6 +65,7 @@ export default function SettingReset({ navigation }) {
     const [uid,setuid]=useState();
     const [initializing, setInitializing] = useState(true);
     var count = 4;
+    const ref=firestore().collection("UserInfo");
 
     const pushstress = () => {
         setSelect(select.concat('스트레스'))
@@ -97,30 +98,15 @@ export default function SettingReset({ navigation }) {
     const filterhabit = () => {
         setSelect(select.filter(info => info !== '습관'))
     }
-
-    function onAuthStateChanged(users) {
-        setUser(users);
-        
-        if (initializing) setInitializing(false);
-      }
-      const ref=firestore().collection("UserInfo");
-
     async function reset(){
         setModalVisible(false)
         if(user){
-            await ref.doc(uid).update({
+            await ref.doc(user.uid).update({
                 SmokingTime:""
               })
         }
         navigation.navigate("ResetComplete")
     }
-    useEffect(() => {
-        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-        return subscriber; // unsubscribe on unmount
-      }, []);
-    
-      if (initializing) return null;
-
     useEffect(() => {
         stress === true ? count = count + 1 : count = count - 1;
         symptom === true ? count = count + 1 : count = count - 1;
@@ -140,6 +126,18 @@ export default function SettingReset({ navigation }) {
         }
     }, [stress, symptom, environ, habit]);
 
+    function onAuthStateChanged(users) {
+        setUser(users);
+        
+        if (initializing) setInitializing(false);
+      }
+      
+
+    useEffect(() => {
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+        return subscriber; // unsubscribe on unmount
+      }, []);
+      if (initializing) return null;
     return (
         <>
             <StatusBar barStyle="light-content" />

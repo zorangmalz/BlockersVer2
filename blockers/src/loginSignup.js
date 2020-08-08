@@ -116,7 +116,7 @@ export default function LoginSignup({navigation}) {
    
       async function onFacebookButtonPress() {
         
-        const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+        const result = await LoginManager.logInWithPermissions(['public_profile', 'email','user_friends']);
       
         if (result.isCancelled) {
           throw 'User cancelled the login process';

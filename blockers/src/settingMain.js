@@ -10,6 +10,7 @@ import {
     Modal
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import { LoginManager } from 'react-native-fbsdk'
 
 const setting = StyleSheet.create({
     mainText : {
@@ -29,6 +30,8 @@ export default function SettingMain({ navigation }) {
         auth()
   .signOut()
   .then(() => console.log('User signed out!'));
+  LoginManager.logOut()
+
   navigation.popToTop();
                                     setModalVisible(false);
     }

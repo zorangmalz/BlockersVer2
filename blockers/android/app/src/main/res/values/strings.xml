@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">blockers</string>
-    <string name="facebook_app_id">296710414890989</string> <string name="fb_login_protocol_scheme">fb296710414890989</string>
+    <string name="facebook_app_id">2707757942871429</string> <string name="fb_login_protocol_scheme">fb2707757942871429</string>
+
 
 </resources>

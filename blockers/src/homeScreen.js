@@ -15,6 +15,7 @@ import Swiper from 'react-native-swiper';
 import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { useScreens } from 'react-native-screens';
 
 
 const WIDTH = Dimensions.get('window').width;
@@ -65,7 +66,7 @@ export default function HomeScreen({navigation}) {
     const [month, setMonth] = useState('00');
     const [day, setDay] = useState();
     const [hour, setHour] = useState();
-    const [min, setMin] = useState();
+    const [minu, setMinu] = useState();
     const [sec, setSec] = useState();
     const [timestart, setTimestart] = useState(false);
     const [viewopacity, setViewOpacity] = useState(true);
@@ -73,6 +74,7 @@ export default function HomeScreen({navigation}) {
     const [user,setUser]=useState()
     const [initializing, setInitializing] = useState(true);
     const [fullTime,setfullTime]=useState()
+    const [check,setcheck]=useState(false)
     const onButtonStart = () => {
         setTimestart(true);
         console.log(timestart)
@@ -95,46 +97,56 @@ function timeCounter(seconds){
     
     setDay(parseInt(seconds/86400))
     setHour(parseInt(seconds%86400/3600))
-    setMin(parseInt(seconds%86400%3600/60))
+    setMinu(parseInt(seconds%86400%3600/60))
     setSec(parseInt(seconds%86400%3600%60))
 }
 
 useEffect(() => {
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
-  }, []);
+  }, [user]);
+  
 useEffect(()=>{
     if(user){
         ref.doc(user.uid).get().then(documentSnapshot=>{
-            if(documentSnapshot.exists){
+            
+            if(!documentSnapshot.data().SmokingTime){
+                setcheck(false)
+            }else{
+            
             setfullTime(documentSnapshot.data().SmokingTime)
-            setViewOpacity(false)
+            setcheck(true)
+           console.log(check,"check")
         // console.log(fullTime)
         }
         })
-        }
-        if(fullTime){
-            setViewOpacity(false) 
-        }else(
-            setViewOpacity(true)
-        )
-},[user])
+        } 
+        if(!check){
+            setViewOpacity(true) 
+            console.log("wow no data here")
+        }else{
+            console.log("now please start the game")
+            console.log(fullTime)
+            setViewOpacity(false)
+        }     
+},[user,viewopacity,check])
     useEffect(()=>{
     //    auth().onAuthStateChanged(onAuthStateChanged);
     //    console.log(user)
-        
-        var b=moment(fullTime)
-        console.log(fullTime)
-        const interval=setInterval(()=>{
-            
-            var a=moment().toArray()
-            
-            var c=(b.diff(a,"seconds"))*-1
-            timeCounter(c)
-        },1000)
-        return()=>clearInterval(interval)
  
-    },[fullTime])
+    var b=moment(fullTime)
+    
+    const interval=setInterval(()=>{
+            
+        var a=moment().toArray()
+        
+        
+        var c=(b.diff(a,"seconds"))*-1
+        
+        timeCounter(c)
+    },1000)
+    return()=>clearInterval(interval) 
+    },[fullTime,user])
 
     const onButtonClear = () => {
         setTimestart(false);
@@ -167,51 +179,8 @@ useEffect(()=>{
                     </View>
                 </View>
                 <ScrollView style={{marginBottom: 70}}>
-                    <Swiper dotStyle={{ borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 225 }}>
-                        {startButton ?
-                            <View style={{marginTop: 8, width: "100%"}}>
-                                <Text style={{alignSelf:'center', fontSize: 16, fontFamily: 'NunitoSans-Bold', marginBottom: 16}}>Verification Period({month}/{day}~{month}/{day+2})</Text>
-                                <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
-                                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                        <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
-                                            <Image resizeMode="contain" source={require('./icon/checkred.png')} />
-                                        </View>
-                                        <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>1st</Text>
-                                    </View>
-                                    <View style={{ justifyContent: 'center', alignItems: 'center'}}>
-                                        <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
-                                            <Image resizeMode="contain" source={require('./icon/checkred.png')} />
-                                        </View>
-                                        <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>2nd</Text>
-                                    </View>
-                                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                        <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B' }} />
-                                        <Text style={{marginTop:4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>3rd</Text>
-                                    </View>
-                                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                                        <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B' }} />
-                                        <Text style={{marginTop:4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>Final</Text>
-                                    </View>
-                                </View>
-                                <TouchableOpacity style={{ marginTop: 8, alignSelf: 'center'}} onPress={()=>{navigation.navigate('Verification')}}>
-                                    <View style={{ backgroundColor: '#5CC27B', width: 100, borderRadius: 20, height: 35, alignItems: 'center', justifyContent: 'center' }}>
-                                        <Text style={{ color: '#ffffff', fontFamily: 'NunitoSans-Bold'}}>인증하기</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                            :
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 33 }}>
-                                <Text style={{ fontSize: 24, textAlign: 'center' }}>
-                                    <Text style={{ fontFamily: 'NunitoSans-ExtraBold', color: '#000000', opacity: 0.8 }}>Start your Smoking Cessation With </Text>
-                                    <Text style={{ fontFamily: 'NunitoSans-ExtraBold', color: '#5CC27B' }}>Blockers</Text>
-                                </Text>
-                                <TouchableOpacity style={{ marginTop: 32 }} onPress={() => setStartButton(true)}>
-                                    <View style={{ backgroundColor: '#5CC27B', width: 100, borderRadius: 18, height: 35, alignItems: 'center', justifyContent: 'center' }}>
-                                        <Text style={{ color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>시작하기</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                        }
+                    <Swiper dotStyle={{borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 225 }}>
+                        
                         <View>
                             {viewopacity === true ?
                                 <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={() => {
@@ -262,7 +231,7 @@ useEffect(()=>{
                                             <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
                                         </View>
                                         <View style={date.viewcontainer}>
-                                            <Text style={date.largedate}>{min}</Text>
+                                            <Text style={date.largedate}>{minu}</Text>
                                             <Text style={date.smalldate}>minutes</Text>
                                         </View>
                                         <View style={{ justifyContent: 'space-evenly', alignItems: 'center', height: 64, paddingTop: 16, paddingBottom: 16 }}>
@@ -287,6 +256,50 @@ useEffect(()=>{
                                 </View>
                             </View>
                         </View>
+                        {startButton ?
+                            <View style={{marginTop: 8, width: "100%"}}>
+                                <Text style={{alignSelf:'center', fontSize: 16, fontFamily: 'NunitoSans-Bold', marginBottom: 16}}>Verification Period({month}/{day}~{month}/{day+2})</Text>
+                                <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
+                                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                        <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image resizeMode="contain" source={require('./icon/checkred.png')} />
+                                        </View>
+                                        <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>1st</Text>
+                                    </View>
+                                    <View style={{ justifyContent: 'center', alignItems: 'center'}}>
+                                        <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
+                                            <Image resizeMode="contain" source={require('./icon/checkred.png')} />
+                                        </View>
+                                        <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>2nd</Text>
+                                    </View>
+                                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                        <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B' }} />
+                                        <Text style={{marginTop:4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>3rd</Text>
+                                    </View>
+                                    <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                                        <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B' }} />
+                                        <Text style={{marginTop:4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>Final</Text>
+                                    </View>
+                                </View>
+                                <TouchableOpacity style={{ marginTop: 8, alignSelf: 'center'}} onPress={()=>{navigation.navigate('Verification')}}>
+                                    <View style={{ backgroundColor: '#5CC27B', width: 100, borderRadius: 20, height: 35, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Text style={{ color: '#ffffff', fontFamily: 'NunitoSans-Bold'}}>인증하기</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                            :
+                            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 33 }}>
+                                <Text style={{ fontSize: 24, textAlign: 'center' }}>
+                                    <Text style={{ fontFamily: 'NunitoSans-ExtraBold', color: '#000000', opacity: 0.8 }}>Start your Smoking Cessation With </Text>
+                                    <Text style={{ fontFamily: 'NunitoSans-ExtraBold', color: '#5CC27B' }}>Blockers</Text>
+                                </Text>
+                                <TouchableOpacity style={{ marginTop: 32 }} onPress={() => setStartButton(true)}>
+                                    <View style={{ backgroundColor: '#5CC27B', width: 100, borderRadius: 18, height: 35, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Text style={{ color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>시작하기</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        }
                     </Swiper>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', marginTop: 16, paddingLeft: "12%" }}>
                         <Image style={{width: 15, height: 20, marginRight: 8}} resizeMode="stretch" source={require('./icon/lightbulb.png')} />
