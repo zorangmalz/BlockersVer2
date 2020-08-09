@@ -72,11 +72,6 @@ export default function MyPageScreen({ navigation }) {
         setUser(user);
         if (user) {
             const sexs = "boy"
-            user.sex = sexs
-            console.log(user.sex)
-            console.log(user.password)
-            console.log(user.birth)
-            console.log(user, "herererererer")
             setUserlogined(true)
         } else {
             setUserlogined(false)
@@ -145,7 +140,7 @@ export default function MyPageScreen({ navigation }) {
                         <View style={style.containerStatus}>
                             <View style={{ marginTop: 16, marginLeft: 16, marginRight: 16 }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', }}>
-                                    <Text style={{ fontSize: 16, fontFamily: "HelveticaNeue", fontFamily: 'NunitoSans-Bold', color: "white" }}>김현명님</Text>
+                    <Text style={{ fontSize: 16, fontFamily: "HelveticaNeue", fontFamily: 'NunitoSans-Bold', color: "white" }}>{user.displayName}님</Text>
                                     <TouchableOpacity onPress={() => navigation.navigate('Transaction')}>
                                         <Text style={{ textDecorationLine: 'underline', fontSize: 9, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>Transaction</Text>
                                     </TouchableOpacity>
