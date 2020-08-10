@@ -87,12 +87,6 @@ export default function HomeScreen({navigation}) {
         })
       }
 
-      function onAuthStateChanged(user) {
-        setUser(user);
-       
-        if (initializing) setInitializing(false);
-      }
-    
 function timeCounter(seconds){
     
     setDay(parseInt(seconds/86400))
@@ -101,11 +95,11 @@ function timeCounter(seconds){
     setSec(parseInt(seconds%86400%3600%60))
 }
 
-useEffect(() => {
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
-  }, [user]);
-  
+useEffect(()=>{
+    auth().onAuthStateChanged(userAuth=>{
+        setUser(userAuth)})
+        
+},[])
 useEffect(()=>{
     if(user){
         ref.doc(user.uid).get().then(documentSnapshot=>{
@@ -116,17 +110,14 @@ useEffect(()=>{
             
             setfullTime(documentSnapshot.data().SmokingTime)
             setcheck(true)
-           console.log(check,"check")
+           
         // console.log(fullTime)
         }
         })
         } 
         if(!check){
             setViewOpacity(true) 
-            console.log("wow no data here")
         }else{
-            console.log("now please start the game")
-            console.log(fullTime)
             setViewOpacity(false)
         }     
 },[user,viewopacity,check])

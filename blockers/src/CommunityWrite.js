@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     View,
     Text,
@@ -13,6 +13,10 @@ import {
     Alert
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import moment from "moment"
+
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -58,6 +62,7 @@ const community = StyleSheet.create({
 })
 
 export default function CommunityWrite ({navigation}) {
+    const ref=firestore().collection("Community1");
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [imageOne, setImageOne] = useState(undefined);
@@ -66,7 +71,26 @@ export default function CommunityWrite ({navigation}) {
     const [pictwo, setPictwo] = useState(true);
     const [imageThree, setImageThree] = useState(undefined);
     const [picthree, setPicthree] = useState(true);
+    const [user,setuser]=useState()
+    useEffect(()=>{
+        auth().onAuthStateChanged(userAuth=>{
+            setuser(userAuth)
+            console.log(user)
+        })
+    },[])
 
+    async function writePost(){
+        var a=moment().toArray()
+
+        await ref.doc(title).set({
+            context:content,
+            like:0,
+            title:title,
+            writerUid:user.uid,
+            time:a
+        })
+        navigation.goBack()
+    }
     const options = {
         title: '사진가져오기',
         customButtons: [
@@ -123,7 +147,7 @@ export default function CommunityWrite ({navigation}) {
                     <TouchableOpacity style={community.buttonbox}
                         onPress={() => {
                             (title.length > 0) && (content.length > 0) ?
-                                navigation.navigate('CommunityScreen')
+                                writePost()
                                 :
                                 Alert.alert(
                                     '작성 오류',

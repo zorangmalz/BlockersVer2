@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -9,8 +9,12 @@ import {
     TextInput,
     Image,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    ActivityIndicator, FlatList
 } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 
 const topposition = Dimensions.get('window').width;
 
@@ -20,7 +24,7 @@ const community = StyleSheet.create({
         paddingTop: 16,
         paddingLeft: 16,
         paddingBottom: 16,
-        borderTopWidth: 1,
+        
         borderBottomWidth: 1,
         borderColor: "#E5E5E5",
     },
@@ -72,10 +76,32 @@ const community = StyleSheet.create({
 
 export default function CommunityClick({ navigation }) {
     const [search, setSearch] = useState('');
-    var thumbnum = 10,
-        replynum = 5;
+    const ref = firestore().collection('Community1');
+    const [ loading, setLoading ] = useState(true);
+    const [ items, setItems ] = useState([]);
+    // ...
     
-    var content = "흡연 10년차 입니다.... 저번주부터 금연을…."
+    useEffect(() => {
+      return ref.onSnapshot(querySnapshot => {
+        const list = [];
+        querySnapshot.forEach(doc => {
+          
+          list.push({
+            title: doc.data().title,
+            time:doc.data().time,
+            context:doc.data().context,
+            like:doc.data().like,
+
+          });
+        });
+  
+        setItems(list);
+  
+        if (loading) {
+          setLoading(false);
+        }
+      });
+    }, []);
     
     return (
         <>
@@ -94,20 +120,30 @@ export default function CommunityClick({ navigation }) {
                         <TextInput value={search} onChangeText={text => setSearch(text)} placeholder="검색어를 입력하세요" style={community.textinput} />
                         <Image style={{width: 24, height: 24}} source={require('./icon/search.png')} resizeMode="contain" />
                     </View>
-                    <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost')} style={[community.board, { marginTop: 2 }]}>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                    <FlatList 
+                    
+                    data={items}
+                    renderItem={({item})=>(
+                        <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost')} >
+                        <View style={community.board}>
+<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <View style={community.circle} />
-                            <Text style={community.title}>금연하기가 너무 힘드네요</Text>
+                    <Text style={community.title}>{item.title}</Text>
                         </View>
-                        <Text style={community.content}>{content}</Text>
+                        <Text style={community.content}>{item.context}</Text>
                         <View style={community.lowerbox}>
                             <Text style={[community.timethumbreply, { color: '#707070' }]}>방금전</Text>
                             <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: "33%" }]} source={require("./icon/emptythumb.png")}></Image>
-                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{thumbnum}</Text>
+                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
                             <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 16 }]} source={require("./icon/reply.png")}></Image>
-                            <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{replynum}</Text>
+                            <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>65/</Text>
                         </View>
-                    </TouchableOpacity>
+                        </View>
+                        </TouchableOpacity>
+                    )}
+                    />
+                        
+                    
                 </ScrollView>
                 <TouchableOpacity 
                     onPress={() => navigation.navigate('작성하기')}
