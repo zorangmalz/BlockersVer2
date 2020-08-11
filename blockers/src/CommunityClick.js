@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-
+import moment from "moment"
 
 const topposition = Dimensions.get('window').width;
 
@@ -79,24 +79,43 @@ export default function CommunityClick({ navigation }) {
     const ref = firestore().collection('Community1');
     const [ loading, setLoading ] = useState(true);
     const [ items, setItems ] = useState([]);
+    const[timer,settimer]=useState();
     // ...
-    
+   
     useEffect(() => {
       return ref.onSnapshot(querySnapshot => {
         const list = [];
+        var a=moment().toArray()
+        if (a[1]===12){
+            a[1]=1
+        }else{
+            a[1]=a[1]+1
+        }
+        
         querySnapshot.forEach(doc => {
-          
+            
+          if (a[0]===doc.data().fullTime[0]&&a[1]===doc.data().fullTime[1]&&a[2]===doc.data().fullTime[2]){
           list.push({
             title: doc.data().title,
             time:doc.data().time,
             context:doc.data().context,
             like:doc.data().like,
-
-          });
+            docname:doc.data().docName
+            
+          });}
+          else{
+            list.push({
+                title: doc.data().title,
+                time:doc.data().day,
+                context:doc.data().context,
+                like:doc.data().like,
+                docname:doc.data().docName
+              });}
+          
         });
   
         setItems(list);
-  
+     
         if (loading) {
           setLoading(false);
         }
@@ -123,8 +142,9 @@ export default function CommunityClick({ navigation }) {
                     <FlatList 
                     
                     data={items}
+                    inverted={true}
                     renderItem={({item})=>(
-                        <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost')} >
+                        <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost',{docID:item.docname,ID:item.docname})} >
                         <View style={community.board}>
 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                             <View style={community.circle} />
@@ -132,7 +152,7 @@ export default function CommunityClick({ navigation }) {
                         </View>
                         <Text style={community.content}>{item.context}</Text>
                         <View style={community.lowerbox}>
-                            <Text style={[community.timethumbreply, { color: '#707070' }]}>방금전</Text>
+                    <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
                             <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: "33%" }]} source={require("./icon/emptythumb.png")}></Image>
                             <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
                             <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 16 }]} source={require("./icon/reply.png")}></Image>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -11,8 +11,12 @@ import {
     Keyboard,
     Dimensions,
     TouchableOpacity,
-    Alert,
+    Alert, FlatList,
 } from 'react-native';
+
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import moment from "moment"
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -67,15 +71,25 @@ const community = StyleSheet.create({
         height: 15,
     },
 })
-
-export default function CommunityOtherPost({ navigation }) {
-    const title = "브로리 대학원 기원 1일차";
-    const author = "브로리"
-    const creacteddate = '2020.07.01';
-    const content = "브로리 대학원 가즈아아아아아아";
+export default function CommunityOtherPost({route, navigation }) {
+    // const title = "브로리 대학원 기원 1일차";
+    // const author = "브로리"
+    // const creacteddate = '2020.07.01';
+    // const content = "브로리 대학원 가즈아아아아아아";
     const [comment, setComment] = useState('');
     const [islogined, setIslogined] = useState(true);
-
+    const [title,setTitle]=useState();
+    const [author,setAuthor]=useState();
+    const [createdate,setCreateDate]=useState();
+    const [content,setContent]=useState();
+    const [user,setUser]=useState();
+    const [like,setLike]=useState();
+    const [ items, setItems ] = useState([]);
+    
+    const ref = firestore().collection('Community1');
+    const [nick,setNick]=useState();
+    const [state,setState]=useState();
+    const{docID}=route.params
     var thumbnum = 11,
         replynum = 5;
     const [numrep, setNumrep] = useState(0);
@@ -89,6 +103,74 @@ export default function CommunityOtherPost({ navigation }) {
         setNumrerep(numrerep + 1);
     }
 
+    async function writepost(b){
+        
+        var a=moment().toArray()
+        console.log(b)
+        if(a[1]===12){
+            a[1]=1
+        }else{
+            a[1]=a[1]+1
+        }
+        console.log(docID)
+        await ref.doc(docID).collection("Reply").doc(a+b).set({
+            content:b,
+            nick:nick,
+            fullTime:a,
+            time:a[3]+":"+a[4],
+            day:a[1]+"/"+a[2],
+            writerUid:user.uid
+        })
+        Alert.alert("Completed")
+        setState(true)
+    }
+    useEffect(()=>{
+        auth().onAuthStateChanged(userAuth=>{
+            setUser(userAuth)})
+            if(user){
+            firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot=>{
+                console.log(documentSnapshot.data().nickname,"hihi")
+                setNick(documentSnapshot.data().nickname)
+            })
+           
+        }
+    },[user])
+    useEffect(()=>{
+        
+        console.log(docID,"HIHI")
+        firestore().collection("Community1").doc(docID).onSnapshot(doc=>{
+                setTitle(doc.data().title)
+                setContent(doc.data().context)
+                setAuthor(doc.data().nickname)
+                setCreateDate(doc.data().day+" "+doc.data().time)
+                setLike(doc.data().like)
+            })
+       
+},[])
+    useEffect(()=>{
+        const {ID}=route.params
+        return ref.doc(ID).collection("Reply").onSnapshot(querySnapshot=>{
+            console.log(ID)
+            const list = [];
+                
+            querySnapshot.forEach(docs => {
+                console.log("imhee")
+                console.log(docs.data().content,"here")
+               list.push({
+                   reNick:docs.data().nick,
+                   reContent:docs.data().content,
+                   reLike:docs.data().like,
+                   reTime:docs.data().day+" "+docs.data().time
+               });
+           })
+               setItems(list);
+               console.log(list)
+        
+           
+        })
+    
+    },[state])
+      
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -178,7 +260,7 @@ export default function CommunityOtherPost({ navigation }) {
                             <Image resizeMode="contain" style={community.icon} source={require("./icon/brori.png")} />
                             <Text style={community.author}>{author}</Text>
                         </View>
-                        <Text style={community.dateandrepair}>{creacteddate}</Text>
+                        <Text style={community.dateandrepair}>{createdate}</Text>
                     </View>
                     <Image resizeMode="cover" style={community.image} source={require("./icon/brorigraduate.png")} />
                     <View style={{
@@ -193,26 +275,30 @@ export default function CommunityOtherPost({ navigation }) {
                         <Text style={community.content}>{content}</Text>
                         <View style={community.lowerbox}>
                             <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greenThumb.png")}></Image>
-                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{thumbnum}</Text>
+                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{like}</Text>
                             <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 16 }]} source={require("./icon/reply.png")}></Image>
                             <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{replynum}</Text>
                         </View>
                     </View>
                     <View style={{
                         paddingTop: 8,
-                        paddingRight: 20,
-                        paddingLeft: 20,
+                        paddingRight: 5,
+                        paddingLeft: 5,
                         width: "100%"
                     }}>
-                        <View>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: "100%" }}>
+                        <FlatList
+                        data={items}
+                        
+                        renderItem={({item})=>(
+                            <View style={{borderBottomWidth:1,borderColor:'#E2E2E2',paddingTop:5,paddingBottom:5}}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: "100%",}}>
                                 <View style={{
                                     flexDirection: 'row',
                                     alignItems: 'center',
                                 }}>
                                     <Image resizeMode="contain" style={community.icon} source={require('./icon/blackcircle.png')} />
-                                    <Text style={community.author}>익명</Text>
-                                    <Text style={[community.date, { fontSize: 12, marginLeft: 8 }]}>{creacteddate}</Text>
+                            <Text style={community.author}>{item.reNick}</Text>
+                                    <Text style={[community.date, { fontSize: 12, marginLeft: 8 }]}>{item.reTime}</Text>
                                     <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 8 }]} source={require("./icon/emptythumb.png")}></Image>
                                     <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{numrep}</Text>
                                 </View>
@@ -276,13 +362,13 @@ export default function CommunityOtherPost({ navigation }) {
                                 </View>
                             </View>
                             <View style={{ marginTop: 8 }}>
-                                <Text>%%%대박정보%%%</Text>
-                                <Text>Blocker.com</Text>
-                                <Text>&&&&접속시&&&&</Text>
-                                <Text>금연키트 무료증정</Text>
+                                <Text>{item.reContent}</Text>
+                                
                             </View>
-                        </View>
-                        <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                            </View>
+                        )}
+                        />
+                        {/* <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-evenly' }}>
                             <Image source={require('./icon/rereply.png')} resizeMode="contain" style={{ marginLeft: 5, width: 16, height: 16 }} />
                             <View style={{ alignSelf: 'flex-end', backgroundColor: '#E5E5E5', width: "90%", minHeight: 84, borderRadius: 5, paddingTop: 4, paddingLeft: 8, paddingRight: 8 }}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -292,7 +378,7 @@ export default function CommunityOtherPost({ navigation }) {
                                     }}>
                                         <Image resizeMode="contain" style={community.icon} source={require('./icon/blackcircle.png')} />
                                         <Text style={community.author}>익명</Text>
-                                        <Text style={[community.date, { fontSize: 12, marginLeft: 8 }]}>{creacteddate}</Text>
+                                        <Text style={[community.date, { fontSize: 12, marginLeft: 8 }]}>{createdate}</Text>
                                         <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 8 }]} source={require("./icon/emptythumb.png")}></Image>
                                         <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{numrerep}</Text>
                                     </View>
@@ -330,7 +416,7 @@ export default function CommunityOtherPost({ navigation }) {
                                     <Text>매너 채팅 부탁드려요</Text>
                                 </View>
                             </View>
-                        </View>
+                        </View> */}
                     </View>
                 </ScrollView>
                 <View style={{
@@ -361,7 +447,8 @@ export default function CommunityOtherPost({ navigation }) {
                     />
                     <TouchableOpacity onPress={() => {
                         comment.length > 0 ?
-                            true
+                            writepost(comment)
+                            
                             :
                             Alert.alert(
                                 '작성 오류',

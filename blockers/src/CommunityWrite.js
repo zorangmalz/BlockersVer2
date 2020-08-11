@@ -72,22 +72,39 @@ export default function CommunityWrite ({navigation}) {
     const [imageThree, setImageThree] = useState(undefined);
     const [picthree, setPicthree] = useState(true);
     const [user,setuser]=useState()
+    const [nick,setNick]=useState()
+    
     useEffect(()=>{
         auth().onAuthStateChanged(userAuth=>{
             setuser(userAuth)
-            console.log(user)
+            
         })
-    },[])
+        if(user){
+            firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot=>{
+                console.log(documentSnapshot.data().nickname,"hihi")
+                setNick(documentSnapshot.data().nickname)
+            })
+           
+        }
+    },[user])
 
     async function writePost(){
         var a=moment().toArray()
-
-        await ref.doc(title).set({
+        if(a[1]===12){
+            a[1]=1
+        }else{
+            a[1]=a[1]+1
+        }
+        await ref.doc(a+title).set({
             context:content,
             like:0,
             title:title,
             writerUid:user.uid,
-            time:a
+            fullTime:a,
+            time:a[3]+":"+a[4],
+            day:a[1]+"/"+a[2],
+            docName:a+title,
+            nickname:nick
         })
         navigation.goBack()
     }
