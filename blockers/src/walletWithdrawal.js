@@ -192,7 +192,6 @@ export function WithdrawalPassword ({navigation}) {
     }
     const confirmWrong = () => {
         setTwoTime(false);
-        decreaseConfirm();
         onDelete();
         onDeleteAll();
     }
