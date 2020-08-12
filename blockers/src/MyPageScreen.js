@@ -151,7 +151,7 @@ export default function MyPageScreen({ navigation }) {
                                 <TouchableOpacity onPress={() => navigation.navigate('WalletWithDrawal')} style={[style.buttonStyle, { backgroundColor: '#f0f0f0', borderBottomLeftRadius: 10 }]}>
                                     <Text style={{ fontSize: 12, color: 'black', opacity: 0.6, fontFamily: 'NunitoSans-Bold' }}>출금</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('입금')} style={[style.buttonStyle, { backgroundColor: '#5cc27b', borderBottomRightRadius: 10 }]}>
+                                <TouchableOpacity onPress={() => navigation.navigate('입금')} style={[style.buttonStyle, { backgroundColor: '#FFB83D', borderBottomRightRadius: 10 }]}>
                                     <Text style={{ fontSize: 12, color: 'white', fontFamily: 'NunitoSans-Bold' }}>충전</Text>
                                 </TouchableOpacity>
                             </View>

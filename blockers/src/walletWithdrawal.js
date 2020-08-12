@@ -131,11 +131,38 @@ export function WithdrawalPassword ({navigation}) {
     const [two, setTwo] = useState(false);
     const [three, setThree] = useState(false);
     const [four, setFour] = useState(false);
+    const [initializing, setInitializing] = useState(true);
+    const [user, setUser] = useState();
 
-    const OneImage = one === true ? require('./icon/passwordicon.png') : ''
-    const TwoImage = two === true ? require('./icon/passwordicon.png') : ''
-    const ThreeImage = three === true ? require('./icon/passwordicon.png') : ''
-    const FourImage = four === true ? require('./icon/passwordicon.png') : ''
+    //create userInfo
+    const ref = firestore().collection("UserInfo");
+
+
+    async function addInfo(mail, code, pass) {
+        await ref.doc(code).set({
+            birth: "",
+            cellphone: "",
+            email: mail,
+            password: pass,
+            sex: "",
+            nickname: "",
+            SmokingTime: ""
+        })
+    }
+
+    const OneImage = one === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
+    const TwoImage = two === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
+    const ThreeImage = three === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
+    const FourImage = four === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
+
+    function onAuthStateChanged(user) {
+        setUser(user);
+        if (initializing) setInitializing(false);
+    }
+    function move() {
+        addInfo(user.email, user.uid, passWord)
+        navigation.navigate("WalletWithdrawlComplete")
+    }
     function pass(count, action) {
         switch (action.type) {
             case 'plus':
@@ -148,8 +175,46 @@ export function WithdrawalPassword ({navigation}) {
                 setThree(false);
                 setFour(false);
                 return count = 0;
+            case 'confirmwrong':
+                return count = 0;
         }
     }
+
+    const [oneTime, setOneTime] = useState(false);
+    const [twoTime, setTwoTime] = useState(true);
+    function Twopassword() {
+        onDelete();
+        setOneTime(true);
+    }
+    function confirmTrue () {
+        addInfo(user.email, user.uid, passWord);
+        navigation.navigate("WalletWithDrawlComplete");
+    }
+    const confirmWrong = () => {
+        setTwoTime(false);
+        decreaseConfirm();
+        onDelete();
+        onDeleteAll();
+    }
+    function compareArray(arr1, arr2) {
+        var rst = false;
+     
+        if (arr1.length != arr2.length) {
+            return rst;
+        }
+     
+        arr1.forEach(function (item) {
+            var i = arr2.indexOf(item);
+            if (i > -1) arr2.splice(i, 1);
+        });
+        rst = arr2.length == 0;
+        return rst;
+    }
+    
+    function WrongPass () {
+        compareArray(passWord, passWordTwo) === true ? confirmTrue() : confirmWrong()
+    }
+
     const [count, dispatch] = useReducer(pass, 0);
     const onIncrease = () => {
         dispatch({
@@ -169,48 +234,49 @@ export function WithdrawalPassword ({navigation}) {
     }
 
     const [passWord, setPassWord] = useState([]);
+    const [passWordTwo, setPassWordTwo] = useState([]);
     const onAddOne = () => {
-        setPassWord(passWord.concat(1));
+        oneTime===false ? setPassWord(passWord.concat(1)) : setPassWordTwo(passWordTwo.concat(1))
     }
     const onAddTwo = () => {
-        setPassWord(passWord.concat(2));
+        oneTime===false ? setPassWord(passWord.concat(2)) : setPassWordTwo(passWordTwo.concat(2))
     }
     const onAddThree = () => {
-        setPassWord(passWord.concat(3));
+        oneTime===false ? setPassWord(passWord.concat(3)) : setPassWordTwo(passWordTwo.concat(3))
     }
     const onAddFour = () => {
-        setPassWord(passWord.concat(4));
+        oneTime===false ? setPassWord(passWord.concat(4)) : setPassWordTwo(passWordTwo.concat(4))
     }
     const onAddFive = () => {
-        setPassWord(passWord.concat(5));
+        oneTime===false ? setPassWord(passWord.concat(5)) : setPassWordTwo(passWordTwo.concat(5))
     }
     const onAddSix = () => {
-        setPassWord(passWord.concat(6));
+        oneTime===false ? setPassWord(passWord.concat(6)) : setPassWordTwo(passWordTwo.concat(6))
     }
     const onAddSeven = () => {
-        setPassWord(passWord.concat(7));
+        oneTime===false ? setPassWord(passWord.concat(7)) : setPassWordTwo(passWordTwo.concat(7))
     }
     const onAddEight = () => {
-        setPassWord(passWord.concat(8));
+        oneTime===false ? setPassWord(passWord.concat(8)) : setPassWordTwo(passWordTwo.concat(8))
     }
     const onAddNine = () => {
-        setPassWord(passWord.concat(9));
+        oneTime===false ? setPassWord(passWord.concat(9)) : setPassWordTwo(passWordTwo.concat(9))
     }
     const onAddZero = () => {
-        setPassWord(passWord.concat(0));
+        oneTime===false ? setPassWord(passWord.concat(0)) : setPassWordTwo(passWordTwo.concat(0))
     }
     const onDeleteOne = () => {
-        setPassWord(passWord.slice(0, passWord.length-1))
+        oneTime===false ? setPassWord(passWord.slice(0, passWord.length-1)) : setPassWordTwo(passWordTwo.slice(0, passWordTwo.length-1))
     }
     const onDeleteAll = () => {
-        setPassWord(passWord.slice(0, 0))
+        oneTime===false ? setPassWord(passWord.slice(0, 0)) : setPassWordTwo(passWordTwo.slice(0, 0))
     }
 
 
     useEffect(() => {
         if (count > 4) {
             console.log("초과되었습니다.");
-            setPassWord(passWord.slice(0, passWord.length-1))
+            oneTime===false ? setPassWord(passWord.slice(0, passWord.length-1)) : setPassWordTwo(passWordTwo.slice(0, passWordTwo.length-1))
             dispatch({
                 type: 'minus'
             })
@@ -230,7 +296,7 @@ export function WithdrawalPassword ({navigation}) {
             setTwo(false);
             setThree(false);
             setFour(false);
-            console.log(passWord);
+            console.log(oneTime===false ? passWord : passWordTwo);
             console.log("0");
         }
         else if (count === 1) {
@@ -238,7 +304,7 @@ export function WithdrawalPassword ({navigation}) {
             setTwo(false);
             setThree(false);
             setFour(false);
-            console.log(passWord);
+            console.log(oneTime===false ? passWord : passWordTwo);
             console.log("1");
         }
         else if (count === 2) {
@@ -246,7 +312,7 @@ export function WithdrawalPassword ({navigation}) {
             setTwo(true);
             setThree(false);
             setFour(false);
-            console.log(passWord);
+            console.log(oneTime===false ? passWord : passWordTwo);
             console.log("2")
         }
         else if (count === 3) {
@@ -254,7 +320,7 @@ export function WithdrawalPassword ({navigation}) {
             setTwo(true);
             setThree(true);
             setFour(false);
-            console.log(passWord);
+            console.log(oneTime===false ? passWord : passWordTwo);
             console.log("3")
         }
         else if (count === 4) {
@@ -262,9 +328,11 @@ export function WithdrawalPassword ({navigation}) {
             setTwo(true);
             setThree(true);
             setFour(true);
-            console.log(passWord);
+            console.log(oneTime===false ? passWord : passWordTwo);
             console.log("4")
         }
+        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
+    return subscriber; 
     }, [count])
 
     return (
@@ -300,55 +368,109 @@ export function WithdrawalPassword ({navigation}) {
                             <View style={{backgroundColor: '#5cc27b', width: 48, height: 1.5}}/>
                         </View>
                     </View>
+                    {twoTime ? 
+                        <Text></Text>
+                        :
+                        <Text style={{fontFamily: 'NunitoSans-Regular', fontSize: 12, color: '#ff0000', marginTop: 16, alignSelf: 'center'}}>비밀번호가 다릅니다. 다시 입력해주세요</Text>    
+                    }
                 </ScrollView>
-                <View style={password.largeBox}>
-                    <View style={password.mediumBox}>
-                        <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddOne}>
-                            <Text style={password.number}>1</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddTwo}>
-                            <Text style={password.number}>2</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddThree}>
-                            <Text style={password.number}>3</Text>
-                        </TouchableOpacity>
+                {oneTime === false ?
+                    <View style={password.largeBox}>
+                        <View style={password.mediumBox}>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddOne}>
+                                <Text style={password.number}>1</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddTwo}>
+                                <Text style={password.number}>2</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddThree}>
+                                <Text style={password.number}>3</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={password.mediumBox}>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddFour}>
+                                <Text style={password.number}>4</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddFive}>
+                                <Text style={password.number}>5</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddSix}>
+                                <Text style={password.number}>6</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={password.mediumBox}>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddSeven}>
+                                <Text style={password.number}>7</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddEight}>
+                                <Text style={password.number}>8</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddNine}>
+                                <Text style={password.number}>9</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={password.mediumBox}>
+                            <TouchableOpacity style={password.smallBox} onPress={onDelete} onPressIn={onDeleteAll}>
+                                <Text style={password.text}>취소</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddZero}>
+                                <Text style={password.number}>0</Text >
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onDecrease} onPressIn={onDeleteOne}>
+                                <Text style={password.text}>지우기</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={password.mediumBox}>
-                        <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddFour}>
-                            <Text style={password.number}>4</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddFive}>
-                            <Text style={password.number}>5</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddSix}>
-                            <Text style={password.number}>6</Text>
-                        </TouchableOpacity>
+                    :
+                    <View style={password.largeBox}>
+                        <View style={password.mediumBox}>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddOne}>
+                                <Text style={password.number}>1</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddTwo}>
+                                <Text style={password.number}>2</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddThree}>
+                                <Text style={password.number}>3</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={password.mediumBox}>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddFour}>
+                                <Text style={password.number}>4</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddFive}>
+                                <Text style={password.number}>5</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddSix}>
+                                <Text style={password.number}>6</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={password.mediumBox}>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddSeven}>
+                                <Text style={password.number}>7</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddEight}>
+                                <Text style={password.number}>8</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddNine}>
+                                <Text style={password.number}>9</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={password.mediumBox}>
+                            <TouchableOpacity style={password.smallBox} onPress={onDelete} onPressIn={onDeleteAll}>
+                                <Text style={password.text}>취소</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddZero}>
+                                <Text style={password.number}>0</Text >
+                            </TouchableOpacity>
+                            <TouchableOpacity style={password.smallBox} onPress={onDecrease} onPressIn={onDeleteOne}>
+                                <Text style={password.text}>지우기</Text>
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={password.mediumBox}>
-                        <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddSeven}>
-                            <Text style={password.number}>7</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddEight}>
-                            <Text style={password.number}>8</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddNine}>
-                            <Text style={password.number}>9</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={password.mediumBox}>
-                        <TouchableOpacity style={password.smallBox} onPress={onDelete} onPressIn={onDeleteAll}>
-                            <Text style={password.text}>취소</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={password.smallBox} onPress={onIncrease} onPressIn={onAddZero}>
-                            <Text style={password.number}>0</Text >
-                        </TouchableOpacity>
-                        <TouchableOpacity style={password.smallBox} onPress={onDecrease} onPressIn={onDeleteOne}>
-                            <Text style={password.text}>지우기</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                }
                 {count===4 ?
-                    <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => navigation.navigate('WalletWithDrawlComplete')}>
+                    <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={oneTime===false ? Twopassword : WrongPass}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>다음</Text>
                         </View>
