@@ -10,7 +10,8 @@ import {
     StyleSheet,
     Dimensions,
     TextInput,
-    Alert
+    Alert,
+    Modal
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import firestore from '@react-native-firebase/firestore';
@@ -156,25 +157,77 @@ export default function CommunityWrite ({navigation}) {
         });
     };
 
+    const [writeerror, setWriteerror] = useState(false)
+    const errorview = () => {
+        setTimeout(() => {
+            setWriteerror(true)
+        }, 200)
+    }
+
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+            <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={writeerror}
+                    onRequestClose={() => setWriteerror(false)}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{
+                            width: 280,
+                            height: 180,
+                            borderRadius: 20,
+                            backgroundColor: '#ffffff',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            borderWidth: 1,
+                            borderColor: '#cccccc'
+                        }}>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Bold',
+                                fontSize: 16,
+                                color: '#000000',
+                                opacity: 0.8,
+                                marginTop: 20
+                            }}>작성 오류</Text>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Regular',
+                                fontSize: 14,
+                                color: '#000000',
+                                opacity: 0.6,
+                                textAlign: 'center'
+                            }}>제목 본문 한글자 이상 작성해주세요.</Text>
+                            <TouchableOpacity onPress={() => {
+                                setWriteerror(false)
+                            }}
+                                style={{
+                                    width: 280,
+                                    height: 45,
+                                    borderBottomRightRadius: 20,
+                                    borderBottomLeftRadius: 20,
+                                    backgroundColor: '#5cc27b',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginTop: 15
+                                }}>
+                                <Text style={{
+                                    fontSize: 16,
+                                    color: '#ffffff',
+                                    fontFamily: 'NunitoSans-Regular'
+                                }}>Ok</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <ScrollView>
                     <TouchableOpacity style={community.buttonbox}
                         onPress={() => {
                             (title.length > 0) && (content.length > 0) ?
                                 writePost()
                                 :
-                                Alert.alert(
-                                    '작성 오류',
-                                    '제목 본문 한글자 이상 작성해주세요.',
-                                    [
-                                        {
-                                            text: 'OK', onPress: () => console.log('OK Pressed')
-                                        }
-                                    ]
-                                )
+                                errorview()
                         }}>
                         <Text style={community.buttontext} >완료</Text>
                     </TouchableOpacity>
