@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
@@ -8,7 +8,8 @@ import {
     StatusBar,
     SafeAreaView,
     ScrollView,
-    StyleSheet
+    StyleSheet,
+    Modal
 } from 'react-native'
 
 const login = StyleSheet.create({
@@ -22,7 +23,7 @@ const login = StyleSheet.create({
         textAlign: 'center',
     },
     textinput: {
-        fontSize: 21, 
+        fontSize: 21,
         fontFamily: 'NunitoSans-Bold',
         opacity: 0.7,
         color: '#000000',
@@ -40,8 +41,14 @@ const login = StyleSheet.create({
     }
 })
 
-export default function ProfileNickname ({navigation}) {
+export default function ProfileNickname({ navigation }) {
     const [nickname, setNickname] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
+    const modalbutton = () => {
+        setTimeout(() => {
+            setModalVisible(true)
+        }, 200)
+    }
     const [same, setSame] = useState(true);
     const [repeat, setRepeat] = useState(false);
     const repeatchange = () => setRepeat(!repeat);
@@ -49,9 +56,64 @@ export default function ProfileNickname ({navigation}) {
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
+                </Modal>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{
+                            width: 280,
+                            height: 180,
+                            borderRadius: 20,
+                            backgroundColor: '#ffffff',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            borderWidth: 1,
+                            borderColor: '#cccccc'
+                        }}>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Bold',
+                                fontSize: 16,
+                                color: '#000000',
+                                opacity: 0.8,
+                                marginTop: 20
+                            }}>변경완료</Text>
+                            <TouchableOpacity onPress={() => {
+                                navigation.goBack();
+                                setModalVisible(false);
+                            }}
+                                style={{
+                                    width: 280,
+                                    height: 45,
+                                    borderBottomRightRadius: 20,
+                                    borderBottomLeftRadius: 20,
+                                    backgroundColor: '#5cc27b',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    marginTop: 15
+                                }}>
+                                <Text style={{
+                                    fontSize: 16,
+                                    color: '#ffffff',
+                                    fontFamily: 'NunitoSans-Regular'
+                                }}>Ok</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </Modal>
                 <ScrollView>
-                <View>
+                    <View>
                         <TextInput onSubmitEditing={repeatchange} onChangeText={text => setNickname(text)} style={[login.textinput, { width: "80%", marginTop: 32 }]} placeholder="닉네임" />
                         {repeat === true ?
                             <Text style={login.repeat}>중복된 닉네임입니다.</Text>
@@ -60,17 +122,9 @@ export default function ProfileNickname ({navigation}) {
                         }
                     </View>
                 </ScrollView>
-                {nickname.length>0 ?
-                    <TouchableOpacity 
-                        onPress={() => Alert.alert(
-                            '변경완료',
-                            '',
-                            [
-                                {
-                                    text: 'OK', onPress: () => navigation.goBack()
-                                }
-                            ]
-                        )}
+                {nickname.length > 0 ?
+                    <TouchableOpacity
+                        onPress={modalbutton}
                         style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>변경하기</Text>

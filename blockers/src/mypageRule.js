@@ -109,7 +109,7 @@ export default function MyPageRule({ navigation }) {
                                         fontSize: 16,
                                         color: '#ffffff',
                                         fontFamily: 'NunitoSans-Regular'
-                                    }}>취소</Text>
+                                    }}>Cancel</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
                                     setAgreeTwo(false);
