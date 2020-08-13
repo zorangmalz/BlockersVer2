@@ -125,10 +125,7 @@ export default function ChallengeConfirm({ navigation }) {
         setUser(user);
         if (initializing) setInitializing(false);
     }
-    function move() {
-        addInfo(user.email, user.uid, passWord)
-        navigation.navigate("WalletWithdrawlComplete")
-    }
+    
     function pass(count, action) {
         switch (action.type) {
             case 'plus':

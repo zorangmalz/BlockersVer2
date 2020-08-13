@@ -9,6 +9,7 @@ import {
   Image,
   StyleSheet,
   Alert,
+  Modal
 } from 'react-native';
 
 const contents = StyleSheet.create({
@@ -66,11 +67,91 @@ const contents = StyleSheet.create({
 })
 
 export default function ContentsInfo({ navigation }) {
-  const [userlogined, setUserlogined] = useState(true);
+  const [userlogined, setUserlogined] = useState(true)
+  const [modallogin, setModallogin] = useState(userlogined===true ? false : true)
+  //Modal 띄울때 사용
+  const loginview = () => {
+    setTimeout(() => {
+      setModallogin(true)
+    }, 200)
+  }
   return (
     <>
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+        <Modal
+          animationType="none"
+          transparent={true}
+          visible={modallogin}
+          onRequestClose={() => setModallogin(false)}
+        >
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{
+              width: 280,
+              height: 180,
+              borderRadius: 20,
+              backgroundColor: '#ffffff',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              borderWidth: 1,
+              borderColor: '#cccccc'
+            }}>
+              <Text style={{
+                fontFamily: 'NunitoSans-Bold',
+                fontSize: 16,
+                color: '#000000',
+                opacity: 0.8,
+                marginTop: 20
+              }}>로그인이 필요한서비스입니다.</Text>
+              <Text style={{
+                fontFamily: 'NunitoSans-Regular',
+                fontSize: 14,
+                color: '#000000',
+                opacity: 0.6,
+                textAlign: 'center'
+              }}>로그인하고 다양한 혜택을 만나보세요</Text>
+              <View style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginTop: 15
+              }}>
+                <TouchableOpacity onPress={() => setModallogin(false)} style={{
+                  width: 140,
+                  height: 55,
+                  borderBottomLeftRadius: 20,
+                  backgroundColor: '#999999',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}>
+                  <Text style={{
+                    fontSize: 16,
+                    color: '#ffffff',
+                    fontFamily: 'NunitoSans-Regular'
+                  }}>둘러보기</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => {
+                  navigation.navigate('회원가입')
+                  setModallogin(false)
+                }}
+                  style={{
+                    width: 140,
+                    height: 55,
+                    borderBottomRightRadius: 20,
+                    backgroundColor: '#5cc27b',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }}>
+                  <Text style={{
+                    fontSize: 16,
+                    color: '#ffffff',
+                    fontFamily: 'NunitoSans-Regular'
+                  }}>로그인</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        </Modal>
         <ScrollView>
           <View>
             <Image style={contents.icecream} source={require("./icon/icecream.jpg")}></Image>
@@ -116,21 +197,10 @@ export default function ContentsInfo({ navigation }) {
           </View>
           <View style={[contents.buttonStyle, { backgroundColor: '#5cc27b', width: "50%", height: 60, }]}>
             <TouchableOpacity onPress={() =>
-              userlogined == true ?
+              userlogined === true ?
                 navigation.navigate('주문정보')
                 :
-                Alert.alert(
-                  '로그인이 필요한서비스입니다.',
-                  '로그인하고 다양한 혜택을 만나보세요',
-                  [
-                    {
-                      text: '취소', onPress: () => console.log('취소')
-                    },
-                    {
-                      text: '로그인', onPress: () => navigation.navigate('회원가입')
-                    }
-                  ]
-                )
+                loginview()
             }>
               <Text style={{ fontSize: 18, color: 'white', fontFamily: 'NunitoSans-Regular' }}>주문하기</Text>
             </TouchableOpacity>
