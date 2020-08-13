@@ -8,13 +8,15 @@ import {
     StatusBar,
     StyleSheet,
     Image,
-    Alert
+    Alert,
+    FlatList,
+    Modal
 } from 'react-native';
 
 const challenge = StyleSheet.create({
     box: {
-        marginRight: 30,
-        marginLeft: 30,
+        marginRight: 32,
+        marginLeft: 32,
         marginBottom: 17,
         paddingTop: 16,
         paddingBottom: 16,
@@ -61,29 +63,191 @@ const challenge = StyleSheet.create({
 
 export default function ChallengeMain({ navigation }) {
     const num = 1;
-    const [ChallengeToken, setChallengeToken] = useState(true);
+    //챌린지 참가 여부
+    const [ChallengeToken, setChallengeToken] = useState(false);
+    //Modal 띄울때 사용
+    const [userlogin, setUserlogin] = useState(false);
+    const loginview = () => {
+        setTimeout(()=>{
+            setUserlogin(true)
+        }, 200)
+    }
+    //아래는 진짜 로그인이 되어있는지 여부
     const [userlogined, setUserlogined] = useState(true);
     const PreviousData = [
         {
-            challengeNumber : 1001,
-            success : false,
-            ChallengeStep : 'Step 01',
-            participationDate : '참가일: 2020/06/01',
-            failureDate : '실패일: 2020/06/23'
+            challengeNumber: 1001,
+            success: false,
+            ChallengeStep: 'Step 01',
+            participationDate: '참가일: 2020/06/01',
+            failureDate: '실패일: 2020/06/23'
         },
         {
-            challengeNumber : 1002,
-            success : true,
-            ChallengeStep : 'Step 01',
-            participationDate : '참가일: 2020/06/01',
-            failureDate : '상금: ₩ 20,000'
+            challengeNumber: 1002,
+            success: true,
+            ChallengeStep: 'Step 01',
+            participationDate: '참가일: 2020/06/01',
+            failureDate: '상금: ₩ 20,000'
         },
     ]
+    //이전 챌린지가 참여 안했을 때 사용
+    const [previousChallenge, setPreviousChallenge] = useState(false);
+    const previouschallengeview = () => {
+        setTimeout(()=>{
+            setPreviousChallenge(true)
+        }, 200)
+    }
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
-                {userlogined === true ?
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={userlogin}
+                    onRequestClose={() => setUserlogin(false)}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{
+                            width: 280,
+                            height: 180,
+                            borderRadius: 20,
+                            backgroundColor: '#ffffff',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            borderWidth: 1,
+                            borderColor: '#cccccc'
+                        }}>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Bold',
+                                fontSize: 16,
+                                color: '#000000',
+                                opacity: 0.8,
+                                marginTop: 20
+                            }}>로그인이 필요한서비스입니다.</Text>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Regular',
+                                fontSize: 14,
+                                color: '#000000',
+                                opacity: 0.6,
+                                textAlign: 'center'
+                            }}>로그인하고 다양한 혜택을 만나보세요</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                marginTop: 15
+                            }}>
+                                <TouchableOpacity onPress={() => setUserlogin(false)} style={{
+                                    width: 140,
+                                    height: 55,
+                                    borderBottomLeftRadius: 20,
+                                    backgroundColor: '#999999',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>취소</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() =>  {
+                                    navigation.navigate('회원가입')
+                                    setUserlogin(false)
+                                }}
+                                    style={{
+                                        width: 140,
+                                        height: 55,
+                                        borderBottomRightRadius: 20,
+                                        backgroundColor: '#5cc27b',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>로그인</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={previousChallenge}
+                    onRequestClose={() => setPreviousChallenge(false)}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{
+                            width: 280,
+                            height: 180,
+                            borderRadius: 20,
+                            backgroundColor: '#ffffff',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            borderWidth: 1,
+                            borderColor: '#cccccc'
+                        }}>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Bold',
+                                fontSize: 16,
+                                color: '#000000',
+                                opacity: 0.8,
+                                marginTop: 20
+                            }}>이전 챌린지를 완료하셔야합니다.</Text>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Regular',
+                                fontSize: 14,
+                                color: '#000000',
+                                opacity: 0.6,
+                                textAlign: 'center'
+                            }}>이전 챌린지로 참가신청 하시겠습니까?</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                marginTop: 15
+                            }}>
+                                <TouchableOpacity onPress={() => setPreviousChallenge(false)} style={{
+                                    width: 140,
+                                    height: 55,
+                                    borderBottomLeftRadius: 20,
+                                    backgroundColor: '#999999',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>취소</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() =>  {
+                                    navigation.navigate('ChallengeResisterOne')
+                                    setPreviousChallenge(false)
+                                }}
+                                    style={{
+                                        width: 140,
+                                        height: 55,
+                                        borderBottomRightRadius: 20,
+                                        backgroundColor: '#5cc27b',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>참가하기</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+                {ChallengeToken === false ?
                     <ScrollView style={{ paddingTop: 27 }}>
                         <View style={challenge.box}>
                             <View>
@@ -95,18 +259,7 @@ export default function ChallengeMain({ navigation }) {
                                 userlogined === true ?
                                     navigation.navigate('ChallengeResisterOne')
                                     :
-                                    Alert.alert(
-                                        '로그인이 필요한서비스입니다.',
-                                        '로그인하고 다양한 혜택을 만나보세요',
-                                        [
-                                            {
-                                                text: '취소', onPress: () => console.log('취소')
-                                            },
-                                            {
-                                                text: '로그인', onPress: () => navigation.navigate('회원가입')
-                                            }
-                                        ]
-                                    )
+                                    loginview()
                             }>
                                 <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 2, alignItems: 'center', justifyContent: 'center' }}>
                                     <Text style={{ fontSize: 12, fontWeight: 'bold', fontFamily: 'NunitoSans-Regular' }}>신청하기</Text>
@@ -121,31 +274,9 @@ export default function ChallengeMain({ navigation }) {
                             </View>
                             <TouchableOpacity style={{ alignSelf: 'center' }} onPress={() =>
                                 userlogined === true ?
-                                    Alert.alert(
-                                        '이전 챌린지를 완료하셔야합니다.',
-                                        '이전 챌린지로 참가신청 하시겠습니까?',
-                                        [
-                                            {
-                                                text: '취소', onPress: () => console.log('취소')
-                                            },
-                                            {
-                                                text: '참가하기', onPress: () => navigation.navigate('ChallengeResisterOne')
-                                            }
-                                        ]
-                                    )
+                                    previouschallengeview()
                                     :
-                                    Alert.alert(
-                                        '로그인이 필요한서비스입니다.',
-                                        '로그인하고 다양한 혜택을 만나보세요',
-                                        [
-                                            {
-                                                text: '취소', onPress: () => console.log('취소')
-                                            },
-                                            {
-                                                text: '로그인', onPress: () => navigation.navigate('회원가입')
-                                            }
-                                        ]
-                                    )
+                                    loginview()
                             }>
                                 <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 2, alignItems: 'center', justifyContent: 'center' }}>
                                     <Text style={{ fontSize: 12, fontWeight: 'bold' }}>신청하기</Text>
@@ -166,7 +297,7 @@ export default function ChallengeMain({ navigation }) {
                         </View>
                     </ScrollView>
                     :
-                    <ScrollView style={{ paddingBottom: 70 }}>
+                    <ScrollView style={{paddingBottom: 70}}>
                         <View style={{
                             marginRight: 30,
                             marginLeft: 30,
@@ -267,7 +398,7 @@ export default function ChallengeMain({ navigation }) {
                             borderBottomWidth: 0.2,
                             borderBottomColor: '#979797'
                         }}>
-                            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#ffb83d', marginRight: 8 }} />
+                            <View style={{width: 8, height: 8, borderRadius: 4, backgroundColor: '#ffb83d', marginRight: 8}} />
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 16,
@@ -284,7 +415,7 @@ export default function ChallengeMain({ navigation }) {
                                         <Text style={[challenge.mediumText, { marginBottom: 4 }]}>{item.participationDate}</Text>
                                         <Text style={[challenge.smallText, { fontSize: 16 }]}>{item.failureDate}</Text>
                                     </View>
-                                    <Image source={item.success === true ? require('./icon/success.png') : require('./icon/failure.png')} />
+                                    <Image source={item.success===true ? require('./icon/success.png') : require('./icon/failure.png')}  />
                                 </View>
                             )
                             }

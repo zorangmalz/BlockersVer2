@@ -17,12 +17,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
 
 import HomeScreen from './src/homeScreen';
 import MissionScreen from './src/missionScreen';
-import SplashScreen from './src/splashscreen';
-import WelcomeScreen from './src/solutionMain';
 import ChallengeMain from './src/challengeMain';
 import ChallengeResisterOne from './src/challengeResisterOne';
 import ChallengeResisterTwo from './src/challengeResisterTwo';
@@ -39,7 +36,7 @@ import SettingExitComplete from './src/settingExitComplete';
 import SettingOften from './src/settingOften';
 import WalletTransaction from './src/walletTransaction';
 import WalletCharge from './src/walletCharge';
-import { WalletWithdrawal, WithdrawalPassword, WalletWithdrawlComplete } from './src/walletWithdrawal';
+import { WalletWithdrawal, WalletWithdrawlComplete } from './src/walletWithdrawal';
 import { WalletPassword } from './src/walletPassword';
 import CommunityHome from './src/Community';
 import CommunityClick from './src/CommunityClick';
@@ -252,11 +249,6 @@ const App = ({ navigation }) => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen 
-          name="SplashScreen"
-          component={SplashScreen}
-          options={{headerShown: false}}
-        />
         <Stack.Screen
           name="Home"
           component={HomeTab}
@@ -336,14 +328,6 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="WalletWithDrawal"
           component={WalletWithdrawal}
-          options={{
-            headerTitle: "출금",
-            gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="WithDrawalPassword"
-          component={WithdrawalPassword}
           options={{
             headerTitle: "출금",
             gestureDirection: 'vertical-inverted'
