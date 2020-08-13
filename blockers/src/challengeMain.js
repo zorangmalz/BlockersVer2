@@ -107,6 +107,14 @@ export default function ChallengeMain({ navigation }) {
                     visible={userlogin}
                     onRequestClose={() => setUserlogin(false)}
                 >
+                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
+                </Modal>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={userlogin}
+                    onRequestClose={() => setUserlogin(false)}
+                >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{
                             width: 280,
@@ -173,6 +181,14 @@ export default function ChallengeMain({ navigation }) {
                             </View>
                         </View>
                     </View>
+                </Modal>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={previousChallenge}
+                    onRequestClose={() => setPreviousChallenge(false)}
+                >
+                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
                 </Modal>
                 <Modal
                     animationType="none"

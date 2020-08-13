@@ -63,6 +63,14 @@ export default function SolutionMain({navigation}) {
                     visible={skipmodal}
                     onRequestClose={() => setSkipmodal(false)}
                 >
+                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
+                </Modal>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={skipmodal}
+                    onRequestClose={() => setSkipmodal(false)}
+                >
                     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
                         <View style={{
                             width: 280,

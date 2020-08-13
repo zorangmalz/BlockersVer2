@@ -85,6 +85,14 @@ export default function ContentsInfo({ navigation }) {
           visible={modallogin}
           onRequestClose={() => setModallogin(false)}
         >
+          <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
+        </Modal>
+        <Modal
+          animationType="none"
+          transparent={true}
+          visible={modallogin}
+          onRequestClose={() => setModallogin(false)}
+        >
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{
               width: 280,
