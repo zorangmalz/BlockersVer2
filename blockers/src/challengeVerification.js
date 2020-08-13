@@ -74,7 +74,8 @@ export default function ChallengeVerification() {
 
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <SafeAreaView style={{ flex: 0 }} />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <ScrollView style={{ marginBottom: 70 }}>
                     <View style={{
@@ -87,9 +88,9 @@ export default function ChallengeVerification() {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <TouchableOpacity style={{width: 164, height: 146, borderRadius: 14, borderWidth: 1, marginBottom: 8}} onPress={showCamera1}>
-                                <ImageBackground resizeMode="contain" source={require('./icon/plus.png')} style={{ width: 164, height: 146}}>
-                                    {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 164, height: 146, borderRadius: 14, borderWidth: 1}} />}
+                            <TouchableOpacity style={{width: 160, height: 160, borderRadius: 14, borderWidth: 0.7, borderColor: imageOne===undefined ? '#000000' : '#ffffff',  marginBottom: 8, justifyContent: 'center', alignItems: 'center'}} onPress={showCamera1}>
+                                <ImageBackground source={require('./icon/plus.png')} style={{ width: 150, height: 150, borderRadius: 14}}>
+                                    {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 150, height: 150, borderRadius: 14, borderWidth: 1}} />}
                                 </ImageBackground>
                             </TouchableOpacity>
                             <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', color: '#79808C' }}>입에 문 사진</Text>
@@ -98,9 +99,9 @@ export default function ChallengeVerification() {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <TouchableOpacity style={{width: 164, height: 146, borderRadius: 14, borderWidth: 1, marginBottom: 8}} onPress={showCamera2}>
-                                <ImageBackground resizeMode="contain" source={require('./icon/plus.png')} style={{ width: 164, height: 146 }}>
-                                    {imageTwo&&<Image resizeMode="stretch" source={{ uri: imageTwo }} style={{ width: 164, height: 146, borderRadius: 14, borderWidth: 1, marginBottom: 8 }} />}
+                            <TouchableOpacity style={{width: 160, height: 160, borderRadius: 14, borderWidth: 0.7, borderColor: imageTwo===undefined ? '#000000' : '#ffffff', marginBottom: 8, justifyContent: 'center', alignItems: 'center'}} onPress={showCamera2}>
+                                <ImageBackground source={require('./icon/plus.png')} style={{ width: 150, height: 150, borderRadius: 14 }}>
+                                    {imageTwo&&<Image resizeMode="stretch" source={{ uri: imageTwo }} style={{ width: 150, height: 150, borderRadius: 14, borderWidth: 1, marginBottom: 8 }} />}
                                 </ImageBackground>
                             </TouchableOpacity>
                             <Text style={{fontSize: 16, fontFamily: 'NunitoSans-Bold', color: '#79808C'}}>입에 문 사진</Text>
