@@ -67,12 +67,12 @@ const contents = StyleSheet.create({
 })
 
 export default function ContentsInfo({ navigation }) {
-  const [userlogined, setUserlogined] = useState(false);
-
+  const [userlogined, setUserlogined] = useState(true)
+  const [modallogin, setModallogin] = useState(userlogined===true ? false : true)
   //Modal 띄울때 사용
   const loginview = () => {
     setTimeout(() => {
-      setUserlogined(true)
+      setModallogin(true)
     }, 200)
   }
   return (
@@ -82,8 +82,8 @@ export default function ContentsInfo({ navigation }) {
         <Modal
           animationType="none"
           transparent={true}
-          visible={userlogined}
-          onRequestClose={() => setUserlogined(false)}
+          visible={modallogin}
+          onRequestClose={() => setModallogin(false)}
         >
           <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <View style={{
@@ -116,7 +116,7 @@ export default function ContentsInfo({ navigation }) {
                 justifyContent: 'space-between',
                 marginTop: 15
               }}>
-                <TouchableOpacity onPress={() => setUserlogined(false)} style={{
+                <TouchableOpacity onPress={() => setModallogin(false)} style={{
                   width: 140,
                   height: 55,
                   borderBottomLeftRadius: 20,
@@ -132,7 +132,7 @@ export default function ContentsInfo({ navigation }) {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                   navigation.navigate('회원가입')
-                  setUserlogined(false)
+                  setModallogin(false)
                 }}
                   style={{
                     width: 140,
