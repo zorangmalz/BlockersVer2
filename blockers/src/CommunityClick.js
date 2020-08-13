@@ -79,10 +79,12 @@ export default function CommunityClick({ navigation }) {
     const ref = firestore().collection('Community1');
     const [ loading, setLoading ] = useState(true);
     const [ items, setItems ] = useState([]);
+    const [replyNum,setReplyNum]=useState();
     const[timer,settimer]=useState();
     // ...
    
     useEffect(() => {
+    
       return ref.onSnapshot(querySnapshot => {
         const list = [];
         var a=moment().toArray()
@@ -93,15 +95,16 @@ export default function CommunityClick({ navigation }) {
         }
         
         querySnapshot.forEach(doc => {
-            
+          if(doc.data().fullTime){  
           if (a[0]===doc.data().fullTime[0]&&a[1]===doc.data().fullTime[1]&&a[2]===doc.data().fullTime[2]){
+           
           list.push({
             title: doc.data().title,
             time:doc.data().time,
             context:doc.data().context,
             like:doc.data().like,
-            docname:doc.data().docName
-            
+            docname:doc.data().docName,
+            replynum:doc.data().commentNum
           });}
           else{
             list.push({
@@ -109,16 +112,19 @@ export default function CommunityClick({ navigation }) {
                 time:doc.data().day,
                 context:doc.data().context,
                 like:doc.data().like,
-                docname:doc.data().docName
+                docname:doc.data().docName,
+                replynum:doc.data().commentNum
               });}
-          
+            }
+        console.log(list)
         });
-  
+        
         setItems(list);
      
         if (loading) {
           setLoading(false);
         }
+        
       });
     }, []);
     
@@ -156,7 +162,7 @@ export default function CommunityClick({ navigation }) {
                             <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: "33%" }]} source={require("./icon/emptythumb.png")}></Image>
                             <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
                             <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 16 }]} source={require("./icon/reply.png")}></Image>
-                            <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>65/</Text>
+                    <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
                         </View>
                         </View>
                         </TouchableOpacity>

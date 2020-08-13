@@ -17,6 +17,7 @@ import {
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import moment from "moment"
+import { useScreens } from 'react-native-screens';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -72,10 +73,6 @@ const community = StyleSheet.create({
     },
 })
 export default function CommunityOtherPost({route, navigation }) {
-    // const title = "브로리 대학원 기원 1일차";
-    // const author = "브로리"
-    // const creacteddate = '2020.07.01';
-    // const content = "브로리 대학원 가즈아아아아아아";
     const [comment, setComment] = useState('');
     const [islogined, setIslogined] = useState(true);
     const [title,setTitle]=useState();
@@ -85,17 +82,20 @@ export default function CommunityOtherPost({route, navigation }) {
     const [user,setUser]=useState();
     const [like,setLike]=useState();
     const [ items, setItems ] = useState([]);
-    
+    const [likeButton,setLikeButton]=useState(false);
     const ref = firestore().collection('Community1');
     const [nick,setNick]=useState();
     const [state,setState]=useState();
+    const [meLike,setMeLike]=useState(false);
+    const [likeList,setLikeList]=useState();
+    const [param,setParam]=useState()
+    const [likeState,setLikeState]=useState()
+    const [replynum,setReplyNum]=useState(0)
     const{docID}=route.params
-    var thumbnum = 11,
-        replynum = 5;
     const [numrep, setNumrep] = useState(0);
     const [numrerep, setNumrerep] = useState(0);
-
-    const plusnumrep = () => {
+    const [commentNum,setCommentNum]=useState();
+    const plusnumrep = () => { 
         setNumrep(numrep + 1);
     }
 
@@ -121,8 +121,11 @@ export default function CommunityOtherPost({route, navigation }) {
             day:a[1]+"/"+a[2],
             writerUid:user.uid
         })
-        Alert.alert("Completed")
+        await ref.doc(docID).update({
+            commentNum:replynum+1
+        })
         setState(true)
+        setComment("")
     }
     useEffect(()=>{
         auth().onAuthStateChanged(userAuth=>{
@@ -134,7 +137,7 @@ export default function CommunityOtherPost({route, navigation }) {
             })
            
         }
-    },[user])
+    },[user,replynum])
     useEffect(()=>{
         
         console.log(docID,"HIHI")
@@ -144,18 +147,21 @@ export default function CommunityOtherPost({route, navigation }) {
                 setAuthor(doc.data().nickname)
                 setCreateDate(doc.data().day+" "+doc.data().time)
                 setLike(doc.data().like)
+                setLikeList(doc.data().whoLike)
+                
             })
        
-},[])
+},[likeState])
+
     useEffect(()=>{
         const {ID}=route.params
+        setParam(ID)
         return ref.doc(ID).collection("Reply").onSnapshot(querySnapshot=>{
             console.log(ID)
             const list = [];
-                
+            console.log(querySnapshot.size+"size!!")
+            setReplyNum(querySnapshot.size)
             querySnapshot.forEach(docs => {
-                console.log("imhee")
-                console.log(docs.data().content,"here")
                list.push({
                    reNick:docs.data().nick,
                    reContent:docs.data().content,
@@ -170,7 +176,54 @@ export default function CommunityOtherPost({route, navigation }) {
         })
     
     },[state])
-      
+    function likeMinus(a){
+
+        return ref.doc(param).update({
+            whoLike:a,
+            like:like-1
+            
+        }).then(() => {
+            
+            setLikeState(true)
+          });
+    }
+    function likePlus(a){
+        
+        return ref.doc(param).update({
+            whoLike:a,
+            like:like+1
+            
+        }).then(() => {
+            
+            setLikeState(true)
+            setLikeList(a)
+            
+          });
+    }
+
+    function pressLike(){
+        var lst=[]
+        lst=lst.concat(likeList)
+        console.log(user.uid)
+        console.log(lst.indexOf(user.uid))
+        if(lst.indexOf(user.uid)>=0){
+            
+            lst.splice(lst.indexOf(user.uid),1)
+            setLikeList(likeList.push(lst))
+            setMeLike(false)
+            likeMinus(lst)
+
+        }else{
+            
+        lst.push(user.uid)
+        
+        setLikeList(likeList.push(lst))
+        
+        setMeLike(true)
+        
+        likePlus(lst)}
+    }
+
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -274,7 +327,16 @@ export default function CommunityOtherPost({route, navigation }) {
                     }}>
                         <Text style={community.content}>{content}</Text>
                         <View style={community.lowerbox}>
+                            {meLike===true?
+                            <TouchableOpacity onPress={pressLike}>
                             <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greenThumb.png")}></Image>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity onPress={pressLike}>
+                            <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/emptythumb.png")}></Image>
+                            </TouchableOpacity>
+                        }
+                            
                             <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{like}</Text>
                             <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 16 }]} source={require("./icon/reply.png")}></Image>
                             <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{replynum}</Text>
@@ -448,7 +510,7 @@ export default function CommunityOtherPost({route, navigation }) {
                     <TouchableOpacity onPress={() => {
                         comment.length > 0 ?
                             writepost(comment)
-                            
+                        
                             :
                             Alert.alert(
                                 '작성 오류',

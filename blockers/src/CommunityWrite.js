@@ -91,6 +91,7 @@ export default function CommunityWrite ({navigation}) {
 
     async function writePost(){
         var a=moment().toArray()
+        console.log(a)
         if(a[1]===12){
             a[1]=1
         }else{
@@ -105,8 +106,11 @@ export default function CommunityWrite ({navigation}) {
             time:a[3]+":"+a[4],
             day:a[1]+"/"+a[2],
             docName:a+title,
-            nickname:nick
+            nickname:nick,
+            whoLike:[],
+            commentNum:0
         })
+
         navigation.goBack()
     }
     const options = {
