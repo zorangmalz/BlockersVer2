@@ -59,36 +59,7 @@ export default function ChallengeResisterOne ({navigation}) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
-                <ScrollView style={{marginBottom: 70}}>
-                    <View style={{marginTop: 32}}>
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
-                            <View style={[challenge.circle,{backgroundColor: '#5CC27B'}]}>
-                                <Text style={[challenge.numText,{color: '#ffffff', fontFamily: 'NunitoSans-Bold'}]}>1</Text>
-                            </View>
-                            <View style={challenge.bar}/>
-                            <View style={[challenge.circle,{backgroundColor: '#ffffff'}]}>
-                                <Text style={[challenge.numText,{color: '#5CC27B'}]}>2</Text>
-                            </View>
-                            <View style={challenge.bar}/>
-                            <View style={[challenge.circle,{backgroundColor: '#ffffff'}]}>
-                                <Text style={[challenge.numText,{color: '#5CC27B'}]}>3</Text>
-                            </View>
-                        </View>
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'space-evenly',
-                            alignItems: 'center',
-                            marginTop: 4,
-                        }}>
-                            <Text style={challenge.smallText}>챌린지 정보</Text>
-                            <Text style={challenge.smallText}>챌린지 설정</Text>
-                            <Text style={challenge.smallText}>비밀번호 입력</Text>
-                        </View>
-                    </View>
+                <ScrollView style={{marginBottom: 70, marginTop: 32}}>
                     <View style={challenge.box}>
                         <Text style={challenge.largeText}>Step 01</Text>
                         <View style={{
