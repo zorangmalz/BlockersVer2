@@ -202,7 +202,7 @@ export default function MyPageScreen({ navigation }) {
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                         <TouchableOpacity style={{ marginLeft: 8 }} onPress={() => {
                             userlogined === true ?
-                                navigation.navigate('Setting')
+                                navigation.navigate('설정')
                                 :
                                 loginview()
                         }}>
