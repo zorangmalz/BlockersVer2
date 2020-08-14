@@ -17,7 +17,8 @@ import ImagePicker from 'react-native-image-picker';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import moment from "moment"
-
+import storage from '@react-native-firebase/storage';
+import { utils } from '@react-native-firebase/app';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -88,7 +89,14 @@ export default function CommunityWrite ({navigation}) {
            
         }
     },[user])
+    async function uploadImage(){
+        const uri=imageOne;
+        const filename=title+nick
+        const reference = firebase.storage().ref(filename);
+        const pathToFile = `${utils.FilePath.PICTURES_DIRECTORY}/black-t-shirt-sm.png`;
 
+        await reference.putFile(pathToFile);
+    }
     async function writePost(){
         var a=moment().toArray()
         console.log(a)

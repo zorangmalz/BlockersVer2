@@ -87,7 +87,7 @@ export default function CommunityOtherPost({route, navigation }) {
     const [nick,setNick]=useState();
     const [state,setState]=useState();
     const [meLike,setMeLike]=useState(false);
-    const [likeList,setLikeList]=useState();
+    const [likeList,setLikeList]=useState([]);
     const [param,setParam]=useState()
     const [likeState,setLikeState]=useState()
     const [replynum,setReplyNum]=useState(0)
@@ -103,6 +103,7 @@ export default function CommunityOtherPost({route, navigation }) {
         setNumrerep(numrerep + 1);
     }
 
+    //댓글 작성하는 함수. 댓글 작성후에 reply collection에 추가를 하고 커멘트 숫자도 업로드한다
     async function writepost(b){
         
         var a=moment().toArray()
@@ -127,6 +128,8 @@ export default function CommunityOtherPost({route, navigation }) {
         setState(true)
         setComment("")
     }
+
+    //사용자 정보를 불러오는 함수. 불러온후에 사용자 닉네임을 설정한다(화면에 띄워줌)
     useEffect(()=>{
         auth().onAuthStateChanged(userAuth=>{
             setUser(userAuth)})
@@ -138,6 +141,8 @@ export default function CommunityOtherPost({route, navigation }) {
            
         }
     },[user,replynum])
+
+    //화면에 텍스트 및 좋아요를 띄워주는 함수.
     useEffect(()=>{
         
         console.log(docID,"HIHI")
@@ -147,12 +152,19 @@ export default function CommunityOtherPost({route, navigation }) {
                 setAuthor(doc.data().nickname)
                 setCreateDate(doc.data().day+" "+doc.data().time)
                 setLike(doc.data().like)
-                setLikeList(doc.data().whoLike)
+                setLikeList(likeList.concat(doc.data().whoLike))
                 
             })
-       
-},[likeState])
+           if(user){
+            console.log("This is the main point")
+            if(likeList.includes(user.uid)){
+                console.log("great!!!!!!!!!!")
+                setMeLike(true)
+            }
+        }
+},[likeState,user,nick])
 
+//댓글을 보여주는 함수. 
     useEffect(()=>{
         const {ID}=route.params
         setParam(ID)
@@ -176,8 +188,10 @@ export default function CommunityOtherPost({route, navigation }) {
         })
     
     },[state])
-    function likeMinus(a){
 
+
+    function likeMinus(a){
+        console.log(a,"this is a ")
         return ref.doc(param).update({
             whoLike:a,
             like:like-1
@@ -204,12 +218,12 @@ export default function CommunityOtherPost({route, navigation }) {
     function pressLike(){
         var lst=[]
         lst=lst.concat(likeList)
-        console.log(user.uid)
-        console.log(lst.indexOf(user.uid))
-        if(lst.indexOf(user.uid)>=0){
+        if(lst.includes(user.uid)){
             
             lst.splice(lst.indexOf(user.uid),1)
-            setLikeList(likeList.push(lst))
+            console.log(lst+"newone")
+            setLikeList([])
+            setLikeList(likeList.concat(lst))
             setMeLike(false)
             likeMinus(lst)
 
@@ -217,7 +231,7 @@ export default function CommunityOtherPost({route, navigation }) {
             
         lst.push(user.uid)
         
-        setLikeList(likeList.push(lst))
+        setLikeList(likeList.concat(lst))
         
         setMeLike(true)
         
