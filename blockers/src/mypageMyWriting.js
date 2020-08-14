@@ -33,7 +33,8 @@ const community = StyleSheet.create({
     },
     title: {
         fontSize: 16,
-        fontFamily: 'NunitoSans-Bold'
+        fontFamily: 'NunitoSans-Bold',
+        color: '#303030'
     },
     content: {
         fontSize: 14,

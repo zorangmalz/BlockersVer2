@@ -15,12 +15,14 @@ const setting = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
         marginBottom: 16,
-        marginLeft: 32
+        marginLeft: 32,
+        color: '#303030'
     },
     content : {
         fontSize: 16,
         fontFamily: 'NunitoSans-Regular',
-        marginLeft: 32
+        marginLeft: 32,
+        color: '#303030'
     }
 })
 
@@ -86,10 +88,10 @@ export default function SettingOften () {
             initialRouteName="공통"
             style={{borderBottomColor: '#5CC27B'}}
             tabBarOptions={{
-                labelStyle: { fontSize: 16, color: '#000000', fontFamily: 'NunitoSans-Regular' },
+                labelStyle: { fontSize: 16, color: '#303030', fontFamily: 'NunitoSans-Regular' },
                 tabStyle: {width: 80, borderBottomColor: '#5cc27b'},
                 indicatorStyle: {borderBottomColor: '#5cc27b', borderBottomWidth: 2, width: 80},
-                activeTintColor: '#000000',
+                activeTintColor: '#303030',
                 inactiveTintColor: '#333333'
             }}
         >

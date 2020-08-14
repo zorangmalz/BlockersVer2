@@ -24,13 +24,13 @@ const style = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
         opacity: 0.8,
-        color: '#000000',
+        color: '#303030',
         marginBottom: 8
     },
     title: {
         fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8,
         marginBottom: 16
     },
@@ -47,7 +47,7 @@ const style = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'NunitoSans-Regular',
         opacity: 0.6,
-        color: '#000000'
+        color: '#303030'
     },
     buttonStyle: {
         alignItems: 'center',

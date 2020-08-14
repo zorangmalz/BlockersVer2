@@ -13,7 +13,7 @@ const notice = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
         opacity: 0.8,
-        color: '#000000',
+        color: '#303030',
         marginLeft: 8
     },
     box: {

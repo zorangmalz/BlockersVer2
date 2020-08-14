@@ -23,7 +23,8 @@ export default function SettingVersion({navigation}) {
                     <Text style={{
                         fontSize:16,
                         fontFamily: 'NunitoSans-Regular',
-                        alignSelf: 'center'
+                        alignSelf: 'center',
+                        color: '#303030'
                     }}>최신버전입니다!</Text>
                 </ScrollView>
             </SafeAreaView>

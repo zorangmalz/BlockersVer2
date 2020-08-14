@@ -21,7 +21,7 @@ const solution = StyleSheet.create({
     mediumText: {
         fontSize: 18,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8
     },
     buttonBox: {
@@ -129,7 +129,7 @@ export default function SolutionSmoke({ navigation }) {
                     {ten === false ?
                         <TouchableOpacity onPressIn={pushten} onPress={()=>setTen(!ten)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>0~10 개피</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>0~10 개피</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -142,7 +142,7 @@ export default function SolutionSmoke({ navigation }) {
                     {twenty === false ?
                         <TouchableOpacity onPressIn={pushtwenty} onPress={()=>setTwenty(!twenty)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>11~20 개피</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>11~20 개피</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -155,7 +155,7 @@ export default function SolutionSmoke({ navigation }) {
                     {thirty === false ?
                         <TouchableOpacity onPressIn={pushthirty} onPress={()=>setThirty(!thirty)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>20개피 이상</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>20개피 이상</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -165,7 +165,7 @@ export default function SolutionSmoke({ navigation }) {
                             </View>
                         </TouchableOpacity>
                     }
-                    <TextInput placeholder="Ex) 30" placeholderTextColor="#707070" style={{width: '50%', height: 50, paddingBottom: 8, borderBottomColor: '#000000', borderBottomWidth: 1, fontSize: 21, fontFamily: 'NunitoSans-Bold', color: '#707070', alignSelf: 'center'}} />
+                    <TextInput placeholder="Ex) 30" placeholderTextColor="#707070" style={{width: '50%', height: 50, paddingBottom: 8, borderBottomColor: '#303030', borderBottomWidth: 1, fontSize: 21, fontFamily: 'NunitoSans-Bold', color: '#707070', alignSelf: 'center'}} />
                 </ScrollView>
             </SafeAreaView>
         </>

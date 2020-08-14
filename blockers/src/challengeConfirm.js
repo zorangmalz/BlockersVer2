@@ -37,15 +37,18 @@ const challenge = StyleSheet.create({
         fontSize: 12,
         width: 75,
         textAlign: "center",
-        fontFamily: 'NunitoSans-Regular'
+        fontFamily: 'NunitoSans-Regular', 
+        color: '#303030' 
     },
     largeText: {
         fontSize: 16,
-        fontFamily: 'NunitoSans-Bold'
+        fontFamily: 'NunitoSans-Bold', 
+        color: '#303030' 
     },
     mediumText: {
         fontSize: 14,
-        fontFamily: 'NunitoSans-Regular'
+        fontFamily: 'NunitoSans-Regular', 
+        color: '#303030' 
     },
     kitText : {
         fontSize: 18,
@@ -74,13 +77,13 @@ const password = StyleSheet.create({
     number : {
         fontSize: 30,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8
     },
     text: {
         fontSize: 25,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8
     },
     iconBox: {

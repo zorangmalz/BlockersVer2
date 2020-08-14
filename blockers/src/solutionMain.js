@@ -31,7 +31,7 @@ const welcome = StyleSheet.create({
     },
     mediumText: {
         fontSize: 18,
-        color: '#000000',
+        color: '#303030',
         textAlign: 'center',
         marginTop: 20,
         fontFamily: 'NunitoSans-Regular'
@@ -85,14 +85,14 @@ export default function SolutionMain({navigation}) {
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 16,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginTop: 20
                             }}>건너뛰시겠습니까?</Text>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Regular',
                                 fontSize: 14,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.6,
                                 textAlign: 'center'
                             }}>홈화면의 챗봇과 미션 클릭을 통해 다시 진행할 수 있습니다.</Text>
@@ -143,7 +143,7 @@ export default function SolutionMain({navigation}) {
                     borderRadius: 30
                 }}>
                     <TouchableOpacity onPress={skipView} style={{ alignSelf: 'flex-end', paddingRight: 17, paddingTop: 17 }}>
-                        <Text style={{ textDecorationLine: 'underline', fontSize: 12, fontFamily: 'NunitoSans-Regular' }}>건너뛰기</Text>
+                        <Text style={{ textDecorationLine: 'underline', fontSize: 12, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>건너뛰기</Text>
                     </TouchableOpacity>
                     <Text style={[welcome.largeText, { alignSelf: 'center', paddingTop: 8 }]}>Welcome Blockers</Text>
                     <View style={welcome.box}>

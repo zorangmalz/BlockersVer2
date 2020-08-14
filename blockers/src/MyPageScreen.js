@@ -110,7 +110,7 @@ export default function MyPageScreen({ navigation }) {
                     visible={userlogin}
                     onRequestClose={() => setUserlogin(false)}
                 >
-                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
+                    <View style={{ flex: 1, backgroundColor: '#303030', opacity: 0.4 }} />
                 </Modal>
                 <Modal
                     animationType="none"
@@ -132,14 +132,14 @@ export default function MyPageScreen({ navigation }) {
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 16,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginTop: 20
                             }}>로그인이 필요한서비스입니다.</Text>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Regular',
                                 fontSize: 14,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.6,
                                 textAlign: 'center'
                             }}>로그인하고 다양한 혜택을 만나보세요</Text>
@@ -226,7 +226,7 @@ export default function MyPageScreen({ navigation }) {
                             </View>
                             <View style={{ flexDirection: "row", marginTop: 2, justifyContent: 'flex-end', alignItems: 'center', }}>
                                 <TouchableOpacity onPress={() => navigation.navigate('WalletWithDrawal')} style={[style.buttonStyle, { backgroundColor: '#f0f0f0', borderBottomLeftRadius: 10 }]}>
-                                    <Text style={{ fontSize: 12, color: 'black', opacity: 0.6, fontFamily: 'NunitoSans-Bold' }}>출금</Text>
+                                    <Text style={{ fontSize: 12, color: '#303030', opacity: 0.6, fontFamily: 'NunitoSans-Bold' }}>출금</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => navigation.navigate('입금')} style={[style.buttonStyle, { backgroundColor: '#FFB83D', borderBottomRightRadius: 10 }]}>
                                     <Text style={{ fontSize: 12, color: 'white', fontFamily: 'NunitoSans-Bold' }}>충전</Text>

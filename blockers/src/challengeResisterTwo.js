@@ -39,15 +39,18 @@ const challenge = StyleSheet.create({
         fontSize: 12,
         width: 75,
         textAlign: "center",
-        fontFamily: 'NunitoSans-Regular'
+        fontFamily: 'NunitoSans-Regular',
+        color: '#303030'
     },
     largeText: {
         fontSize: 16,
-        fontFamily: 'NunitoSans-Bold'
+        fontFamily: 'NunitoSans-Bold',
+        color: '#303030'
     },
     mediumText: {
         fontSize: 14,
-        fontFamily: 'NunitoSans-Regular'
+        fontFamily: 'NunitoSans-Regular',
+        color: '#303030'
     },
     kitText : {
         fontSize: 18,
@@ -246,13 +249,13 @@ export default function ChallengeResisterTwo({navigation}) {
                                 <View style={{width: 12, height: 12, borderRadius: 6, backgroundColor:YesColor}} />
                             </View>
                         </TouchableOpacity>
-                        <Text style={{fontFamily: 'NunitoSans-Regular', fontSize: 14, color: '#000000', opacity: 0.8}}>있음</Text>
+                        <Text style={{fontFamily: 'NunitoSans-Regular', fontSize: 14, color: '#303030', opacity: 0.8}}>있음</Text>
                         <TouchableOpacity style={{marginLeft: 35, marginRight: 7}} onPress={NoPress}>
                             <View style={{width: 20, height: 20, borderRadius: 10, borderWidth: 2, borderColor: '#5CC27B', justifyContent: 'center', alignItems: 'center'}}>
                                 <View style={{width: 12, height: 12, borderRadius: 6, backgroundColor:NoColor}} />
                             </View>
                         </TouchableOpacity>
-                        <Text style={{fontFamily: 'NunitoSans-Regular', fontSize: 14, color: '#000000', opacity: 0.8}}>없음 (+ 12,500)</Text>
+                        <Text style={{fontFamily: 'NunitoSans-Regular', fontSize: 14, color: '#303030', opacity: 0.8}}>없음 (+ 12,500)</Text>
                     </View>
                     {YesorNo === 1 ? 
                         <Text style={{
@@ -275,7 +278,7 @@ export default function ChallengeResisterTwo({navigation}) {
                                 marginTop: 18,
                                 marginBottom: 8
                             }}>
-                                <Text style={{fontSize:14, fontFamily: 'NunitoSans-Bold'}}>우편번호</Text>
+                                <Text style={{fontSize:14, fontFamily: 'NunitoSans-Bold', color: '#303030'}}>우편번호</Text>
                                 <TextInput onChangeText={text => setAdressnumber(text)} placeholder="36917" placeholderTextColor="#C6C6C6" style={{fontSize: 14, width:"36%", height: 40, borderRadius: 5, borderWidth: 1, borderColor: '#C6C6C6', marginLeft: 27, fontFamily: 'NunitoSans-Regular'}}/>
                                 <TouchableOpacity style={{marginLeft: 16}} onPress={() => navigation.navigate('주소찾기')}>
                                     <View style={{
@@ -297,7 +300,7 @@ export default function ChallengeResisterTwo({navigation}) {
                                 marginLeft: 32,
                                 marginBottom: 8
                             }}>
-                                <Text style={{fontSize:14, fontFamily: 'NunitoSans-Bold', alignSelf: 'flex-start'}}>주소</Text>
+                                <Text style={{fontSize:14, fontFamily: 'NunitoSans-Bold', alignSelf: 'flex-start', color: '#303030'}}>주소</Text>
                                 <View style={{marginLeft: 54}}>
                                     <TextInput onChangeText={text => setAddress(text)} placeholder="경북 문경시 문경읍 온천1길 29" placeholderTextColor="#C6C6C6" style={{ fontSize: 14, fontFamily: 'NunitoSans-Regular', width: 251, height: 40, borderRadius: 5, borderWidth: 1, borderColor: '#C6C6C6' }} />
                                     <TextInput onChangeText={text => setDetailaddress(text)} placeholder="1동 202호 (대원퀸즈빌)" placeholderTextColor="#C6C6C6" style={{ fontSize: 14, fontFamily: 'NunitoSans-Regular', width: 251, height: 40, borderRadius: 5, borderWidth: 1, borderColor: '#C6C6C6', marginTop: 8 }} />
@@ -402,8 +405,8 @@ export default function ChallengeResisterTwo({navigation}) {
                                 marginLeft: 18,
                                 marginRight: 18
                             }}>
-                                <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold' }}>총금액</Text>
-                                <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold' }}>{totalmoney} Block</Text>
+                                <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold', color: '#303030'  }}>총금액</Text>
+                                <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold', color: '#303030'  }}>{totalmoney} Block</Text>
                             </View>
                         </View>
                         :
@@ -426,8 +429,8 @@ export default function ChallengeResisterTwo({navigation}) {
                                 marginLeft: 18,
                                 marginRight: 18
                             }}>
-                                <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold'}}>총금액</Text>
-                                <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold' }}>{money} Block</Text>
+                                <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold', color: '#303030' }}>총금액</Text>
+                                <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold', color: '#303030' }}>{money} Block</Text>
                             </View>
                         </View>
                     }

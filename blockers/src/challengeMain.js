@@ -35,22 +35,25 @@ const challenge = StyleSheet.create({
     largeText: {
         fontSize: 16,
         marginBottom: 12,
-        fontFamily: 'NunitoSans-Bold'
+        fontFamily: 'NunitoSans-Bold',
+        color: '#303030'
     },
     mediumText: {
         fontSize: 16,
         marginBottom: 12,
-        fontFamily: 'NunitoSans-Regular'
+        fontFamily: 'NunitoSans-Regular',
+        color: '#303030'
     },
     smallText: {
         fontSize: 14,
-        color: '#000000',
+        color: '#303030',
         marginBottom: 8,
         fontFamily: 'NunitoSans-Regular'
     },
     TokentrueText: {
         fontSize: 16,
-        fontFamily: 'NunitoSans-Bold'
+        fontFamily: 'NunitoSans-Bold',
+        color: '#303030'
     },
     TokenBox: {
         flexDirection: 'row',
@@ -129,14 +132,14 @@ export default function ChallengeMain({ navigation }) {
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 16,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginTop: 20
                             }}>로그인이 필요한서비스입니다.</Text>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Regular',
                                 fontSize: 14,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.6,
                                 textAlign: 'center'
                             }}>로그인하고 다양한 혜택을 만나보세요</Text>
@@ -210,14 +213,14 @@ export default function ChallengeMain({ navigation }) {
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 16,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginTop: 20
                             }}>이전 챌린지를 완료하셔야합니다.</Text>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Regular',
                                 fontSize: 14,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.6,
                                 textAlign: 'center'
                             }}>이전 챌린지로 참가신청 하시겠습니까?</Text>
@@ -278,7 +281,7 @@ export default function ChallengeMain({ navigation }) {
                                     loginview()
                             }>
                                 <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 12, fontWeight: 'bold', fontFamily: 'NunitoSans-Regular' }}>신청하기</Text>
+                                    <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>신청하기</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -295,7 +298,7 @@ export default function ChallengeMain({ navigation }) {
                                     loginview()
                             }>
                                 <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 12, fontWeight: 'bold' }}>신청하기</Text>
+                                    <Text style={{ fontSize: 12, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>신청하기</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -307,7 +310,7 @@ export default function ChallengeMain({ navigation }) {
                             </View>
                             <TouchableOpacity style={{ alignSelf: 'center' }}>
                                 <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 12, fontWeight: 'bold' }}>신청하기</Text>
+                                    <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>신청하기</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
@@ -343,7 +346,7 @@ export default function ChallengeMain({ navigation }) {
                                 marginBottom: 19
                             }}>
                                 <Image resizeMode="contain" style={{ width: 18, height: 20 }} source={require('./icon/fire.png')} />
-                                <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 8 }} >성공률</Text>
+                                <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 8, color: '#303030' }} >성공률</Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginBottom: 17 }}>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
@@ -355,9 +358,9 @@ export default function ChallengeMain({ navigation }) {
                                         justifyContent: 'center',
                                         alignItems: 'center'
                                     }}>
-                                        <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold' }}>60%</Text>
+                                        <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', color: '#303030' }}>60%</Text>
                                     </View>
-                                    <Text style={{ marginTop: 4, fontSize: 14 }}>1st</Text>
+                                    <Text style={{ marginTop: 4, fontSize: 14, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>1st</Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                     <View style={{
@@ -368,17 +371,17 @@ export default function ChallengeMain({ navigation }) {
                                         justifyContent: 'center',
                                         alignItems: 'center'
                                     }}>
-                                        <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold' }}>60%</Text>
+                                        <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', color: '#303030' }}>60%</Text>
                                     </View>
-                                    <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular' }}>2nd</Text>
+                                    <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>2nd</Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                     <View style={{ borderWidth: 3, width: 48, height: 48, borderColor: '#5CC27B' }} />
-                                    <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular' }}>3rd</Text>
+                                    <Text style={{ marginTop: 4, fontSize: 14, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>3rd</Text>
                                 </View>
                                 <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                                     <View style={{ borderWidth: 3, width: 48, height: 48, borderColor: '#5CC27B' }} />
-                                    <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular' }}>Final</Text>
+                                    <Text style={{ marginTop: 4, fontSize: 14, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>Final</Text>
                                 </View>
                             </View>
                             <View style={{
@@ -388,7 +391,7 @@ export default function ChallengeMain({ navigation }) {
                                 marginBottom: 40
                             }}>
                                 <Image resizeMode="contain" style={{ width: 18, height: 20 }} source={require('./icon/reward.png')} />
-                                <Text style={{ fontSize: 16, marginLeft: 8, fontFamily: 'NunitoSans-Bold' }}>상금정보</Text>
+                                <Text style={{ fontSize: 16, marginLeft: 8, color: '#303030', fontFamily: 'NunitoSans-Bold' }}>상금정보</Text>
                             </View>
                             <View style={challenge.TokenBox}>
                                 <Text style={[challenge.TokentrueText, { alignSelf: 'flex-start' }]}>총 참여자 수</Text>
@@ -438,7 +441,7 @@ export default function ChallengeMain({ navigation }) {
                         />
                     </ScrollView>
                 }
-                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => setUserlogined(!userlogined)}>
+                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => setChallengeToken(!ChallengeToken)}>
                     <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff' }}>DB 연결 전 임시 버튼</Text>
                     </View>

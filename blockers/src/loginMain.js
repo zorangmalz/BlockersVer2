@@ -25,18 +25,19 @@ const login = StyleSheet.create({
         height: 40,
         alignSelf: 'center',
         fontSize: 14,
-        fontWeight: 'bold'
+        fontFamily: 'NunitoSans-Bold',
+        color: '#303030'
     },
     text: {
         marginLeft: "5%",
         fontSize: 10,
-        fontWeight: 'normal',
-        color: '#000000',
+        fontFamily: 'NunitoSans-Regular',
+        color: '#303030',
         opacity: 0.4
     },
     buttontext: {
         fontSize: 14,
-        fontWeight: 'bold',
+        fontFamily: 'NunitoSans-Bold',
         color: '#ffffff'
     },
     buttonbox: {
@@ -50,8 +51,8 @@ const login = StyleSheet.create({
     },
     signtext: {
         fontSize: 12,
-        fontWeight: 'bold',
-        color: '#000000',
+        fontFamily: 'NunitoSans-Bold',
+        color: '#303030',
         opacity: 0.8,
         textDecorationLine: 'underline',
         marginRight: '5%',

@@ -38,9 +38,9 @@ function loginfind (state, action) {
 export default function LoginFind({navigation}) {
     const [click, dispatch] = useReducer(loginfind, 0);
     const backColor = click === 1 ? '#5cc27b' : '#ffffff'
-    const textColor = click === 1 ? '#ffffff' : '#000000'
+    const textColor = click === 1 ? '#ffffff' : '#303030'
     const back = click === 2 ? '#5cc27b' : '#ffffff'
-    const teColor = click === 2 ? '#ffffff' : '#000000'
+    const teColor = click === 2 ? '#ffffff' : '#303030'
     const idclick = () => {
         dispatch({
             type: 'id'

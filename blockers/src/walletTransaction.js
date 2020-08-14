@@ -25,12 +25,13 @@ const wallet = StyleSheet.create({
     date: {
         fontSize: 16,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000'
+        color: '#303030'
     },
     content: {
         marginTop: 24,
         fontSize: 16,
         fontFamily: 'NunitoSans-Regular',
+        color: '#303030'
     }
 })
 

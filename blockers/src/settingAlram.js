@@ -17,13 +17,13 @@ const setting = StyleSheet.create({
     title: {
         fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8
     },
     content: {
         fontSize: 16,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.6
     }
 })
@@ -59,7 +59,7 @@ function alramOne({ navigation }) {
                                 <Text style={{
                                     fontSize: 16,
                                     fontFamily: 'NunitoSans-Regular',
-                                    color: '#000000',
+                                    color: '#303030',
                                     opacity: 0.8
                                 }}>설정</Text>
                             </TouchableOpacity>

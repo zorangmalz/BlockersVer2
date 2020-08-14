@@ -19,7 +19,7 @@ const contents = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'NunitoSans-Bold',
     opacity: 0.8,
-    color: '#000000'
+    color: '#303030'
   },
   textinput: {
     width: "75%",
@@ -103,14 +103,14 @@ export default function ContentsBuy({ navigation }) {
               <Text style={{
                 fontFamily: 'NunitoSans-Bold',
                 fontSize: 16,
-                color: '#000000',
+                color: '#303030',
                 opacity: 0.8,
                 marginTop: 20
               }}>잔액이 부족합니다.</Text>
               <Text style={{
                 fontFamily: 'NunitoSans-Regular',
                 fontSize: 14,
-                color: '#000000',
+                color: '#303030',
                 opacity: 0.6,
                 textAlign: 'center'
               }}>충전하시겠습니까?</Text>

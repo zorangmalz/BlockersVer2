@@ -45,7 +45,7 @@ export default function SplashScreen({ navigation }) {
                         style={{ fontSize: 31, fontFamily: 'NunitoSans-Bold', color: '#5CC27B', marginTop: 16 }}
                     >Blockers</Text>
                     <Text
-                        style={{ fontSize: 24, fontFamily: 'NunitoSans-Bold', color: '#000000', marginTop: 16 }}
+                        style={{ fontSize: 24, fontFamily: 'NunitoSans-Bold', color: '#303030', marginTop: 16 }}
                     >We Block You</Text>
                 </TouchableOpacity>
             </SafeAreaView>

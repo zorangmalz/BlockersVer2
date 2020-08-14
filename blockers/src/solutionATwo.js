@@ -21,7 +21,7 @@ const solution = StyleSheet.create({
     mediumText: {
         fontSize: 18,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8
     },
     buttonBox: {
@@ -161,7 +161,7 @@ export default function SolutionATwo({ navigation }) {
                     {one === false ?
                         <TouchableOpacity onPressIn={pushone} onPress={()=>setOne(!one)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>{quesone}</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>{quesone}</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -174,7 +174,7 @@ export default function SolutionATwo({ navigation }) {
                     {two === false ?
                         <TouchableOpacity onPressIn={pushtwo} onPress={()=>setTwo(!two)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>{questwo}</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>{questwo}</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -187,7 +187,7 @@ export default function SolutionATwo({ navigation }) {
                     {three === false ?
                         <TouchableOpacity onPressIn={pushthree} onPress={()=>setThree(!three)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>{questhree}</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>{questhree}</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -200,7 +200,7 @@ export default function SolutionATwo({ navigation }) {
                     {four === false ?
                         <TouchableOpacity onPressIn={pushfour} onPress={()=>setFour(!four)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>{quesfour}</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>{quesfour}</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -213,7 +213,7 @@ export default function SolutionATwo({ navigation }) {
                     {five === false ?
                         <TouchableOpacity onPressIn={pushfive} onPress={()=>setFive(!five)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>{quesfive}</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>{quesfive}</Text>
                             </View>
                         </TouchableOpacity>
                         :
