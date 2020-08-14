@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
@@ -12,18 +12,18 @@ import {
 } from 'react-native';
 
 const setting = StyleSheet.create({
-    agree : {
+    agree: {
         fontSize: 14,
         fontFamily: 'NunitoSans-Regular',
         color: '#000000',
         opacity: 0.6,
         marginLeft: 8
     },
-    agreeBox : {
-        width: 16, 
-        height: 16, 
-        borderColor: '#000000', 
-        borderWidth: 0.7, 
+    agreeBox: {
+        width: 16,
+        height: 16,
+        borderColor: '#000000',
+        borderWidth: 0.7,
         borderRadius: 2,
         alignItems: 'center',
         justifyContent: 'center'
@@ -32,6 +32,11 @@ const setting = StyleSheet.create({
 
 export default function MyPageRule({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
+    const modalbutton = () => {
+        setTimeout(() => {
+            setModalVisible(true)
+        }, 200)
+    }
     const [agreeTwo, setAgreeTwo] = useState(true);
     const TwoCheck = () => { setAgreeTwo(!agreeTwo) }
     const TwoAgree = agreeTwo === true ? require('./icon/exitcheck.png') : '';
@@ -41,43 +46,94 @@ export default function MyPageRule({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
-                <ScrollView>
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={modalVisible}
-                        onRequestClose={() => setModalVisible(!modalVisible)}
-                    >
-                        <View style={{ position: 'absolute', top: "33%", justifyContent: 'space-between', borderColor: '#000000', borderWidth: 1, borderRadius: 10, alignSelf: 'center', width: 250, height: 170, alignItems: 'center', backgroundColor: '#ffffff' }}>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
+                </Modal>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{
+                            width: 280,
+                            height: 180,
+                            borderRadius: 20,
+                            backgroundColor: '#ffffff',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            borderWidth: 1,
+                            borderColor: '#cccccc'
+                        }}>
                             <Text style={{
-                                fontSize: 16,
                                 fontFamily: 'NunitoSans-Bold',
+                                fontSize: 16,
+                                color: '#000000',
+                                opacity: 0.8,
                                 marginTop: 20
                             }}>거부하시겠습니까?</Text>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Regular',
+                                fontSize: 14,
+                                color: '#000000',
+                                opacity: 0.6,
+                                textAlign: 'center',
+                                paddingRight: 12,
+                                paddingLeft: 12
+                            }}>유용한 정보와 혜택을 놓칠수 있습니다!</Text>
                             <View style={{
-                                alignItems: 'center'
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                marginTop: 15
                             }}>
-                                <Text style={{
-                                    fontSize: 12,
-                                    fontFamily: 'NunitoSans-Regular'
-                                }}>유용한 정보와 혜택을 놓칠수 있습니다!</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderLeftWidth: 1, borderRightWidth: 0.5, borderBottomLeftRadius: 10, borderTopWidth: 1 }} 
-                                    onPress={() => {setModalVisible(!modalVisible);
-                                                    setAgreeTwo(true);
-                                }}>
-                                    <Text>cancel</Text>
+                                <TouchableOpacity onPress={() => {
+                                    setModalVisible(!modalVisible);
+                                    setAgreeTwo(true);
+                                }}
+                                    style={{
+                                        width: 140,
+                                        height: 55,
+                                        borderBottomLeftRadius: 20,
+                                        backgroundColor: '#999999',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>Cancel</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderRightWidth: 1, borderLeftWidth: 0.5, borderBottomRightRadius: 10, borderTopWidth: 1 }} onPress={() => {
+                                <TouchableOpacity onPress={() => {
                                     setAgreeTwo(false);
                                     setModalVisible(false);
-                                }}>
-                                    <Text>거부하기</Text>
+                                }}
+                                    style={{
+                                        width: 140,
+                                        height: 55,
+                                        borderBottomRightRadius: 20,
+                                        backgroundColor: '#5cc27b',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>거부하기</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
-                    </Modal>
+                    </View>
+                </Modal>
+                <ScrollView>
                     <View style={{
                         marginLeft: 16,
                         marginRight: 16,
@@ -190,7 +246,7 @@ export default function MyPageRule({ navigation }) {
                                 opacity: 0.8,
                                 marginLeft: 8
                             }}>
-                                <Text style={{color: 'red'}}>(선택) </Text>
+                                <Text style={{ color: 'red' }}>(선택) </Text>
                                 <Text>마케팅, 홍보 약관</Text>
                             </Text>
                         </View>
@@ -200,8 +256,8 @@ export default function MyPageRule({ navigation }) {
                             justifyContent: 'flex-end'
                         }}>
                             <TouchableOpacity onPress={() => {
-                                TwoCheck;
-                                setModalVisible(true);
+                                TwoCheck();
+                                modalbutton();
                             }}>
                                 <View style={setting.agreeBox}>
                                     <Image resizeMode="contain" source={noTwoAgree} />

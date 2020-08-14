@@ -28,7 +28,7 @@ const solution = StyleSheet.create({
         height: 50,
         borderRadius: 28,
         borderWidth: 1,
-        borderColor: '#000000',
+        borderColor: '#999999',
         marginLeft: 38,
         marginRight: 38,
         marginBottom: 16,

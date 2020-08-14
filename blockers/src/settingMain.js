@@ -26,45 +26,105 @@ const setting = StyleSheet.create({
 
 export default function SettingMain({ navigation }) {
     const [modalVisible, setModalVisible] = useState(false);
-    function signout(){
+    const modalbutton = () => {
+        setTimeout(() => {
+            setModalVisible(true)
+        }, 200)
+    }
+    function signout() {
         auth()
-  .signOut()
-  .then(() => console.log('User signed out!'));
-  LoginManager.logOut()
+            .signOut()
+            .then(() => console.log('User signed out!'));
+        LoginManager.logOut()
 
-  navigation.popToTop();
-                                    setModalVisible(false);
+        navigation.popToTop();
+        setModalVisible(false);
     }
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
-                <ScrollView style={{ marginBottom: 70 }}>
-                    <Modal
-                        animationType="slide"
-                        transparent={true}
-                        visible={modalVisible}
-                        onRequestClose={() => setModalVisible(!modalVisible)}
-                    >
-                        <View style={{ position: 'absolute', top: "33%", justifyContent: 'space-between', borderColor: '#000000', borderWidth: 1, borderRadius: 10, alignSelf: 'center', width: 250, height: 170, alignItems: 'center', backgroundColor: '#ffffff' }}>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
+                </Modal>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={modalVisible}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{
+                            width: 280,
+                            height: 180,
+                            borderRadius: 20,
+                            backgroundColor: '#ffffff',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            borderWidth: 1,
+                            borderColor: '#cccccc'
+                        }}>
                             <Text style={{
-                                fontSize: 16,
                                 fontFamily: 'NunitoSans-Bold',
+                                fontSize: 16,
+                                color: '#000000',
+                                opacity: 0.8,
                                 marginTop: 20
                             }}>로그아웃하시겠습니까?</Text>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderLeftWidth: 1, borderRightWidth: 0.5, borderBottomLeftRadius: 10, borderTopWidth: 1 }} onPress={() => setModalVisible(!modalVisible)}>
-                                    <Text>취소</Text>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Regular',
+                                fontSize: 14,
+                                color: '#000000',
+                                opacity: 0.6,
+                                textAlign: 'center',
+                                paddingRight: 12,
+                                paddingLeft: 12
+                            }}>출금을 완료하지 않으면 탈퇴가 불가능합니다</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                marginTop: 15
+                            }}>
+                                <TouchableOpacity onPress={() => setModalVisible(false)} style={{
+                                    width: 140,
+                                    height: 55,
+                                    borderBottomLeftRadius: 20,
+                                    backgroundColor: '#999999',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>취소</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{ backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center', width: 125, height: 40, borderColor: '#000000', borderRightWidth: 1, borderLeftWidth: 0.5, borderBottomRightRadius: 10, borderTopWidth: 1 }} 
-                                onPress={
-                                    signout
-                                }>
-                                    <Text>로그아웃</Text>
+                                <TouchableOpacity onPress={signout}
+                                    style={{
+                                        width: 140,
+                                        height: 55,
+                                        borderBottomRightRadius: 20,
+                                        backgroundColor: '#5cc27b',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>로그아웃</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
-                    </Modal>
+                    </View>
+                </Modal>
+                <ScrollView style={{ marginBottom: 70 }}>
                     <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('문의하기')}>
                         <Text style={setting.mainText}>문의하기</Text>
                     </TouchableOpacity>
@@ -92,7 +152,7 @@ export default function SettingMain({ navigation }) {
                         <Text style={setting.mainText}>탈퇴하기</Text>
                     </TouchableOpacity>
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
-                    <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => setModalVisible(true)} >
+                    <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={modalbutton} >
                         <Text style={setting.mainText}>로그아웃</Text>
                     </TouchableOpacity>
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />

@@ -54,8 +54,17 @@ export default function SolutionMain({navigation}) {
     }
     return (
         <>
+            <SafeAreaView style={{flex: 0}} />
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#F8F8F8', justifyContent: 'center' }}>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={skipmodal}
+                    onRequestClose={() => setSkipmodal(false)}
+                >
+                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
+                </Modal>
                 <Modal
                     animationType="none"
                     transparent={true}

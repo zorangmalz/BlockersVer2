@@ -180,7 +180,15 @@ export default function CommunityWrite ({navigation}) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-            <Modal
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={writeerror}
+                    onRequestClose={() => setWriteerror(false)}
+                >
+                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
+                </Modal>
+                <Modal
                     animationType="none"
                     transparent={true}
                     visible={writeerror}
