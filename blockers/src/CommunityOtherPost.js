@@ -18,6 +18,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import moment from "moment"
 import { useScreens } from 'react-native-screens';
+import storage from '@react-native-firebase/storage';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -94,7 +95,10 @@ export default function CommunityOtherPost({route, navigation }) {
     const{docID}=route.params
     const [numrep, setNumrep] = useState(0);
     const [numrerep, setNumrerep] = useState(0);
-    const [commentNum,setCommentNum]=useState();
+    const [imageSource, setImageSource] = useState(undefined);
+    const [time,setTime]=useState();
+    const [realWriterUid,setRealWriterUid]=useState();
+
     const plusnumrep = () => { 
         setNumrep(numrep + 1);
     }
@@ -146,25 +150,45 @@ export default function CommunityOtherPost({route, navigation }) {
     useEffect(()=>{
         
         console.log(docID,"HIHI")
+        async function load(){
         firestore().collection("Community1").doc(docID).onSnapshot(doc=>{
                 setTitle(doc.data().title)
                 setContent(doc.data().context)
                 setAuthor(doc.data().nickname)
                 setCreateDate(doc.data().day+" "+doc.data().time)
-                setLike(doc.data().like)
-                setLikeList(likeList.concat(doc.data().whoLike))
-                
-            })
+                setLike(doc.data().whoLike.length)
+                setLikeList(doc.data().whoLike)
+                setTime(doc.data().fullTime)
+                setRealWriterUid(doc.data().writerUid)
+            })}
+            load()
            if(user){
             console.log("This is the main point")
             if(likeList.includes(user.uid)){
                 console.log("great!!!!!!!!!!")
                 setMeLike(true)
+                
+                // setImageSource(url)
+            } if(user.uid===realWriterUid){
+                setIslogined(true)
+            }else{
+                setIslogined(false)
             }
-        }
+            hi()
+           
+        }     
 },[likeState,user,nick])
 
+//사진 불러오는 함수
+async function hi(){
+    
+const url = await storage()
+  .refFromURL("gs://blockers-8a128.appspot.com/community1/"+String(title+author+time))
+  .getDownloadURL();
+  
+  setImageSource(url)}
 //댓글을 보여주는 함수. 
+
     useEffect(()=>{
         const {ID}=route.params
         setParam(ID)
@@ -191,53 +215,56 @@ export default function CommunityOtherPost({route, navigation }) {
 
 
     function likeMinus(a){
-        console.log(a,"this is a ")
+        
         return ref.doc(param).update({
             whoLike:a,
-            like:like-1
-            
         }).then(() => {
-            
+            console.log("minus success")
             setLikeState(true)
           });
     }
     function likePlus(a){
-        
         return ref.doc(param).update({
             whoLike:a,
-            like:like+1
-            
         }).then(() => {
-            
+            console.log("plus success")
             setLikeState(true)
-            setLikeList(a)
             
+        
           });
     }
 
     function pressLike(){
-        var lst=[]
-        lst=lst.concat(likeList)
-        if(lst.includes(user.uid)){
+        const userUID=user.uid
+        console.log(user.uid,"user.uid")
+        console.log(likeList,"when pressed")
+        if(likeList.includes(user.uid)){
             
-            lst.splice(lst.indexOf(user.uid),1)
-            console.log(lst+"newone")
-            setLikeList([])
-            setLikeList(likeList.concat(lst))
+            setLikeList(likeList.splice(likeList.indexOf(user.uid),1))
+            console.log(likeList,"should be empty or user.uid is deleted")
             setMeLike(false)
-            likeMinus(lst)
-
+            likeMinus(likeList)
         }else{
-            
-        lst.push(user.uid)
         
-        setLikeList(likeList.concat(lst))
-        
-        setMeLike(true)
-        
-        likePlus(lst)}
+        setLikeList(likeList.push(userUID));
+        console.log(likeList,"likelist updated");
+        setMeLike(true);
+        likePlus(likeList);}
     }
+    function deletePost(){
+       return ref.doc(param).delete().then(()=>{
+        const filename=title+nick+time
+        var desertRef = storage().ref("community1/"+filename);
 
+        // Delete the file
+        desertRef.delete().then(function() {
+            navigation.goBack()
+        }).catch(function(error) {
+          // Uh-oh, an error occurred!
+        });
+       
+       })
+    }
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -267,15 +294,8 @@ export default function CommunityOtherPost({route, navigation }) {
                                                 text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
                                             },
                                             {
-                                                text: '삭제하기', onPress: () => Alert.alert(
-                                                    '삭제완료',
-                                                    '',
-                                                    [
-                                                        {
-                                                            text: 'OK', onPress: () => navigation.navigate('자유게시판')
-                                                        }
-                                                    ]
-                                                )
+                                                text: '삭제하기', onPress: () => deletePost()
+                                                
                                             }
                                         ]
                                     )
@@ -324,12 +344,14 @@ export default function CommunityOtherPost({route, navigation }) {
                             justifyContent: 'center',
                             alignItems: 'center',
                         }}>
+                            
                             <Image resizeMode="contain" style={community.icon} source={require("./icon/brori.png")} />
                             <Text style={community.author}>{author}</Text>
                         </View>
                         <Text style={community.dateandrepair}>{createdate}</Text>
                     </View>
-                    <Image resizeMode="cover" style={community.image} source={require("./icon/brorigraduate.png")} />
+                    {imageSource && <Image style={community.image} resizeMode="cover" source={{uri: imageSource}}/>}
+                    
                     <View style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',

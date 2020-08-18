@@ -77,6 +77,8 @@ export default function CommunityWrite ({navigation}) {
     const [nick,setNick]=useState()
     
     useEffect(()=>{
+
+console.log(utils.FilePath.PICTURES_DIRECTORY);
         auth().onAuthStateChanged(userAuth=>{
             setuser(userAuth)
             
@@ -89,22 +91,27 @@ export default function CommunityWrite ({navigation}) {
            
         }
     },[user])
-    async function uploadImage(){
+    async function uploadImage(a){
         const uri=imageOne;
-        const filename=title+nick
-        const reference = firebase.storage().ref(filename);
-        const pathToFile = `${utils.FilePath.PICTURES_DIRECTORY}/black-t-shirt-sm.png`;
+        const filename=title+nick+a
+        const reference = storage().ref("community1/"+filename);
+        const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
-        await reference.putFile(pathToFile);
+        await reference.putFile(uploadUri);
     }
     async function writePost(){
+        
+
         var a=moment().toArray()
         console.log(a)
+
         if(a[1]===12){
             a[1]=1
         }else{
             a[1]=a[1]+1
         }
+        
+        uploadImage(a)
         await ref.doc(a+title).set({
             context:content,
             like:0,
@@ -116,10 +123,19 @@ export default function CommunityWrite ({navigation}) {
             docName:a+title,
             nickname:nick,
             whoLike:[],
-            commentNum:0
+            commentNum:0,
+            fullText:title+content
         })
-
-        navigation.goBack()
+        Alert.alert(
+            '업로드 완료',
+            '',
+            [
+                {
+                    text: 'OK', onPress: () => navigation.pop()
+                }
+            ]
+        )
+       
     }
     const options = {
         title: '사진가져오기',
@@ -130,7 +146,8 @@ export default function CommunityWrite ({navigation}) {
         storageOptions: {
             skipBackup: true,
             path: 'images',
-        }
+        },
+        quality:0.3
     };
 
     const showCameraRoll1 = () => {

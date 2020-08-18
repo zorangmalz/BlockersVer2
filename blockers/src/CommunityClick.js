@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useCallback } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -10,7 +10,7 @@ import {
     Image,
     TouchableOpacity,
     Dimensions,
-    ActivityIndicator, FlatList
+    ActivityIndicator, FlatList,RefreshControl
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -83,11 +83,17 @@ export default function CommunityClick({ navigation }) {
     const [ items, setItems ] = useState([]);
     const [replyNum,setReplyNum]=useState();
     const[timer,settimer]=useState();
-    // ...
-   
-    useEffect(() => {
-    
-      return ref.onSnapshot(querySnapshot => {
+    const[filtered,setFiltered]=useState();
+    const [refreshing, setRefreshing] = useState(false);
+
+    const wait = (timeout) => {
+        return new Promise(resolve => {
+          setTimeout(resolve, timeout);
+        });
+      }
+
+      
+    async function load(){
         const list = [];
         var a=moment().toArray()
         if (a[1]===12){
@@ -96,6 +102,47 @@ export default function CommunityClick({ navigation }) {
             a[1]=a[1]+1
         }
         
+        if (filtered){
+            const a=String(search)
+            console.log(a.split(""))
+            ref.onSnapshot(querySnapshot => {
+                querySnapshot.forEach(function(doc){
+                    
+                    const check=doc.data().fullText
+                    if(check.includes(a)){
+                    if(doc.data().fullTime){  
+                        if (a[0]===doc.data().fullTime[0]&&a[1]===doc.data().fullTime[1]&&a[2]===doc.data().fullTime[2]){
+                         
+                        list.push({
+                          title: doc.data().title,
+                          time:doc.data().time,
+                          context:doc.data().context,
+                          like:doc.data().whoLike.length,
+                          docname:doc.data().docName,
+                          replynum:doc.data().commentNum
+                        });}
+                        else{
+                          list.push({
+                              title: doc.data().title,
+                              time:doc.data().day,
+                              context:doc.data().context,
+                              like:doc.data().whoLike.length,
+                              docname:doc.data().docName,
+                              replynum:doc.data().commentNum
+                            });}
+                          }
+                        }
+                })
+                setItems(list);
+     
+                if (loading) {
+                  setLoading(false);
+                }
+            }).catch(function(error) {
+                console.log("Error getting documents: ", error);
+            });
+        }else{
+      ref.onSnapshot(querySnapshot => {
         querySnapshot.forEach(doc => {
           if(doc.data().fullTime){  
           if (a[0]===doc.data().fullTime[0]&&a[1]===doc.data().fullTime[1]&&a[2]===doc.data().fullTime[2]){
@@ -104,7 +151,7 @@ export default function CommunityClick({ navigation }) {
             title: doc.data().title,
             time:doc.data().time,
             context:doc.data().context,
-            like:doc.data().like,
+            like:doc.data().whoLike.length,
             docname:doc.data().docName,
             replynum:doc.data().commentNum
           });}
@@ -113,14 +160,14 @@ export default function CommunityClick({ navigation }) {
                 title: doc.data().title,
                 time:doc.data().day,
                 context:doc.data().context,
-                like:doc.data().like,
+                like:doc.data().whoLike.length,
                 docname:doc.data().docName,
                 replynum:doc.data().commentNum
               });}
             }
-        console.log(list)
-        });
         
+        });
+    
         setItems(list);
      
         if (loading) {
@@ -128,8 +175,17 @@ export default function CommunityClick({ navigation }) {
         }
         
       });
-    }, []);
-    
+    }}
+    useEffect(() => {
+
+    load()
+    }, [filtered]);
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        load()
+        wait(2000).then(() => setRefreshing(false));
+      }, [refreshing]);
+      
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -143,14 +199,21 @@ export default function CommunityClick({ navigation }) {
                         alignItems: 'center',
                         justifyContent: 'flex-end',
                         alignSelf: 'flex-end',
-                    }}>
+                        
+                    }}
+                    >
+                        <TouchableOpacity onPress={()=>setFiltered(true)}>
                         <TextInput value={search} onChangeText={text => setSearch(text)} placeholder="검색어를 입력하세요" style={community.textinput} />
                         <Image style={{width: 24, height: 24}} source={require('./icon/search.png')} resizeMode="contain" />
+                        </TouchableOpacity>
                     </View>
                     <FlatList 
-                    
+                    refreshControl={
+                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                    }
                     data={items}
                     inverted={true}
+                    keyExtractor={items.docname}
                     renderItem={({item})=>(
                         <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost',{docID:item.docname,ID:item.docname})} >
                         <View style={community.board}>
