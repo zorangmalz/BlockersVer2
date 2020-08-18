@@ -21,7 +21,7 @@ const contents = StyleSheet.create({
   title: {
     fontSize: 16,
     fontFamily: 'NunitoSans-Bold',
-    color: '#000000',
+    color: '#303030',
     opacity: 0.8,
     margin: 16
   },
@@ -30,7 +30,7 @@ const contents = StyleSheet.create({
     fontFamily: 'NunitoSans-Bold',
     marginLeft: 16,
     marginBottom: 16,
-    color: '#000000',
+    color: '#303030',
     opacity: 0.4,
     textDecorationLine: 'line-through'
   },
@@ -47,7 +47,7 @@ const contents = StyleSheet.create({
   company: {
     fontSize: 16,
     fontFamily: 'NunitoSans-Regular',
-    color: '#000000',
+    color: '#303030',
     opacity: 0.8
   },
   pricebox: {
@@ -61,7 +61,7 @@ const contents = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'NunitoSans-Bold',
     opacity: 0.8,
-    color: '#000000',
+    color: '#303030',
     marginRight: 8
   }
 })
@@ -85,7 +85,7 @@ export default function ContentsInfo({ navigation }) {
           visible={modallogin}
           onRequestClose={() => setModallogin(false)}
         >
-          <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
+          <View style={{ flex: 1, backgroundColor: '#303030', opacity: 0.4 }} />
         </Modal>
         <Modal
           animationType="none"
@@ -107,14 +107,14 @@ export default function ContentsInfo({ navigation }) {
               <Text style={{
                 fontFamily: 'NunitoSans-Bold',
                 fontSize: 16,
-                color: '#000000',
+                color: '#303030',
                 opacity: 0.8,
                 marginTop: 20
               }}>로그인이 필요한서비스입니다.</Text>
               <Text style={{
                 fontFamily: 'NunitoSans-Regular',
                 fontSize: 14,
-                color: '#000000',
+                color: '#303030',
                 opacity: 0.6,
                 textAlign: 'center'
               }}>로그인하고 다양한 혜택을 만나보세요</Text>
@@ -184,7 +184,7 @@ export default function ContentsInfo({ navigation }) {
                 fontSize: 10,
                 fontFamily: 'NunitoSans-Bold',
                 opacity: 0.8,
-                color: '#000000'
+                color: '#303030'
               }} >Step 03</Text>
             </TouchableOpacity>
           </View>

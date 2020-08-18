@@ -22,14 +22,14 @@ export default function SettingExitComplete({navigation}) {
                     <Text style={{
                         fontSize: 24,
                         fontFamily: 'NunitoSans-Bold',
-                        color: '#000000',
+                        color: '#303030',
                         opacity: 0.7,
                         alignSelf: 'center'
                     }}>탈퇴 완료</Text>
                     <Text style={{
                         fontSize: 16,
                         fontFamily: 'NunitoSans-Regular',
-                        color: '#000000',
+                        color: '#303030',
                         opacity: 0.6,
                         alignSelf: 'center',
                         marginTop: 16

@@ -53,7 +53,8 @@ const styles = {
   textSub: {
     fontSize: 16,
     fontFamily: 'NunitoSans-Bold',
-    textAlign: "center"
+    textAlign: "center",
+    color: '#303030'
   }
 }
 

@@ -53,7 +53,7 @@ const resource = StyleSheet.create({
     smallText : {
         fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.6
     }
 })
@@ -249,27 +249,27 @@ useEffect(()=>{
                         </View>
                         {startButton ?
                             <View style={{marginTop: 8, width: "100%"}}>
-                                <Text style={{alignSelf:'center', fontSize: 16, fontFamily: 'NunitoSans-Bold', marginBottom: 16}}>Verification Period({month}/{day}~{month}/{day+2})</Text>
+                                <Text style={{alignSelf:'center', fontSize: 16, fontFamily: 'NunitoSans-Bold', marginBottom: 16, color: '#303030'}}>Verification Period({month}/{day}~{month}/{day+2})</Text>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
                                     <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                         <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
                                             <Image resizeMode="contain" source={require('./icon/checkred.png')} />
                                         </View>
-                                        <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>1st</Text>
+                                        <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.8 }}>1st</Text>
                                     </View>
                                     <View style={{ justifyContent: 'center', alignItems: 'center'}}>
                                         <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
                                             <Image resizeMode="contain" source={require('./icon/checkred.png')} />
                                         </View>
-                                        <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>2nd</Text>
+                                        <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.8 }}>2nd</Text>
                                     </View>
                                     <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                         <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B' }} />
-                                        <Text style={{marginTop:4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>3rd</Text>
+                                        <Text style={{marginTop:4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.8 }}>3rd</Text>
                                     </View>
                                     <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                         <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B' }} />
-                                        <Text style={{marginTop:4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.8 }}>Final</Text>
+                                        <Text style={{marginTop:4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.8 }}>Final</Text>
                                     </View>
                                 </View>
                                 <TouchableOpacity style={{ marginTop: 8, alignSelf: 'center'}} onPress={()=>{navigation.navigate('Verification')}}>
@@ -281,7 +281,7 @@ useEffect(()=>{
                             :
                             <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 33 }}>
                                 <Text style={{ fontSize: 24, textAlign: 'center' }}>
-                                    <Text style={{ fontFamily: 'NunitoSans-ExtraBold', color: '#000000', opacity: 0.8 }}>Start your Smoking Cessation With </Text>
+                                    <Text style={{ fontFamily: 'NunitoSans-ExtraBold', color: '#303030', opacity: 0.8 }}>Start your Smoking Cessation With </Text>
                                     <Text style={{ fontFamily: 'NunitoSans-ExtraBold', color: '#5CC27B' }}>Blockers</Text>
                                 </Text>
                                 <TouchableOpacity style={{ marginTop: 32 }} onPress={() => setStartButton(true)}>
@@ -294,9 +294,9 @@ useEffect(()=>{
                     </Swiper>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', marginTop: 16, paddingLeft: "12%" }}>
                         <Image style={{width: 15, height: 20, marginRight: 8}} resizeMode="stretch" source={require('./icon/lightbulb.png')} />
-                        <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', color: '#000000', opacity: 0.6}}>오늘의 팁</Text>
+                        <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', color: '#303030', opacity: 0.6}}>오늘의 팁</Text>
                     </View>
-                    <Text style={{alignSelf: 'center', fontSize: 16, fontFamily: 'NunitoSans-Regular', color: '#000000', opacity: 0.6, marginTop: 8}}>물을 많이 마시면 니코틴 배출이 빨라집니다!</Text>
+                    <Text style={{alignSelf: 'center', fontSize: 16, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.6, marginTop: 8}}>물을 많이 마시면 니코틴 배출이 빨라집니다!</Text>
                     <View style={{
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -329,16 +329,16 @@ useEffect(()=>{
                                 paddingRight: 14
                             }}>
                                 <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#FFB83D' }} />
-                                <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 10 }}>Challenge {num}</Text>
+                                <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 10, color: '#303030' }}>Challenge {num}</Text>
                             </View>
                             <Text style={{ marginLeft: 32 }}>
                                 <Text style={{ fontSize: 14, color: '#979797', fontFamily: 'NunitoSans-Regular' }}>180 days Smoking Cessation Challenge with</Text>
-                                <Text style={{ fontSize: 14, color: '#000000', fontFamily: 'NunitoSans-Bold' }}> Blockers</Text>
+                                <Text style={{ fontSize: 14, color: '#303030', fontFamily: 'NunitoSans-Bold' }}> Blockers</Text>
                             </Text>
                         </View>
                         <TouchableOpacity style={{ marginTop: 40, marginRight: 20 }} onPress={()=> navigation.navigate('Challenge')}>
                             <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Regular' }}>Start</Text>
+                                <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>Start</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -361,16 +361,16 @@ useEffect(()=>{
                                 paddingRight: 14,
                             }}>
                                 <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#FFB83D' }} />
-                                <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 10 }}>Mission {num}</Text>
+                                <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 10, color: '#303030' }}>Mission {num}</Text>
                             </View>
                             <Text style={{ marginLeft: 32 }}>
                                 <Text style={{ fontSize: 14, color: '#979797', fontFamily: 'NunitoSans-Regular' }}>180 days Smoking Cessation Challenge with</Text>
-                                <Text style={{ fontSize: 14, color: '#000000', fontFamily: 'NunitoSans-Bold' }}> Blockers</Text>
+                                <Text style={{ fontSize: 14, color: '#303030', fontFamily: 'NunitoSans-Bold' }}> Blockers</Text>
                             </Text>
                         </View>
                         <TouchableOpacity style={{ marginTop: 40, marginRight: 20 }} onPress={()=> navigation.navigate('Mission')}>
                             <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Regular' }}>Start</Text>
+                                <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>Start</Text>
                             </View>
                         </TouchableOpacity>
                     </View>

@@ -33,13 +33,13 @@ const password = StyleSheet.create({
     number : {
         fontSize: 30,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8
     },
     text: {
         fontSize: 25,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8
     },
     iconBox: {

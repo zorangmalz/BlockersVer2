@@ -21,7 +21,7 @@ const solution = StyleSheet.create({
     mediumText: {
         fontSize: 18,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8
     },
     buttonBox: {
@@ -142,7 +142,7 @@ export default function SolutionSmokeTwo({ navigation }) {
                     {one === false ?
                         <TouchableOpacity onPressIn={pushone} onPress={()=>setOne(!one)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>5분 이내</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>5분 이내</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -155,7 +155,7 @@ export default function SolutionSmokeTwo({ navigation }) {
                     {two === false ?
                         <TouchableOpacity onPressIn={pushtwo} onPress={()=>setTwo(!two)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>30분 이내</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>30분 이내</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -168,7 +168,7 @@ export default function SolutionSmokeTwo({ navigation }) {
                     {three === false ?
                         <TouchableOpacity onPressIn={pushthree} onPress={()=>setThree(!three)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>1시간 이내</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>1시간 이내</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -181,7 +181,7 @@ export default function SolutionSmokeTwo({ navigation }) {
                     {four === false ?
                         <TouchableOpacity onPressIn={pushfour} onPress={()=>setFour(!four)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>1시간 이후</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>1시간 이후</Text>
                             </View>
                         </TouchableOpacity>
                         :

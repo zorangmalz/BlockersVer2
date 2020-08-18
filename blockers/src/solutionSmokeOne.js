@@ -21,7 +21,7 @@ const solution = StyleSheet.create({
     mediumText: {
         fontSize: 18,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8
     },
     buttonBox: {
@@ -144,7 +144,7 @@ export default function SolutionSmokeOne({ navigation }) {
                     {yesone === false ?
                         <TouchableOpacity onPressIn={pushyesone} onPress={()=>setyesone(!yesone)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>네</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>네</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -157,7 +157,7 @@ export default function SolutionSmokeOne({ navigation }) {
                     {noone === false ?
                         <TouchableOpacity onPressIn={pushnoone} onPress={()=>setnoone(!noone)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>아니오</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>아니오</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -171,7 +171,7 @@ export default function SolutionSmokeOne({ navigation }) {
                     {yestwo === false ?
                         <TouchableOpacity onPressIn={pushyestwo} onPress={()=>setyestwo(!yestwo)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>네</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>네</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -184,7 +184,7 @@ export default function SolutionSmokeOne({ navigation }) {
                     {notwo === false ?
                         <TouchableOpacity onPressIn={pushnotwo} onPress={()=>setnotwo(!notwo)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>아니오</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>아니오</Text>
                             </View>
                         </TouchableOpacity>
                         :

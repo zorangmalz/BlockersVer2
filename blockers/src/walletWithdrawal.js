@@ -1,4 +1,4 @@
-import React, {useState, useReducer, useEffect} from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import {
     View,
     Text,
@@ -45,31 +45,31 @@ const modal = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 16
     },
-    mediumBox : {
+    mediumBox: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
     },
-    smallBox : {
+    smallBox: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: 0.25*WIDTH,
-        height: 0.1*HEIGHT
+        width: 0.25 * WIDTH,
+        height: 0.1 * HEIGHT
     },
-    number : {
+    number: {
         fontSize: 34,
         fontFamily: 'NunitoSans-Regular',
         color: '#352641',
     },
 })
 
-export function WalletWithdrawal({navigation}) {
+export function WalletWithdrawal({ navigation }) {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [money, onChangeMoney] = useState('')
     const [bank, onChangeBank] = useState('')
     const [account, onChangeAccount] = useState('')
     const [check, setCheck] = useState(false)
-    const checkColor = check===true ? "#5CC27B" : "#FFFFFF";
+    const checkColor = check === true ? "#5CC27B" : "#FFFFFF";
     const [one, setOne] = useState(false);
     const [two, setTwo] = useState(false);
     const [three, setThree] = useState(false);
@@ -270,7 +270,8 @@ export function WalletWithdrawal({navigation}) {
             setFour(true);
             console.log(oneTime === false ? passWord : passWordTwo);
             console.log("4")
-            {oneTime === false ?
+            {
+                oneTime === false ?
                 setTimeout(() => {
                     Twopassword();
                 }, 300)
@@ -283,157 +284,157 @@ export function WalletWithdrawal({navigation}) {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber;
     }, [count])
-    
+
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
-            <Modal
-            animationType="slide"
-            visible={passwordVisible}
-            onRequestClose={() => setPasswordVisible(false)}
-        >
-            <View style={{ flex: 1, backgroundColor: '#CCCCCC', justifyContent: 'flex-end' }}>
-                <View style={{
-                    flex: 0.7,
-                    borderTopRightRadius: 35,
-                    borderTopLeftRadius: 35,
-                    backgroundColor: '#ffffff',
-                    alignItems: 'center'
-                }}>
-                    <Text style={modal.modalText}>비밀번호</Text>
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        paddingLeft: 60,
-                        paddingRight: 60,
-                        marginTop: 16
-                    }}>
-                        <View style={[modal.iconBox, { marginRight: 12 }]}>
-                            <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={OneImage} />
-                        </View>
-                        <View style={[modal.iconBox, { marginRight: 6 }]}>
-                            <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={TwoImage} />
-                        </View>
-                        <View style={[modal.iconBox, { marginLeft: 6 }]}>
-                            <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={ThreeImage} />
-                        </View>
-                        <View style={[modal.iconBox, { marginLeft: 12 }]}>
-                            <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={FourImage} />
-                        </View>
-                    </View>
-                    {twoTime ?
-                        <Text></Text>
-                        :
-                        <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 12, color: '#ff0000', marginTop: 19, alignSelf: 'center' }}>비밀번호가 다릅니다. 다시 입력해주세요</Text>
-                    }
-                    <View style={modal.modalPasswordBox}>
-                        {oneTime === false ?
-                            <View style={modal.largeBox}>
-                                <View style={modal.mediumBox}>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddOne}>
-                                        <Text style={modal.number}>1</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddTwo}>
-                                        <Text style={modal.number}>2</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddThree}>
-                                        <Text style={modal.number}>3</Text>
-                                    </TouchableOpacity>
+                <Modal
+                    animationType="slide"
+                    visible={passwordVisible}
+                    onRequestClose={() => setPasswordVisible(false)}
+                >
+                    <View style={{ flex: 1, backgroundColor: '#CCCCCC', justifyContent: 'flex-end' }}>
+                        <View style={{
+                            flex: 0.7,
+                            borderTopRightRadius: 35,
+                            borderTopLeftRadius: 35,
+                            backgroundColor: '#ffffff',
+                            alignItems: 'center'
+                        }}>
+                            <Text style={modal.modalText}>비밀번호</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                paddingLeft: 60,
+                                paddingRight: 60,
+                                marginTop: 16
+                            }}>
+                                <View style={[modal.iconBox, { marginRight: 12 }]}>
+                                    <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={OneImage} />
                                 </View>
-                                <View style={modal.mediumBox}>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddFour}>
-                                        <Text style={modal.number}>4</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddFive}>
-                                        <Text style={modal.number}>5</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddSix}>
-                                        <Text style={modal.number}>6</Text>
-                                    </TouchableOpacity>
+                                <View style={[modal.iconBox, { marginRight: 6 }]}>
+                                    <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={TwoImage} />
                                 </View>
-                                <View style={modal.mediumBox}>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddSeven}>
-                                        <Text style={modal.number}>7</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddEight}>
-                                        <Text style={modal.number}>8</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddNine}>
-                                        <Text style={modal.number}>9</Text>
-                                    </TouchableOpacity>
+                                <View style={[modal.iconBox, { marginLeft: 6 }]}>
+                                    <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={ThreeImage} />
                                 </View>
-                                <View style={modal.mediumBox}>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onDelete} onPressIn={onDeleteAll}>
-                                        <Text style={modal.text}>취소</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddZero}>
-                                        <Text style={modal.number}>0</Text >
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onDecrease} onPressIn={onDeleteOne}>
-                                        <Text style={modal.text}>지우기</Text>
-                                    </TouchableOpacity>
+                                <View style={[modal.iconBox, { marginLeft: 12 }]}>
+                                    <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={FourImage} />
                                 </View>
                             </View>
-                            :
-                            <View style={modal.largeBox}>
-                                <View style={modal.mediumBox}>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddOne}>
-                                        <Text style={modal.number}>1</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddTwo}>
-                                        <Text style={modal.number}>2</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddThree}>
-                                        <Text style={modal.number}>3</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={modal.mediumBox}>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddFour}>
-                                        <Text style={modal.number}>4</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddFive}>
-                                        <Text style={modal.number}>5</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddSix}>
-                                        <Text style={modal.number}>6</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={modal.mediumBox}>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddSeven}>
-                                        <Text style={modal.number}>7</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddEight}>
-                                        <Text style={modal.number}>8</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddNine}>
-                                        <Text style={modal.number}>9</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={modal.mediumBox}>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onDelete} onPressIn={onDeleteAll}>
-                                        <Text style={modal.text}>취소</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddZero}>
-                                        <Text style={modal.number}>0</Text >
-                                    </TouchableOpacity>
-                                    <TouchableOpacity style={modal.smallBox} onPress={onDecrease} onPressIn={onDeleteOne}>
-                                        <Text style={modal.text}>지우기</Text>
-                                    </TouchableOpacity>
-                                </View>
+                            {twoTime ?
+                                <Text></Text>
+                                :
+                                <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 12, color: '#ff0000', marginTop: 19, alignSelf: 'center' }}>비밀번호가 다릅니다. 다시 입력해주세요</Text>
+                            }
+                            <View style={modal.modalPasswordBox}>
+                                {oneTime === false ?
+                                    <View style={modal.largeBox}>
+                                        <View style={modal.mediumBox}>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddOne}>
+                                                <Text style={modal.number}>1</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddTwo}>
+                                                <Text style={modal.number}>2</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddThree}>
+                                                <Text style={modal.number}>3</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={modal.mediumBox}>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddFour}>
+                                                <Text style={modal.number}>4</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddFive}>
+                                                <Text style={modal.number}>5</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddSix}>
+                                                <Text style={modal.number}>6</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={modal.mediumBox}>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddSeven}>
+                                                <Text style={modal.number}>7</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddEight}>
+                                                <Text style={modal.number}>8</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddNine}>
+                                                <Text style={modal.number}>9</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={modal.mediumBox}>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onDelete} onPressIn={onDeleteAll}>
+                                                <Text style={modal.text}>취소</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddZero}>
+                                                <Text style={modal.number}>0</Text >
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onDecrease} onPressIn={onDeleteOne}>
+                                                <Text style={modal.text}>지우기</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                    :
+                                    <View style={modal.largeBox}>
+                                        <View style={modal.mediumBox}>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddOne}>
+                                                <Text style={modal.number}>1</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddTwo}>
+                                                <Text style={modal.number}>2</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddThree}>
+                                                <Text style={modal.number}>3</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={modal.mediumBox}>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddFour}>
+                                                <Text style={modal.number}>4</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddFive}>
+                                                <Text style={modal.number}>5</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddSix}>
+                                                <Text style={modal.number}>6</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={modal.mediumBox}>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddSeven}>
+                                                <Text style={modal.number}>7</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddEight}>
+                                                <Text style={modal.number}>8</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddNine}>
+                                                <Text style={modal.number}>9</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                        <View style={modal.mediumBox}>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onDelete} onPressIn={onDeleteAll}>
+                                                <Text style={modal.text}>취소</Text>
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddZero}>
+                                                <Text style={modal.number}>0</Text >
+                                            </TouchableOpacity>
+                                            <TouchableOpacity style={modal.smallBox} onPress={onDecrease} onPressIn={onDeleteOne}>
+                                                <Text style={modal.text}>지우기</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                }
                             </View>
-                        }
+                        </View>
                     </View>
-                </View>
-            </View>
-        </Modal>
+                </Modal>
                 <ScrollView style={{ marginBottom: 70, paddingTop: 35 }}>
                     <TextInput
                         placeholder="출금 금액"
                         placeholderTextColor="#B8B8B8"
                         value={money}
-                        onChangeText={text=>onChangeMoney(text)}
+                        onChangeText={text => onChangeMoney(text)}
                         keyboardType="number-pad"
                         style={{ width: "85%", height: 50, borderBottomColor: '#5CC27B', borderBottomWidth: 2, alignSelf: 'center', fontSize: 21, fontFamily: 'NunitoSans-Regular' }}
                     />
@@ -447,14 +448,14 @@ export function WalletWithdrawal({navigation}) {
                         placeholderTextColor="#B8B8B8"
                         keyboardType="email-address"
                         value={bank}
-                        onChangeText={text=>onChangeBank(text)}
+                        onChangeText={text => onChangeBank(text)}
                         style={{ width: "30%", height: 50, borderBottomColor: '#5CC27B', borderBottomWidth: 2, marginLeft: "7.5%", fontSize: 21, marginTop: 28, fontFamily: 'NunitoSans-Regular' }}
                     />
                     <TextInput
                         placeholder="계좌번호"
                         placeholderTextColor="#B8B8B8"
                         value={account}
-                        onChangeText={text=>onChangeAccount(text)}
+                        onChangeText={text => onChangeAccount(text)}
                         keyboardType="number-pad"
                         style={{ width: "85%", height: 50, borderBottomColor: '#5CC27B', borderBottomWidth: 2, alignSelf: 'center', fontSize: 21, marginTop: 32, fontFamily: 'NunitoSans-Regular' }}
                     />
@@ -478,7 +479,7 @@ export function WalletWithdrawal({navigation}) {
                         <Text style={{ fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#333333', marginLeft: 8 }}>출금시 주의사항을 확인했습니다.</Text>
                     </View>
                 </ScrollView>
-                {(money.length>0)&&(bank.length>0)&&(account.length>0)&&(check===true) ?
+                {(money.length > 0) && (bank.length > 0) && (account.length > 0) && (check === true) ?
                     <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => setPasswordVisible(true)}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>출금하기</Text>
@@ -494,27 +495,27 @@ export function WalletWithdrawal({navigation}) {
     )
 }
 
-export function WalletWithdrawlComplete({navigation}) {
+export function WalletWithdrawlComplete({ navigation }) {
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{backgroundColor: '#FFFFFF', flex: 1}}>
+            <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
                 <ScrollView>
-                    <Image 
-                        style={{width: 150, height: 150, alignSelf: 'center', marginTop: "30%", marginBottom: 32}}
-                        source={require('./icon/resetcheck.png')} 
+                    <Image
+                        style={{ width: 150, height: 150, alignSelf: 'center', marginTop: "30%", marginBottom: 32 }}
+                        source={require('./icon/resetcheck.png')}
                     />
                     <Text style={{
                         fontSize: 24,
                         fontFamily: 'NunitoSans-Bold',
-                        color: '#000000',
+                        color: '#303030',
                         opacity: 0.7,
                         alignSelf: 'center'
                     }}>출금 완료</Text>
                     <Text style={{
                         fontSize: 16,
                         fontFamily: 'NunitoSans-Regular',
-                        color: '#000000',
+                        color: '#303030',
                         opacity: 0.6,
                         alignSelf: 'center',
                         marginTop: 16
@@ -522,7 +523,7 @@ export function WalletWithdrawlComplete({navigation}) {
                     <Text style={{
                         fontSize: 16,
                         fontFamily: 'NunitoSans-Regular',
-                        color: '#000000',
+                        color: '#303030',
                         opacity: 0.6,
                         alignSelf: 'center',
                         marginTop: 8

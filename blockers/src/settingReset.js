@@ -25,7 +25,7 @@ const setting = StyleSheet.create({
     mediumText: {
         fontSize: 18,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8
     },
     buttonBox: {
@@ -175,14 +175,14 @@ export default function SettingReset({ navigation }) {
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 16,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginTop: 20
                             }}>초기화 하시겠습니까?</Text>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Regular',
                                 fontSize: 14,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.6,
                                 textAlign: 'center'
                             }}>챌린지를 진행중인 경우 동으로 포기하게 됩니다.</Text>
@@ -235,7 +235,7 @@ export default function SettingReset({ navigation }) {
                     {stress === false ?
                         <TouchableOpacity onPressIn={pushstress} onPress={() => setStress(!stress)}>
                             <View style={setting.buttonBox}>
-                                <Text style={[setting.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>스트레스</Text>
+                                <Text style={[setting.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>스트레스</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -248,7 +248,7 @@ export default function SettingReset({ navigation }) {
                     {symptom === false ?
                         <TouchableOpacity onPressIn={pushsymptom} onPress={() => setSymptom(!symptom)}>
                             <View style={setting.buttonBox}>
-                                <Text style={[setting.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>금단증상</Text>
+                                <Text style={[setting.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>금단증상</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -261,7 +261,7 @@ export default function SettingReset({ navigation }) {
                     {environ === false ?
                         <TouchableOpacity onPressIn={pushenviron} onPress={() => setEnviron(!environ)}>
                             <View style={setting.buttonBox}>
-                                <Text style={[setting.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>주변환경</Text>
+                                <Text style={[setting.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>주변환경</Text>
                             </View>
                         </TouchableOpacity>
                         :
@@ -274,7 +274,7 @@ export default function SettingReset({ navigation }) {
                     {habit === false ?
                         <TouchableOpacity onPressIn={pushhabit} onPress={() => setHabit(!habit)}>
                             <View style={setting.buttonBox}>
-                                <Text style={[setting.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>습관</Text>
+                                <Text style={[setting.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>습관</Text>
                             </View>
                         </TouchableOpacity>
                         :

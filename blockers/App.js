@@ -23,7 +23,7 @@ import MissionScreen from './src/missionScreen';
 import ChallengeMain from './src/challengeMain';
 import ChallengeResisterOne from './src/challengeResisterOne';
 import ChallengeResisterTwo from './src/challengeResisterTwo';
-import PasswordChange from './src/passwordChange';
+import ChallengeConfirm from './src/challengeConfirm';
 import ChallengeVerification from './src/challengeVerification';
 import SettingMain from './src/settingMain';
 import SettingQuestion from './src/settingQuestion';
@@ -63,6 +63,9 @@ import ContentsComplete from './src/ContentsComplete';
 import ProfileNickname from './src/profileNickname';
 import LoginVerificationProfile from './src/loginVerificationProfile';
 import LoginPassword from "./src/loginPassword";
+import SolutionMain from './src/solutionMain';
+import SplashScreen from './src/splashscreen';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -92,104 +95,11 @@ function ChallengeScreen({ navigation }) {
         }}
       />
       <Stack.Screen
-        name="PasswordChange"
-        component={PasswordChange}
+        name="ChallengeConfirm"
+        component={ChallengeConfirm}
         options={{
           gestureDirection: 'vertical-inverted',
           
-        }}
-      />
-    </Stack.Navigator>
-  )
-}
-
-function SettingScreen({ navigation }) {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="설정"
-        component={SettingMain}
-        options={{
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="문의하기"
-        component={SettingQuestion}
-        options={{
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="알림설정"
-        component={SettingAlram}
-        options={{
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="초기화"
-        component={SettingReset}
-        options={{
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="ResetComplete"
-        component={SettingResetComplete}
-        options={{
-          headerTitle: "초기화",
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="버전정보"
-        component={SettingVersion}
-        options={{
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="탈퇴"
-        component={SettingExit}
-        options={{
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="ExitComplete"
-        component={SettingExitComplete}
-        options={{ 
-          headerShown: false,
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="자주묻는 질문"
-        component={SettingOften}
-        options={{
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-    </Stack.Navigator>
-  )
-}
-
-function ProfileHome({ navigation }) {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="개인정보"
-        component={ProfileMain}
-        options={{
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen 
-        name="지갑 비밀번호 재설정"
-        component={ProfilePasswordChange}
-        options={{
-          gestureDirection: 'vertical-inverted'
         }}
       />
     </Stack.Navigator>
@@ -249,11 +159,19 @@ const App = ({ navigation }) => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen 
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{
+            headerShown: false
+          }}
+        />
         <Stack.Screen
           name="Home"
           component={HomeTab}
           options={{
-            headerShown: false
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
           }}
         />
         <Stack.Screen
@@ -274,29 +192,6 @@ const App = ({ navigation }) => {
           name="Verification"
           component={ChallengeVerification}
           options={{
-            gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="Setting"
-          component={SettingScreen}
-          options={{
-            headerShown: false,
-            gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="초기화"
-          component={SettingReset}
-          options={{
-            gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="ResetComplete"
-          component={SettingResetComplete}
-          options={{
-            headerTitle: "초기화",
             gestureDirection: 'vertical-inverted'
           }}
         />
@@ -350,10 +245,16 @@ const App = ({ navigation }) => {
           }}
         />
         <Stack.Screen
-          name="Profile"
-          component={ProfileHome}
+          name="개인정보"
+          component={ProfileMain}
           options={{
-            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+          name="지갑 비밀번호 변경"
+          component={ProfilePasswordChange}
+          options={{
             gestureDirection: 'vertical-inverted'
           }}
         />
@@ -491,6 +392,79 @@ const App = ({ navigation }) => {
             gestureDirection: 'vertical-inverted'
           }}
         />
+        <Stack.Screen 
+          name="SolutionMain"
+          component={SolutionMain}
+          options={{
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+        name="설정"
+        component={SettingMain}
+        options={{
+          gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen
+        name="문의하기"
+        component={SettingQuestion}
+        options={{
+          gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen
+        name="알림설정"
+        component={SettingAlram}
+        options={{
+          gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen
+        name="초기화"
+        component={SettingReset}
+        options={{
+          gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen
+        name="ResetComplete"
+        component={SettingResetComplete}
+        options={{
+          headerTitle: "초기화",
+          gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen
+        name="버전정보"
+        component={SettingVersion}
+        options={{
+          gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen
+        name="탈퇴"
+        component={SettingExit}
+        options={{
+          gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen
+        name="ExitComplete"
+        component={SettingExitComplete}
+        options={{ 
+          headerShown: false,
+          gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen
+        name="자주묻는 질문"
+        component={SettingOften}
+        options={{
+          gestureDirection: 'vertical-inverted'
+        }}
+      />
       </Stack.Navigator>
     </NavigationContainer>
   );

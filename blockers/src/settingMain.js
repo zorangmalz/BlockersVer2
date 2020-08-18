@@ -17,6 +17,7 @@ const setting = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'NunitoSans-Regular',
         alignSelf: 'flex-start',
+        color: '#303030'
     },
     mainBox: {
         marginBottom: 8,
@@ -72,14 +73,14 @@ export default function SettingMain({ navigation }) {
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 16,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginTop: 20
                             }}>로그아웃하시겠습니까?</Text>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Regular',
                                 fontSize: 14,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.6,
                                 textAlign: 'center',
                                 paddingRight: 12,

@@ -15,11 +15,13 @@ const setting = StyleSheet.create({
         color: "#5CC27B",
         marginBottom: 32,
         marginTop: 32,
-        alignSelf: 'center'
+        alignSelf: 'center',
+        color: '#303030'
     },
     content : {
         fontSize: 16,
         fontFamily: 'NunitoSans-Regular',
+        color: '#303030'
     }
 })
 

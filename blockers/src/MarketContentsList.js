@@ -27,14 +27,14 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
         opacity: 0.8,
-        color: '#000000',
+        color: '#303030',
         marginRight: 8
     },
     content: {
         fontSize: 14,
         fontFamily: 'NunitoSans-Regular',
         opacity: 0.8,
-        color: '#000000',
+        color: '#303030',
     },
     discount: {
         fontSize: 12,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'NunitoSans-Regular',
         opacity: 0.6,
-        color: '#000000',
+        color: '#303030',
         textDecorationLine: "line-through",
         marginRight: 8,
     }

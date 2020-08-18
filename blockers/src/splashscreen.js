@@ -11,12 +11,26 @@ import {
 
 export default function SplashScreen({ navigation }) {
     const [animating, setAnimating] = useState(true);
+    const [first, setFirst] = useState(0);
+    const home = () => {
+        setTimeout(() =>  {
+            navigation.navigate('Home');
+        },50) 
+    }
 
     useEffect(() => {
-        setTimeout(() => {
-            setAnimating(false);
-            navigation.navigate('Home')
-        }, 1000);
+        console.log(first);
+        if (first === 0) {
+            setTimeout(() => {
+                setAnimating(false);
+                setFirst(first+1);
+                navigation.navigate('Home');
+            }, 1000);
+        } else {
+            setTimeout(() =>  {
+                navigation.navigate('Home');
+            },50) 
+        }
     }, []);
 
     return (
@@ -31,7 +45,7 @@ export default function SplashScreen({ navigation }) {
                         style={{ fontSize: 31, fontFamily: 'NunitoSans-Bold', color: '#5CC27B', marginTop: 16 }}
                     >Blockers</Text>
                     <Text
-                        style={{ fontSize: 24, fontFamily: 'NunitoSans-Bold', color: '#000000', marginTop: 16 }}
+                        style={{ fontSize: 24, fontFamily: 'NunitoSans-Bold', color: '#303030', marginTop: 16 }}
                     >We Block You</Text>
                 </TouchableOpacity>
             </SafeAreaView>

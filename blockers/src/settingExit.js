@@ -15,14 +15,14 @@ const setting = StyleSheet.create({
     agree : {
         fontSize: 14,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.6,
         marginLeft: 8
     },
     agreeBox : {
         width: 16, 
         height: 16, 
-        borderColor: '#000000', 
+        borderColor: '#303030', 
         borderWidth: 0.7, 
         borderRadius: 2,
         alignItems: 'center',
@@ -78,14 +78,14 @@ export default function SettingExit({ navigation }) {
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 16,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginTop: 20
                             }}>출금을 진행해주세요</Text>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Regular',
                                 fontSize: 14,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.6,
                                 textAlign: 'center',
                                 paddingRight: 12,
@@ -137,7 +137,7 @@ export default function SettingExit({ navigation }) {
                     <Text style={{
                         fontSize: 18,
                         fontFamily: 'NunitoSans-Regular',
-                        color: '#000000',
+                        color: '#303030',
                         opacity: 0.8,
                         marginTop: 16,
                         marginLeft: 48
@@ -149,7 +149,7 @@ export default function SettingExit({ navigation }) {
                     <Text style={{
                         fontSize: 18,
                         fontFamily: 'NunitoSans-Regular',
-                        color: '#000000',
+                        color: '#303030',
                         opacity: 0.8,
                         marginTop: 8,
                         marginLeft: 48
@@ -176,7 +176,7 @@ export default function SettingExit({ navigation }) {
                             <Text style={{
                                 fontSize: 18,
                                 fontFamily: 'NunitoSans-Bold',
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginLeft: 8
                             }}>탈퇴 약관 동의</Text>
@@ -239,7 +239,7 @@ export default function SettingExit({ navigation }) {
                             <Text style={{
                                 fontSize: 18,
                                 fontFamily: 'NunitoSans-Bold',
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginLeft: 8
                             }}>개인정보 처리 약관 동의</Text>

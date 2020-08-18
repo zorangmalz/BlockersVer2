@@ -21,7 +21,7 @@ const solution = StyleSheet.create({
     mediumText: {
         fontSize: 18,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.8
     },
     buttonBox: {
@@ -151,14 +151,14 @@ export default function SolutionSmokeThree({ navigation }) {
                             <TouchableOpacity onPressIn={pushone} onPress={() => setOne(!one)}>
                                 <View style={solution.buttonBox}>
                                     <Image source={require('./icon/sun.png')} />
-                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#000000' }]}>오전</Text>
+                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#303030' }]}>오전</Text>
                                 </View>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity onPressIn={filterone} onPress={() => setOne(!one)}>
                                 <View style={solution.activeButton}>
                                     <Image source={require('./icon/sun.png')} />
-                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>오전</Text>
+                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>오전</Text>
                                 </View>
                             </TouchableOpacity>
                         }
@@ -166,14 +166,14 @@ export default function SolutionSmokeThree({ navigation }) {
                             <TouchableOpacity onPressIn={pushtwo} onPress={() => setTwo(!two)}>
                                 <View style={solution.buttonBox}>
                                     <Image source={require('./icon/moon.png')} />
-                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#000000' }]}>오후 & 저녁</Text>
+                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#303030' }]}>오후 & 저녁</Text>
                                 </View>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity onPressIn={filtertwo} onPress={() => setTwo(!two)}>
                                 <View style={solution.activeButton}>
                                     <Image source={require('./icon/moon.png')} />
-                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>오후 & 저녁</Text>
+                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>오후 & 저녁</Text>
                                 </View>
                             </TouchableOpacity>
                         }
@@ -190,14 +190,14 @@ export default function SolutionSmokeThree({ navigation }) {
                             <TouchableOpacity onPressIn={pushthree} onPress={() => setThree(!three)}>
                                 <View style={solution.buttonBox}>
                                     <Image source={require('./icon/sun.png')} />
-                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#000000' }]}>아침 첫담배</Text>
+                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#303030' }]}>아침 첫담배</Text>
                                 </View>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity onPressIn={filterthree} onPress={() => setThree(!three)}>
                                 <View style={solution.activeButton}>
                                     <Image source={require('./icon/sun.png')} />
-                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>아침 첫담배</Text>
+                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>아침 첫담배</Text>
                                 </View>
                             </TouchableOpacity>
                         }
@@ -205,14 +205,14 @@ export default function SolutionSmokeThree({ navigation }) {
                             <TouchableOpacity onPressIn={pushfour} onPress={() => setFour(!four)}>
                                 <View style={solution.buttonBox}>
                                     <Image source={require('./icon/moon.png')} />
-                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#000000' }]}>그 외</Text>
+                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#303030' }]}>그 외</Text>
                                 </View>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity onPressIn={filterfour} onPress={() => setFour(!four)}>
                                 <View style={solution.activeButton}>
                                     <Image source={require('./icon/moon.png')} />
-                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#000000' }]}>그 외</Text>
+                                    <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>그 외</Text>
                                 </View>
                             </TouchableOpacity>
                         }

@@ -52,7 +52,7 @@ export default function MyPageRule({ navigation }) {
                     visible={modalVisible}
                     onRequestClose={() => setModalVisible(false)}
                 >
-                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
+                    <View style={{ flex: 1, backgroundColor: '#303030', opacity: 0.4 }} />
                 </Modal>
                 <Modal
                     animationType="none"
@@ -74,14 +74,14 @@ export default function MyPageRule({ navigation }) {
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 16,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginTop: 20
                             }}>거부하시겠습니까?</Text>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Regular',
                                 fontSize: 14,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.6,
                                 textAlign: 'center',
                                 paddingRight: 12,
@@ -152,7 +152,7 @@ export default function MyPageRule({ navigation }) {
                             <Text style={{
                                 fontSize: 18,
                                 fontFamily: 'NunitoSans-Bold',
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginLeft: 8
                             }}>개인정보 처리약관</Text>
@@ -197,7 +197,7 @@ export default function MyPageRule({ navigation }) {
                             <Text style={{
                                 fontSize: 18,
                                 fontFamily: 'NunitoSans-Bold',
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginLeft: 8
                             }}>환불 약관</Text>
@@ -242,7 +242,7 @@ export default function MyPageRule({ navigation }) {
                             <Text style={{
                                 fontSize: 18,
                                 fontFamily: 'NunitoSans-Bold',
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginLeft: 8
                             }}>

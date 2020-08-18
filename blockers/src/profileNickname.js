@@ -16,7 +16,7 @@ const login = StyleSheet.create({
     rule: {
         fontSize: 12,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.4,
         alignSelf: 'center',
         width: "80%",
@@ -26,7 +26,7 @@ const login = StyleSheet.create({
         fontSize: 21,
         fontFamily: 'NunitoSans-Bold',
         opacity: 0.7,
-        color: '#000000',
+        color: '#303030',
         borderBottomColor: '#5cc27b',
         borderBottomWidth: 1,
         alignSelf: 'center',
@@ -85,7 +85,7 @@ export default function ProfileNickname({ navigation }) {
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 16,
-                                color: '#000000',
+                                color: '#303030',
                                 opacity: 0.8,
                                 marginTop: 20
                             }}>변경완료</Text>

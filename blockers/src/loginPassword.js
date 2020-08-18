@@ -30,7 +30,7 @@ const login = StyleSheet.create({
     text: {
         fontSize: 10,
         fontFamily: 'NunitoSans-Regular',
-        color: '#000000',
+        color: '#303030',
         opacity: 0.4,
         alignSelf: 'flex-start',
         marginLeft: '5%'
