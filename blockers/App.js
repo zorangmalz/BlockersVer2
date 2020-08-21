@@ -23,7 +23,7 @@ import MissionScreen from './src/missionScreen';
 import ChallengeMain from './src/challengeMain';
 import ChallengeResisterOne from './src/challengeResisterOne';
 import ChallengeResisterTwo from './src/challengeResisterTwo';
-import ChallengeConfirm from './src/challengeConfirm';
+// import ChallengeConfirm from './src/challengeConfirm';
 import ChallengeVerification from './src/challengeVerification';
 import SettingMain from './src/settingMain';
 import SettingQuestion from './src/settingQuestion';
@@ -94,14 +94,14 @@ function ChallengeScreen({ navigation }) {
           gestureDirection: 'vertical-inverted'
         }}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="ChallengeConfirm"
         component={ChallengeConfirm}
         options={{
           gestureDirection: 'vertical-inverted',
           
         }}
-      />
+      /> */}
     </Stack.Navigator>
   )
 }

@@ -150,7 +150,7 @@ export default function SolutionMain({navigation}) {
                         <View style={{ justifyContent: 'center', alignItems: 'center', width: 120 }}>
                             <Text style={welcome.smallText}>Blockers</Text>
                             <Text style={welcome.smallText}>평균 성공률</Text>
-                            <Image style={{ marginTop: 16, marginBottom: 5 }} source={require('./icon/percent.png')} />
+                            {/* <Image style={{ marginTop: 16, marginBottom: 5 }} source={require('./icon/percent.png')} /> */}
                         </View>
                         <View style={{ justifyContent: 'center', alignItems: 'center', width: 120 }}>
                             <Text style={welcome.smallText}>Blockers</Text>
