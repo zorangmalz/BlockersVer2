@@ -386,7 +386,7 @@ const url = await storage()
                     }}>
                         <FlatList
                         data={items}
-                        
+                        keyExtractor={items.ID}
                         renderItem={({item})=>(
                             <View style={{borderBottomWidth:1,borderColor:'#E2E2E2',paddingTop:5,paddingBottom:5}}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: "100%",}}>

@@ -65,7 +65,7 @@ import LoginVerificationProfile from './src/loginVerificationProfile';
 import LoginPassword from "./src/loginPassword";
 import SolutionMain from './src/solutionMain';
 import SplashScreen from './src/splashscreen';
-
+import SettingCompanyInfo from  "./src/companyInfo";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -461,6 +461,13 @@ const App = ({ navigation }) => {
       <Stack.Screen
         name="자주묻는 질문"
         component={SettingOften}
+        options={{
+          gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen
+        name="회사소개"
+        component={SettingCompanyInfo}
         options={{
           gestureDirection: 'vertical-inverted'
         }}

@@ -131,7 +131,7 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
             '',
             [
                 {
-                    text: 'OK', onPress: () => navigation.pop()
+                    text: 'OK', onPress: () => navigation.replace("자유게시판")
                 }
             ]
         )

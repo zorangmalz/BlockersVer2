@@ -125,7 +125,7 @@ export default function SettingMain({ navigation }) {
                         </View>
                     </View>
                 </Modal>
-                <ScrollView style={{ marginBottom: 70 }}>
+                <ScrollView style={{  }}>
                     <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('문의하기')}>
                         <Text style={setting.mainText}>문의하기</Text>
                     </TouchableOpacity>
@@ -157,6 +157,12 @@ export default function SettingMain({ navigation }) {
                         <Text style={setting.mainText}>로그아웃</Text>
                     </TouchableOpacity>
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
+                   
+                    <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={()=>navigation.navigate("회사소개")} >
+                        <Text style={setting.mainText}>회사소개</Text>
+                    </TouchableOpacity>
+                    <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
+                   
                 </ScrollView>
             </SafeAreaView>
         </>
