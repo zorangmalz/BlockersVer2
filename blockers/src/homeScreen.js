@@ -75,11 +75,7 @@ export default function HomeScreen({navigation}) {
     const [initializing, setInitializing] = useState(true);
     const [fullTime,setfullTime]=useState()
     const [check,setcheck]=useState(false)
-    const onButtonStart = () => {
-        setTimestart(true);
-        console.log(timestart)
-    }
-
+ 
     async function updateInfo(code){
         var a=moment().toArray()
         await ref.doc(code).update({
@@ -88,7 +84,6 @@ export default function HomeScreen({navigation}) {
       }
 
 function timeCounter(seconds){
-    
     setDay(parseInt(seconds/86400))
     setHour(parseInt(seconds%86400/3600))
     setMinu(parseInt(seconds%86400%3600/60))
@@ -138,11 +133,6 @@ useEffect(()=>{
     },1000)
     return()=>clearInterval(interval) 
     },[fullTime,user])
-
-    const onButtonClear = () => {
-        setTimestart(false);
-        console.log("클릭되었습니다");
-    }
 
     return (
         <>

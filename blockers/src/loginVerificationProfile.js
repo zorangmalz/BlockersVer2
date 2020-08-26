@@ -8,7 +8,8 @@ import {
     StatusBar,
     SafeAreaView,
     StyleSheet,
-    ScrollView
+    ScrollView,
+    Alert
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -46,23 +47,28 @@ export default function LoginVerificationProfile({ navigation }) {
     const [gender, setGender] = useState('');
     const [birthday, setBirthday] = useState('');
     const [repeat, setRepeat] = useState(false);
-    const repeatchange = () => setRepeat(!repeat);
+    
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
-
+    const [nickState,setNickState]=useState(false)
 
     const ref=firestore().collection("UserInfo");
 
-
+    
     async function updateInfo(code,bir,se,nick){
+        
+    console.log("시발 여기라고")
       await ref.doc(code).update({
         birth:bir,
         sex:se,
         nickname:nick
       })
+  
     }
 
-
+    // useEffect(()=>{
+    //     ref.doc(user.uid).
+    // })
 
     function onAuthStateChanged(user) {
         setUser(user);
@@ -80,11 +86,36 @@ export default function LoginVerificationProfile({ navigation }) {
 
 
       function move(){
+        
+            
         updateInfo(user.uid,birthday,gender,nickname)
         navigation.navigate("Home")
+        
       }
-
-
+      async function repeatchange(){
+          console.log("gere")
+          console.log(nickname,"nickname")
+          console.log(nickState,'Nickstate')
+        await firestore()
+        .collection('UserInfo')
+        .where('nickname', '==', nickname)
+        .get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(function(doc){
+          console.log("samehere")
+          console.log(doc.data())
+          setRepeat(true)
+          SetNickState(true)
+            })
+        })
+        if (nickState===false){
+            
+            move()
+        }else{
+            console.log("same shit")
+        }
+    }
+      
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -94,7 +125,7 @@ export default function LoginVerificationProfile({ navigation }) {
                         <Image source={require('./icon/userprofile.png')} style={{width: 132, height: 132}} resizeMode="contain" />
                     </TouchableOpacity>
                     <View>
-                        <TextInput onSubmitEditing={repeatchange} onChangeText={text => setNickname(text)} style={[login.textinput, { width: "80%", marginTop: 32 }]} placeholder="닉네임" />
+                        <TextInput onChangeText={text => setNickname(text)} style={[login.textinput, { width: "80%", marginTop: 32 }]} placeholder="닉네임" />
                         {repeat === true ?
                             <Text style={login.repeat}>중복된 닉네임입니다.</Text>
                             :
@@ -115,7 +146,7 @@ export default function LoginVerificationProfile({ navigation }) {
                         에 동의하게 됩니다.(마케팅 정보 수신동의 포함)</Text>
                     </View>
                 </ScrollView>
-                <TouchableOpacity onPress={move} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                <TouchableOpacity onPress={repeatchange} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>시작하기</Text>
                     </View>

@@ -98,6 +98,7 @@ export default function CommunityOtherPost({route, navigation }) {
     const [imageSource, setImageSource] = useState(undefined);
     const [time,setTime]=useState();
     const [realWriterUid,setRealWriterUid]=useState();
+    const [alertList,setAlertList]=useState([]);
 
     const plusnumrep = () => { 
         setNumrep(numrep + 1);
@@ -160,7 +161,9 @@ export default function CommunityOtherPost({route, navigation }) {
                 setLikeList(doc.data().whoLike)
                 setTime(doc.data().fullTime)
                 setRealWriterUid(doc.data().writerUid)
+                setAlertList(doc.data().whoAlert)
             })}
+            console.log(alertList,likeList,time,"alertList")
             load()
            if(user){
             console.log("This is the main point")
@@ -265,6 +268,68 @@ const url = await storage()
        
        })
     }
+    function alertPost(){
+        console.log(alertList,"fucking here")
+        const userID=user.uid
+        if(alertList.includes(userID)){
+            console.log("include!!!!!!!!")
+            Alert.alert(
+                '신고하시겠습니까?',
+                '신고가 누적되면 자동 삭제 됩니다.',
+                [
+                    {
+                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                    },
+                    {
+                        text: '신고하기', onPress: () => Alert.alert(
+                            '이미 신고하셨습니다',
+                            "ㅅㅂ"
+                            [
+                                {
+                                    text: 'OK', onPress: () => console.log('OK Pressed')
+                                }
+                            ]
+                        )
+                    }
+                ]
+            )
+        }else{
+            console.log("damn why not")
+            Alert.alert(
+                '신고하시겠습니까?',
+                '신고가 누적되면 자동 삭제 됩니다.',
+                [
+                    {
+                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                    },
+                    {
+                        text: '신고하기', onPress: () => Alert.alert(
+                            '신고완료',
+                            '검토후 조치하겠습니다.',
+                            [
+                                {
+                                    text: 'OK', onPress: () => console.log('OK Pressed')
+                                }
+                            ]
+                        )
+                    }
+                ]
+            )
+            setAlertList(alertList.push(userID))
+        alertUpdate(alertList)
+        }
+        
+    }
+    function alertUpdate(a){
+        return ref.doc(param).update({
+            whoAlert:a,
+        }).then(() => {
+            console.log("alert success")
+            
+            
+        
+          });
+    }
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -304,27 +369,7 @@ const url = await storage()
                                 </TouchableOpacity>
                             </Text>
                             :
-                            <TouchableOpacity onPress={() =>
-                                Alert.alert(
-                                    '신고하시겠습니까?',
-                                    '신고가 누적되면 자동 삭제 됩니다.',
-                                    [
-                                        {
-                                            text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
-                                        },
-                                        {
-                                            text: '신고하기', onPress: () => Alert.alert(
-                                                '신고완료',
-                                                '검토후 조치하겠습니다.',
-                                                [
-                                                    {
-                                                        text: 'OK', onPress: () => console.log('OK Pressed')
-                                                    }
-                                                ]
-                                            )
-                                        }
-                                    ]
-                                )
+                            <TouchableOpacity onPress={alertPost
                             }>
                                 <Image resizeMode="contain" style={community.warning} source={require("./icon/blackwarning.png")}></Image>
                             </TouchableOpacity>

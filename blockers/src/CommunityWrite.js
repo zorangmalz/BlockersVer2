@@ -124,7 +124,8 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
             nickname:nick,
             whoLike:[],
             commentNum:0,
-            fullText:title+content
+            fullText:title+content,
+            whoAlert:[]
         })
         Alert.alert(
             '업로드 완료',
