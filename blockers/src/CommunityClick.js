@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -10,7 +10,7 @@ import {
     Image,
     TouchableOpacity,
     Dimensions,
-    ActivityIndicator, FlatList,RefreshControl
+    ActivityIndicator, FlatList, RefreshControl
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -24,7 +24,7 @@ const community = StyleSheet.create({
         paddingTop: 16,
         paddingLeft: 16,
         paddingBottom: 16,
-        
+
         borderBottomWidth: 1,
         borderColor: "#E5E5E5",
     },
@@ -38,8 +38,8 @@ const community = StyleSheet.create({
     title: {
         fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
-        color:"#000000"
-        
+        color: "#000000"
+
     },
     content: {
         fontSize: 14,
@@ -79,117 +79,118 @@ const community = StyleSheet.create({
 export default function CommunityClick({ navigation }) {
     const [search, setSearch] = useState('');
     const ref = firestore().collection('Community1');
-    const [ loading, setLoading ] = useState(true);
-    const [ items, setItems ] = useState([]);
-    const [replyNum,setReplyNum]=useState();
-    const[timer,settimer]=useState();
-    const[filtered,setFiltered]=useState();
+    const [loading, setLoading] = useState(true);
+    const [items, setItems] = useState([]);
+    const [replyNum, setReplyNum] = useState();
+    const [timer, settimer] = useState();
+    const [filtered, setFiltered] = useState();
     const [refreshing, setRefreshing] = useState(false);
 
     const wait = (timeout) => {
         return new Promise(resolve => {
-          setTimeout(resolve, timeout);
+            setTimeout(resolve, timeout);
         });
-      }
+    }
 
-      
-    async function load(){
+
+    async function load() {
         const list = [];
-        var a=moment().toArray()
-        if (a[1]===12){
-            a[1]=1
-        }else{
-            a[1]=a[1]+1
+        var a = moment().toArray()
+        if (a[1] === 12) {
+            a[1] = 1
+        } else {
+            a[1] = a[1] + 1
         }
-        
-        if (filtered){
-            const a=String(search)
+
+        if (filtered) {
+            const a = String(search)
             console.log(a.split(""))
             ref.onSnapshot(querySnapshot => {
-                querySnapshot.forEach(function(doc){
-                    
-                    const check=doc.data().fullText
-                    if(check.includes(a)){
-                    if(doc.data().fullTime){  
-                        if (a[0]===doc.data().fullTime[0]&&a[1]===doc.data().fullTime[1]&&a[2]===doc.data().fullTime[2]){
-                         
-                        list.push({
-                          title: doc.data().title,
-                          time:doc.data().time,
-                          context:doc.data().context,
-                          like:doc.data().whoLike.length,
-                          docname:doc.data().docName,
-                          replynum:doc.data().commentNum
-                        });}
-                        else{
-                          list.push({
-                              title: doc.data().title,
-                              time:doc.data().day,
-                              context:doc.data().context,
-                              like:doc.data().whoLike.length,
-                              docname:doc.data().docName,
-                              replynum:doc.data().commentNum
-                            });}
-                          }
+                querySnapshot.forEach(function (doc) {
+
+                    const check = doc.data().fullText
+                    if (check.includes(a)) {
+                        if (doc.data().fullTime) {
+                            if (a[0] === doc.data().fullTime[0] && a[1] === doc.data().fullTime[1] && a[2] === doc.data().fullTime[2]) {
+                                list.push({
+                                    title: doc.data().title,
+                                    time: doc.data().time,
+                                    context: doc.data().context,
+                                    like: doc.data().whoLike.length,
+                                    docname: doc.data().docName,
+                                    replynum: doc.data().commentNum
+                                });
+                            }
+                            else {
+                                list.push({
+                                    title: doc.data().title,
+                                    time: doc.data().day,
+                                    context: doc.data().context,
+                                    like: doc.data().whoLike.length,
+                                    docname: doc.data().docName,
+                                    replynum: doc.data().commentNum
+                                });
+                            }
                         }
+                    }
                 })
                 setItems(list);
-     
                 if (loading) {
-                  setLoading(false);
+                    setLoading(false);
                 }
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log("Error getting documents: ", error);
             });
-        }else{
-      ref.onSnapshot(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          if(doc.data().fullTime){  
-          if (a[0]===doc.data().fullTime[0]&&a[1]===doc.data().fullTime[1]&&a[2]===doc.data().fullTime[2]){
-           
-          list.push({
-            title: doc.data().title,
-            time:doc.data().time,
-            context:doc.data().context,
-            like:doc.data().whoLike.length,
-            docname:doc.data().docName,
-            replynum:doc.data().commentNum
-          });}
-          else{
-            list.push({
-                title: doc.data().title,
-                time:doc.data().day,
-                context:doc.data().context,
-                like:doc.data().whoLike.length,
-                docname:doc.data().docName,
-                replynum:doc.data().commentNum
-              });}
-            }
-        
-        });
-    
-        setItems(list);
-     
-        if (loading) {
-          setLoading(false);
+        } else {
+            ref.onSnapshot(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    if (doc.data().fullTime) {
+                        if (a[0] === doc.data().fullTime[0] && a[1] === doc.data().fullTime[1] && a[2] === doc.data().fullTime[2]) {
+
+                            list.push({
+                                title: doc.data().title,
+                                time: doc.data().time,
+                                context: doc.data().context,
+                                like: doc.data().whoLike.length,
+                                docname: doc.data().docName,
+                                replynum: doc.data().commentNum
+                            });
+                        }
+                        else {
+                            list.push({
+                                title: doc.data().title,
+                                time: doc.data().day,
+                                context: doc.data().context,
+                                like: doc.data().whoLike.length,
+                                docname: doc.data().docName,
+                                replynum: doc.data().commentNum
+                            });
+                        }
+                    }
+
+                });
+                setItems(list);
+                if (loading) {
+                    setLoading(false);
+                }
+
+            });
         }
-        
-      });
-    }}
+    }
     useEffect(() => {
 
-    load()
+        load()
     }, [filtered]);
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         load()
         wait(2000).then(() => setRefreshing(false));
-      }, [refreshing]);
-      
+    }, [refreshing]);
+
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <ScrollView>
                     <View style={{
                         marginRight: 14,
@@ -199,50 +200,47 @@ export default function CommunityClick({ navigation }) {
                         alignItems: 'center',
                         justifyContent: 'flex-end',
                         alignSelf: 'flex-end',
-                        
                     }}
                     >
-                        <TouchableOpacity onPress={()=>setFiltered(true)}>
                         <TextInput value={search} onChangeText={text => setSearch(text)} placeholder="검색어를 입력하세요" style={community.textinput} />
-                        <Image style={{width: 24, height: 24}} source={require('./icon/search.png')} resizeMode="contain" />
+                        <TouchableOpacity onPress={() => setFiltered(true)}>
+                            <Image style={{ width: 24, height: 24 }} source={require('./icon/search.png')} resizeMode="contain" />
                         </TouchableOpacity>
                     </View>
-                    <FlatList 
-                    refreshControl={
-                        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                    }
-                    data={items}
-                    inverted={true}
-                    keyExtractor={items.docname}
-                    renderItem={({item})=>(
-                        <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost',{docID:item.docname,ID:item.docname})} >
-                        <View style={community.board}>
-<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <View style={community.circle} />
-                    <Text style={community.title}>{item.title}</Text>
-                        </View>
-                        <Text style={community.content}>{item.context}</Text>
-                        <View style={community.lowerbox}>
-                    <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: "33%" }]} source={require("./icon/emptythumb.png")}></Image>
-                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 16 }]} source={require("./icon/reply.png")}></Image>
-                    <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
-                        </View>
-                        </View>
-                        </TouchableOpacity>
-                    )}
+                    <FlatList
+                        refreshControl={
+                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                        }
+                        data={items}
+                        inverted={true}
+                        keyExtractor={items.docname}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname })} >
+                                <View style={community.board}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                        <View style={community.circle} />
+                                        <Text style={community.title}>{item.title}</Text>
+                                    </View>
+                                    <Text style={community.content}>{item.context}</Text>
+                                    <View style={community.lowerbox}>
+                                        <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
+                                        <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: "33%" }]} source={require("./icon/emptythumb.png")}></Image>
+                                        <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
+                                        <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 16 }]} source={require("./icon/reply.png")}></Image>
+                                        <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        )}
                     />
-                        
-                    
                 </ScrollView>
-                <TouchableOpacity 
+                <TouchableOpacity
                     onPress={() => navigation.navigate('작성하기')}
                     style={{
-                    position: 'absolute',
-                    top: topposition*1.3,
-                    right: "10%"
-                }}>
+                        position: 'absolute',
+                        top: topposition * 1.3,
+                        right: "10%"
+                    }}>
                     <View style={{
                         width: 36,
                         height: 36,
