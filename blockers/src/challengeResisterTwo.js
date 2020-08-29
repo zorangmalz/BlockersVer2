@@ -465,7 +465,7 @@ export default function ChallengeResisterTwo({navigation}) {
                                                 <Text style={modal.number}>0</Text >
                                             </TouchableOpacity>
                                             <TouchableOpacity style={modal.smallBox} onPress={onDecrease} onPressIn={onDeleteOne}>
-                                                <Text style={modal.text}>지우기</Text>
+                                                <Image source={require('./icon/delete.png')} />
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -512,7 +512,7 @@ export default function ChallengeResisterTwo({navigation}) {
                                                 <Text style={modal.number}>0</Text >
                                             </TouchableOpacity>
                                             <TouchableOpacity style={modal.smallBox} onPress={onDecrease} onPressIn={onDeleteOne}>
-                                                <Text style={modal.text}>지우기</Text>
+                                                <Image source={require('./icon/delete.png')} />
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -601,10 +601,9 @@ export default function ChallengeResisterTwo({navigation}) {
                         </View>
                     </View>
                     <View style={{
-                        marginTop: 44,
+                        marginTop: 28,
                         marginLeft: 18,
                         marginRight: 16,
-
                         flexDirection: 'row',
                         alignItems: 'center',
                         justifyContent: 'space-between'

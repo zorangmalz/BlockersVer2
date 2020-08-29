@@ -373,7 +373,7 @@ export function WalletWithdrawal({ navigation }) {
                                                 <Text style={modal.number}>0</Text >
                                             </TouchableOpacity>
                                             <TouchableOpacity style={modal.smallBox} onPress={onDecrease} onPressIn={onDeleteOne}>
-                                                <Text style={modal.text}>지우기</Text>
+                                                <Image source={require('./icon/delete.png')} />
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -420,7 +420,7 @@ export function WalletWithdrawal({ navigation }) {
                                                 <Text style={modal.number}>0</Text >
                                             </TouchableOpacity>
                                             <TouchableOpacity style={modal.smallBox} onPress={onDecrease} onPressIn={onDeleteOne}>
-                                                <Text style={modal.text}>지우기</Text>
+                                                <Image source={require('./icon/delete.png')} />
                                             </TouchableOpacity>
                                         </View>
                                     </View>

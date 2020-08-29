@@ -159,9 +159,8 @@ useEffect(()=>{
                         </TouchableOpacity>
                     </View>
                 </View>
-                <ScrollView style={{marginBottom: 70}}>
+                <ScrollView>
                     <Swiper dotStyle={{borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 225 }}>
-                        
                         <View>
                             {viewopacity === true ?
                                 <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={() => {

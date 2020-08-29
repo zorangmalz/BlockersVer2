@@ -42,12 +42,7 @@ const styles = {
     marginBottom: 30,
     fontFamily: 'NunitoSans-Regular'
   },
-  ImageSub: {
-    marginLeft: 24,
-    marginTop: 26
-  },
   ImageSquare: {
-    marginLeft: 24,
     marginTop: 26
   },
   textSub: {
@@ -79,7 +74,7 @@ export default function MarketHome({ navigation }) {
             </View>
           </Swiper>
         </View>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-evenly' }}>
           <TouchableOpacity onPress={() => navigation.navigate('Food')}>
             <View style={styles.ImageSquare}>
               <Image source={require("./icon/1.png")}></Image>
@@ -91,7 +86,7 @@ export default function MarketHome({ navigation }) {
             <Text style={styles.textSub}>Category 2</Text>
           </View>
         </View>
-        <View style={{ flexDirection: "row" }}>
+        <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-evenly'  }}>
           <View style={styles.ImageSquare}>
             <Image source={require("./icon/3.png")}></Image>
             <Text style={styles.textSub}>
