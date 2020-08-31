@@ -71,7 +71,7 @@ export default function ProfileMain({ navigation }) {
     const [userBirth, setuserBirth]=useState();
     const [userPhone, setuserPhone]=useState();
     const [userNick,setUserNick]=useState();
-    
+    const [haveProfile,setHaveProfile]=useState();
     const [recommend, setRecommend] = useState(true);
     const [copiedText, setCopiedText] = useState('')
     const ref=firestore().collection("UserInfo");
@@ -87,6 +87,7 @@ export default function ProfileMain({ navigation }) {
 
    
       useEffect(() => {
+        async function hello(){
         auth().onAuthStateChanged(userAuth=>{
             setUser(userAuth)})
             if(user){
@@ -94,10 +95,14 @@ export default function ProfileMain({ navigation }) {
                 console.log(documentSnapshot.data().nickname,"hihi")
                 setUserNick(documentSnapshot.data().nickname)
                 setuserBirth(documentSnapshot.data().birth)
+                setHaveProfile(documentSnapshot.data().gotProfile)
             })
-           hi()
+            console.log(user)
+            console.log(haveProfile,"profile")
+            hi()
         }
-      }, [userNick]);
+    }hello()
+      }, [userNick,user,imageOne]);
     
     
     
@@ -121,16 +126,18 @@ export default function ProfileMain({ navigation }) {
           }
           else {
             setImageOne(response.uri);
+            console.log(response.uri,"thisisresponsoe")
             setPicone(false);
 
-            uploadImage()
+            uploadImage(response.uri)
           }
         });
     };
-    async function uploadImage(){
-        const uri=imageOne;
+    async function uploadImage(a){
+        const uri=a;
         const filename="프로필사진"+userNick
         const reference = storage().ref(userNick+"/"+filename);
+        console.log(uri,imageOne,filename,reference)
         const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
         await reference.putFile(uploadUri);

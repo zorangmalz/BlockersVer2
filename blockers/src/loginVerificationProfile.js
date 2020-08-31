@@ -13,6 +13,9 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
+import ImagePicker from 'react-native-image-picker';
+
 const login = StyleSheet.create({
     rule: {
         fontSize: 12,
@@ -51,6 +54,11 @@ export default function LoginVerificationProfile({ navigation }) {
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
     const [nickState,setNickState]=useState(false)
+    const [imageOne, setImageOne] = useState(undefined);
+    const [picone, setPicone] = useState(true);
+    const [imageSource, setImageSource] = useState(undefined);
+    const [isImage,setIsImage]=useState(false);
+    const [haveProfile,setHaveProfile]=useState(false);
 
     const ref=firestore().collection("UserInfo");
 
@@ -61,7 +69,8 @@ export default function LoginVerificationProfile({ navigation }) {
       await ref.doc(code).update({
         birth:bir,
         sex:se,
-        nickname:nick
+        nickname:nick,
+        gotProfile:haveProfile
       })
   
     }
@@ -86,8 +95,7 @@ export default function LoginVerificationProfile({ navigation }) {
 
 
       function move(){
-        
-            
+        uploadImage()
         updateInfo(user.uid,birthday,gender,nickname)
         navigation.navigate("Home")
         
@@ -114,15 +122,54 @@ export default function LoginVerificationProfile({ navigation }) {
         }else{
             console.log("same shit")
         }
+    } const options = {
+        title: '사진가져오기',
+        customButtons: [
+            { name: 'button_id_1', title: 'CustomButton 1' },
+            { name: 'button_id_2', title: 'CustomButton 2' }
+        ],
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+        quality:0.3
+    };
+
+
+    const showCameraRoll1 = () => {
+        ImagePicker.launchImageLibrary(options, (response) => {
+          if (response.error) {
+            console.log('LaunchImageLibrary Error: ', response.error);
+          }
+          else {
+            setImageOne(response.uri);
+            setPicone(false);
+            setIsImage(true)
+          }
+        });
+    };
+    async function uploadImage(){
+        const uri=imageOne;
+        const filename="프로필사진"+nickname
+        const reference = storage().ref(nickname+"/"+filename);
+        const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
+
+        await reference.putFile(uploadUri);
+        setHaveProfile(true)
     }
-      
+
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <ScrollView>
-                    <TouchableOpacity style={{alignSelf: 'center', marginTop: 16}}>
-                        <Image source={require('./icon/userprofile.png')} style={{width: 132, height: 132}} resizeMode="contain" />
+                    <TouchableOpacity onPress={showCameraRoll1} style={{alignSelf: 'center', marginTop: 16}}>
+                    {isImage===true?
+                            imageOne&&<Image resizeMode="stretch" source={{ uri: imageOne}} style={{ width: 92, height: 92 }} />
+                            :
+                            <Image source={require('./icon/userprofile.png')} style={{width: 132, height: 132}} resizeMode="contain" />    
+                            }
+                        
                     </TouchableOpacity>
                     <View>
                         <TextInput onChangeText={text => setNickname(text)} style={[login.textinput, { width: "80%", marginTop: 32 }]} placeholder="닉네임" />
