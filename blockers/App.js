@@ -140,12 +140,12 @@ function HomeTab({ navigation }) {
         component={HomeScreen}
       />
       <Tab.Screen
-        name="CommunityScreen"
-        component={CommunityHome}
-      />
-      <Tab.Screen
         name="Market"
         component={MarketHome}
+      />
+      <Tab.Screen
+        name="CommunityScreen"
+        component={CommunityHome}
       />
       <Tab.Screen
         name="MyPageScreen"

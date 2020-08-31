@@ -160,7 +160,7 @@ useEffect(()=>{
                     </View>
                 </View>
                 <ScrollView>
-                    <Swiper dotStyle={{borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 225 }}>
+                    <Swiper dotStyle={{borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 250 }}>
                         <View>
                             {viewopacity === true ?
                                 <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={() => {
@@ -173,7 +173,7 @@ useEffect(()=>{
                                         width: "100%",
                                         zIndex: 1,
                                         position: 'absolute',
-                                        height: 175,
+                                        height: 210,
                                         backgroundColor: '#000000',
                                         opacity: 30,
                                         alignItems: 'center',
@@ -224,7 +224,7 @@ useEffect(()=>{
                                         </View>
                                     </View>
                                 </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 16 }}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 48 }}>
                                     <View style={resource.container}>
                                         <Text style={resource.smallText}>얼마나 안폈지?</Text>
                                         <Text style={resource.largeText}>1,000 대</Text>
@@ -237,8 +237,8 @@ useEffect(()=>{
                             </View>
                         </View>
                         {startButton ?
-                            <View style={{marginTop: 8, width: "100%"}}>
-                                <Text style={{alignSelf:'center', fontSize: 16, fontFamily: 'NunitoSans-Bold', marginBottom: 16, color: '#303030'}}>Verification Period({month}/{day}~{month}/{day+2})</Text>
+                            <View style={{width: "100%"}}>
+                                <Text style={{alignSelf:'center', fontSize: 16, fontFamily: 'NunitoSans-Bold', marginTop: 16, marginBottom: 32, color: '#303030'}}>Verification Period({month}/{day}~{month}/{day+2})</Text>
                                 <View style={{flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center'}}>
                                     <View style={{justifyContent: 'center', alignItems: 'center'}}>
                                         <View style={{ borderWidth: 2, width: WIDTH/7, height: WIDTH/7, borderColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
@@ -281,7 +281,7 @@ useEffect(()=>{
                             </View>
                         }
                     </Swiper>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', marginTop: 16, paddingLeft: "12%" }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: "12%" }}>
                         <Image style={{width: 15, height: 20, marginRight: 8}} resizeMode="stretch" source={require('./icon/lightbulb.png')} />
                         <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', color: '#303030', opacity: 0.6}}>오늘의 팁</Text>
                     </View>
@@ -293,10 +293,10 @@ useEffect(()=>{
                         marginTop: 32,
                     }}>
                         <TouchableOpacity onPress={() => navigation.navigate('Calendar')}>
-                            <Image style={{width: 48, height: 48}} resizeMode="stretch" source={require('./icon/calendar.png')} />
+                            <Image style={{width: 48, height: 45.8}} resizeMode="stretch" source={require('./icon/Iconcalendar.png')} />
                         </TouchableOpacity>
                         <TouchableOpacity>
-                            <Image style={{width: 56, height: 48}} resizeMode="stretch" source={require('./icon/chatbot.png')} />
+                            <Image style={{width: 48, height: 48}} resizeMode="stretch" source={require('./icon/alertcircle.png')} />
                         </TouchableOpacity>
                     </View>
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center', marginTop: 16}} />
