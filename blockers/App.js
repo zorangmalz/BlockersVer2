@@ -17,6 +17,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from './src/homeScreen';
 import MissionScreen from './src/missionScreen';
@@ -117,11 +118,11 @@ function HomeTab({ navigation }) {
           if (route.name === 'HomeScreen') {
             iconName = focused ? 'ios-home-sharp' : 'ios-home-outline';
             return <Ionicons name={iconName} size={25} color={color} />;
+          } else if (route.name === 'Market') {
+            iconName = focused ? 'text-box' : 'text-box-outline';
+            return <MaterialCommunityIcons name={iconName} size={25} color={color} /> 
           } else if (route.name === 'CommunityScreen') {
             iconName = focused ? 'ios-people-sharp' : 'ios-people-outline';
-            return <Ionicons name={iconName} size={25} color={color} />
-          } else if (route.name === 'Market') {
-            iconName = focused ? 'ios-cart-sharp' : 'ios-cart-outline';
             return <Ionicons name={iconName} size={25} color={color} />
           } else if (route.name === 'MyPageScreen') {
             iconName = focused ? 'ios-person' : 'ios-person-outline';
