@@ -58,6 +58,7 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Fonts/MaterialCommunityIcons.ttf</string>
 		<string>Fonts/Ionicons.ttf</string>
 		<string>Fonts/NunitoSans-Regular.ttf</string>
 		<string>Fonts/NunitoSans-ExtraBold.ttf</string>
