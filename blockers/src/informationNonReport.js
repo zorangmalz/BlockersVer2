@@ -107,6 +107,9 @@ export default function InformationNonReport({ navigation }) {
                     <View style={[report.roundBox, {marginBottom: 18}]}>
                         <Text style={report.roundTitle}>금단 증상 대처 방법</Text>
                     </View>
+                    <View>
+                        
+                    </View>
                 </ScrollView>
             </SafeAreaView>
         </>
