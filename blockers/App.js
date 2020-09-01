@@ -67,6 +67,7 @@ import LoginPassword from "./src/loginPassword";
 import SolutionMain from './src/solutionMain';
 import SplashScreen from './src/splashscreen';
 import SettingCompanyInfo from  "./src/companyInfo";
+import InformationMain from './src/informationMain';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -95,14 +96,6 @@ function ChallengeScreen({ navigation }) {
           gestureDirection: 'vertical-inverted'
         }}
       />
-      {/* <Stack.Screen
-        name="ChallengeConfirm"
-        component={ChallengeConfirm}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          
-        }}
-      /> */}
     </Stack.Navigator>
   )
 }
@@ -118,7 +111,7 @@ function HomeTab({ navigation }) {
           if (route.name === 'HomeScreen') {
             iconName = focused ? 'ios-home-sharp' : 'ios-home-outline';
             return <Ionicons name={iconName} size={25} color={color} />;
-          } else if (route.name === 'Market') {
+          } else if (route.name === 'Information') {
             iconName = focused ? 'text-box' : 'text-box-outline';
             return <MaterialCommunityIcons name={iconName} size={25} color={color} /> 
           } else if (route.name === 'CommunityScreen') {
@@ -141,8 +134,8 @@ function HomeTab({ navigation }) {
         component={HomeScreen}
       />
       <Tab.Screen
-        name="Market"
-        component={MarketHome}
+        name="Information"
+        component={InformationMain}
       />
       <Tab.Screen
         name="CommunityScreen"
@@ -199,6 +192,9 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="주소찾기"
           component={AddressFind}
+          options={{
+            gestureDirection: 'vertical-inverted'
+          }}
         />
         <Stack.Screen
           name="Calendar"
