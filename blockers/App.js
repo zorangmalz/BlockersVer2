@@ -68,6 +68,7 @@ import SolutionMain from './src/solutionMain';
 import SplashScreen from './src/splashscreen';
 import SettingCompanyInfo from  "./src/companyInfo";
 import InformationMain from './src/informationMain';
+import InformationNonReport from './src/informationNonReport';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -467,6 +468,14 @@ const App = ({ navigation }) => {
         component={SettingCompanyInfo}
         options={{
           gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen 
+        name="InformationNonReport"
+        component={InformationNonReport}
+        options={{
+          gestureDirection: 'vertical-inverted',
+          headerShown: false
         }}
       />
       </Stack.Navigator>
