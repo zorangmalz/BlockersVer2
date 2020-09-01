@@ -12,14 +12,17 @@ import {
     FlatList,
     Modal
 } from 'react-native';
+import ProgressBar from 'react-native-progress/Bar';
 
 const challenge = StyleSheet.create({
     box: {
-        marginRight: 32,
-        marginLeft: 32,
-        marginBottom: 17,
+        marginRight: 16,
+        marginLeft: 16,
+        marginBottom: 16,
         paddingTop: 16,
         paddingBottom: 16,
+        paddingRight: 16,
+        paddingLeft: 16,
         borderRadius: 10,
 
         shadowColor: 'black',
@@ -31,6 +34,7 @@ const challenge = StyleSheet.create({
 
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center'
     },
     largeText: {
         fontSize: 16,
@@ -82,17 +86,37 @@ export default function ChallengeMain({ navigation }) {
             challengeNumber: 1001,
             success: false,
             ChallengeStep: 'Step 01',
-            participationDate: '참가일: 2020/06/01',
-            failureDate: '실패일: 2020/06/23'
+            participationDate: '참가: 2020/06/01',
+            failureDate: '실패: 2020/06/23'
         },
         {
             challengeNumber: 1002,
             success: true,
             ChallengeStep: 'Step 01',
-            participationDate: '참가일: 2020/06/01',
+            participationDate: '참가: 2020/06/01',
             failureDate: '상금: ₩ 20,000'
         },
     ]
+
+    const OngoingData = [
+        {
+            step: '1st',
+            percent: 100
+        },
+        {
+            step: '2nd',
+            percent: 70
+        },
+        {
+            step: '3rd',
+            percent: 0
+        },
+        {
+            step: 'Final',
+            percent: 0
+        }
+    ]
+
     //이전 챌린지가 참여 안했을 때 사용
     const [previousChallenge, setPreviousChallenge] = useState(false);
     const previouschallengeview = () => {
@@ -323,21 +347,20 @@ export default function ChallengeMain({ navigation }) {
                             paddingTop: 16,
                             paddingBottom: 16,
                             borderRadius: 10,
-                            borderBottomColor: '#979797',
-                            borderBottomWidth: 0.2,
                         }}>
                             <View style={{
+                                marginTop: 16,
+                                marginBottom: 24,
                                 flexDirection: 'row',
-                                justifyContent: 'space-between',
                                 alignItems: 'center',
-                                marginBottom: 17,
-                                marginLeft: 26,
-                                marginRight: 26
+                                justifyContent: 'flex-start',
                             }}>
-                                <Text style={challenge.largeText}>Step 01</Text>
-                                <TouchableOpacity style={{ alignSelf: 'center' }}>
-                                    <Text style={{ fontSize: 12, textDecorationLine: 'underline', color: '#666666', fontFamily: 'NunitoSans-Regular' }}>포기하기</Text>
-                                </TouchableOpacity>
+                                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#ffb83d', marginRight: 8 }} />
+                                <Text style={{
+                                    fontFamily: 'NunitoSans-Bold',
+                                    fontSize: 16,
+                                    color: '#333333'
+                                }}>Ongoing</Text>
                             </View>
                             <View style={{
                                 flexDirection: 'row',
@@ -346,49 +369,36 @@ export default function ChallengeMain({ navigation }) {
                                 marginBottom: 19
                             }}>
                                 <Image resizeMode="contain" style={{ width: 18, height: 20 }} source={require('./icon/fire.png')} />
-                                <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 8, color: '#303030' }} >성공률</Text>
+                                <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 8, color: '#303030' }} >Step 01</Text>
                             </View>
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginBottom: 17 }}>
-                                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <View style={{
-                                        borderWidth: 3,
-                                        width: 48,
-                                        height: 48,
-                                        borderColor: '#5CC27B',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', color: '#303030' }}>60%</Text>
+                            <FlatList
+                                data={OngoingData}
+                                keyExtractor={item => item.step}
+                                renderItem={({ item }) => (
+                                    <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginBottom: 16 }}>
+                                        <Text style={{
+                                            fontSize: 12,
+                                            fontFamily: 'NunitoSans-Bold',
+                                            color: '#303030',
+                                            width: 40,
+                                            marginRight: 12
+                                        }}>{item.step}</Text>
+                                        <ProgressBar progress={item.percent/100} width={184} color="#5cc27b" unfilledColor="#e0e0e0" borderColor="#ffffff" />
+                                        <Text style={{
+                                            fontSize: 12,
+                                            fontFamily: 'NunitoSans-Bold',
+                                            color: '#303030',
+                                            width: 40,
+                                            marginLeft: 12
+                                        }}>{item.percent}%</Text>
                                     </View>
-                                    <Text style={{ marginTop: 4, fontSize: 14, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>1st</Text>
-                                </View>
-                                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <View style={{
-                                        borderWidth: 3,
-                                        width: 48,
-                                        height: 48,
-                                        borderColor: '#5CC27B',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', color: '#303030' }}>60%</Text>
-                                    </View>
-                                    <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>2nd</Text>
-                                </View>
-                                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <View style={{ borderWidth: 3, width: 48, height: 48, borderColor: '#5CC27B' }} />
-                                    <Text style={{ marginTop: 4, fontSize: 14, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>3rd</Text>
-                                </View>
-                                <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                    <View style={{ borderWidth: 3, width: 48, height: 48, borderColor: '#5CC27B' }} />
-                                    <Text style={{ marginTop: 4, fontSize: 14, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>Final</Text>
-                                </View>
-                            </View>
+                                )}
+                            />
                             <View style={{
                                 flexDirection: 'row',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                marginBottom: 40
+                                marginBottom: 16
                             }}>
                                 <Image resizeMode="contain" style={{ width: 18, height: 20 }} source={require('./icon/reward.png')} />
                                 <Text style={{ fontSize: 16, marginLeft: 8, color: '#303030', fontFamily: 'NunitoSans-Bold' }}>상금정보</Text>
@@ -417,7 +427,7 @@ export default function ChallengeMain({ navigation }) {
                             borderBottomWidth: 0.2,
                             borderBottomColor: '#979797'
                         }}>
-                            <View style={{width: 8, height: 8, borderRadius: 4, backgroundColor: '#ffb83d', marginRight: 8}} />
+                            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#ffb83d', marginRight: 8 }} />
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 16,
@@ -431,10 +441,39 @@ export default function ChallengeMain({ navigation }) {
                                 <View style={challenge.box}>
                                     <View>
                                         <Text style={challenge.largeText}>{item.ChallengeStep}</Text>
-                                        <Text style={[challenge.mediumText, { marginBottom: 4 }]}>{item.participationDate}</Text>
-                                        <Text style={[challenge.smallText, { fontSize: 16 }]}>{item.failureDate}</Text>
+                                        {item.success === true ?
+                                            <View>
+                                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                                    <View style={{width: 8, height: 8, backgroundColor: '#5cc27b', borderRadius: 4, marginRight: 12}} />
+                                                    <Text style={[challenge.mediumText, { marginBottom: 4 }]}>{item.participationDate}</Text>
+                                                </View>
+                                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                                    <View style={{width: 8, height: 8, backgroundColor: '#5cc27b', borderRadius: 4, marginRight: 12}} />
+                                                    <Text style={[challenge.smallText, { fontSize: 16 }]}>{item.failureDate}</Text>
+                                                </View>
+                                            </View>
+                                            :
+                                            <View>
+                                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                                    <View style={{width: 8, height: 8, backgroundColor: '#5cc27b', borderRadius: 4, marginRight: 12}} />
+                                                    <Text style={[challenge.mediumText, { marginBottom: 4 }]}>{item.participationDate}</Text>
+                                                </View>
+                                                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                                                    <View style={{width: 8, height: 8, backgroundColor: '#ff0000', borderRadius: 4, marginRight: 12}} />
+                                                    <Text style={[challenge.smallText, { fontSize: 16 }]}>{item.failureDate}</Text>
+                                                </View>
+                                            </View>
+                                        }
                                     </View>
-                                    <Image source={item.success===true ? require('./icon/success.png') : require('./icon/failure.png')}  />
+                                    {item.success === true ?
+                                        <View style={{ width: 80, height: 30, backgroundColor: '#5cc27b', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
+                                            <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>성공</Text>
+                                        </View>
+                                        :
+                                        <View style={{ width: 80, height: 30, backgroundColor: '#ff0000', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
+                                            <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>실패</Text>
+                                        </View>
+                                    }
                                 </View>
                             )
                             }
