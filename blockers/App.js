@@ -69,6 +69,9 @@ import SplashScreen from './src/splashscreen';
 import SettingCompanyInfo from  "./src/companyInfo";
 import InformationMain from './src/informationMain';
 import InformationNonReport from './src/informationNonReport';
+import ModeSelect from './src/modeSelect';
+import ModeSelectSmoker from './src/modeSelectSmoker';
+import ModeSelectNonSmoker from './src/modeSelectNonSmoker';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -473,6 +476,30 @@ const App = ({ navigation }) => {
       <Stack.Screen 
         name="InformationNonReport"
         component={InformationNonReport}
+        options={{
+          gestureDirection: 'vertical-inverted',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="ModeSelect"
+        component={ModeSelect}
+        options={{
+          gestureDirection: 'vertical-inverted',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="ModeSelectSmoker"
+        component={ModeSelectSmoker}
+        options={{
+          gestureDirection: 'vertical-inverted',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="ModeSelectNonSmoker"
+        component={ModeSelectNonSmoker}
         options={{
           gestureDirection: 'vertical-inverted',
           headerShown: false
