@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { 
-    Container, 
-    Header, 
-    BackContainer, 
-    MenuBox, 
-    Menu, 
-    MainContainer, 
-    WRG20, 
-    WRG18, 
-    WRG16, 
-    Title, 
-    Line,
-    ContentBox
+import {
+  Container,
+  Header,
+  BackContainer,
+  MenuBox,
+  Menu,
+  MainContainer,
+  WRG20,
+  WRG18,
+  WRG16,
+  Title,
+  Line,
+  ContentBox
 } from './style';
 import firebase from 'firebase';
 import 'firebase/firestore';
@@ -29,10 +29,6 @@ const firebaseConfig = {
   appId: "1:729209347504:web:6250b800ab5fe8e5e2ca75",
   measurementId: "G-RHBSD0QHTB"
 };
-
-firebase.initializeApp(firebaseConfig);
-
-const db = firebase.firestore();
 
 //전체 List를 보관하는 박스
 const Listbox = styled.div`
@@ -183,6 +179,10 @@ const DeleteBox = styled.button`
   height: 25px;
   margin-right: 55px;
 
+  background-color: #999999;
+  border: 0;
+  border-radius: 3px;
+
   font-size: 12px;
   font-family: NunitoSans-Regular;
   line-height: 1.33;
@@ -193,10 +193,13 @@ const DeleteBox = styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 function AdminCommunityNotice() {
+  // firebase.initializeApp(firebaseConfig);
+
+  const db = firebase.firestore();
   const [ID, setId] = useState('');
   const [user, setUser] = useState([]);
   const [selectedUser, setSelectedUser] = useState();
@@ -233,88 +236,76 @@ function AdminCommunityNotice() {
   }
   //여기서 firestore query를 이용할 것인지 아니면 그냥 filter 함수를 사용할 것인지 결정해야함
   const enterClick = e => {
-    setListuser(listuser.splice(0,listuser.length-1));
+    setListuser(listuser.splice(0, listuser.length - 1));
     if (e.key === 'Enter') {
       db.collection('UserInfo')
-      .onSnapshot(querySnapshot => {
-        querySnapshot.forEach((doc) => {
-          const fetchedUser = {
-            id: doc.id,
-            ...doc.data()
-          };
-          user.push(fetchedUser);
-        });
-        setListuser(user);
-      })
+        .onSnapshot(querySnapshot => {
+          querySnapshot.forEach((doc) => {
+            const fetchedUser = {
+              id: doc.id,
+              ...doc.data()
+            };
+            user.push(fetchedUser);
+          });
+          setListuser(user);
+        })
       var query = db.collection('UserInfo').where("email", "==", ID)
       if (ID.length === 0) { alert('검색어를 입력해주세요') }
       else {
         query.get()
-        .then(function(querySnapshot) {
-          querySnapshot.forEach(function(doc) {
-            const fetchedSearch = {
-              id: doc.id,
-              ...doc.data()
-            };
-            search.push(fetchedSearch);
-          });
-          setListuser(search);
-        })
+          .then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+              const fetchedSearch = {
+                id: doc.id,
+                ...doc.data()
+              };
+              search.push(fetchedSearch);
+            });
+            setListuser(search);
+          })
         setId('');
       }
     }
   }
 
   //여기서 push를 제한 두는 것이 중요할 듯 하다.
-  
+
 
   return (
-    <Container>
-      <Header>Blockers Admin</Header>
-      <BackContainer>
-        <MenuBox>
-          <Menu>Home</Menu>
-          <Menu>User</Menu>
-          <Menu>Challenge</Menu>
-          <Menu>Community</Menu>
-          <Menu>Market</Menu>
-        </MenuBox>
-        <MainContainer>
-          <Title>Notice</Title>
-          <Line />
-          <Listbox>
-            <Headerbox>
-              <Checkbox checked={totalcheck} onChange={totalhandle} id='totalcheck' value="" />
-              <PostBox>Post no.</PostBox>
-              <TitleBox>제목</TitleBox>
-              <ClickBox>조회수</ClickBox>
-              <GoodBox>좋아요</GoodBox>
-              <RegistrationBox>등록자</RegistrationBox>
-              <RegisterDateBox>등록일자</RegisterDateBox>
-              <DeleteBox>일괄삭제</DeleteBox>
-              <Rightbox>
-                <SearchInput placeholder="Search" value={ID} type="text" onKeyPress={enterClick} onChange={handleChange} />
-                <Search type="button" onClick={handleClick} />
-              </Rightbox>
-            </Headerbox>
-            {
-              listuser.map(list => (
-                <ContentBox key={list.id}>
-                  <Checkbox checked={list.checked} id='totalcheck' value="" />
-                  <PostBox>{list.nickname}</PostBox>
-                  <TitleBox>{list.birth}</TitleBox>
-                  <ClickBox>{list.sex}</ClickBox>
-                  <GoodBox>{list.email}</GoodBox>
-                  <RegistrationBox>Wallet address</RegistrationBox>
-                  <RegisterDateBox>Challenge</RegisterDateBox>
-                  <DeleteBox key={list.id} onClick={}>삭제</DeleteBox>
-                </ContentBox>
-              ))
-            }
-          </Listbox>
-        </MainContainer>
-      </BackContainer>
-    </Container>
+    <>
+      <Title>Notice</Title>
+      <Line />
+      <Listbox>
+        <Headerbox>
+          <Checkbox checked={totalcheck} onChange={totalhandle} id='totalcheck' value="" />
+          <PostBox>Post no.</PostBox>
+          <TitleBox>제목</TitleBox>
+          <ClickBox>조회수</ClickBox>
+          <GoodBox>좋아요</GoodBox>
+          <RegistrationBox>등록자</RegistrationBox>
+          <RegisterDateBox>등록일자</RegisterDateBox>
+          <DeleteBox>일괄삭제</DeleteBox>
+          <Rightbox>
+            <SearchInput placeholder="Search" value={ID} type="text" onKeyPress={enterClick} onChange={handleChange} />
+            <Search type="button" onClick={handleClick} />
+          </Rightbox>
+        </Headerbox>
+        {
+          listuser.map(list => (
+            <ContentBox key={list.id}>
+              <Checkbox checked={list.checked} id='totalcheck' value="" />
+              <PostBox>{list.nickname}</PostBox>
+              <TitleBox>{list.birth}</TitleBox>
+              <ClickBox>{list.sex}</ClickBox>
+              <GoodBox>{list.email}</GoodBox>
+              <RegistrationBox>Wallet address</RegistrationBox>
+              <RegisterDateBox>Challenge</RegisterDateBox>
+              <DeleteBox key={list.id}>삭제</DeleteBox>
+            </ContentBox>
+          ))
+        }
+      </Listbox>
+    </>
   );
 }
 
