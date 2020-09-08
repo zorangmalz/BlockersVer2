@@ -61,7 +61,7 @@ const resource = StyleSheet.create({
 
 export default function HomeScreen({ navigation }) {
     //금연자인지 흡연자인지 구분
-    const smoker = true;
+    
 
     //흡연자일 경우 담배 색깔
     const smokeProof = [true, false, false, false, false, false, false, false, false, false]
@@ -85,7 +85,7 @@ export default function HomeScreen({ navigation }) {
     const [initializing, setInitializing] = useState(true);
     const [fullTime, setfullTime] = useState()
     const [check, setcheck] = useState(false)
-
+    const [smoker,setSmoker]=useState(false)
     async function updateInfo(code) {
         var a = moment().toArray()
         await ref.doc(code).update({
@@ -109,7 +109,9 @@ export default function HomeScreen({ navigation }) {
     useEffect(() => {
         if (user) {
             ref.doc(user.uid).get().then(documentSnapshot => {
-
+                setSmoker(documentSnapshot.data().smoker)
+                console.log(smoker,"smoker?")
+              
                 if (!documentSnapshot.data().SmokingTime) {
                     setcheck(false)
                 } else {
@@ -173,29 +175,7 @@ export default function HomeScreen({ navigation }) {
                 <ScrollView>
                     <Swiper dotStyle={{ borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 250 }}>
                         <View>
-                            {viewopacity === true ?
-                                <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={() => {
-                                    setViewOpacity(false);
-                                    setTimestart(true);
-                                    updateInfo(user.uid)
-                                    console.log(timestart);
-                                }}>
-                                    <View style={{
-                                        width: "100%",
-                                        zIndex: 1,
-                                        position: 'absolute',
-                                        height: 210,
-                                        backgroundColor: '#000000',
-                                        opacity: 30,
-                                        alignItems: 'center',
-                                        justifyContent: 'center'
-                                    }} >
-                                        <Text style={{ color: '#FFFFFF', fontSize: 24, fontFamily: 'NunitoSans-Bold' }}>터치해서 금연 시작하기</Text>
-                                    </View>
-                                </TouchableWithoutFeedback>
-                                :
-                                <View />
-                            }
+                           
                             <View style={{ zIndex: 0 }}>
                                 {smoker === true ?
                                     <>
@@ -237,7 +217,31 @@ export default function HomeScreen({ navigation }) {
                                         </TouchableOpacity>
                                     </>
                                     :
+                                    
                                     <>
+                                     {viewopacity === true ?
+                                <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={() => {
+                                    setViewOpacity(false);
+                                    setTimestart(true);
+                                    updateInfo(user.uid)
+                                    console.log(timestart);
+                                }}>
+                                    <View style={{
+                                        width: "100%",
+                                        zIndex: 1,
+                                        position: 'absolute',
+                                        height: 210,
+                                        backgroundColor: '#000000',
+                                        opacity: 30,
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }} >
+                                        <Text style={{ color: '#FFFFFF', fontSize: 24, fontFamily: 'NunitoSans-Bold' }}>터치해서 금연 시작하기</Text>
+                                    </View>
+                                </TouchableWithoutFeedback>
+                                :
+                                <View />
+                            }
                                         <View style={{
                                             backgroundColor: '#5CC27B',
                                             marginRight: 33,

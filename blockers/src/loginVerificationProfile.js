@@ -97,7 +97,7 @@ export default function LoginVerificationProfile({ navigation }) {
       function move(){
         uploadImage()
         updateInfo(user.uid,birthday,gender,nickname)
-        navigation.navigate("Home")
+        navigation.navigate("ModeSelect")
         
       }
       async function repeatchange(){

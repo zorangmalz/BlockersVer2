@@ -10,6 +10,9 @@ import {
     TextInput
 } from 'react-native';
 
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 const mode = StyleSheet.create({
     largeText: {
         fontSize: 20,
@@ -60,6 +63,15 @@ export default function ModeSelectNonSmoker({navigation}) {
     const [thirty, setThirty] = useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+    const [user,setUser]=useState();
+
+    useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+
+    }, [])
+
     var count = 3;
 
     const pushten = () => {
@@ -102,6 +114,30 @@ export default function ModeSelectNonSmoker({navigation}) {
             setClear(false);
         }
     }, [ten, twenty, thirty]);
+
+    async function move(){
+        if(ten==true){
+            setSelect(select.push(num))
+            console.log(select) 
+            updateInfo(user.uid,select)
+        }else if(twenty==true){
+            setSelect(select.push(several))
+            setSelect(select.push(mg))
+            updateInfo(user.uid,select)
+        }else if(thirty==true){
+            setSelect(select.push(num2))
+            updateInfo(user.uid,select)
+        }   
+            }
+        
+            const ref=firestore().collection("UserInfo");
+            async function updateInfo(code,state){
+              await ref.doc(code).update({
+                  smokeInfo:state
+              })
+          navigation.navigate("Home")
+            }
+
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -111,13 +147,13 @@ export default function ModeSelectNonSmoker({navigation}) {
                     {ten === false ?
                         <TouchableOpacity onPressIn={pushten} onPress={()=>setTen(!ten)}>
                             <View style={mode.buttonBox}>
-                                <Text style={[mode.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>연초</Text>
+                                <Text style={[mode.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>일반담배</Text>
                             </View>
                         </TouchableOpacity>
                         :
                         <TouchableOpacity onPressIn={filterten} onPress={()=>setTen(!ten)}>
                             <View style={mode.activeButton}>
-                                <Text style={[mode.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#FFFFFF' }]}>연초</Text>
+                                <Text style={[mode.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#FFFFFF' }]}>일반담배</Text>
                             </View>
                         </TouchableOpacity>
                     }
@@ -198,7 +234,9 @@ export default function ModeSelectNonSmoker({navigation}) {
                                     fontSize: 21,
                                     color: '#303030',
                                     fontFamily: 'NunitoSans-Regular',
-                                    paddingBottom: 0
+                                    paddingBottom: 0,
+                                    width:100
+                                    
                                 }} 
                                     value={several}
                                     onChangeText={text => setSeveral(text)}
@@ -225,7 +263,8 @@ export default function ModeSelectNonSmoker({navigation}) {
                                     fontSize: 21,
                                     color: '#303030',
                                     fontFamily: 'NunitoSans-Regular',
-                                    paddingBottom: 0
+                                    paddingBottom: 0,
+                                    width:100
                                 }} 
                                     value={mg}
                                     onChangeText={text => setMg(text)}
@@ -244,9 +283,11 @@ export default function ModeSelectNonSmoker({navigation}) {
                 <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     {ten === true ?
                         num.length > 0 ?
+                        <TouchableOpacity onPress={move}>
                             <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
                             </View>
+                            </TouchableOpacity>
                             :
                             <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
@@ -255,18 +296,22 @@ export default function ModeSelectNonSmoker({navigation}) {
                         :
                         twenty === true ?
                             (mg.length > 0) && (several.length > 0) ?
+                            <TouchableOpacity onPress={move}>
                                 <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
                                 </View>
+                                </TouchableOpacity>
                                 :
                                 <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
                                 </View>
                             :
                             thirty === true ?
+                            <TouchableOpacity onPress={move}>
                                 <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
                                 </View>
+                                </TouchableOpacity>
                                 :
                                 <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>

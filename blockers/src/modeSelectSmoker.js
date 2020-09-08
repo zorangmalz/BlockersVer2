@@ -10,6 +10,9 @@ import {
     TextInput
 } from 'react-native';
 
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 const mode = StyleSheet.create({
     largeText: {
         fontSize: 20,
@@ -56,9 +59,12 @@ export default function ModeSelectSmoker({navigation}) {
     const [num, setNum] = useState('');
     const [twenty, setTwenty] = useState(false);
     const [mg, setMg] = useState('');
+    const [several, setSeveral] = useState('');
     const [thirty, setThirty] = useState(false);
+    const [num2,setNum2]=useState("");
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+    const [user,setUser]=useState();
     var count = 3;
 
     const pushten = () => {
@@ -86,12 +92,18 @@ export default function ModeSelectSmoker({navigation}) {
     }
 
     useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+
+    }, [])
+    useEffect(() => {
         ten === true ? count = count + 1 : count = count - 1;
         twenty === true ? count = count + 1 : count = count - 1;
         thirty === true ? count = count + 1 : count = count - 1;
         if ((count <= 2) && (count >= 0)) {
             setClear(true);
-            console.log(select)
+            console.log(select,"Imselect")
         } else {
             if(select[0]==="일반담배") setTen(false);
             if(select[0]==="전자담배(JULL, VAPE)") setTwenty(false);
@@ -101,7 +113,34 @@ export default function ModeSelectSmoker({navigation}) {
             setClear(false);
         }
     }, [ten, twenty, thirty]);
-    return (
+
+    async function move(){
+if(ten==true){
+    setSelect(select.push(num))
+    console.log(select) 
+    updateInfo(user.uid,select)
+}else if(twenty==true){
+    setSelect(select.push(several))
+    setSelect(select.push(mg))
+    updateInfo(user.uid,select)
+}else if(thirty==true){
+    setSelect(select.push(num2))
+    updateInfo(user.uid,select)
+}
+    
+      
+        
+    }
+
+    const ref=firestore().collection("UserInfo");
+    async function updateInfo(code,state){
+      await ref.doc(code).update({
+          smokeInfo:state
+      })
+      navigation.navigate("Home")
+    }
+    
+    return ( 
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
@@ -164,7 +203,8 @@ export default function ModeSelectSmoker({navigation}) {
                                     fontSize: 21,
                                     color: '#303030',
                                     fontFamily: 'NunitoSans-Regular',
-                                    paddingBottom: 0
+                                    paddingBottom: 0,
+                                    width:100
                                 }}
                                     value={num}
                                     onChangeText={text => setNum(text)}
@@ -180,7 +220,36 @@ export default function ModeSelectSmoker({navigation}) {
                         <View />
                     }
                     {twenty === true ? 
-                        <>
+                        <> 
+                        <Text style={[mode.largeText, { marginBottom: 0 }]}>한번 필때 몇번의 흡입을 하셨나요?</Text>
+                        <View style={{
+                            width: "35%",
+                            height: 50,
+                            borderBottomColor: '#5cc27b',
+                            borderBottomWidth: 2,
+                            alignSelf: 'flex-end',
+                            marginRight: '10%',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            flexDirection: 'row'
+                        }}>
+                            <TextInput keyboardType="numeric" style={{
+                                fontSize: 21,
+                                color: '#303030',
+                                fontFamily: 'NunitoSans-Regular',
+                                paddingBottom: 0,
+                                width:100
+                                
+                            }} 
+                                value={several}
+                                onChangeText={text => setSeveral(text)}
+                            />
+                            <Text style={{
+                                fontSize: 21,
+                                color: '#303030',
+                                fontFamily: 'NunitoSans-Regular'
+                            }}>번</Text>
+                        </View>
                             <Text style={[mode.largeText, { marginBottom: 0 }]}>액상에 몇 mg의 니코틴을 넣으시나요?</Text>
                             <View style={{
                                 width: "35%",
@@ -197,7 +266,8 @@ export default function ModeSelectSmoker({navigation}) {
                                     fontSize: 21,
                                     color: '#303030',
                                     fontFamily: 'NunitoSans-Regular',
-                                    paddingBottom: 0
+                                    paddingBottom: 0,
+                                    width:100
                                 }} 
                                     value={mg}
                                     onChangeText={text => setMg(text)}
@@ -212,13 +282,49 @@ export default function ModeSelectSmoker({navigation}) {
                         :
                         <View />
                     }
+                    {thirty === true ?
+                        <>
+                            <Text style={[mode.largeText, { marginBottom: 0 }]}>하루에 담배를 몇 개피 피우시나요?</Text>
+                            <View style={{
+                                width: "35%",
+                                height: 50,
+                                borderBottomColor: '#5cc27b',
+                                borderBottomWidth: 2,
+                                alignSelf: 'flex-end',
+                                marginRight: '10%',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                flexDirection: 'row'
+                            }}>
+                                <TextInput keyboardType="numeric" style={{
+                                    fontSize: 21,
+                                    color: '#303030',
+                                    fontFamily: 'NunitoSans-Regular',
+                                    paddingBottom: 0,
+                                    width:100
+                                }}
+                                    value={num2}
+                                    onChangeText={text => setNum2(text)}
+                                />
+                                <Text style={{
+                                    fontSize: 21,
+                                    color: '#303030',
+                                    fontFamily: 'NunitoSans-Regular'
+                                }}>개피</Text>
+                            </View>
+                        </>
+                        :
+                        <View />
+                    }
                 </ScrollView>
-                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                <TouchableOpacity  style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     {ten === true ?
                         num.length > 0 ?
+                        <TouchableOpacity onPress={move}>
                             <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
                             </View>
+                            </TouchableOpacity>
                             :
                             <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
@@ -227,16 +333,25 @@ export default function ModeSelectSmoker({navigation}) {
                         :
                         twenty === true ?
                             mg.length > 0 ?
+                            <TouchableOpacity onPress={move}>
                                 <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
                                 </View>
+                                </TouchableOpacity>
                                 :
                                 <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
                                 </View>
                             :
                             thirty === true ?
+                                num2.length>0?
+                                <TouchableOpacity onPress={move}>
                                 <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
+                                </View>
+                                </TouchableOpacity>
+                                :
+                                <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
                                 </View>
                                 :

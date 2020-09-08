@@ -10,6 +10,9 @@ import {
     TouchableOpacity
 } from 'react-native';
 
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 const mode = StyleSheet.create({
     title: {
         fontSize: 24,
@@ -57,23 +60,36 @@ export default function ModeSelect({navigation}) {
     const [one, setOne] = useState(false);
     const [two, setTwo] = useState(false);
     const [selectone, setSelectone] = useState([]);
+    const [pressed,setPressed]=useState(false)
+    const [user,setUser]=useState()
     var countone = 2;
 
     const pushone = () => {
         setSelectone(selectone.concat('오전'));
+        setPressed(true)
     }
 
     const filterone = () => {
         setSelectone(selectone.filter(info => info !== '오전'))
+        setPressed(false)
     }
 
     const pushtwo = () => {
         setSelectone(selectone.concat('오후 & 저녁'));
+        setPressed(true)
     }
 
     const filtertwo = () => {
         setSelectone(selectone.filter(info => info !== '오후 & 저녁'))
+        setPressed(false)
     }
+
+    useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+
+    }, [])
 
     useEffect(() => {
         one === true ? countone = countone + 1 : countone = countone - 1;
@@ -88,6 +104,30 @@ export default function ModeSelect({navigation}) {
             console.log(selectone);
         }
     }, [one, two]);
+
+    function move(){
+        if (one==true){
+            forSmoker()
+        }else{
+            forNonSmoker()
+        }
+    }
+    function forSmoker(){
+        updateInfo(user.uid,true)
+        navigation.navigate("ModeSelectSmoker")
+    }
+    function forNonSmoker(){ 
+        updateInfo(user.uid,false)
+        navigation.navigate("ModeSelectNonSmoker")
+    }
+
+    const ref=firestore().collection("UserInfo");
+    async function updateInfo(code,state){
+      await ref.doc(code).update({
+          smoker:state
+      })
+  
+    }
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -157,6 +197,20 @@ export default function ModeSelect({navigation}) {
                         </Text>
                     </View>
                 </ScrollView>
+                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                    { pressed==true ?
+                    <TouchableOpacity onPress={move}>
+                            <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
+                            </View>
+                            </TouchableOpacity>
+                            :
+                            <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
+                            </View>
+
+                    }
+                </TouchableOpacity>
             </SafeAreaView>
         </>
     )
