@@ -1,71 +1,12 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import download from './image/download.jpg';
 import search from './image/search.jpg';
-
-//Box Style
-export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  background: #f7f7f7;
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-`;
-
-//Blockers Admin 보여줌
-export const Header = styled.div`
-  display: inline-block;
-  padding: 42px 0 42px 48px;
-  width: 100vw;
-  height: auto;
-  background: white;
-  align-self: center;
-
-  color: #5cc77b;
-  font-size: 40px;
-  font-family: NunitoSans-Bold;
-  line-height: 54px;
-  letter-spacing: 0.8px;
-`;
-
-//회색 바탕
-export const BackContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  overflow: auto;
-`;
-
-//메뉴 전체 박스
-export const MenuBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 140px;
-  height: 100vh;
-  margin-right: 36px;
-`;
-
-//메뉴의 하나요소
-export const Menu = styled.button`
-  width: 140px;
-  height: 115px;
-  border: 0px;
-  font-family: NunitoSans-Regular;
-  font-size: 24px;
-  text-align: center;
-  line-height: 32px;
-  letter-spacing: 0.48px;
-  background: white;
-`;
-
-//Header와 Menu를 둘다 제외
-export const MainContainer = styled.div`
-    padding-left: 36px;
-`;
+import setting from './image/setting.png';
+import analytic from './image/analytic.png';
 
 //그 페이지의 큰 제목
-export const Title = styled.text`
+export const Title = styled.div`
+  margin-top: 16px;
   margin-left: 32px;
   font-family: NunitoSans-Bold;
   font-size: 40px;
@@ -84,13 +25,40 @@ export const Line = styled.div`
 `;
 
 //Font Style
+export const WBB20 = styled.span`
+  font-size: 20px;
+  font-family: NunitoSans-Bold;
+  color: #303030;
+
+  letter-spacing: 0.4px;
+  line-height: 1.33;
+`;
+
+export const WBB18 = styled.span`
+  font-size: 18px;
+  font-family: NunitoSans-Bold;
+  color: #303030;
+
+  letter-spacing: 0.36px;
+  line-height: 1.33;
+`;
+
+export const WBB16 = styled.span`
+  font-size: 16px;
+  font-family: NunitoSans-Bold;
+  color: #303030;
+
+  letter-spacing: 0.16px;
+  line-height: 1.33;
+`;
+
 export const WRG20 = styled.span`
   font-size: 20px;
   font-family: NunitoSans-Regular;
   color: #707070;
 
   letter-spacing: 0.4px;
-  line-height: 27px;
+  line-height: 1.33;
 `;
 
 export const WRG18 = styled.span`
@@ -99,7 +67,7 @@ export const WRG18 = styled.span`
   color: #707070;
 
   letter-spacing: 0.36px;
-  line-height: 24px;
+  line-height: 1.33;
 `;
 
 export const WRG16 = styled.span`
@@ -108,7 +76,7 @@ export const WRG16 = styled.span`
   color: #707070;
 
   letter-spacing: 0.16px;
-  line-height: 22px;
+  line-height: 1.33;
 `;
 
 //전체 List를 보관하는 박스
@@ -151,20 +119,36 @@ export const Rightbox = styled.div`
   border-bottom: 1px solid #333333;
 `;
 
-export const Download = styled.input`
+export const Download = styled.input.attrs({
+  type: 'button'
+})`
   background-image: url(${download});
-  background-size: cover;
+  background-size: contain;
   border: none;
-  width: 27px;
-  height: 27px;
-  cursor: pointer;
+  width: 24px;
+  height: 24px;
   margin-right: 8px;
+  cursor: pointer;
+  ${props => props.gray && css`
+    background-color: #F7F7F7;
+  `}
+  ${props => props.white && css`
+    background-color: white
+  `}
 `;
 
-export const Search = styled.input`
+export const Downloadbox = styled.div`
+  width: 500px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const Search = styled.div`
   background-image: url(${search});
   background-color: white;
-  background-size: cover;
+  background-size: contain;
   border: none;
   width: 24px;
   height: 24px;
@@ -180,149 +164,27 @@ export const SearchInput = styled.input`
   color: #000000;
 `;
 
-//Header 칸
-//padding만큼 밀리는 경향이 존재함
-export const Headerbox = styled.ul`
-  width: 1568px;
-  padding-top: 14px;
-  padding-bottom: 18px;
-  padding-left: 32px;
-  margin-bottom: 8px;
-  border-top: 1px solid #EFEFEF;
-  border-bottom: 1px solid #EFEFEF;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-//Header에 포함되는 요소들
-export const Checkbox = styled.input.attrs({
-  type: 'checkbox'
+export const Setting = styled.input.attrs({
+  type: 'button'
 })`
+  background-image: url(${setting});
+  margin-left: 8px;
+  background-color: white;
+  background-size: contain;
+  border: none;
   width: 24px;
   height: 24px;
-  border: 0.5px normal #000000;
-  margin-right: 20px;
+  cursor: pointer;
 `;
 
-export const NameBox = styled.div`
-  width: 55px;
-  height: 25px;
-  margin-right: 50px;
-
-  font-size: 18px;
-  font-family: NunitoSans-Regular;
-  line-height: 1.33;
-  letter-spacing: 0.36px;
-  color: #707070;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const BirthBox = styled.div`
-  width: 80px;
-  height: 25px;
-  margin-right: 40px;
-
-  font-size: 18px;
-  font-family: NunitoSans-Regular;
-  line-height: 1.33;
-  letter-spacing: 0.36px;
-  color: #707070;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const GenderBox = styled.div`
-  width: 40px;
-  height: 25px;
-  margin-right: 50px;
-
-  font-size: 18px;
-  font-family: NunitoSans-Regular;
-  line-height: 1.33;
-  letter-spacing: 0.36px;
-  color: #707070;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const IDBox = styled.div`
-  width: 210px;
-  height: 25px;
-  margin-right: 45px;
-
-  font-size: 18px;
-  font-family: NunitoSans-Regular;
-  line-height: 1.33;
-  letter-spacing: 0.36px;
-  color: #707070;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const WalletAddressBox = styled.div`
-  width: 310px;
-  height: 25px;
-  margin-right: 40px;
-
-  font-size: 18px;
-  font-family: NunitoSans-Regular;
-  line-height: 1.33;
-  letter-spacing: 0.36px;
-  color: #707070;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const ChallengeBox = styled.div`
-  width: 120px;
-  height: 25px;
-  margin-right: 30px;
-
-  font-size: 18px;
-  font-family: NunitoSans-Regular;
-  line-height: 1.33;
-  letter-spacing: 0.36px;
-  color: #707070;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-export const TimerBox = styled.div`
-  width: 200px;
-  height: 25px;
-  margin-right: 55px;
-
-  font-size: 18px;
-  font-family: NunitoSans-Regular;
-  line-height: 1.33;
-  letter-spacing: 0.36px;
-  color: #707070;
-
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+export const Analytics = styled.div`
+  background-image: url(${analytic});
+  background-color: white;
+  background-size: cover;
+  border: none;
+  width: 800px;
+  height: 250px;
+  margin-left: 58px;
 `;
 
 export const ContentBox = styled.div`
@@ -334,4 +196,35 @@ export const ContentBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+`;
+
+//adminChallenge 요소
+export const CategoryBox = styled.div`
+  width: 1562px;
+  height: 120px;
+  padding-left: 36px;
+  margin-top: 16px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const VerifyButton = styled.button`
+  width: 150px;
+  height: 60px;
+  border-radius: 10px;
+  border-width: 0px;
+  background: #5cc27b;
+  margin-left: 8px;
+  color: white;
+
+  ${props => props.reject && css`
+      background-color: rgba(255, 0, 0, 0.8);
+  `}
+
+  font-family: NunitoSans-Bold;
+  font-size: 20px;
+  line-height: 1.35;
+  letter-spacing: 0.4px;
 `;

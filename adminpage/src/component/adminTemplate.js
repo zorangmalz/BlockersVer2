@@ -8,11 +8,15 @@ import {
 } from 'react-router-dom';
 import AdminCommunityNotice from './adminCommunityNotice';
 import AdminCommunityList from './adminCommunityList';
+import AdminUserInfo from './adminUserInfo';
+import AdminChallengeHistory from './adminChallengeHistory';
+import AdminChallengeVerify from './adminChallengeVerify';
+import AdminHome from './adminHome';
 
 //Box Style
 const Container = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 110vh;
   background: #f7f7f7;
   display: flex;
   flex-direction: column;
@@ -75,9 +79,10 @@ const MainContainer = styled.div`
 const SideBar = styled.button`
   width: 140px;
   height: 60px;
+  border: 0px;
 
   font-size: 18px;
-  font-family: NunitoSans-Bold;
+  font-family: NunitoSans-Regular;
   line-height: 1.33;
   letter-spacing: 0.36px;
   color: #ffffff;
@@ -85,6 +90,7 @@ const SideBar = styled.button`
   background-color: #5cc27b;
   opacity: 0.6;
   border-width: 0px;
+  cursor: pointer;
 
   display: flex;
   flex-direction: row;
@@ -96,15 +102,23 @@ const routes = [
     {
         path: '/',
         exact: true,
-        main: () => <h2>main</h2>
+        main: () => <AdminHome />
     },
     {
         path: '/user',
-        main: () => <h2>user</h2>
+        main: () => <AdminUserInfo />
     },
     {
-        path: '/challenge',
-        main: () => <h2>challenge</h2>
+        path: '/challenge/main',
+        main: () => <AdminChallengeHistory />
+    },
+    {
+        path: '/challenge/verify',
+        main: () => <AdminChallengeVerify />
+    },
+    {
+        path: '/challenge/history',
+        main: () => <AdminChallengeHistory />
     },
     {
         path: '/community/notice',
@@ -122,11 +136,13 @@ const routes = [
 ]
 
 function AdminTemplate() {
-    const [home, setHome] = useState(false);
+    const [home, setHome] = useState(true);
     const [user, setUser] = useState(false);
     const [comm, setComm] = useState(false);
     const [chall, setChall] = useState(false);
     const [market, setMarket] = useState(false);
+    const [verify, setVerify] = useState(false);
+    const [history, setHistory] = useState(false);
     
     useEffect(() => {
         if (home === true) {
@@ -159,25 +175,25 @@ function AdminTemplate() {
             setChall(false);
             setHome(false);
         }
-    })
+    }, [home, user, comm, chall, market])
     return (
         <Router>
             <Container>
-                <Header>Blockers Admin</Header>
+                <NavLink onClick={() => setHome(true)} to='/' style={{textDecoration: "none"}}><Header>Blockers Admin</Header></NavLink>
                 <BackContainer>
                     <MenuBox>
-                        <NavLink to='/'><Menu onClick={() => setHome(true)} style={{backgroundColor: home===true ? '#5cc27b' : '#ffffff', color: home===true ? '#ffffff' : '#303030'}}>Home</Menu></NavLink>
-                        <NavLink to='/user'><Menu onClick={() => setUser(true)} style={{backgroundColor: user===true ? '#5cc27b' : '#ffffff', color: user===true ? '#ffffff' : '#303030'}}>User</Menu></NavLink>
-                        <NavLink to='/challenge'><Menu onClick={() => setChall(true)} style={{backgroundColor: chall===true ? '#5cc27b' : '#ffffff', color: chall===true ? '#ffffff' : '#303030'}}>Challenge</Menu></NavLink>
+                        <NavLink onClick={() => setHome(true)} to='/'><Menu style={{backgroundColor: home===true ? '#5cc27b' : '#ffffff', color: home===true ? '#ffffff' : '#303030', fontFamily: home===false ? 'NunitoSans-Regular' : 'NunitoSans-Bold'}}>Home</Menu></NavLink>
+                        <NavLink onClick={() => setUser(true)} to='/user'><Menu style={{backgroundColor: user===true ? '#5cc27b' : '#ffffff', color: user===true ? '#ffffff' : '#303030', fontFamily: user===false ? 'NunitoSans-Regular' : 'NunitoSans-Bold'}}>User</Menu></NavLink>
+                        <NavLink onClick={() => setChall(true)} to='/challenge/main'><Menu style={{backgroundColor: chall===true ? '#5cc27b' : '#ffffff', color: chall===true ? '#ffffff' : '#303030', fontFamily: chall===false ? 'NunitoSans-Regular' : 'NunitoSans-Bold'}}>Challenge</Menu></NavLink>
                         {chall === true ?
                             <MenuBox>
-                                <SideBar>Verify</SideBar>
-                                <SideBar>History</SideBar>
+                                <NavLink to='/challenge/verify' style={{textDecorationLine: 'none'}}><SideBar onClick={() => setVerify(!verify)} style={{fontFamily: verify===false ? 'NunitoSans-Regular' : 'NunitoSans-Bold'}}>Verify</SideBar></NavLink>
+                                <NavLink to='/challenge/history' style={{textDecorationLine: 'none'}}><SideBar onClick={() => setHistory(!history)} style={{fontFamily: history===false ? 'NunitoSans-Regular' : 'NunitoSans-Bold'}}>History</SideBar></NavLink>
                             </MenuBox>
                             :
                             false
                         }
-                        <NavLink to='/community/notice'><Menu onClick={() => setComm(true)} style={{backgroundColor: comm===true ? '#5cc27b' : '#ffffff', color: comm===true ? '#ffffff' : '#303030'}}>Community</Menu></NavLink>
+                        <NavLink onClick={() => setComm(true)} to='/community/notice'><Menu style={{backgroundColor: comm===true ? '#5cc27b' : '#ffffff', color: comm===true ? '#ffffff' : '#303030', fontFamily: comm===false ? 'NunitoSans-Regular' : 'NunitoSans-Bold'}}>Community</Menu></NavLink>
                         {comm === true ?
                             <MenuBox>
                                 <NavLink to='/community/notice' style={{textDecorationLine: 'none'}}><SideBar>Notice</SideBar></NavLink>
@@ -186,7 +202,7 @@ function AdminTemplate() {
                             :
                             false
                         }
-                        <NavLink to='/market' style={{textDecorationLine: 'none'}}><Menu onClick={() => setMarket(true)} style={{backgroundColor: market===true ? '#5cc27b' : '#ffffff', color: market===true ? '#ffffff' : '#303030'}}>Market</Menu></NavLink>
+                        <NavLink onClick={() => setMarket(true)} to='/market' style={{textDecorationLine: 'none'}}><Menu style={{backgroundColor: market===true ? '#5cc27b' : '#ffffff', color: market===true ? '#ffffff' : '#303030', fontFamily: market===false ? 'NunitoSans-Regular' : 'NunitoSans-Bold'}}>Market</Menu></NavLink>
                     </MenuBox>
                     <MainContainer>
                         <Switch>
