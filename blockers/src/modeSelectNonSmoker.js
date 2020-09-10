@@ -61,7 +61,7 @@ export default function ModeSelectNonSmoker({navigation}) {
     const [several, setSeveral] = useState('');
     const [mg, setMg] = useState('');
     const [thirty, setThirty] = useState(false);
-    const [select, setSelect] = useState([]);
+    const [select, setSelect] = useState();
     const [clear, setClear] = useState(false);
     const [user,setUser]=useState();
 
@@ -75,11 +75,11 @@ export default function ModeSelectNonSmoker({navigation}) {
     var count = 3;
 
     const pushten = () => {
-        setSelect(select.concat('연초'));
+        setSelect(select.concat("일반담배"));
     }
 
     const filterten = () => {
-        setSelect(select.filter(info => info !== '연초'))
+        setSelect(select.filter(info => info !== '일반담배'))
     }
 
     const pushtwenty = () => {
@@ -106,7 +106,7 @@ export default function ModeSelectNonSmoker({navigation}) {
             setClear(true);
             console.log(select)
         } else {
-            if(select[0]==="연초") setTen(false);
+            if(select[0]==="일반담배") setTen(false);
             if(select[0]==="전자담배(JULL, VAPE)") setTwenty(false);
             if(select[0]==="궐련형 담배(IQOS, LIL)") setThirty(false);
             setSelect(select.slice(1, select.length));
@@ -117,23 +117,21 @@ export default function ModeSelectNonSmoker({navigation}) {
 
     async function move(){
         if(ten==true){
-            setSelect(select.push(num))
-            console.log(select) 
-            updateInfo(user.uid,select)
+            updateInfo(user.uid,select,num,0)
         }else if(twenty==true){
-            setSelect(select.push(several))
-            setSelect(select.push(mg))
-            updateInfo(user.uid,select)
+            updateInfo(user.uid,select,several,mg)
         }else if(thirty==true){
-            setSelect(select.push(num2))
-            updateInfo(user.uid,select)
+            
+            updateInfo(user.uid,select,num2,0)
         }   
             }
         
             const ref=firestore().collection("UserInfo");
-            async function updateInfo(code,state){
+            async function updateInfo(code,state,amount,mg){
               await ref.doc(code).update({
-                  smokeInfo:state
+                  smokeInfo:state,
+                  smokingAmount:amount,
+                  smokingMg:mg
               })
           navigation.navigate("Home")
             }

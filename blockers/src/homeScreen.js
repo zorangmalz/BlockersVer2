@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import {
     StatusBar,
     SafeAreaView,
@@ -19,6 +20,8 @@ import { useScreens } from 'react-native-screens';
 import { FlatList } from 'react-native-gesture-handler';
 
 
+
+const Caver = require('caver-js')
 const WIDTH = Dimensions.get('window').width;
 
 const date = StyleSheet.create({
@@ -86,6 +89,11 @@ export default function HomeScreen({ navigation }) {
     const [fullTime, setfullTime] = useState()
     const [check, setcheck] = useState(false)
     const [smoker,setSmoker]=useState(false)
+    const [smokeInfo,setSmokeInfo]=useState()
+    const [smokingAmount,setSmokingAmount]=useState()
+    const [smokingShow,setSmokingShow]=useState()
+    const [smokingMoney,setSmokingMoney]=useState()
+    const [stats,setStats]=useState()
     async function updateInfo(code) {
         var a = moment().toArray()
         await ref.doc(code).update({
@@ -98,20 +106,33 @@ export default function HomeScreen({ navigation }) {
         setHour(parseInt(seconds % 86400 / 3600))
         setMinu(parseInt(seconds % 86400 % 3600 / 60))
         setSec(parseInt(seconds % 86400 % 3600 % 60))
+        
+        setSmokingShow(day*stats+parseInt(hour*stats/24))
+        console.log("smokingShow:",smokingShow,"day:",day,"smokingAmount:",smokingAmount,"hour:",hour,"fulltime:",fullTime)
     }
 
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
-
+        // const caver = new Caver('https://api.baobab.klaytn.net:8651/')
+        // async function testFunction() {
+        //     const keyring = caver.wallet.keyring.generate()
+        //     console.log(keyring)
+        //     console.log(keyring._key._privateKey)
+        // }
+        // testFunction()
+        
     }, [])
     useEffect(() => {
         if (user) {
             ref.doc(user.uid).get().then(documentSnapshot => {
                 setSmoker(documentSnapshot.data().smoker)
-                console.log(smoker,"smoker?")
-              
+                setSmokeInfo(documentSnapshot.data().smokeInfo)
+                setStats(documentSnapshot.data().smokingAmount)
+                
+                console.log(smokeInfo,stats)
+                
                 if (!documentSnapshot.data().SmokingTime) {
                     setcheck(false)
                 } else {
@@ -134,9 +155,12 @@ export default function HomeScreen({ navigation }) {
         //    console.log(user)
 
         var b = moment(fullTime)
-
+        if(fullTime){
         const interval = setInterval(() => {
-
+             
+            
+            console.log(smokingShow)
+            // console.log(hour*smokingAmount)
             var a = moment().toArray()
 
 
@@ -145,7 +169,9 @@ export default function HomeScreen({ navigation }) {
             timeCounter(c)
         }, 1000)
         return () => clearInterval(interval)
-    }, [fullTime, user])
+    }
+        
+    }, [fullTime])
 
     return (
         <>
@@ -182,7 +208,7 @@ export default function HomeScreen({ navigation }) {
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 16, marginBottom: 16 }}>
                                             <View style={resource.container}>
                                                 <Text style={resource.smallText}>얼마나 안폈지?</Text>
-                                                <Text style={resource.largeText}>1,000 대</Text>
+                                                <Text style={resource.largeText}>{smokingShow}대</Text>
                                             </View>
                                             <View style={resource.container}>
                                                 <Text style={resource.smallText}>얼마나 아꼈지?</Text>
@@ -284,7 +310,7 @@ export default function HomeScreen({ navigation }) {
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 48 }}>
                                             <View style={resource.container}>
                                                 <Text style={resource.smallText}>얼마나 안폈지?</Text>
-                                                <Text style={resource.largeText}>1,000 대</Text>
+                                    <Text style={resource.largeText}>{smokingShow}대</Text>
                                             </View>
                                             <View style={resource.container}>
                                                 <Text style={resource.smallText}>얼마나 아꼈지?</Text>
