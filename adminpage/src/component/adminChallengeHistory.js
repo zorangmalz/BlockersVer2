@@ -8,31 +8,26 @@ import {
     ContentBox,
     Downloadbox,
     Download,
-    Rightbox,
     Setting
 } from './style';
 
-function AdminChallengeHistory() {
-    const [ID, setId] = useState('');
-    const [user, setUser] = useState([]);
-    const [selectedUser, setSelectedUser] = useState();
-    const [listuser, setListuser] = useState([
-        {
-            id: 'hyunmyung137@gmail.com',
-            name: '김현명',
-            Number: 20200101,
-            Step: 1,
-            Month: 'Jan',
-            participants: 1000,
-            fund: 1000000,
-            success: '60%',
-            claim: 10
-        }
-    ]);
+const listuser = [
+    {
+        id: 'hyunmyung137@gmail.com',
+        name: '김현명',
+        Number: 20200101,
+        Step: 1,
+        Month: 'Jan',
+        participants: 1000,
+        fund: 1000000,
+        success: '60%',
+        claim: 10
+    }
+];
 
+function AdminChallengeHistory() {
     //CHECKBOX에 대하여
     const [totalcheck, setTotalcheck] = useState(false);
-    const [check, setCheck] = useState(false);
     const totalhandle = () => {
         setTotalcheck(!totalcheck);
     }

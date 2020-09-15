@@ -1,18 +1,12 @@
-import React, { useState } from 'react';
+// eslint-disable-next-line
+import React from 'react';
 import styled, { css } from 'styled-components';
 import {
     Title,
-    Download,
     WRG20,
-    WRG18,
-    WRG16,
     Setting,
     Analytics
 } from './style';
-import firebase from 'firebase';
-import 'firebase/firestore';
-import download from './image/download.jpg';
-import search from './image/search.jpg';
 
 const listuser = [
     {
