@@ -59,26 +59,30 @@ export default function LoginVerificationProfile({ navigation }) {
     const [imageSource, setImageSource] = useState(undefined);
     const [isImage,setIsImage]=useState(false);
     const [haveProfile,setHaveProfile]=useState(false);
-
+    const [revmtk,setRevmtk]=useState()
     const ref=firestore().collection("UserInfo");
-
-    
-    async function updateInfo(code,bir,se,nick){
+ async function ProfilePicture(a) {
+        console.log(a)
+        const url2 = await storage()
+            .refFromURL("gs://blockers-8a128.appspot.com/User/" + a + "/" + "프로필사진" + a)
+            .getDownloadURL();
         
-    console.log("시발 여기라고")
+        setRevmtk(url2)
+
+    }
+    
+    async function updateInfo(code,bir,se,nick,pic){
+    // await ProfilePicture(nickname)
+    console.log("시발 여기라고",revmtk)
       await ref.doc(code).update({
         birth:bir,
         sex:se,
         nickname:nick,
-        gotProfile:haveProfile
+        gotProfile:haveProfile,
+        profilePicture:pic
       })
   
     }
-
-    // useEffect(()=>{
-    //     ref.doc(user.uid).
-    // })
-
     function onAuthStateChanged(user) {
         setUser(user);
        
@@ -92,11 +96,13 @@ export default function LoginVerificationProfile({ navigation }) {
 
       if (initializing) return null;
 
-
-
-      function move(){
+     
+      async function move(){
         uploadImage()
-        updateInfo(user.uid,birthday,gender,nickname)
+        const url2 = await storage()
+            .refFromURL("gs://blockers-8a128.appspot.com/User/" +nickname+ "/" + "프로필사진" +nickname)
+            .getDownloadURL();
+        updateInfo(user.uid,birthday,gender,nickname,url2)
         navigation.navigate("ModeSelect")
         
       }

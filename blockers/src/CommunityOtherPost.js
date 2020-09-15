@@ -108,7 +108,15 @@ export default function CommunityOtherPost({ route, navigation }) {
     const plusnumrerep = () => {
         setNumrerep(numrerep + 1);
     }
+    // async function reProfilePicture(a) {
+    //     console.log(a)
+    //     const url2 = await storage()
+    //         .refFromURL("gs://blockers-8a128.appspot.com/User/" + a + "/" + "프로필사진" + a)
+    //         .getDownloadURL();
+    //     console.log("revmtkdlqslek", url2)
+    //     setRevmtk(url2)
 
+    // }
     //댓글 작성하는 함수. 댓글 작성후에 reply collection에 추가를 하고 커멘트 숫자도 업로드한다
     async function writepost(b) {
 
@@ -120,13 +128,15 @@ export default function CommunityOtherPost({ route, navigation }) {
             a[1] = a[1] + 1
         }
         console.log(docID)
+        
         await ref.doc(docID).collection("Reply").doc(a + b).set({
             content: b,
             nick: nick,
             fullTime: a,
             time: a[3] + ":" + a[4],
             day: a[1] + "/" + a[2],
-            writerUid: user.uid
+            writerUid: user.uid,
+            profilePicture:revmtk
         })
         await ref.doc(docID).update({
             commentNum: replynum + 1
@@ -144,8 +154,9 @@ export default function CommunityOtherPost({ route, navigation }) {
             firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot => {
                 console.log(documentSnapshot.data().nickname, "hihi")
                 setNick(documentSnapshot.data().nickname)
+                setRevmtk(documentSnapshot.data().profilePicture)
             })
-
+            console.log("flvmtk",revmtk)
         }
     }, [user, replynum])
 
@@ -213,14 +224,14 @@ export default function CommunityOtherPost({ route, navigation }) {
             ref.doc(ID).collection("Reply").onSnapshot(querySnapshot => {
                 const list = [];
                 setReplyNum(querySnapshot.size)
-                querySnapshot.forEach(docs => {
-                    reProfilePicture(docs.data().nick)
+                querySnapshot.forEach(docs => {     
+                    // reProfilePicture(docs.data().nick)
                     list.push({
                         reNick: docs.data().nick,
                         reContent: docs.data().content,
                         reLike: docs.data().like,
                         reTime: docs.data().day + " " + docs.data().time,
-                        reProfile: revmtk
+                        reProfile:docs.data().profilePicture
                     });
                 })
                 setItems(list);
@@ -231,16 +242,9 @@ export default function CommunityOtherPost({ route, navigation }) {
         }
        reply()
 
-    }, [state])
+    }, [state,vmtk])
 
-    async function reProfilePicture(a) {
-        const url2 = await storage()
-            .refFromURL("gs://blockers-8a128.appspot.com/User/" + a + "/" + "프로필사진" + a)
-            .getDownloadURL();
-        console.log("revmtkdlqslek", url2)
-        setRevmtk(url2)
-
-    }
+    
     function likeMinus(a) {
 
         return ref.doc(param).update({
@@ -533,10 +537,20 @@ export default function CommunityOtherPost({ route, navigation }) {
                                         <Text>{item.reContent}</Text>
 
                                     </View>
+                                    <FlatList
+                                    data
+                                    
+                                    />
+
+                                
                                 </View>
+                                
                             )}
+                            
                         />
-                        {/* <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+
+                        
+                        <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-evenly' }}>
                             <Image source={require('./icon/rereply.png')} resizeMode="contain" style={{ marginLeft: 5, width: 16, height: 16 }} />
                             <View style={{ alignSelf: 'flex-end', backgroundColor: '#E5E5E5', width: "90%", minHeight: 84, borderRadius: 5, paddingTop: 4, paddingLeft: 8, paddingRight: 8 }}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -584,7 +598,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                     <Text>매너 채팅 부탁드려요</Text>
                                 </View>
                             </View>
-                        </View> */}
+                        </View>
                     </View>
                 </ScrollView>
                 <View style={{
