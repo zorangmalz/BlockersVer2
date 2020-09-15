@@ -12,6 +12,7 @@ import AdminUserInfo from './adminUserInfo';
 import AdminChallengeHistory from './adminChallengeHistory';
 import AdminChallengeVerify from './adminChallengeVerify';
 import AdminHome from './adminHome';
+import AdminTest from './adminTest';
 
 //Box Style
 const Container = styled.div`
@@ -130,7 +131,7 @@ const routes = [
     },
     {
         path: '/market',
-        main: () => <h2>market</h2>
+        main: () => <AdminTest />
     },
 
 ]

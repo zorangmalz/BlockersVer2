@@ -1,11 +1,11 @@
 import React from 'react';
 import AdminTemplate from './component/adminTemplate';
-import AdminCommunityList from './component/adminCommunityList';
+import AdminTest from './component/adminTest';
 
 function App() {
   return (
     <>
-      <AdminTemplate />
+      <AdminTest />
     </>
   );
 }
