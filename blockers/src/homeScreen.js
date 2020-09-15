@@ -77,10 +77,10 @@ export default function HomeScreen({ navigation }) {
     const DATA = [];
     const num = 1;
     const [month, setMonth] = useState('00');
-    const [day, setDay] = useState();
-    const [hour, setHour] = useState();
-    const [minu, setMinu] = useState();
-    const [sec, setSec] = useState();
+    const [day, setDay] = useState(0);
+    const [hour, setHour] = useState(0);
+    const [minu, setMinu] = useState(0);
+    const [sec, setSec] = useState(0);
     const [timestart, setTimestart] = useState(false);
     const [viewopacity, setViewOpacity] = useState(true);
     const [startButton, setStartButton] = useState(false);
@@ -91,7 +91,7 @@ export default function HomeScreen({ navigation }) {
     const [smoker,setSmoker]=useState(false)
     const [smokeInfo,setSmokeInfo]=useState()
     const [smokingAmount,setSmokingAmount]=useState()
-    const [smokingShow,setSmokingShow]=useState()
+    const [smokingShow,setSmokingShow]=useState(0)
     const [smokingMoney,setSmokingMoney]=useState()
     const [stats,setStats]=useState()
     async function updateInfo(code) {
@@ -102,13 +102,15 @@ export default function HomeScreen({ navigation }) {
     }
 
     function timeCounter(seconds) {
+        // console.log(seconds)
         setDay(parseInt(seconds / 86400))
+        // console.log(day,"day")
         setHour(parseInt(seconds % 86400 / 3600))
         setMinu(parseInt(seconds % 86400 % 3600 / 60))
         setSec(parseInt(seconds % 86400 % 3600 % 60))
         
-        setSmokingShow(day*stats+parseInt(hour*stats/24))
-        console.log("smokingShow:",smokingShow,"day:",day,"smokingAmount:",smokingAmount,"hour:",hour,"fulltime:",fullTime)
+        
+        // console.log("smokingShow:",smokingShow,"sec",sec,"day:",day,"smokingAmount:",smokingAmount,"hour:",hour,"fulltime:",fullTime)
     }
 
     useEffect(() => {
@@ -131,7 +133,7 @@ export default function HomeScreen({ navigation }) {
                 setSmokeInfo(documentSnapshot.data().smokeInfo)
                 setStats(documentSnapshot.data().smokingAmount)
                 
-                console.log(smokeInfo,stats)
+                console.log("smokeInfo and stats",smokeInfo,stats)
                 
                 if (!documentSnapshot.data().SmokingTime) {
                     setcheck(false)
@@ -157,16 +159,16 @@ export default function HomeScreen({ navigation }) {
         var b = moment(fullTime)
         if(fullTime){
         const interval = setInterval(() => {
-             
-            
-            console.log(smokingShow)
             // console.log(hour*smokingAmount)
             var a = moment().toArray()
-
-
             var c = (b.diff(a, "seconds")) * -1
-
+            // console.log(c)
             timeCounter(c)
+            setSmokingShow(parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))
+            setSmokingMoney(((parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))*125).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+            // console.log(stats,day,hour)
+            var hi=100000
+            // console.log("real",hi.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
         }, 1000)
         return () => clearInterval(interval)
     }
@@ -212,7 +214,8 @@ export default function HomeScreen({ navigation }) {
                                             </View>
                                             <View style={resource.container}>
                                                 <Text style={resource.smallText}>얼마나 아꼈지?</Text>
-                                                <Text style={resource.largeText}>225,000원</Text>
+                                                
+                                <Text style={resource.largeText}>{smokingMoney}원</Text>
                                             </View>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -314,7 +317,7 @@ export default function HomeScreen({ navigation }) {
                                             </View>
                                             <View style={resource.container}>
                                                 <Text style={resource.smallText}>얼마나 아꼈지?</Text>
-                                                <Text style={resource.largeText}>225,000원</Text>
+                                    <Text style={resource.largeText}>{smokingMoney}원</Text>
                                             </View>
                                         </View>
                                     </>

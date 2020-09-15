@@ -61,7 +61,7 @@ export default function ModeSelectNonSmoker({navigation}) {
     const [several, setSeveral] = useState('');
     const [mg, setMg] = useState('');
     const [thirty, setThirty] = useState(false);
-    const [select, setSelect] = useState();
+    const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
     const [user,setUser]=useState();
 

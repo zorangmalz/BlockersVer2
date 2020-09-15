@@ -136,7 +136,7 @@ export default function ProfileMain({ navigation }) {
     async function uploadImage(a){
         const uri=a;
         const filename="프로필사진"+userNick
-        const reference = storage().ref(userNick+"/"+filename);
+        const reference = storage().ref("User/"+userNick+"/"+filename);
         console.log(uri,imageOne,filename,reference)
         const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
@@ -145,7 +145,7 @@ export default function ProfileMain({ navigation }) {
     async function hi(){
     console.log("HI","gs://blockers-8a128.appspot.com/"+userNick+"/프로필사진"+userNick)
         const url = await storage()
-          .refFromURL("gs://blockers-8a128.appspot.com/"+userNick+"/프로필사진"+userNick)
+          .refFromURL("gs://blockers-8a128.appspot.com/"+"User/"+userNick+"/프로필사진"+userNick)
           .getDownloadURL();
           setIsImage(true)
           setImageSource(url)

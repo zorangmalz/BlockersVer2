@@ -151,7 +151,7 @@ export default function LoginVerificationProfile({ navigation }) {
     async function uploadImage(){
         const uri=imageOne;
         const filename="프로필사진"+nickname
-        const reference = storage().ref(nickname+"/"+filename);
+        const reference = storage().ref("User/"+nickname+"/"+filename);
         const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
         await reference.putFile(uploadUri);
