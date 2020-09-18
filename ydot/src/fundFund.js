@@ -145,7 +145,7 @@ export default function FundFund({ navigation }) {
                     visible={fundvisible}
                     onRequestClose={() => setFundvisible(!fundvisible)}
                 >
-                    <View style={{ flex: 1, backgroundColor: '#B7B7B7', alignItems: 'center', justifyContent: 'flex-end' }}>
+                    <View style={{ flex: 1, backgroundColor: '#303030', opacity: 0.9, alignItems: 'center', justifyContent: 'flex-end' }}>
                         <View style={{
                             width: "100%",
                             height: 439,
