@@ -166,7 +166,7 @@ export default function HomeScreen({ navigation }) {
                             </View>
                             <Text style={[style.text, {fontSize: 12, marginLeft: 16, marginTop: 4}]}>목표: 1,000,000 원</Text>
                             <View style={{flexDirection: 'row', alignItems: 'center', marginLeft: 16, marginTop: 4}}>
-                                <ProgressBar width={100} height={8} color="#161513" unfilledColor="acacac" progress={0.6} />
+                                <ProgressBar width={100} height={8} color="#161513" unfilledColor="#acacac" borderWidth={0} progress={0.6} />
                                 <Text style={[style.text, {fontSize: 12, marginLeft: 4}]}>60%</Text>
                             </View>
                         </View>
@@ -180,7 +180,7 @@ export default function HomeScreen({ navigation }) {
                             </View>
                             <Text style={[style.text, { fontSize: 12, marginLeft: 16, marginTop: 4 }]}>목표: 1,000,000 원</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 16, marginTop: 4 }}>
-                                <ProgressBar width={100} height={8} color="#161513" unfilledColor="acacac" progress={0.6} />
+                                <ProgressBar width={100} height={8} color="#161513" unfilledColor="#acacac" borderWidth={0} progress={0.6} />
                                 <Text style={[style.text, { fontSize: 12, marginLeft: 4 }]}>60%</Text>
                             </View>
                         </View>
@@ -203,7 +203,7 @@ export default function HomeScreen({ navigation }) {
                             </View>
                             <Text style={[style.text, { fontSize: 12, marginLeft: 16, marginTop: 4 }]}>목표: 1,000,000 원</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 16, marginTop: 4 }}>
-                                <ProgressBar width={100} height={8} color="#161513" unfilledColor="acacac" progress={0.6} />
+                                <ProgressBar width={100} height={8} color="#161513" unfilledColor="#acacac" borderWidth={0} progress={0.6} />
                                 <Text style={[style.text, { fontSize: 12, marginLeft: 4 }]}>60%</Text>
                             </View>
                         </View>
@@ -217,7 +217,7 @@ export default function HomeScreen({ navigation }) {
                             </View>
                             <Text style={[style.text, { fontSize: 12, marginLeft: 16, marginTop: 4 }]}>목표: 1,000,000 원</Text>
                             <View style={{ flexDirection: 'row', alignItems: 'center', marginLeft: 16, marginTop: 4 }}>
-                                <ProgressBar width={100} height={8} color="#161513" unfilledColor="acacac" progress={0.6} />
+                                <ProgressBar width={100} height={8} color="#161513" unfilledColor="#acacac" borderWidth={0} progress={0.6} />
                                 <Text style={[style.text, { fontSize: 12, marginLeft: 4 }]}>60%</Text>
                             </View>
                         </View>
