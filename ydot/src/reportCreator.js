@@ -140,11 +140,11 @@ export default function ReportCreator({ navigation }) {
                         <Text style={{ fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Regular', opacity: 0.4, marginLeft: 16, marginBottom: 16 }}>최근 동영상</Text>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', marginBottom: 16}}>
                             <Image source={require('./icon/lobster.png')} />
-                            <Image source={require('./icon/lobster.png')} />
+                            <Image source={require('./icon/squid.png')} />
                         </View>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', marginBottom: 16}}>
-                            <Image source={require('./icon/lobster.png')} />
-                            <Image source={require('./icon/lobster.png')} />
+                            <Image source={require('./icon/shrimp.png')} />
+                            <Image source={require('./icon/orangefish.png')} />
                         </View>
                         <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular', alignSelf: 'center', opacity: 0.6}}>+ More</Text>
                     </View>

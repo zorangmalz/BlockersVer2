@@ -171,11 +171,11 @@ export default function HomeScreen({ navigation }) {
                             </View>
                         </View>
                         <View style={style.newbox}>
-                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} source={require('./icon/background.png')} >
+                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} source={require('./icon/desert.png')} >
                                 <Text style={{ width: 62, backgroundColor: '#161513', fontFamily: 'Metropolis-Bold', color: '#ffffff', fontSize: 12, alignSelf: 'flex-end', marginTop: 95, textAlign: 'center' }}>D-30</Text>
                             </ImageBackground>
                             <View style={{ marginTop: 4, marginLeft: 16, flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={[style.text, { fontSize: 12, marginRight: 4 }]}>크랩 TV</Text>
+                                <Text style={[style.text, { fontSize: 12, marginRight: 4 }]}>사막 TV</Text>
                                 <Image style={{ width: 12, height: 12 }} resizeMode="contain" source={require('./icon/heart.png')} />
                             </View>
                             <Text style={[style.text, { fontSize: 12, marginLeft: 16, marginTop: 4 }]}>목표: 1,000,000 원</Text>
@@ -194,11 +194,11 @@ export default function HomeScreen({ navigation }) {
                         marginTop: 16
                     }}>
                         <View style={style.newbox}>
-                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} source={require('./icon/background.png')} >
+                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} source={require('./icon/travel.png')} >
                                 <Text style={{ width: 62, backgroundColor: '#161513', fontFamily: 'Metropolis-Bold', color: '#ffffff', fontSize: 12, alignSelf: 'flex-end', marginTop: 95, textAlign: 'center' }}>D-30</Text>
                             </ImageBackground>
                             <View style={{ marginTop: 4, marginLeft: 16, flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={[style.text, { fontSize: 12, marginRight: 4 }]}>크랩 TV</Text>
+                                <Text style={[style.text, { fontSize: 12, marginRight: 4 }]}>여행 TV</Text>
                                 <Image style={{ width: 12, height: 12 }} resizeMode="contain" source={require('./icon/heart.png')} />
                             </View>
                             <Text style={[style.text, { fontSize: 12, marginLeft: 16, marginTop: 4 }]}>목표: 1,000,000 원</Text>
@@ -208,11 +208,11 @@ export default function HomeScreen({ navigation }) {
                             </View>
                         </View>
                         <View style={style.newbox}>
-                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} source={require('./icon/background.png')} >
+                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} source={require('./icon/mountain.png')} >
                                 <Text style={{ width: 62, backgroundColor: '#161513', fontFamily: 'Metropolis-Bold', color: '#ffffff', fontSize: 12, alignSelf: 'flex-end', marginTop: 95, textAlign: 'center' }}>D-30</Text>
                             </ImageBackground>
                             <View style={{ marginTop: 4, marginLeft: 16, flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={[style.text, { fontSize: 12, marginRight: 4 }]}>크랩 TV</Text>
+                                <Text style={[style.text, { fontSize: 12, marginRight: 4 }]}>산악 TV</Text>
                                 <Image style={{ width: 12, height: 12 }} resizeMode="contain" source={require('./icon/heart.png')} />
                             </View>
                             <Text style={[style.text, { fontSize: 12, marginLeft: 16, marginTop: 4 }]}>목표: 1,000,000 원</Text>
