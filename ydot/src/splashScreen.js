@@ -12,7 +12,7 @@ const style = StyleSheet.create({
     fontFamily: 'Metropolis-Bold',
     color: '#303030',
     fontSize: 24,
-    marginBottom: 20
+    marginTop: 20
   },
   size: {
     fontSize: 40
@@ -33,7 +33,7 @@ function SplashScreen({navigation}) {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <Text style={[style.logo, style.size]}>Y.</Text>
+            <Image style={{width: 200, height: 200}} source={require('./icon/ydotlogo.gif')} />
             <Text style={style.logo}>Create, Fund, Enjoy!</Text>
           </View>
       </SafeAreaView>
