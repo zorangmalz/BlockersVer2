@@ -5,6 +5,7 @@ import {
   View,
   Text,
   StatusBar,
+  Image
 } from 'react-native';
 
 const style = StyleSheet.create({

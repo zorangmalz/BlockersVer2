@@ -53,6 +53,32 @@ function SignScreen({navigation}) {
   const [accountvisible, setAccountvisible] = useState(false);
   const [signvisible, setSignvisible] = useState(false);
   const [walletvisible, setWalletvisible] = useState(false);
+
+  function requestCall(){
+    var request = require('request');
+
+var headers = {
+    'x-chain-id': '1001'
+};
+
+var options = {
+    url: 'https://wallet-api.klaytnapi.com/v2/account',
+    headers: headers,
+    auth: {
+        'user': 'KASKT37TZEH7QSUWDC26TT0L',
+        'pass': 'zMMs4rHWOJqwOcEl0wCucuDVB6oAcmLbWaRe9oCL'
+    }
+};
+
+function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(body)
+    }
+}
+
+request(options, callback);
+navigation.navigate("Home")
+  }
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -124,7 +150,7 @@ function SignScreen({navigation}) {
                   <Text style={[style.text, { color: '#161513' }]}>Sign In</Text>
                 </TouchableOpacity>
                 :
-                <TouchableOpacity onPress={() => navigation.navigate("Home")} style={[style.box, {height: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}]}>
+                <TouchableOpacity onPress={() => requestCall()} style={[style.box, {height: 60, flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}]}>
                   <Image source={require('./icon/klaytn.png')} />
                   <Text style={[style.text, { color: '#161513', marginLeft: 20 }]}>Connect to Klaytn</Text>
                 </TouchableOpacity>
