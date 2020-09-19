@@ -5,7 +5,7 @@
  * @format
  * @flow strict-local
  */
-
+import "./global";
 import React, { useState } from 'react';
 import {
   SafeAreaView,
@@ -155,3 +155,4 @@ const App = () => {
 };
 
 export default App;
+export const cryp = require('crypto')

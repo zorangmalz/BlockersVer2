@@ -11,6 +11,7 @@ import {
   FlatList
 } from 'react-native';
 import Clipboard from "@react-native-community/clipboard";
+import App from "./contract";
 
 const style = StyleSheet.create({
   containerStatus: {
@@ -68,7 +69,7 @@ function FancardDetail({navigation}) {
         <ScrollView style={{ flex: 1 }}>
           <View style={style.containerStatus}>
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity style={[style.box, { backgroundColor: '#E78276', marginBottom: 8 }]}>
+              <TouchableOpacity style={[style.box, { backgroundColor: '#E78276', marginBottom: 8 }]} onPress={()=>App.createToken()}>
                 <Image source={require('./icon/youtuber.png')} />
               </TouchableOpacity>
               <Text style={[style.text, { width: 100, fontSize: 12, textAlign: 'center' }]}>KRAB</Text>
