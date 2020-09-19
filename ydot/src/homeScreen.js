@@ -231,9 +231,9 @@ export default function HomeScreen({ navigation }) {
                         <FlatList
                             data={[
                                 { key: 1, name: '가짜 사나이 2', content: '[프로그램] 수익분배형 제작…', progress: '1,100%' },
-                                { key: 2, name: '가짜 사나이 2', content: '[프로그램] 수익분배형 제작…', progress: '1,100%' },
-                                { key: 3, name: '가짜 사나이 2', content: '[프로그램] 수익분배형 제작…', progress: '1,100%' },
-                                { key: 4, name: '가짜 사나이 2', content: '[프로그램] 수익분배형 제작…', progress: '1,100%' },
+                                { key: 2, name: '등산하는 정선웅', content: '[재매입] 프로그램 제작…', progress: '1,100%' },
+                                { key: 3, name: '김진성 코딩하기', content: '[수익분배] 프로그램 제작…', progress: '1,100%' },
+                                { key: 4, name: '감귤농사 TV', content: '[수익분배] 프로그램 제작…', progress: '1,100%' },
                             ]}
                             renderItem={({ item }) => (
                                 <>
