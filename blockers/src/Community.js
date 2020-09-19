@@ -1,5 +1,5 @@
 
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useEffect } from 'react';
 import {
     StyleSheet,
     StatusBar,
@@ -64,7 +64,21 @@ export default function CommunityHome({ navigation }) {
         replynum = 5;
 
     var content = "흡연 10년차 입니다.... 저번주부터 금연을…."
-    
+    useEffect(()=>{
+        
+        const list=[]
+        list.push(
+            {hi: "hi"}
+
+        )
+        const lists=[]
+        lists.push({
+            hi:[{hi:"hoihi",hlhl:"slefka"}]
+        })
+        
+        list.push(lists)
+        console.log(lists)
+    })
     return (
         <>
             <StatusBar barStyle="light-content" />

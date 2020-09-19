@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -19,6 +19,7 @@ import auth from '@react-native-firebase/auth';
 import moment from "moment"
 import { useScreens } from 'react-native-screens';
 import storage from '@react-native-firebase/storage';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -76,6 +77,7 @@ const community = StyleSheet.create({
 export default function CommunityOtherPost({ route, navigation }) {
     const [comment, setComment] = useState('');
     const [islogined, setIslogined] = useState(true);
+    const [reIsLogined,setReIsLogined]=useState()
     const [title, setTitle] = useState();
     const [author, setAuthor] = useState();
     const [createdate, setCreateDate] = useState();
@@ -83,6 +85,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [user, setUser] = useState();
     const [like, setLike] = useState();
     const [items, setItems] = useState([]);
+    const [itemss,setItemss]=useState([]);
     const [likeButton, setLikeButton] = useState(false);
     const ref = firestore().collection('Community1');
     const [nick, setNick] = useState();
@@ -101,6 +104,12 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [alertList, setAlertList] = useState([]);
     const [vmtk, setVmtk] = useState();
     const [revmtk, setRevmtk] = useState();
+    const [reComment,setReComment]=useState();
+    const [reHave,setReHave]=useState();
+    const textbox=useRef()
+    
+    
+
     const plusnumrep = () => {
         setNumrep(numrep + 1);
     }
@@ -119,7 +128,34 @@ export default function CommunityOtherPost({ route, navigation }) {
     // }
     //댓글 작성하는 함수. 댓글 작성후에 reply collection에 추가를 하고 커멘트 숫자도 업로드한다
     async function writepost(b) {
-
+        if(reComment){
+            var a = moment().toArray()
+            console.log(b)
+            if (a[1] === 12) {
+                a[1] = 1
+            } else {
+                a[1] = a[1] + 1
+            }
+            console.log(docID)
+            
+            await ref.doc(docID).collection("Reply").doc(reComment).collection("ReReply").doc(a + b).set({
+                content: b,
+                nick: nick,
+                fullTime: a,
+                time: a[3] + ":" + a[4],
+                day: a[1] + "/" + a[2],
+                writerUid: user.uid,
+                profilePicture:revmtk
+            })
+            await ref.doc(docID).update({
+                commentNum: replynum + 1
+            })
+            await ref.doc(docID).collection("Reply").doc(reComment).update({
+                rereply:true
+            })
+            setState(true)
+            setComment("")
+        }else{
         var a = moment().toArray()
         console.log(b)
         if (a[1] === 12) {
@@ -136,13 +172,15 @@ export default function CommunityOtherPost({ route, navigation }) {
             time: a[3] + ":" + a[4],
             day: a[1] + "/" + a[2],
             writerUid: user.uid,
-            profilePicture:revmtk
+            profilePicture:revmtk,
+            rereply:false
         })
         await ref.doc(docID).update({
             commentNum: replynum + 1
         })
         setState(true)
         setComment("")
+    }
     }
 
     //사용자 정보를 불러오는 함수. 불러온후에 사용자 닉네임을 설정한다(화면에 띄워줌)
@@ -223,25 +261,70 @@ export default function CommunityOtherPost({ route, navigation }) {
         async function reply(){
             ref.doc(ID).collection("Reply").onSnapshot(querySnapshot => {
                 const list = [];
+                
                 setReplyNum(querySnapshot.size)
-                querySnapshot.forEach(docs => {     
-                    // reProfilePicture(docs.data().nick)
-                    list.push({
-                        reNick: docs.data().nick,
-                        reContent: docs.data().content,
-                        reLike: docs.data().like,
-                        reTime: docs.data().day + " " + docs.data().time,
-                        reProfile:docs.data().profilePicture
-                    });
+                querySnapshot.forEach(docs => {   
+                    
+                
+                console.log(docs.data().rereply,"rerererere")
+                    
+                    if(docs.data().rereply){
+                        
+                          var reName=docs.data().fullTime+docs.data().content
+                          var  reNick=docs.data().nick
+                          var reContent= docs.data().content
+                          var reLike= docs.data().like
+                            var reTime= docs.data().day + " " + docs.data().time
+                            var reProfile=docs.data().profilePicture
+                            var reUserUid=docs.data().writerUid
+                        
+                        console.log("push",docs.data().fullTime+docs.data().content,)
+                        ref.doc(ID).collection("Reply").doc(docs.data().fullTime+docs.data().content).collection("ReReply").onSnapshot(querySnapshot=>{
+                            
+                            querySnapshot.forEach(docs=>{
+                                list.push({
+                                    reName:reName,
+                                    reNick:reNick,
+                                    reContent:reContent,
+                                    reLike:reLike,
+                                    reTime:reTime,
+                                    reProfile:reProfile,
+                                    reUserUid:reUserUid,
+                                    rereName:docs.data().fullTime+docs.data().content,
+                                    rereNick: docs.data().nick,
+                                    rereContent: docs.data().content,
+                                    rereLike: docs.data().like,
+                                    rereTime: docs.data().day + " " + docs.data().time,
+                                    rereProfile:docs.data().profilePicture,
+                                    rereUserUid:docs.data().writerUid,
+                                
+                                });
+                            })
+                        })
+                    }else{
+                        list.push({
+                            reName:docs.data().fullTime+docs.data().content,
+                            reNick: docs.data().nick,
+                            reContent: docs.data().content,
+                            reLike: docs.data().like,
+                            reTime: docs.data().day + " " + docs.data().time,
+                            reProfile:docs.data().profilePicture,
+                            reUserUid:docs.data().writerUid,
+                            
+                        });
+                    }
+
                 })
                 setItems(list);
-                console.log(list)
+                
+               
     
     
             })
+            console.log("this is the final list",items)
         }
        reply()
-
+       
     }, [state,vmtk])
 
     
@@ -359,10 +442,39 @@ export default function CommunityOtherPost({ route, navigation }) {
 
         });
     }
+
+    // function focusing(){
+    //     // console.log(a)
+    //     Alert.alert(
+    //         '대댓글을 작성하시겠습니까?',
+    //         "대댓글",
+    //         [
+    //             {
+    //                 text: '네', onPress: () => realfocusing()
+    //             },
+    //             {
+    //                 text: '아니오', onPress: () => unfocusing()
+
+    //             }
+    //         ]
+    //     )
+        
+    // }
+    function focusing(a){
+        setReComment(a)
+        console.log(reComment)
+        textbox.current.focus()
+    }
+    function unfocusing(){
+        Keyboard.dismiss
+
+    }
     return (
         <>
+        
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+            
                 <ScrollView style={{ marginBottom: 50 }}>
                     <View style={{
                         flexDirection: "row",
@@ -475,7 +587,29 @@ export default function CommunityOtherPost({ route, navigation }) {
                                             <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{numrep}</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
-                                            {islogined === true ?
+                                           
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+
+                                         
+
+                                            {/* 대댓글 다는 버튼 */}
+                                            <TouchableOpacity onPress={()=>{focusing(item.reName)}}> 
+                                            <View style={{borderWidth:0.5,width:30,height:20}}>
+
+                                            </View>
+                                            </TouchableOpacity>
+                                            {/* 좋아요 누르는 버튼 */}
+
+                                            <TouchableOpacity onPress={plusnumrep} >
+                                            
+                                            <View style={{color: "#DDDDDD",borderWidth:0.5,width:30,height:20}}>
+                                            <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greyThumb.png")} />
+                                            </View>
+                                            </TouchableOpacity>  
+                                            {item.reUserUid === user.uid ?
+
+                                            // {/* 신고 및 삭제 누르는 버튼 */}
+                                                <View style={{borderWidth:0.5,width:30,height:20}}>
                                                 <TouchableOpacity onPress={() =>
                                                     Alert.alert(
                                                         '삭제하시겠습니까?',
@@ -500,12 +634,10 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                 }>
                                                     <Text style={community.dateandrepair}>삭제</Text>
                                                 </TouchableOpacity>
+                                                </View>
                                                 :
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                    <TouchableOpacity onPress={plusnumrep} style={{ marginRight: 8 }}>
-                                                        <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greyThumb.png")} />
-                                                    </TouchableOpacity>
-                                                    <TouchableOpacity onPress={() =>
+                                                <View style={{borderWidth:0.5,width:30,height:20}}>
+                                                        <TouchableOpacity onPress={() =>
                                                         Alert.alert(
                                                             '신고하시겠습니까?',
                                                             '신고가 누적되면 자동 삭제 됩니다.',
@@ -529,19 +661,134 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                     }>
                                                         <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greyAlert.png")} />
                                                     </TouchableOpacity>
-                                                </View>
-                                            }
+                                                        </View>
+                            }
+                                            
+                                            
+                                         
+                                        </View>
+                                               
+                                               
                                         </View>
                                     </View>
                                     <View style={{ marginTop: 8 }}>
                                         <Text>{item.reContent}</Text>
 
                                     </View>
-                                    <FlatList
-                                    data
+                                    {item.rereContent ?
+                                <FlatList
+                                data={items}
+                                keyExtractor={items.rereContent}
+                                renderItem={({ item }) => (
+                                    <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-evenly' }}>
+                                <Image source={require('./icon/rereply.png')} resizeMode="contain" style={{ marginLeft: 5, width: 16, height: 16 }} />
+                                <View style={{ alignSelf: 'flex-end', backgroundColor: '#E5E5E5', width: "90%", minHeight: 84, borderRadius: 5, paddingTop: 4, paddingLeft: 8, paddingRight: 8 }}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                            <View style={{
+                                                flexDirection: 'row',
+                                                alignItems: 'center',
+                                            }}>
+                                                <Image resizeMode="contain" style={community.icon} source={{ uri: item.rereProfile }} />
+                                                <Text style={community.author}>{item.rereNick}</Text>
+                                                <Text style={[community.date, { fontSize: 12, marginLeft: 8 }]}>{item.rereTime}</Text>
+                                                <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 8 }]} source={require("./icon/emptythumb.png")}></Image>
+                                                <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{numrep}</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
+                                               
+                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    
+                                             
+    
+                                                {/* 대댓글 다는 버튼 */}
+                                                
+                                                {/* 좋아요 누르는 버튼 */}
+    
+                                                <TouchableOpacity onPress={plusnumrep} >
+                                                
+                                                <View style={{color: "#DDDDDD",borderWidth:0.5,width:30,height:20}}>
+                                                <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greyThumb.png")} />
+                                                </View>
+                                                </TouchableOpacity>  
+                                                {item.rereUserUid === user.uid ?
+    
+                                                // {/* 신고 및 삭제 누르는 버튼 */}
+                                                    <View style={{borderWidth:0.5,width:30,height:20}}>
+                                                    <TouchableOpacity onPress={() =>
+                                                        Alert.alert(
+                                                            '삭제하시겠습니까?',
+                                                            '삭제된 게시물은 되돌릴 수 없습니다.',
+                                                            [
+                                                                {
+                                                                    text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                                                                },
+                                                                {
+                                                                    text: '삭제하기', onPress: () => Alert.alert(
+                                                                        '삭제완료',
+                                                                        '',
+                                                                        [
+                                                                            {
+                                                                                text: 'OK', onPress: () => console.log('삭제가 완료되었습니다.')
+                                                                            }
+                                                                        ]
+                                                                    )
+                                                                }
+                                                            ]
+                                                        )
+                                                    }>
+                                                        <Text style={community.dateandrepair}>삭제</Text>
+                                                    </TouchableOpacity>
+                                                    </View>
+                                                    :
+                                                    <View style={{borderWidth:0.5,width:30,height:20}}>
+                                                            <TouchableOpacity onPress={() =>
+                                                            Alert.alert(
+                                                                '신고하시겠습니까?',
+                                                                '신고가 누적되면 자동 삭제 됩니다.',
+                                                                [
+                                                                    {
+                                                                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                                                                    },
+                                                                    {
+                                                                        text: '신고하기', onPress: () => Alert.alert(
+                                                                            '신고완료',
+                                                                            '검토후 조치하겠습니다.',
+                                                                            [
+                                                                                {
+                                                                                    text: 'OK', onPress: () => console.log('OK Pressed')
+                                                                                }
+                                                                            ]
+                                                                        )
+                                                                    }
+                                                                ]
+                                                            )
+                                                        }>
+                                                            <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greyAlert.png")} />
+                                                        </TouchableOpacity>
+                                                            </View>
+                                }
+                                                
+                                                
+                                             
+                                            </View>
+                                                   
+                                                   
+                                            </View>
+                                        </View>
+                                        <View style={{ marginTop: 8 }}>
+                                            <Text>{item.rereContent}</Text>
+    
+                                        </View>
+                                        
+                                    </View>
+                                    </View>
+                                )}
+                                
+                            />
+                            :
+                            <></>
+                                }
                                     
-                                    />
-
                                 
                                 </View>
                                 
@@ -550,102 +797,69 @@ export default function CommunityOtherPost({ route, navigation }) {
                         />
 
                         
-                        <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                            <Image source={require('./icon/rereply.png')} resizeMode="contain" style={{ marginLeft: 5, width: 16, height: 16 }} />
-                            <View style={{ alignSelf: 'flex-end', backgroundColor: '#E5E5E5', width: "90%", minHeight: 84, borderRadius: 5, paddingTop: 4, paddingLeft: 8, paddingRight: 8 }}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <View style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                    }}>
-                                        <Image resizeMode="contain" style={community.icon} source={require('./icon/blackcircle.png')} />
-                                        <Text style={community.author}>익명</Text>
-                                        <Text style={[community.date, { fontSize: 12, marginLeft: 8 }]}>{createdate}</Text>
-                                        <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 8 }]} source={require("./icon/emptythumb.png")}></Image>
-                                        <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{numrerep}</Text>
-                                    </View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
-                                        <TouchableOpacity onPress={plusnumrerep} style={{ marginRight: 8 }}>
-                                            <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greyThumb.png")} />
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => 
-                                            Alert.alert(
-                                                '신고하시겠습니까?',
-                                                '신고가 누적되면 자동 삭제 됩니다.',
-                                                [
-                                                    {
-                                                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
-                                                    },
-                                                    {
-                                                        text: '신고하기', onPress: () => Alert.alert(
-                                                            '신고완료',
-                                                            '검토후 조치하겠습니다.',
-                                                            [
-                                                                {
-                                                                    text: 'OK', onPress: () => console.log('OK Pressed')
-                                                                }
-                                                            ]
-                                                        )
-                                                    }
-                                                ]
-                                            )
-                                        }>
-                                            <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greyAlert.png")} />
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                                <View style={{ marginTop: 8 }}>
-                                    <Text>매너 채팅 부탁드려요</Text>
-                                </View>
-                            </View>
-                        </View>
+                        
                     </View>
                 </ScrollView>
-                <View style={{
-                    position: "absolute",
-                    bottom: 0, height: 40, right: 0, left: 0, flexDirection: "row",
-                    borderRadius: 10,
-                    backgroundColor: '#E5E5E5',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    paddingLeft: 16,
-                    paddingRight: 8,
-                    margin: 8
-                }}>
-                    <TextInput
-                        value={comment}
-                        onChangeText={text => setComment(text)}
-                        placeholder="댓글을 입력하세요."
-                        placeholderTextColor="#707070"
-                        textAlign="left"
-                        onSubmitEditing={Keyboard.dismiss}
-                        style={{
-                            width: "90%",
-                            marginRight: 5,
-                            fontSize: 15,
-                            borderRadius: 30,
-                            fontFamily: 'NunitoSans-Regular'
-                        }}
-                    />
-                    <TouchableOpacity onPress={() => {
-                        comment.length > 0 ?
-                            writepost(comment)
-
-                            :
-                            Alert.alert(
-                                '작성 오류',
-                                '두글자 이상 작성해주세요.',
-                                [
-                                    {
-                                        text: 'OK', onPress: () => console.log('OK Pressed')
-                                    }
-                                ]
-                            )
+                <View>
+              
+                    <View style={{
+                        position: "absolute",
+                        bottom: 0, height: 40, right: 0, left: 0, flexDirection: "row",
+                        borderRadius: 10,
+                        backgroundColor: '#E5E5E5',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        paddingLeft: 16,
+                        paddingRight: 8,
+                        margin: 8
                     }}>
-                        <Image style={{ width: 16, height: 16 }} resizeMode="contain" source={require("./icon/send.png")}></Image>
-                    </TouchableOpacity>
-                </View>
+                          
+                        <TextInput
+                            value={comment}
+                            onChangeText={text => setComment(text)}
+
+                            placeholder="댓글을 입력하세요."
+                            placeholderTextColor="#707070"
+                            textAlign="left"
+                            ref={textbox}
+
+                            onSubmitEditing={Keyboard.dismiss}
+                            style={{
+                                width: "90%",
+                                marginRight: 5,
+                                fontSize: 15,
+                                borderRadius: 30,
+                                fontFamily: 'NunitoSans-Regular'
+                            }}
+                        />
+                     
+                        <TouchableOpacity onPress={() => {
+                            comment.length > 0 ?
+                                writepost(comment)
+    
+                                :
+                                Alert.alert(
+                                    '작성 오류',
+                                    '두글자 이상 작성해주세요.',
+                                    [
+                                        {
+                                            text: 'OK', onPress: () => console.log('OK Pressed')
+                                        }
+                                    ]
+                                )
+                        }}>
+                            <Image style={{ width: 16, height: 16 }} resizeMode="contain" source={require("./icon/send.png")}></Image>
+                        </TouchableOpacity>
+                        
+                    </View>
+                 
+                        
+                       
+                       
+               
+            </View>
             </SafeAreaView>
+            
         </>
     )
 }

@@ -22,7 +22,7 @@ const style = StyleSheet.create({
 function SplashScreen({navigation}) {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('Home')
+      navigation.navigate('SignScreen')
     }, 500)
   }, [])
   return (
