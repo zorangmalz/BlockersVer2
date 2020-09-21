@@ -77,7 +77,7 @@ export default function ReportScreen({ navigation }) {
                                     justifyContent: 'space-between'
                                 }}>
                                     <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular' }}>총 투자금액 </Text>
-                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Bold' }}>₩ 1,000,000</Text>
+                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Bold' }}>25 KLAY</Text>
                                 </View>
                                 <View style={{
                                     width: "100%",
@@ -92,7 +92,7 @@ export default function ReportScreen({ navigation }) {
                                             <Text style={{fontSize: 8, color: '#202426', fontFamily: 'Metropolis-Bold'}}>?</Text>
                                         </View>
                                     </View>
-                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Bold' }}>₩ 1,000,000</Text>
+                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Bold' }}>2.5 KLAY</Text>
                                 </View>
                                 <View style={{
                                     width: "100%",
@@ -102,7 +102,7 @@ export default function ReportScreen({ navigation }) {
                                     justifyContent: 'space-between'
                                 }}>
                                     <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular' }}>누적 배당 </Text>
-                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Bold' }}>₩ 1,000,000</Text>
+                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Bold' }}>5.6 KLAY</Text>
                                 </View>
                             </View>
                             <View style={{
@@ -170,7 +170,7 @@ export default function ReportScreen({ navigation }) {
                         </View>
                     </View>
                     <View style={{ marginBottom: 80 }}>
-                        {list.map(number =>
+                        
                             <View style={style.container}>
                                 <View style={{
                                     flexDirection: 'row',
@@ -192,7 +192,7 @@ export default function ReportScreen({ navigation }) {
                                             justifyContent: 'space-between'
                                         }}>
                                             <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>총 투자금액</Text>
-                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>₩400,000</Text>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>10 KLAY</Text>
                                         </View>
                                         <View style={{
                                             width: "100%",
@@ -207,7 +207,7 @@ export default function ReportScreen({ navigation }) {
                                                     <Text style={{ fontSize: 8, color: '#202426', fontFamily: 'Metropolis-Bold' }}>?</Text>
                                                 </View>
                                             </View>
-                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>₩20,000</Text>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>0 KLAY</Text>
                                         </View>
                                         <View style={{
                                             width: "100%",
@@ -217,7 +217,7 @@ export default function ReportScreen({ navigation }) {
                                             justifyContent: 'space-between'
                                         }}>
                                             <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>누적배당</Text>
-                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>₩100,000</Text>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>0 KLAY</Text>
                                         </View>
                                     </View>
                                     <TouchableOpacity onPress={() => navigation.navigate("ReportCreator")} style={{
@@ -234,7 +234,132 @@ export default function ReportScreen({ navigation }) {
                                     </TouchableOpacity>
                                 </View>
                             </View>
-                        )}
+                            <View style={style.container}>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    width: "100%",
+                                    marginBottom: 8
+                                }}>
+                                    <Text style={{ fontSize: 16, color: '#161513', fontFamily: 'Metropolis-Bold' }}>미미 TV </Text>
+                                    <Text style={{ fontSize: 16, color: '#161513', fontFamily: 'Metropolis-Bold' }}>40 MIMI</Text>
+                                </View>
+                                <View style={{ width: "100%", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <View style={{ width: "60%" }}>
+                                        <View style={{
+                                            width: "100%",
+                                            marginBottom: 8,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between'
+                                        }}>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>총 투자금액</Text>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>10 KLAY</Text>
+                                        </View>
+                                        <View style={{
+                                            width: "100%",
+                                            marginBottom: 8,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between'
+                                        }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginRight: 12 }}>예상배당</Text>
+                                                <View style={{ width: 12, height: 12, borderWidth: 1, borderColor: '#202426', backgroundColor: '#ffffff', borderRadius: 6, alignItems: 'center', justifyContent: 'center' }}>
+                                                    <Text style={{ fontSize: 8, color: '#202426', fontFamily: 'Metropolis-Bold' }}>?</Text>
+                                                </View>
+                                            </View>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>2 KLAY</Text>
+                                        </View>
+                                        <View style={{
+                                            width: "100%",
+                                            marginBottom: 8,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between'
+                                        }}>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>누적배당</Text>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>5 KLAY</Text>
+                                        </View>
+                                    </View>
+                                    <TouchableOpacity onPress={() => navigation.navigate("ReportCreator")} style={{
+                                        width: 94,
+                                        height: 32,
+                                        borderRadius: 10,
+                                        backgroundColor: '#202426',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <Text style={{ fontFamily: 'Metropolis-Bold', fontSize: 12, color: '#ffffff', marginRight: 8 }}>Report</Text>
+                                        <Image source={require('./icon/arrowright.png')} />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <View style={style.container}>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    width: "100%",
+                                    marginBottom: 8
+                                }}>
+                                    <Text style={{ fontSize: 16, color: '#161513', fontFamily: 'Metropolis-Bold' }}>삐삐 TV </Text>
+                                    <Text style={{ fontSize: 16, color: '#161513', fontFamily: 'Metropolis-Bold' }}>40 PIPI</Text>
+                                </View>
+                                <View style={{ width: "100%", flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <View style={{ width: "60%" }}>
+                                        <View style={{
+                                            width: "100%",
+                                            marginBottom: 8,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between'
+                                        }}>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>총 투자금액</Text>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>5 KLAY</Text>
+                                        </View>
+                                        <View style={{
+                                            width: "100%",
+                                            marginBottom: 8,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between'
+                                        }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginRight: 12 }}>예상배당</Text>
+                                                <View style={{ width: 12, height: 12, borderWidth: 1, borderColor: '#202426', backgroundColor: '#ffffff', borderRadius: 6, alignItems: 'center', justifyContent: 'center' }}>
+                                                    <Text style={{ fontSize: 8, color: '#202426', fontFamily: 'Metropolis-Bold' }}>?</Text>
+                                                </View>
+                                            </View>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>0.5 KLAY</Text>
+                                        </View>
+                                        <View style={{
+                                            width: "100%",
+                                            marginBottom: 8,
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            justifyContent: 'space-between'
+                                        }}>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>누적배당</Text>
+                                            <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Regular' }}>0.6 KLAY</Text>
+                                        </View>
+                                    </View>
+                                    <TouchableOpacity onPress={() => navigation.navigate("ReportCreator")} style={{
+                                        width: 94,
+                                        height: 32,
+                                        borderRadius: 10,
+                                        backgroundColor: '#202426',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        justifyContent: 'center'
+                                    }}>
+                                        <Text style={{ fontFamily: 'Metropolis-Bold', fontSize: 12, color: '#ffffff', marginRight: 8 }}>Report</Text>
+                                        <Image source={require('./icon/arrowright.png')} />
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
                     </View>
                 </ScrollView>
             </SafeAreaView>

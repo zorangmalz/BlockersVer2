@@ -84,9 +84,16 @@ function FancardScreen({navigation}) {
               alignItems: 'center',
               justifyContent: 'space-evenly',
             }}>
+              <View style={{flexDirection:"row"}}>
              <Text style={[style.text, {width: 100, fontSize: 12, textAlign: 'center'}]}>KRAB</Text>
+             
+             </View>
+             <View>
              <Text style={[style.text, {width: 100, fontSize: 12, textAlign: 'center'}]}>MIMI</Text>
+             </View>
+             <View>
              <Text style={[style.text, {width: 100, fontSize: 12, textAlign: 'center'}]}>RIRI</Text>
+            </View>
             </View>
           </View>
           <Text style={[style.text, { fontSize: 14, marginLeft: '9%' }]}>Likes</Text>

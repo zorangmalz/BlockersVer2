@@ -36,10 +36,10 @@ import FundFund from './src/fundFund';
 import ReportScreen from './src/reportScreen';
 import ReportCreator from './src/reportCreator';
 import CommunityScreen from './src/communityScreen';
-
+import Transaction from "./src/transaction"
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
+console.disableYellowBox = true;
 function HomeTab({ navigation }) {
   return (
     <Tab.Navigator
@@ -145,6 +145,13 @@ const App = () => {
         <Stack.Screen 
           name="ReportCreator"
           component={ReportCreator}
+          options={{
+            headerShown: false
+          }}
+        />
+        <Stack.Screen 
+          name="Transaction"
+          component={Transaction}
           options={{
             headerShown: false
           }}

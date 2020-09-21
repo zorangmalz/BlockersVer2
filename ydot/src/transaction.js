@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {
     StatusBar,
     ScrollView,
@@ -10,11 +10,12 @@ import {
     Image
 } from 'react-native';
 import Clipboard from "@react-native-community/clipboard";
+import firestore from '@react-native-firebase/firestore';
 
 const style = StyleSheet.create({
     bigbox: {
         width: '90%',
-        height: 500,
+        height: 700,
         borderRadius: 10, 
         backgroundColor: '#ffffff',
 
@@ -28,6 +29,11 @@ const style = StyleSheet.create({
 })
 
 export default function Transaction({ navigation }) {
+    const ref = firestore().collection('Ydot');
+    const [first,setFirst]=useState();
+    const [second,setSecond]=useState();
+    const [third,setThird]=useState();
+
     const list = [
         {
             type: "receive",
@@ -46,7 +52,17 @@ export default function Transaction({ navigation }) {
         }
     ];
     const [copiedText, setCopiedText] = useState('')
-
+    useEffect(()=>{
+        async function load(){
+        firestore().collection("Ydot").doc("abcd").get().then(documentSnapshot=>{
+            setFirst(documentSnapshot.data().first)
+            setSecond(documentSnapshot.data().second)
+            setThird(documentSnapshot.data().third)
+        })
+        console.log(first,second,third)
+    }
+    load()
+    },[])
     const copyToClipboard = () => {
         Clipboard.setString('hello world')
     }
@@ -72,9 +88,9 @@ export default function Transaction({ navigation }) {
                     <View />
                 </View>
                 <ScrollView>
-                    <View style={style.bigbox}>
+                    
                         <View style={{ marginTop: 16, width: "100%" }}>
-                            {list.map(transaction =>
+                            
                                 <View style={{
                                     alignItems: 'flex-start',
                                     borderBottomColor: '#D2D3D3',
@@ -93,35 +109,87 @@ export default function Transaction({ navigation }) {
                                         fontSize: 12,
                                         color: '#202426',
                                         marginBottom: 8
-                                    }}>Tx type : Smart contract execution</Text>
+                                    }}>{first}</Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%", marginBottom: 8 }}>
-                                        <Text style={{
-                                            fontFamily: 'Metropolis-Regular',
-                                            fontSize: 12,
-                                            color: '#202426',
-                                        }}>Timestamp : {transaction.number}</Text>
+                                    
                                         <Text style={{
                                             fontFamily: 'Metropolis-Bold',
                                             fontSize: 12,
-                                            color: transaction.type === "receive" ? '#78e185' : "#e78276",
-                                        }}>{transaction.text}</Text>
+                                            color: '#78e185'
+                                            // "#e78276",
+                                        }}>Received Krab Card</Text>
                                     </View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', width: "100%", marginBottom: 8 }}>
-                                        <Text style={{
-                                            fontFamily: 'Metropolis-Regular',
-                                            fontSize: 12,
-                                            color: '#202426',
-                                            marginRight: 8
-                                        }}>
-                                            <Text>Txhash: </Text>
-                                            <Text style={{textDecorationLine: 'underline'}}>0x82ac…aaf6c</Text>
-                                        </Text>
-                                        <TouchableOpacity onPress={copyToClipboard}>
-                                            <Image source={require('./icon/blackclip.png')} />
-                                        </TouchableOpacity>
-                                    </View>
+                                    
                                 </View>
-                            )}
+                            
+                        </View>
+                        <View style={{ marginTop: 16, width: "100%" }}>
+                            
+                                <View style={{
+                                    alignItems: 'flex-start',
+                                    borderBottomColor: '#D2D3D3',
+                                    borderBottomWidth: 1,
+                                    marginBottom: 8,
+                                    width: "100%"
+                                }}>
+                                    <Text style={{
+                                        fontFamily: 'Metropolis-Bold',
+                                        fontSize: 14,
+                                        color: '#202426',
+                                        marginBottom: 8
+                                    }}>Transaction</Text>
+                                    <Text style={{
+                                        fontFamily: 'Metropolis-Regular',
+                                        fontSize: 12,
+                                        color: '#202426',
+                                        marginBottom: 8
+                                    }}>{second}</Text>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%", marginBottom: 8 }}>
+                                    
+                                        <Text style={{
+                                            fontFamily: 'Metropolis-Bold',
+                                            fontSize: 12,
+                                            color: '#78e185'
+                                            // "#e78276",
+                                        }}>Received Krab Token</Text>
+                                    </View>
+                                    
+                                </View>
+                            
+                        </View>
+                        <View style={{ marginTop: 16, width: "100%" }}>
+                            
+                                <View style={{
+                                    alignItems: 'flex-start',
+                                    borderBottomColor: '#D2D3D3',
+                                    borderBottomWidth: 1,
+                                    marginBottom: 8,
+                                    width: "100%"
+                                }}>
+                                    <Text style={{
+                                        fontFamily: 'Metropolis-Bold',
+                                        fontSize: 14,
+                                        color: '#202426',
+                                        marginBottom: 8
+                                    }}>Transaction</Text>
+                                    <Text style={{
+                                        fontFamily: 'Metropolis-Regular',
+                                        fontSize: 12,
+                                        color: '#202426',
+                                        marginBottom: 8
+                                    }}>{third}</Text>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%", marginBottom: 8 }}>
+                                    
+                                        <Text style={{
+                                            fontFamily: 'Metropolis-Bold',
+                                            fontSize: 12,
+                                            color: "#e78276"
+                                            // "#e78276",
+                                        }}>Send 1 Klay</Text>
+                                    </View>
+                                    
+                                </View>
+                            
                         </View>
                         <Text style={{
                             fontFamily: 'Metropolis-Regular',
@@ -130,7 +198,7 @@ export default function Transaction({ navigation }) {
                             opacity: 0.6,
                             alignSelf: 'center'
                         }}>Powerd by Klaytn</Text>
-                    </View>
+                    
                 </ScrollView>
             </SafeAreaView>
         </>

@@ -183,12 +183,14 @@ export default function FundFund({ navigation }) {
                                 :
                                 <Image style={{marginBottom: 32}} source={require('./icon/checkcomplete.png')} />
                             }
-                            <Text style={[style.text, { color: '#161513', fontSize: 14, marginTop: 16, alignSelf: 'center' }]}>{fundComplete === false ? "Smart Contract Address" : "Tx hash"}</Text>
-                            <Text style={{ fontSize: 12, marginTop: 16, alignSelf: 'center', fontFamily: 'Metropolis-Regular', color: '#202426' }}>{fundComplete === false ? "0xCFAf7E7337466ce5444219b84741F2039611a382" : "0x649640518e043295c86e674b4904…e6989215db2"}</Text>
-                            <Text style={{ fontSize: 12, marginTop: 16, alignSelf: 'flex-end', fontFamily: 'Metropolis-Regular', color: '#202426', marginRight: "9%", textDecorationLine: "underline" }}>View In Klaytnscope</Text>
+                            <Text style={[style.text, { color: '#161513', fontSize: 20, marginTop: 16, alignSelf: 'center' }]}>{fundComplete === false ? "Smart Contract Address" : "Transaction Success"}</Text>
+                            <Text style={{ fontSize: 12, marginTop: 16, alignSelf: 'center', fontFamily: 'Metropolis-Regular', color: '#202426' }}>{fundComplete === false ? "0xCFAf7E7337466ce5444219b84741F2039611a382" : ""}</Text>
+                            <Text style={{ fontSize: 12, marginTop:1, alignSelf: 'center', fontFamily: 'Metropolis-Regular', color: '#202426', textDecorationLine: "underline" }}>Check in Klaytnscope</Text>
                         </View>
                     </View>
-                    <TouchableOpacity onPress={() => { fundComplete === false ? setFundComplete(true) : navigation.navigate("Home") }} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                    <TouchableOpacity onPress={() => { fundComplete === false ? setTimeout(() => {
+      setFundComplete(true) 
+    }, 1000): navigation.navigate("Home") }} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                         <View style={{
                             width: "100%",
                             height: 60,

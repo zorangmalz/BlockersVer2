@@ -24,7 +24,7 @@ function SplashScreen({navigation}) {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate('SignScreen')
-    }, 500)
+    }, 1000)
   }, [])
   return (
     <>

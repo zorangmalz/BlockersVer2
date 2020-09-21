@@ -55,28 +55,9 @@ function SignScreen({navigation}) {
   const [walletvisible, setWalletvisible] = useState(false);
 
   function requestCall(){
-    var request = require('request');
-
-var headers = {
-    'x-chain-id': '1001'
-};
-
-var options = {
-    url: 'https://wallet-api.klaytnapi.com/v2/account',
-    headers: headers,
-    auth: {
-        'user': 'KASKT37TZEH7QSUWDC26TT0L',
-        'pass': 'zMMs4rHWOJqwOcEl0wCucuDVB6oAcmLbWaRe9oCL'
-    }
-};
-
-function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-        console.log(body)
-    }
-}
-
-request(options, callback);
+    setWalletvisible(false)
+    setSignvisible(false)
+    setAccountvisible(false)
 navigation.navigate("Home")
   }
   return (

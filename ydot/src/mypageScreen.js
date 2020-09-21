@@ -11,7 +11,7 @@ import {
   FlatList
 } from 'react-native';
 import Clipboard from "@react-native-community/clipboard";
-import axios from 'axios';
+
 import * as RNFS from 'react-native-fs';
 
 const style = StyleSheet.create({
@@ -36,17 +36,17 @@ const style = StyleSheet.create({
 
 function MypageScreen({navigation}) {
  function temp(){
-
+  var axios=require("axios")
   const accessKey = "KASKT37TZEH7QSUWDC26TT0L";
   const secret = "zMMs4rHWOJqwOcEl0wCucuDVB6oAcmLbWaRe9oCL";
   const credential = Buffer.from(`${accessKey}:${secret}`).toString("base64");
-
+console.log(credential)
   const configForDeployContract = {
     method: 'POST',
     url: `https://wallet-api.beta.klaytn.io/v2/tx/value`,
     headers: {
         'x-chain-id': '1001',
-        'Authorization': `Basic ${credential}`,
+        "Authorization": "Basic S0FTS1ZMOEJYUEdJM1RPNkI5NzVMUUNOOkdMZ2pZUExza2JkdmRZczByL3lYTUlsQ0k4dnhNSkg1YWhyMmFWamo=",
         'Content-Type': 'application/json'
     },
     data: {
@@ -54,11 +54,6 @@ function MypageScreen({navigation}) {
         value: "0x12",
         nonce: 0,
         to:"0x33035dd1f7f9cFDd60066F2d3946fc14ca926D4a",
-        memo:"with memo", 
-        nonce: 0, 
-        gas_limit: 1000000,
-        submit: true, 
-        fee_ratio: 0 
     }
 }
 axios(configForDeployContract)
@@ -69,28 +64,20 @@ axios(configForDeployContract)
         console.log(error,"errordlqslek")
     })
  }
+
   function send(){
     var request = require('request');
-
 var headers = {
-  'x-chain-id':"1001",
-    'Content-Type': 'application/json',
-    
+  'Content-Type': 'application/json',
+    'x-chain-id':"1001",
+    "Authorization": "Basic S0FTS1ZMOEJYUEdJM1RPNkI5NzVMUUNOOkdMZ2pZUExza2JkdmRZczByL3lYTUlsQ0k4dnhNSkg1YWhyMmFWamo=",
 };
-
-var dataString = '{ "from":"0xFE071C182b38c9E1901649527d40EDeC072dd4a6", "value": "0x12", "to":"0x33035dd1f7f9cFDd60066F2d3946fc14ca926D4a", "memo":"with memo", "nonce": 0, "gas_limit": 1000000, "submit": true, "fee_ratio": 0 }';
-
+var dataString = '{ "from":"0x33035dd1f7f9cFDd60066F2d3946fc14ca926D4a", "value": "0x12", "to":"0xc3c266Efa54923Ea1e67ef9C4F35B7a0a82DaAD7", "memo":"with memo", "nonce": 0, "gas_limit": 1000000, "submit": true, "fee_ratio": 0 }';
 var options = {
     url: 'https://wallet-api.beta.klaytn.io/v2/tx/value',
-    method: 'POST',
     headers: headers,
     body: dataString,
-    auth: {
-      'user': 'KASKT37TZEH7QSUWDC26TT0L',
-      'pass': 'zMMs4rHWOJqwOcEl0wCucuDVB6oAcmLbWaRe9oCL'
-    }
 };
-
 function callback(error, response, body) {
     if (!error && response.statusCode == 200) {
         console.log(body);
@@ -101,8 +88,27 @@ function callback(error, response, body) {
       console.error(error)
     }
 }
-
 request(options, callback);
+  }
+
+
+  function sendFetch(){
+    fetch("https://wallet-api.beta.klaytn.io/v2/tx/value", {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "x-chain-id": "1001",
+            "Authorization": "Basic S0FTS1ZMOEJYUEdJM1RPNkI5NzVMUUNOOkdMZ2pZUExza2JkdmRZczByL3lYTUlsQ0k4dnhNSkg1YWhyMmFWamo=",
+        },
+        data:{
+            from: '0xFE071C182b38c9E1901649527d40EDeC072dd4a6',
+            value: "0x12",
+            nonce: 0,
+            to:"0x33035dd1f7f9cFDd60066F2d3946fc14ca926D4a",
+        }
+        
+      }).then(res => res.json())
+      .then(json => console.log(json));
 
   }
 const [copiedText, setCopiedText] = useState('')
@@ -121,7 +127,6 @@ function token(){
   var options = {
       url: 'https://th-api.beta.klaytn.io/v1/account/0x7160a9d133b2b1288ec278ba4f5aea38fea6cd44',
       headers: headers,
-      
       auth: {
           'user': 'KASKT37TZEH7QSUWDC26TT0L',
           'pass': 'zMMs4rHWOJqwOcEl0wCucuDVB6oAcmLbWaRe9oCL'
@@ -268,7 +273,7 @@ useEffect(()=>{
               marginLeft: '37.5%'
             }}
           >
-            <TouchableOpacity onPress={()=>send()}>
+            <TouchableOpacity onPress={()=>sendFetch()}>
             <Text style={{ fontSize: 24 }}>
               <Text style={{ fontFamily: 'Metropolis-Bold', color: '#161513', fontSize: 20, }}>My Page</Text>
             </Text>
@@ -283,7 +288,7 @@ useEffect(()=>{
             <View style={{ marginTop: 26, marginLeft: 31, marginRight: 16 }}>
               <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={{ fontSize: 10, fontFamily: 'Metropolis-Bold', color: "white", marginRight: 8 }}>0xFE071C182b38c9E1901649527d40EDeC072dd4a6</Text>
+                  <Text style={{ fontSize: 10, fontFamily: 'Metropolis-Bold', color: "white", marginRight: 8 }}>0xc0d025e12ad38219f0ae3e049990ce9067becd26</Text>
                   <TouchableOpacity onPress={copyToClipboard}>
                     <Image source={require('./icon/clipboard.png')} />
                   </TouchableOpacity>
