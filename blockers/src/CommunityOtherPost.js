@@ -25,7 +25,8 @@ const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 const community = StyleSheet.create({
     title: {
-        fontSize: 16,
+        fontSize: 18,
+        width:WIDTH*0.8,
         fontFamily: 'NunitoSans-Bold',
         color: '#707070'
     },
@@ -80,9 +81,10 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [reIsLogined,setReIsLogined]=useState()
     const [title, setTitle] = useState();
     const [author, setAuthor] = useState();
+    const [user, setUser] = useState();
     const [createdate, setCreateDate] = useState();
     const [content, setContent] = useState();
-    const [user, setUser] = useState();
+    
     const [like, setLike] = useState();
     const [items, setItems] = useState([]);
     const [itemss,setItemss]=useState([]);
@@ -96,27 +98,22 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [likeState, setLikeState] = useState()
     const [replynum, setReplyNum] = useState(0)
     const { docID } = route.params
-    const [numrep, setNumrep] = useState(0);
-    const [numrerep, setNumrerep] = useState(0);
+    const {Uid}=route.params
     const [imageSource, setImageSource] = useState(undefined);
     const [time, setTime] = useState();
     const [realWriterUid, setRealWriterUid] = useState();
     const [alertList, setAlertList] = useState([]);
     const [vmtk, setVmtk] = useState();
     const [revmtk, setRevmtk] = useState();
-    const [reComment,setReComment]=useState();
+    
     const [reHave,setReHave]=useState();
     const textbox=useRef()
-    
-    
+    const [loading,setLoading]=useState(false);
+    //for Reply
+    const [relikeState,setReLikeState]=useState()
+    const [reMelike,setReMeLike]=useState()
+    const [reLike,setReLike]=useState()
 
-    const plusnumrep = () => {
-        setNumrep(numrep + 1);
-    }
-
-    const plusnumrerep = () => {
-        setNumrerep(numrerep + 1);
-    }
     // async function reProfilePicture(a) {
     //     console.log(a)
     //     const url2 = await storage()
@@ -128,34 +125,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     // }
     //댓글 작성하는 함수. 댓글 작성후에 reply collection에 추가를 하고 커멘트 숫자도 업로드한다
     async function writepost(b) {
-        if(reComment){
-            var a = moment().toArray()
-            console.log(b)
-            if (a[1] === 12) {
-                a[1] = 1
-            } else {
-                a[1] = a[1] + 1
-            }
-            console.log(docID)
-            
-            await ref.doc(docID).collection("Reply").doc(reComment).collection("ReReply").doc(a + b).set({
-                content: b,
-                nick: nick,
-                fullTime: a,
-                time: a[3] + ":" + a[4],
-                day: a[1] + "/" + a[2],
-                writerUid: user.uid,
-                profilePicture:revmtk
-            })
-            await ref.doc(docID).update({
-                commentNum: replynum + 1
-            })
-            await ref.doc(docID).collection("Reply").doc(reComment).update({
-                rereply:true
-            })
-            setState(true)
-            setComment("")
-        }else{
+       
         var a = moment().toArray()
         console.log(b)
         if (a[1] === 12) {
@@ -171,9 +141,12 @@ export default function CommunityOtherPost({ route, navigation }) {
             fullTime: a,
             time: a[3] + ":" + a[4],
             day: a[1] + "/" + a[2],
-            writerUid: user.uid,
+            writerUid: Uid,
             profilePicture:revmtk,
-            rereply:false
+            rereply:false,
+            whoLike:[],
+            whoAlert:[]
+
         })
         await ref.doc(docID).update({
             commentNum: replynum + 1
@@ -181,26 +154,25 @@ export default function CommunityOtherPost({ route, navigation }) {
         setState(true)
         setComment("")
     }
-    }
+    
 
     //사용자 정보를 불러오는 함수. 불러온후에 사용자 닉네임을 설정한다(화면에 띄워줌)
     useEffect(() => {
-        auth().onAuthStateChanged(userAuth => {
-            setUser(userAuth)
-        })
-        if (user) {
-            firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot => {
+        var a=[1,2,3,4]
+        console.log(a.splice(0,0,0),"alsekjfpwojfopwije")
+       
+            firestore().collection("UserInfo").doc(Uid).get().then(documentSnapshot => {
                 console.log(documentSnapshot.data().nickname, "hihi")
                 setNick(documentSnapshot.data().nickname)
                 setRevmtk(documentSnapshot.data().profilePicture)
             })
             console.log("flvmtk",revmtk)
-        }
-    }, [user, replynum])
+        
+    }, [replynum])
 
     //화면에 텍스트 및 좋아요를 띄워주는 함수.
     useEffect(() => {
-
+        console.log(Uid,"uiduidudiuidu")
         console.log(docID, "HIHI")
         async function load() {
             firestore().collection("Community1").doc(docID).onSnapshot(doc => {
@@ -213,29 +185,38 @@ export default function CommunityOtherPost({ route, navigation }) {
                 setTime(doc.data().fullTime)
                 setRealWriterUid(doc.data().writerUid)
                 setAlertList(doc.data().whoAlert)
-
+                setVmtk(doc.data().profilePicture)
+                
             })
         }
-        console.log(alertList, likeList, time, "alertList")
+        console.log(alertList, likeList, time,author, "alertList")
         load()
-        if (user) {
-            console.log("This is the main point")
-            if (likeList.includes(user.uid)) {
-                console.log("great!!!!!!!!!!")
+        
+            
+            if (likeList.includes(Uid)) {
+            
                 setMeLike(true)
 
                 // setImageSource(url)
-            } if (user.uid === realWriterUid) {
-                setIslogined(true)
-            } else {
-                setIslogined(false)
-            }
-            profilePicture()
-            hi()
+            } 
+            
+       
+            
+            // profilePicture()
+            
 
+        
+    }, [likeState, nick,title])
+    useEffect(()=>{
+        hi()
+        if (Uid === realWriterUid) {
+            setIslogined(true)
+            console.log("yes ITs true")
+        } else {
+            setIslogined(false)
+            console.log("no its not")
         }
-    }, [likeState, user, nick])
-
+    },[time])
     async function profilePicture() {
 
         const url1 = await storage()
@@ -243,91 +224,71 @@ export default function CommunityOtherPost({ route, navigation }) {
             .getDownloadURL();
 
         setVmtk(url1)
+        
     }
     //사진 불러오는 함수
     async function hi() {
-
+        console.log("comeins")
+        console.log(title,author,time)
         const url = await storage()
             .refFromURL("gs://blockers-8a128.appspot.com/community1/" + String(title + author + time))
             .getDownloadURL();
 
         setImageSource(url)
+
     }
     //댓글을 보여주는 함수. 
 
     useEffect(() => {
+        setItems(items.splice(0,items.length))
+        console.log(items,"??????")
         const { ID } = route.params
         setParam(ID)
+        
         async function reply(){
-            ref.doc(ID).collection("Reply").onSnapshot(querySnapshot => {
-                const list = [];
-                
-                setReplyNum(querySnapshot.size)
-                querySnapshot.forEach(docs => {   
-                    
-                
-                console.log(docs.data().rereply,"rerererere")
-                    
-                    if(docs.data().rereply){
-                        
-                          var reName=docs.data().fullTime+docs.data().content
-                          var  reNick=docs.data().nick
-                          var reContent= docs.data().content
-                          var reLike= docs.data().like
-                            var reTime= docs.data().day + " " + docs.data().time
-                            var reProfile=docs.data().profilePicture
-                            var reUserUid=docs.data().writerUid
-                        
-                        console.log("push",docs.data().fullTime+docs.data().content,)
-                        ref.doc(ID).collection("Reply").doc(docs.data().fullTime+docs.data().content).collection("ReReply").onSnapshot(querySnapshot=>{
-                            
-                            querySnapshot.forEach(docs=>{
-                                list.push({
-                                    reName:reName,
-                                    reNick:reNick,
-                                    reContent:reContent,
-                                    reLike:reLike,
-                                    reTime:reTime,
-                                    reProfile:reProfile,
-                                    reUserUid:reUserUid,
-                                    rereName:docs.data().fullTime+docs.data().content,
-                                    rereNick: docs.data().nick,
-                                    rereContent: docs.data().content,
-                                    rereLike: docs.data().like,
-                                    rereTime: docs.data().day + " " + docs.data().time,
-                                    rereProfile:docs.data().profilePicture,
-                                    rereUserUid:docs.data().writerUid,
-                                
-                                });
-                            })
-                        })
+            let list = [];
+            
+            firestore().collection('Community1').doc(ID).collection("Reply").onSnapshot(querySnapshot => {
+                console.log("comd")
+                setReplyNum(querySnapshot.size);
+                querySnapshot.forEach(docs => {
+                    if(docs.data().whoLike.includes(Uid)){
+                        setReMeLike(true)
                     }else{
+                        setReMeLike(false)
+                    }
+                    if(Uid===docs.data().writerUid){
+                        setReIsLogined(true)
+                    }else{
+                        setReIsLogined(false)
+                    }
                         list.push({
-                            reName:docs.data().fullTime+docs.data().content,
+                            reName: docs.data().fullTime + docs.data().content,
                             reNick: docs.data().nick,
                             reContent: docs.data().content,
                             reLike: docs.data().like,
                             reTime: docs.data().day + " " + docs.data().time,
-                            reProfile:docs.data().profilePicture,
-                            reUserUid:docs.data().writerUid,
-                            
+                            reProfile: docs.data().profilePicture,
+                            reUserUid:reIsLogined,
+                            reWhoLike:docs.data().whoLike.length,
+                            reWhoLikeList:docs.data().whoLike,
+                            reWhoAlert:docs.data().whoAlert,
+                            reMeLike:reMelike
+
                         });
-                    }
+                    
+                });
 
-                })
                 setItems(list);
-                
-               
-    
-    
             })
-            console.log("this is the final list",items)
+        
+            // console.log("this is the final list",items)
         }
-       reply()
-       
-    }, [state,vmtk])
-
     
+       reply()
+    }, [state,vmtk,loading])
+
+    //게시글 좋아요 및 좋아요 취소
     function likeMinus(a) {
 
         return ref.doc(param).update({
@@ -349,13 +310,12 @@ export default function CommunityOtherPost({ route, navigation }) {
     }
 
     function pressLike() {
-        const userUID = user.uid
-        console.log(user.uid, "user.uid")
+        const userUID = Uid
+        console.log(Uid, "Uid")
         console.log(likeList, "when pressed")
-        if (likeList.includes(user.uid)) {
-
-            setLikeList(likeList.splice(likeList.indexOf(user.uid), 1))
-            console.log(likeList, "should be empty or user.uid is deleted")
+        if (likeList.includes(Uid)) {
+            setLikeList(likeList.splice(likeList.indexOf(Uid), 1))
+            console.log(likeList, "should be empty or Uid is deleted")
             setMeLike(false)
             likeMinus(likeList)
         } else {
@@ -382,7 +342,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     }
     function alertPost() {
         console.log(alertList, "fucking here")
-        const userID = user.uid
+        const userID = Uid
         if (alertList.includes(userID)) {
             console.log("include!!!!!!!!")
             Alert.alert(
@@ -460,15 +420,126 @@ export default function CommunityOtherPost({ route, navigation }) {
     //     )
         
     // }
-    function focusing(a){
-        setReComment(a)
-        console.log(reComment)
-        textbox.current.focus()
-    }
+    // function focusing(a){
+    //     setReComment(a)
+    //     console.log(reComment)
+    //     textbox.current.focus()
+    // }
     function unfocusing(){
         Keyboard.dismiss
 
     }
+
+    //댓글 좋아요 및 좋아요 취소, 댓글 삭제-----------------------------------------------------------
+    function relikeMinus(a,b) {
+
+        return ref.doc(param).collection("Reply").doc(b).update({
+            whoLike: a,
+        }).then(() => {
+            console.log("minus success")
+            setReLikeState(true)
+        });
+    }
+    function relikePlus(a,b) {
+        return ref.doc(param).collection("Reply").doc(b).update({
+            whoLike: a
+        }).then(() => {
+            console.log("plus success")
+            setReLikeState(true)
+        });
+    }
+
+    function pressReLike(relikeList,name) {
+        const userUID = Uid
+        console.log(Uid, "Uid")
+        console.log(relikeList, "when pressed")
+        if (relikeList.includes(Uid)) {
+            relikeList.splice(relikeList.indexOf(Uid), 1)
+            console.log(relikeList, "should be empty or Uid is deleted")
+            relikeMinus(relikeList,name)
+        } else {
+            relikeList.push(userUID)
+            console.log(relikeList, "likelist updated");
+            relikePlus(relikeList,name);
+        }
+    }
+    function deletePost() {
+        return ref.doc(param).delete().then(() => {
+            const filename = title + nick + time
+            var desertRef = storage().ref("community1/" + filename);
+
+            // Delete the file
+            desertRef.delete().then(function () {
+                navigation.goBack()
+            }).catch(function (error) {
+                // Uh-oh, an error occurred!
+            });
+
+        })
+    }
+    function alertPost() {
+        console.log(alertList, "fucking here")
+        const userID = Uid
+        if (alertList.includes(userID)) {
+            console.log("include!!!!!!!!")
+            Alert.alert(
+                '신고하시겠습니까?',
+                '신고가 누적되면 자동 삭제 됩니다.',
+                [
+                    {
+                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                    },
+                    {
+                        text: '신고하기', onPress: () => Alert.alert(
+                            '이미 신고하셨습니다',
+                            "ㅅㅂ"
+                            [
+                            {
+                                text: 'OK', onPress: () => console.log('OK Pressed')
+                            }
+                            ]
+                        )
+                    }
+                ]
+            )
+        } else {
+            console.log("damn why not")
+            Alert.alert(
+                '신고하시겠습니까?',
+                '신고가 누적되면 자동 삭제 됩니다.',
+                [
+                    {
+                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                    },
+                    {
+                        text: '신고하기', onPress: () => Alert.alert(
+                            '신고완료',
+                            '검토후 조치하겠습니다.',
+                            [
+                                {
+                                    text: 'OK', onPress: () => console.log('OK Pressed')
+                                }
+                            ]
+                        )
+                    }
+                ]
+            )
+            setAlertList(alertList.push(userID))
+            alertUpdate(alertList)
+        }
+
+    }
+    function alertUpdate(a) {
+        return ref.doc(param).update({
+            whoAlert: a,
+        }).then(() => {
+            console.log("alert success")
+
+
+
+        });
+    }
+
     return (
         <>
         
@@ -476,12 +547,33 @@ export default function CommunityOtherPost({ route, navigation }) {
             <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
             
                 <ScrollView style={{ marginBottom: 50 }}>
+                    
                     <View style={{
                         flexDirection: "row",
                         justifyContent: "space-between",
                         alignItems: 'center',
                         borderBottomColor: "#DDDDDD",
                         borderBottomWidth: 1,
+                        padding: 16,
+                        paddingRight: 20
+                    }}>
+                        <View style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+
+                            <Image resizeMode="contain" style={community.icon} source={{ uri: vmtk }} />
+                            <Text style={community.author}>{author}</Text>
+                        </View>
+                        <Text style={community.dateandrepair}>{createdate}</Text>
+                    </View>
+                    <View style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: 'center',
+                        borderBottomColor: "#DDDDDD",
+                        
                         padding: 16,
                         paddingRight: 24
                     }}>
@@ -515,26 +607,6 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 <Image resizeMode="contain" style={community.warning} source={require("./icon/blackwarning.png")}></Image>
                             </TouchableOpacity>
                         }
-                    </View>
-                    <View style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: 'center',
-                        borderBottomColor: "#DDDDDD",
-                        borderBottomWidth: 1,
-                        padding: 16,
-                        paddingRight: 20
-                    }}>
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
-
-                            <Image resizeMode="contain" style={community.icon} source={{ uri: vmtk }} />
-                            <Text style={community.author}>{author}</Text>
-                        </View>
-                        <Text style={community.dateandrepair}>{createdate}</Text>
                     </View>
                     {imageSource && <Image style={community.image} resizeMode="cover" source={{ uri: imageSource }} />}
 
@@ -572,7 +644,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                     }}>
                         <FlatList
                             data={items}
-                            keyExtractor={items.ID}
+                            
                             renderItem={({ item }) => (
                                 <View style={{ borderBottomWidth: 1, borderColor: '#E2E2E2', paddingTop: 5, paddingBottom: 5 }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: "100%", }}>
@@ -583,8 +655,19 @@ export default function CommunityOtherPost({ route, navigation }) {
                                             <Image resizeMode="contain" style={community.icon} source={{ uri: item.reProfile }} />
                                             <Text style={community.author}>{item.reNick}</Text>
                                             <Text style={[community.date, { fontSize: 12, marginLeft: 8 }]}>{item.reTime}</Text>
+
+                                            {item.reMelike===true ?
+                                        <View style={{flexDirection:"row"}}>
+                                            <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 8 }]} source={require("./icon/greenThumb.png")}></Image>
+                                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.reWhoLike}</Text>
+                                        </View>
+                                        :
+<View style={{flexDirection:"row"}}>
                                             <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 8 }]} source={require("./icon/emptythumb.png")}></Image>
-                                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{numrep}</Text>
+                                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.reWhoLike}</Text>
+</View>
+                                        }
+                                            
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
                                            
@@ -593,22 +676,25 @@ export default function CommunityOtherPost({ route, navigation }) {
                                          
 
                                             {/* 대댓글 다는 버튼 */}
-                                            <TouchableOpacity onPress={()=>{focusing(item.reName)}}> 
+                                            {/* <TouchableOpacity onPress={()=>{focusing(item.reName)}}> 
                                             <View style={{borderWidth:0.5,width:30,height:20}}>
 
                                             </View>
-                                            </TouchableOpacity>
+                                            </TouchableOpacity> */}
                                             {/* 좋아요 누르는 버튼 */}
 
-                                            <TouchableOpacity onPress={plusnumrep} >
+                                            <TouchableOpacity onPress={()=> pressReLike(item.reWhoLikeList,item.reName)} >
                                             
                                             <View style={{color: "#DDDDDD",borderWidth:0.5,width:30,height:20}}>
                                             <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greyThumb.png")} />
                                             </View>
                                             </TouchableOpacity>  
-                                            {item.reUserUid === user.uid ?
 
-                                            // {/* 신고 및 삭제 누르는 버튼 */}
+
+                                             {/* 신고 및 삭제 누르는 버튼 */}
+                                            {item.reUserUid === true?
+
+                                            
                                                 <View style={{borderWidth:0.5,width:30,height:20}}>
                                                 <TouchableOpacity onPress={() =>
                                                     Alert.alert(
@@ -675,121 +761,8 @@ export default function CommunityOtherPost({ route, navigation }) {
                                         <Text>{item.reContent}</Text>
 
                                     </View>
-                                    {item.rereContent ?
-                                <FlatList
-                                data={items}
-                                keyExtractor={items.rereContent}
-                                renderItem={({ item }) => (
-                                    <View style={{ marginTop: 8, flexDirection: 'row', justifyContent: 'space-evenly' }}>
-                                <Image source={require('./icon/rereply.png')} resizeMode="contain" style={{ marginLeft: 5, width: 16, height: 16 }} />
-                                <View style={{ alignSelf: 'flex-end', backgroundColor: '#E5E5E5', width: "90%", minHeight: 84, borderRadius: 5, paddingTop: 4, paddingLeft: 8, paddingRight: 8 }}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                            <View style={{
-                                                flexDirection: 'row',
-                                                alignItems: 'center',
-                                            }}>
-                                                <Image resizeMode="contain" style={community.icon} source={{ uri: item.rereProfile }} />
-                                                <Text style={community.author}>{item.rereNick}</Text>
-                                                <Text style={[community.date, { fontSize: 12, marginLeft: 8 }]}>{item.rereTime}</Text>
-                                                <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 8 }]} source={require("./icon/emptythumb.png")}></Image>
-                                                <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{numrep}</Text>
-                                            </View>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
-                                               
-                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-    
-                                             
-    
-                                                {/* 대댓글 다는 버튼 */}
-                                                
-                                                {/* 좋아요 누르는 버튼 */}
-    
-                                                <TouchableOpacity onPress={plusnumrep} >
-                                                
-                                                <View style={{color: "#DDDDDD",borderWidth:0.5,width:30,height:20}}>
-                                                <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greyThumb.png")} />
-                                                </View>
-                                                </TouchableOpacity>  
-                                                {item.rereUserUid === user.uid ?
-    
-                                                // {/* 신고 및 삭제 누르는 버튼 */}
-                                                    <View style={{borderWidth:0.5,width:30,height:20}}>
-                                                    <TouchableOpacity onPress={() =>
-                                                        Alert.alert(
-                                                            '삭제하시겠습니까?',
-                                                            '삭제된 게시물은 되돌릴 수 없습니다.',
-                                                            [
-                                                                {
-                                                                    text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
-                                                                },
-                                                                {
-                                                                    text: '삭제하기', onPress: () => Alert.alert(
-                                                                        '삭제완료',
-                                                                        '',
-                                                                        [
-                                                                            {
-                                                                                text: 'OK', onPress: () => console.log('삭제가 완료되었습니다.')
-                                                                            }
-                                                                        ]
-                                                                    )
-                                                                }
-                                                            ]
-                                                        )
-                                                    }>
-                                                        <Text style={community.dateandrepair}>삭제</Text>
-                                                    </TouchableOpacity>
-                                                    </View>
-                                                    :
-                                                    <View style={{borderWidth:0.5,width:30,height:20}}>
-                                                            <TouchableOpacity onPress={() =>
-                                                            Alert.alert(
-                                                                '신고하시겠습니까?',
-                                                                '신고가 누적되면 자동 삭제 됩니다.',
-                                                                [
-                                                                    {
-                                                                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
-                                                                    },
-                                                                    {
-                                                                        text: '신고하기', onPress: () => Alert.alert(
-                                                                            '신고완료',
-                                                                            '검토후 조치하겠습니다.',
-                                                                            [
-                                                                                {
-                                                                                    text: 'OK', onPress: () => console.log('OK Pressed')
-                                                                                }
-                                                                            ]
-                                                                        )
-                                                                    }
-                                                                ]
-                                                            )
-                                                        }>
-                                                            <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greyAlert.png")} />
-                                                        </TouchableOpacity>
-                                                            </View>
-                                }
-                                                
-                                                
-                                             
-                                            </View>
-                                                   
-                                                   
-                                            </View>
-                                        </View>
-                                        <View style={{ marginTop: 8 }}>
-                                            <Text>{item.rereContent}</Text>
-    
-                                        </View>
-                                        
-                                    </View>
-                                    </View>
-                                )}
-                                
-                            />
-                            :
-                            <></>
-                                }
-                                    
-                                
+
+                           
                                 </View>
                                 
                             )}

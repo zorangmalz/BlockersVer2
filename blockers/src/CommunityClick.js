@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -38,7 +38,12 @@ const community = StyleSheet.create({
     title: {
         fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
-        color: "#000000"
+        color: "#000000",
+        
+        height:16,
+        
+        width:topposition*0.7
+            
 
     },
     content: {
@@ -49,7 +54,7 @@ const community = StyleSheet.create({
         fontFamily: 'NunitoSans-Regular'
     },
     timethumbreply: {
-        fontSize: 12,
+        fontSize: 14,
         fontFamily: 'NunitoSans-Regular'
     },
     lowerbox: {
@@ -85,14 +90,20 @@ export default function CommunityClick({ navigation }) {
     const [timer, settimer] = useState();
     const [filtered, setFiltered] = useState();
     const [refreshing, setRefreshing] = useState(false);
+    const [author, setAuthor] = useState();
+    const [user, setUser] = useState();
 
     const wait = (timeout) => {
         return new Promise(resolve => {
             setTimeout(resolve, timeout);
         });
     }
-
-
+  useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+        console.log(user)
+    },[user])
     async function load() {
         const list = [];
         var a = moment().toArray()
@@ -118,7 +129,8 @@ export default function CommunityClick({ navigation }) {
                                     context: doc.data().context,
                                     like: doc.data().whoLike.length,
                                     docname: doc.data().docName,
-                                    replynum: doc.data().commentNum
+                                    replynum: doc.data().commentNum,
+                                    isPicture:doc.data().isPicture
                                 });
                             }
                             else {
@@ -128,7 +140,8 @@ export default function CommunityClick({ navigation }) {
                                     context: doc.data().context,
                                     like: doc.data().whoLike.length,
                                     docname: doc.data().docName,
-                                    replynum: doc.data().commentNum
+                                    replynum: doc.data().commentNum,
+                                    isPicture:doc.data().isPicture
                                 });
                             }
                         }
@@ -153,7 +166,8 @@ export default function CommunityClick({ navigation }) {
                                 context: doc.data().context,
                                 like: doc.data().whoLike.length,
                                 docname: doc.data().docName,
-                                replynum: doc.data().commentNum
+                                replynum: doc.data().commentNum,
+                                isPicture:doc.data().isPicture
                             });
                         }
                         else {
@@ -163,7 +177,8 @@ export default function CommunityClick({ navigation }) {
                                 context: doc.data().context,
                                 like: doc.data().whoLike.length,
                                 docname: doc.data().docName,
-                                replynum: doc.data().commentNum
+                                replynum: doc.data().commentNum,
+                                isPicture:doc.data().isPicture
                             });
                         }
                     }
@@ -215,16 +230,23 @@ export default function CommunityClick({ navigation }) {
                         inverted={true}
                         keyExtractor={items.docname}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname })} >
+                            <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname, Uid:user.uid })} >
                                 <View style={community.board}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                         <View style={community.circle} />
-                                        <Text style={community.title}>{item.title}</Text>
+                                        <Text ellipsizeMode="tail" numberOfLines={1}  style={community.title}>{item.title}</Text>
                                     </View>
-                                    <Text style={community.content}>{item.context}</Text>
+                                    <Text ellipsizeMode="tail" numberOfLines={2} style={community.content}>{item.context}</Text>
                                     <View style={community.lowerbox}>
+                                        
                                         <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
-                                        <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: "33%" }]} source={require("./icon/emptythumb.png")}></Image>
+                                         {item.isPicture === true ?
+                                        <Image style={[community.thumbandreply,{ marginLeft: "60%" }]} source={require("./icon/picture.png")}></Image>    
+                                         :
+                                         <></>
+                                        }
+                                     
+                                        <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft:9}]} source={require("./icon/emptythumb.png")}></Image>
                                         <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
                                         <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 16 }]} source={require("./icon/reply.png")}></Image>
                                         <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
@@ -257,3 +279,4 @@ export default function CommunityClick({ navigation }) {
         </>
     )
 }
+//아이콘 제작자 <a href="https://www.flaticon.com/kr/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/kr/" title="Flaticon"> www.flaticon.com</a>

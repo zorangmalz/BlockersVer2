@@ -48,6 +48,7 @@ const community = StyleSheet.create({
         fontSize: 14,
         fontFamily: 'NunitoSans-Regular',
         color: '#666666',
+        
     },
     contentbox: {
         paddingLeft: 32,
@@ -75,7 +76,10 @@ export default function CommunityWrite ({navigation}) {
     const [picthree, setPicthree] = useState(true);
     const [user,setuser]=useState()
     const [nick,setNick]=useState()
-    
+    const [filename,setFilename]=useState()
+    const [vmtkfldzm,setvmtkfldzm]=useState()
+    const [picture,setPicture]=useState()
+    const [isPicture,setIsPicture]=useState()
     useEffect(()=>{
 
 console.log(utils.FilePath.PICTURES_DIRECTORY);
@@ -87,17 +91,20 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
             firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot=>{
                 console.log(documentSnapshot.data().nickname,"hihi")
                 setNick(documentSnapshot.data().nickname)
+                setvmtkfldzm(documentSnapshot.data().profilePicture)
+
             })
            
         }
     },[user])
     async function uploadImage(a){
         const uri=imageOne;
-        const filename=title+nick+a
+        setFilename(title+nick+a)
         const reference = storage().ref("community1/"+filename);
         const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
-
+        
         await reference.putFile(uploadUri);
+        setPicture(true)
     }
     async function writePost(){
         
@@ -110,8 +117,9 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
         }else{
             a[1]=a[1]+1
         }
-        
-        uploadImage(a)
+        if(isPicture){
+        await uploadImage(a)
+        }
         await ref.doc(a+title).set({
             context:content,
             like:0,
@@ -125,7 +133,10 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
             whoLike:[],
             commentNum:0,
             fullText:title+content,
-            whoAlert:[]
+            whoAlert:[],
+            profilePicture:vmtkfldzm,
+            isPicture:isPicture
+            
         })
         Alert.alert(
             '업로드 완료',
@@ -150,7 +161,7 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
         },
         quality:0.3
     };
-
+   
     const showCameraRoll1 = () => {
         ImagePicker.launchImageLibrary(options, (response) => {
           if (response.error) {
@@ -161,6 +172,7 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
             setPicone(false);
           }
         });
+        setIsPicture(true)
     };
 
     const showCameraRoll2 = () => {

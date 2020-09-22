@@ -66,18 +66,21 @@ export default function CommunityHome({ navigation }) {
     var content = "흡연 10년차 입니다.... 저번주부터 금연을…."
     useEffect(()=>{
         
-        const list=[]
-        list.push(
-            {hi: "hi"}
-
-        )
-        const lists=[]
+        const data =[{title: 'Node 1', items: [{title: 'Node 1.1'}, {title: 'Node 1.2'}]}]
+        var list=[]
+        var lists=[]
         lists.push({
-            hi:[{hi:"hoihi",hlhl:"slefka"}]
+            hh:"hhh",
+            sef:"sefe"
         })
-        
-        list.push(lists)
-        console.log(lists)
+        lists=JSON.stringify(lists)
+        var dict={}
+        dict["re"]="hi"
+        list.push(dict)
+        console.log(list)
+        dict["gh"]=lists
+        console.log(list)
+        // console.log(JSON.stringify(data))
     })
     return (
         <>
