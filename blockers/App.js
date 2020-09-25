@@ -73,25 +73,10 @@ import InformationNonReport from './src/informationNonReport';
 import ModeSelect from './src/modeSelect';
 import ModeSelectSmoker from './src/modeSelectSmoker';
 import ModeSelectNonSmoker from './src/modeSelectNonSmoker';
-import messaging from '@react-native-firebase/messaging';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-async function saveTokenToDatabase(token) {
-  // Assume user is already signed in
-  const userId = auth().currentUser.uid;
-
-  // Add the token to the users datastore
-  await firestore()
-    .collection('UserInfo')
-    .doc(userId)
-    .update({
-      tokens: firestore.FieldValue.arrayUnion(token),
-    });
-}
 function ChallengeScreen({ navigation }) {
   return (
     <Stack.Navigator>

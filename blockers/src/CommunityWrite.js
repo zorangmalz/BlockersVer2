@@ -99,9 +99,8 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
     },[user])
     async function uploadImage(a){
         const uri=imageOne;
-        
-        const reference = storage().ref("community1/"+String(title+nick+a));
-        
+        setFilename(title+nick+a)
+        const reference = storage().ref("community1/"+filename);
         const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
         
         await reference.putFile(uploadUri);

@@ -165,7 +165,7 @@ export default function HomeScreen({ navigation }) {
             // console.log(c)
             timeCounter(c)
             setSmokingShow(parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))
-            setSmokingMoney(((parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))*225).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+            setSmokingMoney(((parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))*125).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
             // console.log(stats,day,hour)
             var hi=100000
             // console.log("real",hi.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))

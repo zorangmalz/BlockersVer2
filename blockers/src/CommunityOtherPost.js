@@ -105,7 +105,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [alertList, setAlertList] = useState([]);
     const [vmtk, setVmtk] = useState();
     const [revmtk, setRevmtk] = useState();
-    const [isPicture,setIsPicture]=useState();
+    
     const [reHave,setReHave]=useState();
     const textbox=useRef()
     const [loading,setLoading]=useState(false);
@@ -186,7 +186,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                 setRealWriterUid(doc.data().writerUid)
                 setAlertList(doc.data().whoAlert)
                 setVmtk(doc.data().profilePicture)
-                setIsPicture(doc.data().isPicture)
+                
             })
         }
         console.log(alertList, likeList, time,author, "alertList")
@@ -246,12 +246,10 @@ export default function CommunityOtherPost({ route, navigation }) {
         setParam(ID)
         
         async function reply(){
-            
+            let list = [];
             
             firestore().collection('Community1').doc(ID).collection("Reply").onSnapshot(querySnapshot => {
                 console.log("comd")
-                let list = [];
-                let loged=undefined
                 setReplyNum(querySnapshot.size);
                 querySnapshot.forEach(docs => {
                     if(docs.data().whoLike.includes(Uid)){
@@ -260,9 +258,9 @@ export default function CommunityOtherPost({ route, navigation }) {
                         setReMeLike(false)
                     }
                     if(Uid===docs.data().writerUid){
-                        loged=true
+                        setReIsLogined(true)
                     }else{
-                        loged=false
+                        setReIsLogined(false)
                     }
                         list.push({
                             reName: docs.data().fullTime + docs.data().content,
@@ -271,15 +269,16 @@ export default function CommunityOtherPost({ route, navigation }) {
                             reLike: docs.data().like,
                             reTime: docs.data().day + " " + docs.data().time,
                             reProfile: docs.data().profilePicture,
-                            reUserUid:loged,
+                            reUserUid:reIsLogined,
                             reWhoLike:docs.data().whoLike.length,
                             reWhoLikeList:docs.data().whoLike,
                             reWhoAlert:docs.data().whoAlert,
                             reMeLike:reMelike
+
                         });
                     
                 });
-                console.log(list)
+
                 setItems(list);
             })
         
@@ -287,7 +286,6 @@ export default function CommunityOtherPost({ route, navigation }) {
         }
     
        reply()
-       console.log(items)
     }, [state,vmtk,loading])
 
     //게시글 좋아요 및 좋아요 취소
@@ -329,22 +327,17 @@ export default function CommunityOtherPost({ route, navigation }) {
         }
     }
     function deletePost() {
-        navigation.goBack()
         return ref.doc(param).delete().then(() => {
-            if(isPicture){
-                const filename = title + nick + time
-                var desertRef = storage().ref("community1/" + filename);
-    
-                // Delete the file
-                desertRef.delete().then(function () {
-                    
-                }).catch(function (error) {
-                    // Uh-oh, an error occurred!
-                    console.log(error)
-                });
-            }else{
-                
-            }
+            const filename = title + nick + time
+            var desertRef = storage().ref("community1/" + filename);
+
+            // Delete the file
+            desertRef.delete().then(function () {
+                navigation.goBack()
+            }).catch(function (error) {
+                // Uh-oh, an error occurred!
+            });
+
         })
     }
     function alertPost() {
@@ -470,16 +463,24 @@ export default function CommunityOtherPost({ route, navigation }) {
             relikePlus(relikeList,name);
         }
     }
-    function redeletePost(a) {
-        return ref.doc(param).collection("Reply").doc(a).delete().then(() => {
-           console.log("success")
+    function deletePost() {
+        return ref.doc(param).delete().then(() => {
+            const filename = title + nick + time
+            var desertRef = storage().ref("community1/" + filename);
+
+            // Delete the file
+            desertRef.delete().then(function () {
+                navigation.goBack()
+            }).catch(function (error) {
+                // Uh-oh, an error occurred!
+            });
 
         })
     }
-    function realertPost(a,b) {
-        
+    function alertPost() {
+        console.log(alertList, "fucking here")
         const userID = Uid
-        if (b.includes(userID)) {
+        if (alertList.includes(userID)) {
             console.log("include!!!!!!!!")
             Alert.alert(
                 '신고하시겠습니까?',
@@ -511,34 +512,31 @@ export default function CommunityOtherPost({ route, navigation }) {
                         text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
                     },
                     {
-                        text: '신고하기', onPress: () => 
-                        [b.push(userID),
-                            realertUpdate(a,b),
-                            Alert.alert(
-                                '신고완료',
-                                '검토후 조치하겠습니다.',
-                                [
-                                    {
-                                        text: 'OK', onPress: () => console.log('OK Pressed')
-                                    }
-                                ]
-                            )
-                        ]
-                        
+                        text: '신고하기', onPress: () => Alert.alert(
+                            '신고완료',
+                            '검토후 조치하겠습니다.',
+                            [
+                                {
+                                    text: 'OK', onPress: () => console.log('OK Pressed')
+                                }
+                            ]
+                        )
                     }
                 ]
             )
-            
+            setAlertList(alertList.push(userID))
+            alertUpdate(alertList)
         }
 
     }
-    function realertUpdate(a,b) {
-        console.log(param)
-        
-        return ref.doc(param).collection("Reply").doc(a).update({
-            whoAlert: b,
+    function alertUpdate(a) {
+        return ref.doc(param).update({
+            whoAlert: a,
         }).then(() => {
             console.log("alert success")
+
+
+
         });
     }
 
@@ -695,6 +693,8 @@ export default function CommunityOtherPost({ route, navigation }) {
 
                                              {/* 신고 및 삭제 누르는 버튼 */}
                                             {item.reUserUid === true?
+
+                                            
                                                 <View style={{borderWidth:0.5,width:30,height:20}}>
                                                 <TouchableOpacity onPress={() =>
                                                     Alert.alert(
@@ -705,9 +705,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                                 text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
                                                             },
                                                             {
-                                                                text: '삭제하기', onPress: () => 
-                                                                [redeletePost(item.reName),
-                                                                Alert.alert(
+                                                                text: '삭제하기', onPress: () => Alert.alert(
                                                                     '삭제완료',
                                                                     '',
                                                                     [
@@ -715,7 +713,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                                             text: 'OK', onPress: () => console.log('삭제가 완료되었습니다.')
                                                                         }
                                                                     ]
-                                                                )]
+                                                                )
                                                             }
                                                         ]
                                                     )
@@ -726,7 +724,26 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                 :
                                                 <View style={{borderWidth:0.5,width:30,height:20}}>
                                                         <TouchableOpacity onPress={() =>
-                                                        realertPost(item.reName,item.reWhoAlert)
+                                                        Alert.alert(
+                                                            '신고하시겠습니까?',
+                                                            '신고가 누적되면 자동 삭제 됩니다.',
+                                                            [
+                                                                {
+                                                                    text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                                                                },
+                                                                {
+                                                                    text: '신고하기', onPress: () => Alert.alert(
+                                                                        '신고완료',
+                                                                        '검토후 조치하겠습니다.',
+                                                                        [
+                                                                            {
+                                                                                text: 'OK', onPress: () => console.log('OK Pressed')
+                                                                            }
+                                                                        ]
+                                                                    )
+                                                                }
+                                                            ]
+                                                        )
                                                     }>
                                                         <Image resizeMode="contain" style={community.thumbandreply} source={require("./icon/greyAlert.png")} />
                                                     </TouchableOpacity>
