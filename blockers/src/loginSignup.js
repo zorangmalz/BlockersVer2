@@ -14,7 +14,24 @@ import auth from '@react-native-firebase/auth';
 import { GoogleSignin,statusCodes } from '@react-native-community/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import firestore from '@react-native-firebase/firestore';
+import KakaoLogins, {KAKAO_AUTH_TYPES} from '@react-native-seoul/kakao-login';
 
+if (!KakaoLogins) {
+    console.error('Module is Not Linked');
+  }
+  
+  const logCallback = (log, callback) => {
+    console.log(log);
+    callback;
+  };
+  
+  const TOKEN_EMPTY = 'token has not fetched';
+  const PROFILE_EMPTY = {
+    id: 'profile has not fetched',
+    email: 'profile has not fetched',
+    profile_image_url: '',
+  };
+  
 const login = StyleSheet.create({
     textinput: {
         marginLeft: 16,
@@ -74,6 +91,16 @@ export default function LoginSignup({navigation}) {
     const [texts,setTexts]=useState("")
   
 
+    const [loginLoading, setLoginLoading] = useState(false);
+  const [logoutLoading, setLogoutLoading] = useState(false);
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [unlinkLoading, setUnlinkLoading] = useState(false);
+
+  const [token, setToken] = useState(TOKEN_EMPTY);
+  const [profile, setProfile] = useState(PROFILE_EMPTY);
+
+
+
     async function signup(){
         try{
         await ref.where("email","==",email).get().then(function(querySnapshot){
@@ -130,6 +157,30 @@ export default function LoginSignup({navigation}) {
         return auth().signInWithCredential(facebookCredential);
       }
 
+
+      const kakaoLogin= ()=>{
+          console.log("come")
+        logCallback('Login Start', setLoginLoading(true));
+    
+        KakaoLogins.login([KAKAO_AUTH_TYPES.Talk, KAKAO_AUTH_TYPES.Account])
+          .then(result => {
+            setToken(result.accessToken);
+            logCallback(
+              `Login Finished:${JSON.stringify(result)}`,
+              setLoginLoading(false),
+            );
+          })
+          .catch(err => {
+            if (err.code === 'E_CANCELLED_OPERATION') {
+              logCallback(`Login Cancelled:${err.message}`, setLoginLoading(false));
+            } else {
+              logCallback(
+                `Login Failed:${err.code} ${err.message}`,
+                setLoginLoading(false),
+              );
+            }
+          });
+      };
     useEffect(()=>{
        
         GoogleSignin.configure({
@@ -181,7 +232,7 @@ export default function LoginSignup({navigation}) {
                     <TouchableOpacity onPress={onGoogleButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#c45545' }]}>
                         <Text style={login.buttontext}>Gmail로 시작하기</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#f6e14b' }]}>
+                    <TouchableOpacity isLoading={loginLoading} onPress={()=>kakaoLogin()} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#f6e14b' }]}>
                         <Text style={[login.buttontext, { color: '#303030' }]}>Kakaotalk으로 시작하기</Text>
                     </TouchableOpacity>
                 </ScrollView>
