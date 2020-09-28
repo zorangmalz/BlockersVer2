@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -10,7 +10,8 @@ import {
     Modal
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import { LoginManager } from 'react-native-fbsdk'
+import { LoginManager } from 'react-native-fbsdk';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const setting = StyleSheet.create({
     mainText : {
@@ -24,24 +25,40 @@ const setting = StyleSheet.create({
         marginBottom: 8,
         marginLeft: 32,
     },
-    subText:{
-        fontSize:12
+    subText: {
+        fontSize: 12
     }
 })
 
-export default function SettingMain({ navigation }) {
-  
+export default function SettingCompanyInfo({ navigation }) {
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
-               
-                <ScrollView style={{  }}>
-                <TouchableOpacity style={[setting.mainBox, { marginTop: 10}]} >
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>회사소개</Text>
+                        </Text>
+                    </View>
+                </View>
+                <ScrollView >
+                    <TouchableOpacity style={[setting.mainBox, { marginTop: 16 }]} >
                         <Text style={setting.mainText}>상호명</Text>
                         <Text style={setting.subText}>(주)조랑말즈</Text>
                     </TouchableOpacity>
-                    <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
+                    <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
                     <TouchableOpacity style={[setting.mainBox, { marginTop: 10 }]} >
                         <Text style={setting.mainText}>사업자번호</Text>
                         <Text style={setting.subText}>526-86-01693</Text>

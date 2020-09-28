@@ -14,7 +14,9 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import moment from "moment"
+import moment from "moment";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { utils } from '@react-native-firebase/app';
 
@@ -135,18 +137,36 @@ export default function MypageMyWriting({ navigation }) {
         });
     
         setItems(list);
-     
-        if (loading) {
-          setLoading(false);
-        }
-        
+
+          if (loading) {
+              setLoading(false);
+          }
+
       });
     }
-   
+
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>내가 쓴글</Text>
+                        </Text>
+                    </View>
+                </View>
                 <ScrollView>
                     <View style={{
                         marginRight: 14,
@@ -156,36 +176,36 @@ export default function MypageMyWriting({ navigation }) {
                         alignItems: 'center',
                         justifyContent: 'flex-end',
                         alignSelf: 'flex-end',
-                        
+
                     }}
                     >
-                    
+
                     </View>
-                    <FlatList 
-                  
-                    data={items}
-                    inverted={true}
-                    keyExtractor={items.docname}
-                    renderItem={({item})=>(
-                        <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost',{docID:item.docname,ID:item.docname})} >
-                        <View style={community.board}>
-<View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                            <View style={community.circle} />
-                    <Text style={community.title}>{item.title}</Text>
-                        </View>
-                        <Text style={community.content}>{item.context}</Text>
-                        <View style={community.lowerbox}>
-                    <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: "33%" }]} source={require("./icon/emptythumb.png")}></Image>
-                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 16 }]} source={require("./icon/reply.png")}></Image>
-                    <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
-                        </View>
-                        </View>
-                        </TouchableOpacity>
-                    )}
+                    <FlatList
+
+                        data={items}
+                        inverted={true}
+                        keyExtractor={items.docname}
+                        renderItem={({ item }) => (
+                            <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname })} >
+                                <View style={community.board}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                        <View style={community.circle} />
+                                        <Text style={community.title}>{item.title}</Text>
+                                    </View>
+                                    <Text style={community.content}>{item.context}</Text>
+                                    <View style={community.lowerbox}>
+                                        <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
+                                        <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} style={{ marginLeft: "33%" }} />
+                                        <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
+                                        <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
+                                        <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
+                                    </View>
+                                </View>
+                            </TouchableOpacity>
+                        )}
                     />
-                        
+
                     
                 </ScrollView>
                 <TouchableOpacity 
@@ -198,13 +218,13 @@ export default function MypageMyWriting({ navigation }) {
                     <View style={{
                         width: 36,
                         height: 36,
-                        borderColor: '#333333',
+                        borderColor: '#5cc27b',
                         borderWidth: 1,
                         borderRadius: 18,
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}>
-                        <Image resizeMode="contain" source={require('./icon/pen.png')} />
+                        <MaterialCommunityIcons name="pencil" color="#5cc27b" size={25} />
                     </View>
                 </TouchableOpacity>
             </SafeAreaView>

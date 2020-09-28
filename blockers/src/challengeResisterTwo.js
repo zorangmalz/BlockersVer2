@@ -17,6 +17,7 @@ import {
 import {challengeToken} from './challengeMain';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -374,12 +375,30 @@ export default function ChallengeResisterTwo({navigation}) {
     const ThreeCheck = checkThree===true ? require('./icon/check.png') : undefined;
 
     const [info, setInfo] = useState(false);
-    const kitButton = () => {setInfo(!info)}
-    
+    const kitButton = () => { setInfo(!info) }
+
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>Challenge</Text>
+                        </Text>
+                    </View>
+                </View>
                 <ScrollView style={{marginBottom: 70}}>
                 <Modal
                     animationType="slide"
@@ -579,12 +598,12 @@ export default function ChallengeResisterTwo({navigation}) {
                             </TouchableOpacity>
                         </View>
                     }
-                    <View style={{alignSelf: 'flex-start', marginTop: 32, marginLeft: 16}}>
+                    <View style={{alignSelf: 'flex-start', marginTop: 20, marginLeft: "5%"}}>
                         <Text style={[challenge.mediumText,{fontFamily: 'NunitoSans-Bold'}]}>참가자 정보</Text>
                     </View>
                     <View style={{
                         marginTop: 18,
-                        marginLeft: 18,
+                        marginLeft: "5%",
 
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -602,7 +621,7 @@ export default function ChallengeResisterTwo({navigation}) {
                     </View>
                     <View style={{
                         marginTop: 28,
-                        marginLeft: 18,
+                        marginLeft: "5%",
                         marginRight: 16,
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -617,7 +636,7 @@ export default function ChallengeResisterTwo({navigation}) {
                     </View>
                     <View style={{
                         marginTop: 32,
-                        marginLeft: 16,
+                        marginLeft: "5%",
                         flexDirection : 'row',
                         alignItems: 'center'
                     }}>
@@ -761,8 +780,8 @@ export default function ChallengeResisterTwo({navigation}) {
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                marginLeft: 18,
-                                marginRight: 18,
+                                marginLeft: "5%",
+                                marginRight: "5%",
                                 marginBottom: 9
                             }}>
                                 <Text style={[challenge.largeText, { fontFamily: 'NunitoSans-Regular' }]}>참가금액</Text>
@@ -772,8 +791,8 @@ export default function ChallengeResisterTwo({navigation}) {
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                marginLeft: 18,
-                                marginRight: 18,
+                                marginLeft: "5%",
+                                marginRight: "5%",
                                 marginBottom: 9
                             }}>
                                 <Text style={[challenge.largeText, { fontFamily: 'NunitoSans-Regular'}]}>챌린지 키트</Text>
@@ -783,8 +802,8 @@ export default function ChallengeResisterTwo({navigation}) {
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                marginLeft: 18,
-                                marginRight: 18
+                                marginLeft: "5%",
+                                marginRight: "5%"
                             }}>
                                 <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold', color: '#303030' }}>총금액</Text>
                                 <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold', color: '#303030'  }}>{totalmoney} Block</Text>
@@ -796,8 +815,8 @@ export default function ChallengeResisterTwo({navigation}) {
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                marginLeft: 18,
-                                marginRight: 18,
+                                marginLeft: "5%",
+                                marginRight: "5%",
                                 marginBottom: 9
                             }}>
                                 <Text style={[challenge.largeText, { fontFamily: 'NunitoSans-Regular'}]}>참가금액</Text>
@@ -807,8 +826,8 @@ export default function ChallengeResisterTwo({navigation}) {
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
-                                marginLeft: 18,
-                                marginRight: 18
+                                marginLeft: "5%",
+                                marginRight: "5%"
                             }}>
                                 <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold', color: '#303030' }}>총금액</Text>
                                 <Text style={{ fontSize: 21, fontFamily: 'NunitoSans-Bold', color: '#303030' }}>{money} Block</Text>

@@ -13,6 +13,8 @@ import {
     Modal
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const style = StyleSheet.create({
     container: {
@@ -206,7 +208,7 @@ export default function MyPageScreen({ navigation }) {
                                 :
                                 loginview()
                         }}>
-                            <Image source={require('./icon/setting.png')} />
+                            <Ionicons name="settings-sharp" color="#999999" size={28} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -268,13 +270,13 @@ export default function MyPageScreen({ navigation }) {
                         alignSelf: 'center'
                     }}>
                         <TouchableOpacity>
-                            <Image style={{ width: 30, height: 30 }} source={require('./icon/facebook.png')} />
+                            <Ionicons name="logo-facebook" size={36} />
                         </TouchableOpacity>
                         <TouchableOpacity>
-                            <Image style={{ width: 30, height: 30 }} source={require('./icon/twitter.png')} />
+                            <Ionicons name="logo-twitter" size={36}/>
                         </TouchableOpacity>
                         <TouchableOpacity>
-                            <Image style={{ width: 30, height: 30 }} source={require('./icon/medium.png')} />
+                            <AntDesign name="medium-monogram" size={36} />
                         </TouchableOpacity>
                     </View>
                 </ScrollView>

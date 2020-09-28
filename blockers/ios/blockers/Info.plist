@@ -58,6 +58,10 @@
 	<string></string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Fonts/FontAwesome5_Solid.ttf</string>
+		<string>Fonts/FontAwesome5_Regular.ttf</string>
+		<string>Fonts/FontAwesome5_Brands.ttf</string>
+		<string>Fonts/AntDesign.ttf</string>
 		<string>Fonts/MaterialCommunityIcons.ttf</string>
 		<string>Fonts/Ionicons.ttf</string>
 		<string>Fonts/NunitoSans-Regular.ttf</string>

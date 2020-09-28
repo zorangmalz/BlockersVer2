@@ -85,20 +85,23 @@ function ChallengeScreen({ navigation }) {
         component={ChallengeMain}
         options={{
           gestureDirection: 'vertical-inverted',
+          headerShown: false
         }}
       />
       <Stack.Screen
         name="ChallengeResisterOne"
         component={ChallengeResisterOne}
         options={{
-          gestureDirection: 'vertical-inverted'
+          gestureDirection: 'vertical-inverted',
+          headerShown: false
         }}
       />
       <Stack.Screen
         name="ChallengeResisterTwo"
         component={ChallengeResisterTwo}
         options={{
-          gestureDirection: 'vertical-inverted'
+          gestureDirection: 'vertical-inverted',
+          headerShown: false
         }}
       />
     </Stack.Navigator>
@@ -184,7 +187,8 @@ const App = ({ navigation }) => {
           name="Mission"
           component={MissionScreen}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen
@@ -272,21 +276,24 @@ const App = ({ navigation }) => {
           name="공지사항"
           component={Notification}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen 
           name="내가 쓴글"
           component={MypageMyWriting}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen
           name="이용약관"
           component={MyPageRule}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen
@@ -323,27 +330,24 @@ const App = ({ navigation }) => {
           name="자유게시판"
           component={CommunityClick}
           options={{
-            headerTitleAlign: 'center',
-            headerRight: props => <Image style={{marginRight: 20}} source={require('./src/icon/blackalarm.png')} {...props} />,
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen
           name="CommunityOtherPost"
           component={CommunityOtherPost}
           options={{
-            headerTitle: '자유게시판',
-            headerTitleAlign: 'center',
-            headerRight: props => <Image style={{ marginRight: 20 }} source={require('./src/icon/blackalarm.png')} {...props} />,
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen
           name="작성하기"
           component={CommunityWrite}
           options={{
-            headerTitleAlign: 'center',
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen

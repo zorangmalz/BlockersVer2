@@ -35,7 +35,7 @@ export default function SettingExitComplete({navigation}) {
                         marginTop: 16
                     }}>이용해주셔서 감사합니다.</Text>
                 </ScrollView>
-                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => navigation.popToTop()}>
+                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => navigation.navigate("설정")}>
                     <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>종료</Text>
                     </View>

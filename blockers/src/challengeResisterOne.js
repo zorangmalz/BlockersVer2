@@ -9,12 +9,16 @@ import {
     StatusBar,
     StyleSheet,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const challenge = StyleSheet.create({
     box : {
         borderRadius: 10,
         alignItems: 'center',
-        marginTop: 17
+        marginTop: 17,
+        marginLeft: 16,
+        marginRight: 16,
+        paddingBottom: 32
     },
     circle: {
         width: 30,
@@ -59,9 +63,27 @@ export default function ChallengeResisterOne ({navigation}) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{flex: 1, backgroundColor: '#ffffff'}}>
-                <ScrollView style={{marginBottom: 70, marginTop: 32}}>
+            <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>Challenge</Text>
+                        </Text>
+                    </View>
+                </View>
+                <ScrollView style={{marginBottom: 70, marginTop: 3}}>
                     <View style={challenge.box}>
-                        <Text style={challenge.largeText}>Step 01</Text>
+                        <Text style={[challenge.largeText, {marginTop: 16}]}>Step 01</Text>
                         <View style={{
                             justifyContent: 'center', 
                             alignSelf: 'stretch', 

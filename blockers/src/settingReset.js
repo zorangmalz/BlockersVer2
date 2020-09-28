@@ -9,9 +9,9 @@ import {
     TouchableOpacity,
     Modal,
 } from 'react-native';
-
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 
 const setting = StyleSheet.create({
@@ -147,6 +147,24 @@ export default function SettingReset({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>초기화</Text>
+                        </Text>
+                    </View>
+                </View>
                 <Modal
                     animationType="none"
                     transparent={true}

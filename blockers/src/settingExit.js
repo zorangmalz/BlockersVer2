@@ -10,6 +10,7 @@ import {
     Image,
     Modal
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const setting = StyleSheet.create({
     agree : {
@@ -39,17 +40,35 @@ export default function SettingExit({ navigation }) {
     }
     const [agreeOne, setAgreeOne] = useState(true);
     const [agreeTwo, setAgreeTwo] = useState(true);
-    const OneCheck = () => {setAgreeOne(!agreeOne)}
-    const TwoCheck = () => {setAgreeTwo(!agreeTwo)}
-    const OneAgree = agreeOne===true ? require('./icon/exitcheck.png') : '';
-    const noOneAgree = agreeOne===false ? require('./icon/exitcheck.png') : '';
-    const TwoAgree = agreeTwo===true ? require('./icon/exitcheck.png') : '';
-    const noTwoAgree = agreeTwo===false ? require('./icon/exitcheck.png') : '';
+    const OneCheck = () => { setAgreeOne(!agreeOne) }
+    const TwoCheck = () => { setAgreeTwo(!agreeTwo) }
+    const OneAgree = agreeOne === true ? require('./icon/exitcheck.png') : '';
+    const noOneAgree = agreeOne === false ? require('./icon/exitcheck.png') : '';
+    const TwoAgree = agreeTwo === true ? require('./icon/exitcheck.png') : '';
+    const noTwoAgree = agreeTwo === false ? require('./icon/exitcheck.png') : '';
 
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>탈퇴</Text>
+                        </Text>
+                    </View>
+                </View>
                 <Modal
                     animationType="none"
                     transparent={true}

@@ -6,9 +6,11 @@ import {
     StatusBar,
     ScrollView,
     StyleSheet,
-    TouchableWithoutFeedback
+    TouchableWithoutFeedback,
+    TouchableOpacity
 } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const setting = StyleSheet.create({
     title : {
@@ -82,34 +84,54 @@ function moneyTab() {
     )
 }
 
-export default function SettingOften () {
+export default function SettingOften() {
     return (
-        <Tab.Navigator
-            initialRouteName="공통"
-            style={{borderBottomColor: '#5CC27B'}}
-            tabBarOptions={{
-                labelStyle: { fontSize: 16, color: '#303030', fontFamily: 'NunitoSans-Regular' },
-                tabStyle: {width: 80, borderBottomColor: '#5cc27b'},
-                indicatorStyle: {borderBottomColor: '#5cc27b', borderBottomWidth: 2, width: 80},
-                activeTintColor: '#303030',
-                inactiveTintColor: '#333333'
-            }}
-        >
-            <Tab.Screen 
-                name="공통"
-                component={commonTab}
-                options={{ tabBarLabel: '공통' }}
-            />
-            <Tab.Screen 
-                name="챌린지"
-                component={challengeTab}
-                options={{ tabBarLabel: '챌린지' }}
-            />
-            <Tab.Screen 
-                name="입출금"
-                component={moneyTab}
-                options={{ tabBarLabel: '입출금' }}
-            />
-        </Tab.Navigator>
+        <>
+            <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'flex-start', height: 82, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff', paddingBottom: 32}}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Ionicons name="chevron-back" size={35} />
+                </TouchableOpacity>
+                <View
+                    style={{
+                        height: 44,
+                        flexDirection: 'row',
+                        justifyContent: "flex-start",
+                        alignItems: 'center',
+                        marginLeft: 24
+                    }}
+                >
+                    <Text style={{ fontSize: 24 }}>
+                        <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자주묻는 질문</Text>
+                    </Text>
+                </View>
+            </View>
+            <Tab.Navigator
+                initialRouteName="공통"
+                style={{ borderBottomColor: '#5CC27B' }}
+                tabBarOptions={{
+                    labelStyle: { fontSize: 16, color: '#303030', fontFamily: 'NunitoSans-Regular' },
+                    tabStyle: { width: 80, borderBottomColor: '#5cc27b' },
+                    indicatorStyle: { borderBottomColor: '#5cc27b', borderBottomWidth: 2, width: 80 },
+                    activeTintColor: '#303030',
+                    inactiveTintColor: '#333333'
+                }}
+            >
+                <Tab.Screen
+                    name="공통"
+                    component={commonTab}
+                    options={{ tabBarLabel: '공통' }}
+                />
+                <Tab.Screen
+                    name="챌린지"
+                    component={challengeTab}
+                    options={{ tabBarLabel: '챌린지' }}
+                />
+                <Tab.Screen
+                    name="입출금"
+                    component={moneyTab}
+                    options={{ tabBarLabel: '입출금' }}
+                />
+            </Tab.Navigator>
+        </>
     )
 }

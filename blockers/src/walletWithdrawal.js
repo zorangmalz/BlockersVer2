@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -275,10 +276,10 @@ export function WalletWithdrawal({ navigation }) {
                 setTimeout(() => {
                     Twopassword();
                 }, 300)
-                :
-                setTimeout(() => {
-                    WrongPass();
-                }, 300)
+                    :
+                    setTimeout(() => {
+                        WrongPass();
+                    }, 300)
             }
         }
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
@@ -289,6 +290,24 @@ export function WalletWithdrawal({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>출금</Text>
+                        </Text>
+                    </View>
+                </View>
                 <Modal
                     animationType="slide"
                     visible={passwordVisible}
@@ -529,7 +548,7 @@ export function WalletWithdrawlComplete({ navigation }) {
                         marginTop: 8
                     }}>완료시 알림으로 알려드리겠습니다.</Text>
                 </ScrollView>
-                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => navigation.popToTop()}>
+                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => navigation.navigate("MyPageScreen")}>
                     <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>종료</Text>
                     </View>

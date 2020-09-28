@@ -18,8 +18,8 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { useScreens } from 'react-native-screens';
 import { FlatList } from 'react-native-gesture-handler';
-
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Caver = require('caver-js')
 const WIDTH = Dimensions.get('window').width;
@@ -436,7 +436,10 @@ export default function HomeScreen({ navigation }) {
                             <Image style={{ width: 48, height: 45.8 }} resizeMode="stretch" source={require('./icon/Iconcalendar.png')} />
                         </TouchableOpacity>
                         <TouchableOpacity>
-                            <Image style={{ width: 48, height: 48 }} resizeMode="stretch" source={require('./icon/alertcircle.png')} />
+                            <FontAwesome5 name="robot" size={50} color="#5cc27b" />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                            <Ionicons name="alert-circle-outline" size={52} color="#FF0000" />
                         </TouchableOpacity>
                     </View>
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center', marginTop: 16 }} />

@@ -14,15 +14,17 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import moment from "moment"
+import moment from "moment";
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const topposition = Dimensions.get('window').width;
 
 const community = StyleSheet.create({
     board: {
         flex: 1,
-        paddingTop: 16,
-        paddingLeft: 16,
+        paddingTop: "5%",
+        paddingLeft: "5%",
         paddingBottom: 16,
 
         borderBottomWidth: 1,
@@ -39,12 +41,8 @@ const community = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
         color: "#000000",
-        
-        height:16,
-        
+        height: 22,
         width:topposition*0.7
-            
-
     },
     content: {
         fontSize: 14,
@@ -60,8 +58,9 @@ const community = StyleSheet.create({
     lowerbox: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: "space-between",
         marginLeft: 16,
+        marginRight: "10%",
         marginTop: 8
     },
     thumbandreply: {
@@ -70,6 +69,7 @@ const community = StyleSheet.create({
     },
     textinput: {
         width: "45%",
+        minWidth: 170,
         height: 40,
         paddingLeft: 10,
         borderRadius: 15,
@@ -206,6 +206,25 @@ export default function CommunityClick({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',  height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자유게시판</Text>
+                        </Text>
+                    </View>
+                    <TouchableOpacity>
+                        <Ionicons name="notifications" color="#666666" size={25} />
+                    </TouchableOpacity>
+                </View>
                 <ScrollView>
                     <View style={{
                         marginRight: 14,
@@ -219,7 +238,7 @@ export default function CommunityClick({ navigation }) {
                     >
                         <TextInput value={search} onChangeText={text => setSearch(text)} placeholder="검색어를 입력하세요" style={community.textinput} />
                         <TouchableOpacity onPress={() => setFiltered(true)}>
-                            <Image style={{ width: 24, height: 24 }} source={require('./icon/search.png')} resizeMode="contain" />
+                            <Ionicons size={30} name="search" color="#666666" />
                         </TouchableOpacity>
                     </View>
                     <FlatList
@@ -230,26 +249,26 @@ export default function CommunityClick({ navigation }) {
                         inverted={true}
                         keyExtractor={items.docname}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname, Uid:user.uid })} >
+                            <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname, Uid: user.uid })} >
                                 <View style={community.board}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                         <View style={community.circle} />
-                                        <Text ellipsizeMode="tail" numberOfLines={1}  style={community.title}>{item.title}</Text>
+                                        <Text ellipsizeMode="tail" numberOfLines={1} style={community.title}>{item.title}</Text>
                                     </View>
                                     <Text ellipsizeMode="tail" numberOfLines={2} style={community.content}>{item.context}</Text>
                                     <View style={community.lowerbox}>
-                                        
                                         <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
-                                         {item.isPicture === true ?
-                                        <Image style={[community.thumbandreply,{ marginLeft: "60%" }]} source={require("./icon/picture.png")}></Image>    
-                                         :
-                                         <></>
-                                        }
-                                     
-                                        <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft:9}]} source={require("./icon/emptythumb.png")}></Image>
-                                        <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
-                                        <Image resizeMode="contain" style={[community.thumbandreply, { marginLeft: 16 }]} source={require("./icon/reply.png")}></Image>
-                                        <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
+                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                            {item.isPicture === true ?
+                                                <Ionicons name="image-outline" size={15} />
+                                                :
+                                                <></>
+                                            }
+                                            <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} style={{ marginLeft: 16 }} />
+                                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
+                                            <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
+                                            <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
+                                        </View>
                                     </View>
                                 </View>
                             </TouchableOpacity>
@@ -266,17 +285,16 @@ export default function CommunityClick({ navigation }) {
                     <View style={{
                         width: 36,
                         height: 36,
-                        borderColor: '#333333',
+                        borderColor: '#5cc27b',
                         borderWidth: 1,
                         borderRadius: 18,
                         alignItems: 'center',
                         justifyContent: 'center',
                     }}>
-                        <Image resizeMode="contain" source={require('./icon/pen.png')} />
+                        <MaterialCommunityIcons name="pencil" color="#5cc27b" size={25} />
                     </View>
                 </TouchableOpacity>
             </SafeAreaView>
         </>
     )
 }
-//아이콘 제작자 <a href="https://www.flaticon.com/kr/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/kr/" title="Flaticon"> www.flaticon.com</a>

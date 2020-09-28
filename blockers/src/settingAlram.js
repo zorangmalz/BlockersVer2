@@ -10,6 +10,7 @@ import {
     Switch,
 } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Stack = createStackNavigator();
 
@@ -300,17 +301,42 @@ function alramTwo({ navigation }) {
 }
 
 export default function SettingAlram({ navigation }) {
-
     return (
-        <Stack.Navigator>
-            <Stack.Screen 
-                name="AlramOne"
-                component={alramOne}
-            />
-            <Stack.Screen 
-                name="AlramTwo"
-                component={alramTwo}
-            />
-        </Stack.Navigator>
+        <>
+            <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'flex-start', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Ionicons name="chevron-back" size={35} />
+                </TouchableOpacity>
+                <View
+                    style={{
+                        height: 44,
+                        flexDirection: 'row',
+                        justifyContent: "flex-start",
+                        alignItems: 'center',
+                        marginLeft: 24
+                    }}
+                >
+                    <Text style={{ fontSize: 24 }}>
+                        <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>알림설정</Text>
+                    </Text>
+                </View>
+            </View>
+            <Stack.Navigator>
+                <Stack.Screen
+                    name="AlramOne"
+                    component={alramOne}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name="AlramTwo"
+                    component={alramTwo}
+                    options={{
+                        headerShown: false
+                    }}
+                />
+            </Stack.Navigator>
+        </>
     )
 }

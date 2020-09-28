@@ -15,6 +15,8 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const style = StyleSheet.create({
@@ -134,27 +136,45 @@ export default function ProfileMain({ navigation }) {
         });
     };
     async function uploadImage(a){
-        const uri=a;
-        const filename="프로필사진"+userNick
-        const reference = storage().ref("User/"+userNick+"/"+filename);
-        console.log(uri,imageOne,filename,reference)
-        const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
+        const uri = a;
+        const filename = "프로필사진" + userNick
+        const reference = storage().ref("User/" + userNick + "/" + filename);
+        console.log(uri, imageOne, filename, reference)
+        const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
         await reference.putFile(uploadUri);
     }
-    async function hi(){
-    console.log("HI","gs://blockers-8a128.appspot.com/"+userNick+"/프로필사진"+userNick)
+    async function hi() {
+        console.log("HI", "gs://blockers-8a128.appspot.com/" + userNick + "/프로필사진" + userNick)
         const url = await storage()
-          .refFromURL("gs://blockers-8a128.appspot.com/"+"User/"+userNick+"/프로필사진"+userNick)
-          .getDownloadURL();
-          setIsImage(true)
-          setImageSource(url)
+            .refFromURL("gs://blockers-8a128.appspot.com/" + "User/" + userNick + "/프로필사진" + userNick)
+            .getDownloadURL();
+        setIsImage(true)
+        setImageSource(url)
         console.log("get")
-        }
+    }
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>개인정보</Text>
+                        </Text>
+                    </View>
+                </View>
                 <ScrollView>
                     <Text style={[style.title, { marginBottom: 10, marginLeft: 32, marginTop: 24 }]}>Profile</Text>
                     <View style={style.box}>
@@ -177,7 +197,7 @@ export default function ProfileMain({ navigation }) {
                                 <View style={{ flexDirection: "row", alignItems: 'center' }}>
                         <Text style={style.profile}>{userNick}</Text>
                                     <TouchableOpacity onPress={() => navigation.navigate('닉네임 변경')}>
-                                        <Image source={require('./icon/pen.png')} style={{ width: 18, height: 18, marginLeft: 8 }} />
+                                        <MaterialCommunityIcons name="pencil" size={25} style={{ marginLeft: 8 }} />
                                     </TouchableOpacity>
                                 </View>
                             </View>

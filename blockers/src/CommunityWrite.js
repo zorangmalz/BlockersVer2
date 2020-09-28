@@ -19,6 +19,7 @@ import auth from '@react-native-firebase/auth';
 import moment from "moment"
 import storage from '@react-native-firebase/storage';
 import { utils } from '@react-native-firebase/app';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -210,6 +211,23 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>작성하기</Text>
+                        </Text>
+                    </View>
+                    {/* 중앙 맞추기 */}
+                    <View style={{ width: "4%" }} />
+                </View>
                 <Modal
                     animationType="none"
                     transparent={true}

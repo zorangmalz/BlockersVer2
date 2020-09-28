@@ -9,7 +9,8 @@ import {
     TextInput,
     Image,
 } from 'react-native';
-import Clipboard from '@react-native-community/clipboard'
+import Clipboard from '@react-native-community/clipboard';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 export default function WalletCharge({navigation}) {
     const [value, onChangeText] = useState('')
@@ -28,12 +29,30 @@ export default function WalletCharge({navigation}) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>입금</Text>
+                        </Text>
+                    </View>
+                </View>
                 <ScrollView style={{ marginBottom: 70, paddingTop: 35 }}>
                     <TextInput
                         placeholder="금액입력"
                         placeholderTextColor="#B8B8B8"
                         value={value}
-                        onChangeText={text=>onChangeText(text)}
+                        onChangeText={text => onChangeText(text)}
                         keyboardType="number-pad"
                         style={{ width: "85%", height: 50, borderBottomColor: '#5CC27B', borderBottomWidth: 2, alignSelf: 'center', fontSize: 21, fontFamily: 'NunitoSans-Regular' }}
                     />

@@ -10,6 +10,7 @@ import {
     Image,
     Modal,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const setting = StyleSheet.create({
     agree: {
@@ -46,6 +47,24 @@ export default function MyPageRule({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>이용약관</Text>
+                        </Text>
+                    </View>
+                </View>
                 <Modal
                     animationType="none"
                     transparent={true}
@@ -135,9 +154,9 @@ export default function MyPageRule({ navigation }) {
                 </Modal>
                 <ScrollView>
                     <View style={{
-                        marginLeft: 16,
-                        marginRight: 16,
-                        marginTop: 32,
+                        marginLeft: "5%",
+                        marginRight: "5%",
+                        marginTop: 20,
                         marginBottom: 12,
                         flexDirection: 'row',
                         alignItems: 'center',
@@ -180,8 +199,8 @@ export default function MyPageRule({ navigation }) {
                         </Text>
                     </View>
                     <View style={{
-                        marginLeft: 16,
-                        marginRight: 16,
+                        marginLeft: "5%",
+                        marginRight: "5%",
                         marginTop: 16,
                         marginBottom: 12,
                         flexDirection: 'row',
@@ -225,8 +244,8 @@ export default function MyPageRule({ navigation }) {
                         </Text>
                     </View>
                     <View style={{
-                        marginLeft: 16,
-                        marginRight: 16,
+                        marginLeft: "5%",
+                        marginRight: "5%",
                         marginTop: 16,
                         marginBottom: 12,
                         flexDirection: 'row',
