@@ -23,7 +23,7 @@ const verification = StyleSheet.create({
     }
 })
 
-export default function ChallengeVerification() {
+export default function ChallengeVerification({navigation}) {
     const [imageOne, setImageOne] = useState(undefined);
     const [imageTwo, setImageTwo] = useState(undefined);
 
@@ -63,12 +63,12 @@ export default function ChallengeVerification() {
 
     const showCameraRoll = () => {
         ImagePicker.launchImageLibrary(options, (response) => {
-          if (response.error) {
-            console.log('LaunchImageLibrary Error: ', response.error);
-          }
-          else {
-            setImageTwo(response.uri);
-          }
+            if (response.error) {
+                console.log('LaunchImageLibrary Error: ', response.error);
+            }
+            else {
+                setImageTwo(response.uri);
+            }
         });
     };
 
@@ -77,6 +77,24 @@ export default function ChallengeVerification() {
             <SafeAreaView style={{ flex: 0 }} />
             <StatusBar barStyle="default" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>Verification</Text>
+                        </Text>
+                    </View>
+                </View>
                 <ScrollView style={{ marginBottom: 70 }}>
                     <View style={{
                         flexDirection: 'row',
@@ -88,9 +106,9 @@ export default function ChallengeVerification() {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <TouchableOpacity style={{width: 160, height: 160, borderRadius: 14, borderWidth: 0.7, borderColor: imageOne===undefined ? '#000000' : '#ffffff',  marginBottom: 8, justifyContent: 'center', alignItems: 'center'}} onPress={showCamera1}>
-                                <ImageBackground source={require('./icon/plus.png')} style={{ width: 150, height: 150, borderRadius: 14}}>
-                                    {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 150, height: 150, borderRadius: 14, borderWidth: 1}} />}
+                            <TouchableOpacity style={{ width: 160, height: 160, borderRadius: 14, borderWidth: 0.7, borderColor: imageOne === undefined ? '#000000' : '#ffffff', marginBottom: 8, justifyContent: 'center', alignItems: 'center' }} onPress={showCamera1}>
+                                <ImageBackground source={require('./icon/plus.png')} style={{ width: 150, height: 150, borderRadius: 14 }}>
+                                    {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 150, height: 150, borderRadius: 14, borderWidth: 1 }} />}
                                 </ImageBackground>
                             </TouchableOpacity>
                             <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', color: '#79808C' }}>입에 문 사진</Text>

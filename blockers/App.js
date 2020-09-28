@@ -191,7 +191,8 @@ const App = ({ navigation }) => {
           name="Verification"
           component={ChallengeVerification}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen
