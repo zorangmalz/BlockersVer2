@@ -11,7 +11,7 @@ import {
   FlatList
 } from 'react-native';
 import Clipboard from "@react-native-community/clipboard";
-import App from "./contract";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const style = StyleSheet.create({
   containerStatus: {
@@ -69,7 +69,7 @@ function FancardDetail({navigation}) {
         <ScrollView style={{ flex: 1 }}>
           <View style={style.containerStatus}>
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity style={[style.box, { backgroundColor: '#E78276', marginBottom: 8 }]} onPress={()=>App.createToken()}>
+              <TouchableOpacity style={[style.box, { backgroundColor: '#E78276', marginBottom: 8 }]}>
                 <Image source={require('./icon/youtuber.png')} />
               </TouchableOpacity>
               <Text style={[style.text, { width: 100, fontSize: 12, textAlign: 'center' }]}>KRAB</Text>
@@ -125,7 +125,17 @@ function FancardDetail({navigation}) {
                   </View>
                 </>
               )} />
-              <Image style={{alignSelf: 'center'}} source={require('./icon/stream.png')} />
+            <View style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginLeft: 16,
+              marginBottom: 16,
+              alignSelf: "center"
+            }}>
+              <Ionicons style={{ marginRight: 24 }} name="logo-youtube" size={36} />
+              <Ionicons style={{ marginRight: 24 }} name="logo-twitch" size={36} />
+              <Ionicons name="logo-instagram" size={36} />
+            </View>
           </View>
         </ScrollView>
       </SafeAreaView>

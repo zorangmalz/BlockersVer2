@@ -9,10 +9,14 @@ import {
     Image,
     TouchableOpacity, 
     ImageBackground,
-    FlatList
+    FlatList,
+    Dimensions
 } from 'react-native';
 import ProgressCircle from 'react-native-progress-circle';
 import ProgressBar from 'react-native-progress/Bar';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const WIDTH = Dimensions.get('screen').width;
 
 const style = StyleSheet.create({
     containerStatus: {
@@ -85,7 +89,7 @@ export default function HomeScreen({ navigation }) {
                     paddingRight: "5%"
                 }}>
                     <TouchableOpacity onPress={() => navigation.navigate('SignScreen')} style={{ marginLeft: 8 }}>
-                        <Image source={require('./icon/search.png')} />
+                        <Ionicons name="search" size={27} />
                     </TouchableOpacity>
                     <View
                         style={{
@@ -99,7 +103,7 @@ export default function HomeScreen({ navigation }) {
                         </Text>
                     </View>
                     <TouchableOpacity onPress={() => navigation.navigate('SignScreen')} >
-                        <Image source={require('./icon/notification.png')} />
+                        <Ionicons name="notifications-outline" size={27} />
                     </TouchableOpacity>
                 </View>
                 <ScrollView>
@@ -108,19 +112,24 @@ export default function HomeScreen({ navigation }) {
                         <View style={{
                             flexDirection: 'row',
                             alignItems: 'center',
-                            justifyContent: 'space-evenly',
-                            marginBottom: 8
+                            justifyContent: 'space-between',
+                            marginBottom: 8,
+                            paddingRight: WIDTH * 0.02,
+                            paddingLeft: WIDTH * 0.02
                         }}>
                             <View style={{
                                 flexDirection: 'row',
-                                alignItems: 'center'
+                                alignItems: 'center',
                             }}>
                                 <Image source={require('./icon/homeyoutuber.png')} />
                                 <View style={{
                                     marginLeft: 12
                                 }}>
-                                    <Text style={[style.text, { fontSize: 16, marginBottom: 8 }]}>크랩 TV</Text>
-                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 4 }}>[초기자금] 해산물 특화 먹방</Text>
+                                    <View style={{ marginBottom: 8, flexDirection: "row", alignItems: "center"}}>
+                                        <Text style={[style.text, { fontSize: 16, marginRight: 4 }]}>크랩 TV</Text>
+                                        <Ionicons name="heart-outline" color="#202426" size={18} />
+                                    </View>
+                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 4, width: WIDTH * 0.43 }}>[초기자금] 해산물 특화 먹방</Text>
                                     <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 4 }}>목표: 1,000,000 원</Text>
                                     <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Bold', marginBottom: 7 }}>모금액: 600,000</Text>
                                     <View style={{
@@ -157,8 +166,8 @@ export default function HomeScreen({ navigation }) {
                         marginLeft: 16
                     }}>
                         <View style={style.newbox}>
-                            <ImageBackground style={{width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10}} source={require('./icon/background.png')} >
-                                <Text style={{ width: 62, backgroundColor: '#161513', fontFamily: 'Metropolis-Bold', color: '#ffffff', fontSize: 12, alignSelf: 'flex-end', marginTop: 95, textAlign: 'center'}}>D-30</Text>
+                            <ImageBackground style={{width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10, justifyContent: "flex-end", alignItems: "flex-end"}} source={require('./icon/background.png')} >
+                                <Text style={{ width: 62, backgroundColor: '#161513', fontFamily: 'Metropolis-Bold', color: '#ffffff', fontSize: 12, textAlign: 'center'}}>D-30</Text>
                             </ImageBackground>
                             <View style={{marginTop: 4, marginLeft: 16, flexDirection: 'row', alignItems: 'center'}}>
                                 <Text style={[style.text, {fontSize: 12, marginRight: 4}]}>크랩 TV</Text>
@@ -171,8 +180,8 @@ export default function HomeScreen({ navigation }) {
                             </View>
                         </View>
                         <View style={style.newbox}>
-                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} source={require('./icon/desert.png')} >
-                                <Text style={{ width: 62, backgroundColor: '#161513', fontFamily: 'Metropolis-Bold', color: '#ffffff', fontSize: 12, alignSelf: 'flex-end', marginTop: 95, textAlign: 'center' }}>D-30</Text>
+                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10, justifyContent: "flex-end", alignItems: "flex-end" }} source={require('./icon/desert.png')} >
+                                <Text style={{ width: 62, backgroundColor: '#161513', fontFamily: 'Metropolis-Bold', color: '#ffffff', fontSize: 12, marginTop: 95, textAlign: 'center' }}>D-30</Text>
                             </ImageBackground>
                             <View style={{ marginTop: 4, marginLeft: 16, flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={[style.text, { fontSize: 12, marginRight: 4 }]}>사막 TV</Text>
@@ -194,8 +203,8 @@ export default function HomeScreen({ navigation }) {
                         marginTop: 16
                     }}>
                         <View style={style.newbox}>
-                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} source={require('./icon/travel.png')} >
-                                <Text style={{ width: 62, backgroundColor: '#161513', fontFamily: 'Metropolis-Bold', color: '#ffffff', fontSize: 12, alignSelf: 'flex-end', marginTop: 95, textAlign: 'center' }}>D-30</Text>
+                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10, justifyContent: "flex-end", alignItems: "flex-end" }} source={require('./icon/travel.png')} >
+                                <Text style={{ width: 62, backgroundColor: '#161513', fontFamily: 'Metropolis-Bold', color: '#ffffff', fontSize: 12, marginTop: 95, textAlign: 'center' }}>D-30</Text>
                             </ImageBackground>
                             <View style={{ marginTop: 4, marginLeft: 16, flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={[style.text, { fontSize: 12, marginRight: 4 }]}>여행 TV</Text>
@@ -208,8 +217,8 @@ export default function HomeScreen({ navigation }) {
                             </View>
                         </View>
                         <View style={style.newbox}>
-                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10 }} source={require('./icon/mountain.png')} >
-                                <Text style={{ width: 62, backgroundColor: '#161513', fontFamily: 'Metropolis-Bold', color: '#ffffff', fontSize: 12, alignSelf: 'flex-end', marginTop: 95, textAlign: 'center' }}>D-30</Text>
+                            <ImageBackground style={{ width: 160, height: 112, borderTopRightRadius: 10, borderTopLeftRadius: 10, justifyContent: "flex-end", alignItems: "flex-end" }} source={require('./icon/mountain.png')} >
+                                <Text style={{ width: 62, backgroundColor: '#161513', fontFamily: 'Metropolis-Bold', color: '#ffffff', fontSize: 12, marginTop: 95, textAlign: 'center' }}>D-30</Text>
                             </ImageBackground>
                             <View style={{ marginTop: 4, marginLeft: 16, flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={[style.text, { fontSize: 12, marginRight: 4 }]}>산악 TV</Text>
@@ -258,7 +267,7 @@ export default function HomeScreen({ navigation }) {
                                             marginLeft: 33.5,
                                             marginTop: 11
                                         }}>
-                                            <ProgressBar progress={1} width={167} height={8} color={'black'} />
+                                            <ProgressBar progress={1} width={WIDTH * 0.45} height={8} color={'black'} />
                                             <Text style={[style.text, { fontSize: 16, marginLeft: 20 }]}>{item.progress}</Text>
                                         </View>
                                     </View>

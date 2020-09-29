@@ -10,6 +10,7 @@ import {
   Modal,
   TextInput
 } from 'react-native';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const style = StyleSheet.create({
   logo: {
@@ -83,7 +84,13 @@ navigation.navigate("Home")
               alignItems: 'center',
             }}>
               <Text style={[style.text, { color: '#161513', fontSize: 24, marginTop: 26, marginBottom: 48 }]}>Create account</Text>
-              <Image source={require('./icon/social.png')} />
+              <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center", alignSelf: "center"}}>
+                <View style={{borderWidth: 1, borderColor: "#303030", width: 80, height: 80, borderRadius: 40, alignItems: "center", justifyContent: "center"}}>
+                  <Image resizeMode="contain" style={{width: 60, height: 60}} source={require('./icon/kakao.png')} />
+                </View>
+                <Entypo style={{marginLeft: 16, marginRight: 16}} name="twitter-with-circle" size={80} color="#303030" />
+                <Entypo name="facebook-with-circle" size={80} color="#303030" />
+              </View>
               <Text style={[style.text, { color: '#161513', fontSize: 16, marginTop: 16, marginBottom: 16 }]}>or</Text>
               <TextInput placeholder="Email Address" placeholderTextColor="#D2D3D3" style={style.textinput} />
               <TextInput placeholder="Password" secureTextEntry={true} placeholderTextColor="#D2D3D3" style={style.textinput} />
@@ -115,7 +122,13 @@ navigation.navigate("Home")
               <Text style={[style.text, { color: '#161513', fontSize: 24, marginTop: 26, marginBottom: 48 }]}>{walletvisible === false ? 'Sign In' : 'Wallet Connect'}</Text>
               {walletvisible === false ?
                 <>
-                  <Image source={require('./icon/social.png')} />
+                  <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", alignSelf: "center" }}>
+                    <View style={{ borderWidth: 1, borderColor: "#303030", width: 80, height: 80, borderRadius: 40, alignItems: "center", justifyContent: "center" }}>
+                      <Image resizeMode="contain" style={{ width: 60, height: 60 }} source={require('./icon/kakao.png')} />
+                    </View>
+                    <Entypo style={{ marginLeft: 16, marginRight: 16 }} name="twitter-with-circle" size={80} color="#303030" />
+                    <Entypo name="facebook-with-circle" size={80} color="#303030" />
+                  </View>
                   <Text style={[style.text, { color: '#161513', fontSize: 16, marginTop: 16, marginBottom: 16 }]}>or</Text>
                   <TextInput placeholder="Email Address" placeholderTextColor="#D2D3D3" style={style.textinput} />
                   <TextInput placeholder="Password" secureTextEntry={true} placeholderTextColor="#D2D3D3" style={style.textinput} />

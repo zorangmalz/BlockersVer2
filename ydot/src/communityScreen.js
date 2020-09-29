@@ -10,6 +10,8 @@ import {
     TouchableOpacity,
     ImageBackground
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const style = StyleSheet.create({
     freeboard: {
@@ -46,7 +48,7 @@ export default function CommunityScreen({navigation}) {
                     paddingRight: "5%"
                 }}>
                     <TouchableOpacity onPress={() => navigation.navigate('SignScreen')} style={{ marginLeft: 8 }}>
-                        <Image source={require('./icon/search.png')} />
+                        <Ionicons name="search" size={27} />
                     </TouchableOpacity>
                     <View
                         style={{
@@ -60,26 +62,26 @@ export default function CommunityScreen({navigation}) {
                         </Text>
                     </View>
                     <TouchableOpacity onPress={() => navigation.navigate('SignScreen')} >
-                        <Image source={require('./icon/notification.png')} />
+                        <Ionicons name="notifications-outline" size={27} />
                     </TouchableOpacity>
                 </View>
                 <ScrollView>
                     <Text style={[style.text, { fontSize: 14, marginTop: 13, marginLeft: '9%' }]}>Creator Post</Text>
                     <ScrollView style={{ margin: 8 }} horizontal={true} showsHorizontalScrollIndicator={false}>
                         <ImageBackground source={require('./icon/wayimage.png')} resizeMode="stretch" style={{ width: 180, height: 135, borderRadius: 10 }}>
-                            <ImageBackground source={require('./icon/opacity.png')} resizeMode="stretch" style={{width: 180, height: 120, borderRadius: 10}}>
+                            <ImageBackground source={require('./icon/opacity.png')} resizeMode="stretch" style={{width: 180, height: 135, borderRadius: 10}}>
                                 <Text style={{ fontSize: 12, color: '#ffffff', fontFamily: 'Metropolis-Bold', alignSelf: 'center', marginTop: 25 }}>구독자 늘리는 방법</Text>
                                 <Text style={{ fontSize: 10, color: '#ffffff', fontFamily: 'Metropolis-Bold', alignSelf: 'flex-end', marginTop: 50, marginRight: 25 }}>By. BJ 10만</Text>
                             </ImageBackground>
                         </ImageBackground>
                         <ImageBackground source={require('./icon/tipimage.png')} resizeMode="stretch" style={{ width: 180, height: 135, borderRadius: 10 }}>
-                            <ImageBackground source={require('./icon/opacity.png')} resizeMode="stretch" style={{width: 180, height: 120, borderRadius: 10}}>
+                            <ImageBackground source={require('./icon/opacity.png')} resizeMode="stretch" style={{width: 180, height: 135, borderRadius: 10}}>
                                 <Text style={{ fontSize: 12, color: '#ffffff', fontFamily: 'Metropolis-Bold', alignSelf: 'center', marginTop: 25 }}>시작하는 사람을 위한 팁</Text>
                                 <Text style={{ fontSize: 10, color: '#ffffff', fontFamily: 'Metropolis-Bold', alignSelf: 'flex-end', marginTop: 50, marginRight: 25 }}>By. BJ 초보</Text>
                             </ImageBackground>
                         </ImageBackground>
-                        <ImageBackground source={require('./icon/tipimage.png')} resizeMode="stretch" style={{ width: 180, height: 135, borderRadius: 10 }}>
-                            <ImageBackground source={require('./icon/opacity.png')} resizeMode="stretch" style={{width: 180, height: 120, borderRadius: 10}}>
+                        <ImageBackground source={require('./icon/wayimage.png')} resizeMode="stretch" style={{ width: 180, height: 135, borderRadius: 10 }}>
+                            <ImageBackground source={require('./icon/opacity.png')} resizeMode="stretch" style={{width: 180, height: 135, borderRadius: 10}}>
                                 <Text style={{ fontSize: 12, color: '#ffffff', fontFamily: 'Metropolis-Bold', alignSelf: 'center', marginTop: 25 }}>구독자 늘리는 방법</Text>
                                 <Text style={{ fontSize: 10, color: '#ffffff', fontFamily: 'Metropolis-Bold', alignSelf: 'flex-end', marginTop: 50, marginRight: 25 }}>By. BJ 10만</Text>
                             </ImageBackground>
@@ -107,9 +109,9 @@ export default function CommunityScreen({navigation}) {
                                         flexDirection: 'row',
                                         alignItems: 'center',
                                     }}>
-                                        <Image source={require('./icon/good.png')} />
+                                        <MaterialCommunityIcons name="thumb-up-outline" color="#202426" size={16} />
                                         <Text style={{fontFamily: 'Metropolis=Regular', fontSize: 12, color: '#202426', marginLeft: 4, marginRight: 16}}>10</Text>
-                                        <Image source={require('./icon/reply.png')} />
+                                        <Ionicons name="chatbubble-ellipses-outline" color="#202426" size={16} />
                                         <Text style={{fontFamily: 'Metropolis=Regular', fontSize: 12, color: '#202426', marginLeft: 4}}>5</Text>
                                     </View>
                                 </View>

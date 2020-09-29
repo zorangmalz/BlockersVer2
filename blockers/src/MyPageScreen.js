@@ -33,7 +33,7 @@ const style = StyleSheet.create({
     },
     containerStatus: {
         marginTop: 20,
-        backgroundColor: "#85D29C",
+        backgroundColor: "#646464",
         height: 148,
         borderRadius: 10,
         justifyContent: 'space-between'
@@ -219,20 +219,22 @@ export default function MyPageScreen({ navigation }) {
                         <View style={style.containerStatus}>
                             <View style={{ marginTop: 16, marginLeft: 16, marginRight: 16 }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', }}>
-                                    <Text style={{ fontSize: 16, fontFamily: "HelveticaNeue", fontFamily: 'NunitoSans-Bold', color: "white" }}>{user.displayName}님</Text>
+                                    <Text style={{ fontSize: 12, fontFamily: "HelveticaNeue", fontFamily: 'NunitoSans-Bold', color: "white" }}>{user.displayName}님</Text>
                                     <TouchableOpacity onPress={() => navigation.navigate('Transaction')}>
                                         <Text style={{ textDecorationLine: 'underline', fontSize: 9, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>Transaction</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <Text style={{ marginTop: 5, fontSize: 24, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>100,000 Block</Text>
-                            </View>
-                            <View style={{ flexDirection: "row", marginTop: 2, justifyContent: 'flex-end', alignItems: 'center', }}>
-                                <TouchableOpacity onPress={() => navigation.navigate('WalletWithDrawal')} style={[style.buttonStyle, { backgroundColor: '#f0f0f0', borderBottomLeftRadius: 10 }]}>
-                                    <Text style={{ fontSize: 12, color: '#303030', opacity: 0.6, fontFamily: 'NunitoSans-Bold' }}>출금</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('입금')} style={[style.buttonStyle, { backgroundColor: '#FFB83D', borderBottomRightRadius: 10 }]}>
-                                    <Text style={{ fontSize: 12, color: 'white', fontFamily: 'NunitoSans-Bold' }}>충전</Text>
-                                </TouchableOpacity>
+                                <View style={{ flexDirection: 'row', marginTop: 34, alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <Text style={{ fontSize: 24, fontFamily: 'NunitoSans-Bold', color: "white" }}>100,000 Block</Text>
+                                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                        <TouchableOpacity onPress={() => navigation.navigate('WalletWithDrawal')} style={{ width: 54, height: 32, alignItems: "center", justifyContent: "center", borderRadius: 15, borderWidth: 1, borderColor: "white" }}>
+                                            <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Bold', color: "white" }}>출금</Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => navigation.navigate('입금')} style={{ width: 54, height: 32, alignItems: "center", justifyContent: "center", borderRadius: 15, borderWidth: 1, borderColor: "white", backgroundColor: "white", marginLeft: 16 }}>
+                                            <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Bold', color: "#303030" }}>입금</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                </View>
                             </View>
                         </View>
                         :

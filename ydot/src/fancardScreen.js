@@ -8,9 +8,12 @@ import {
   StatusBar,
   Image,
   TouchableOpacity,
-  FlatList
+  FlatList,
+  Dimensions
 } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
+
+const WIDTH = Dimensions.get('screen').width;
 
 const style = StyleSheet.create({
   containerStatus: {
@@ -84,16 +87,9 @@ function FancardScreen({navigation}) {
               alignItems: 'center',
               justifyContent: 'space-evenly',
             }}>
-              <View style={{flexDirection:"row"}}>
              <Text style={[style.text, {width: 100, fontSize: 12, textAlign: 'center'}]}>KRAB</Text>
-             
-             </View>
-             <View>
              <Text style={[style.text, {width: 100, fontSize: 12, textAlign: 'center'}]}>MIMI</Text>
-             </View>
-             <View>
              <Text style={[style.text, {width: 100, fontSize: 12, textAlign: 'center'}]}>RIRI</Text>
-            </View>
             </View>
           </View>
           <Text style={[style.text, { fontSize: 14, marginLeft: '9%' }]}>Likes</Text>
@@ -142,7 +138,7 @@ function FancardScreen({navigation}) {
                       marginLeft: 33.5,
                       marginTop: 11
                     }}>
-                      <ProgressBar progress={1} width={167} height={8} color={'black'} />
+                      <ProgressBar progress={1} width={WIDTH * 0.45} height={8} color={'black'} />
                       <Text style={[style.text, {fontSize: 16, marginLeft: 20}]}>{item.progress}</Text>
                     </View>
                   </View>

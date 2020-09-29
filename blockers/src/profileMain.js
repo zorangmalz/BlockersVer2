@@ -27,10 +27,25 @@ const style = StyleSheet.create({
     },
     profile: {
         fontSize: 16,
-        fontFamily: 'NunitoSans-Bold',
+        fontFamily: 'NunitoSans-Regular',
         opacity: 0.8,
-        color: '#303030',
-        marginBottom: 8
+        color: '#ffffff',
+        marginBottom: 8,
+    },
+    containerStatus: {
+        marginTop: 16,
+        backgroundColor: "#646464",
+        height: 130,
+        borderRadius: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: 'space-between',
+        width: "90%",
+        alignSelf: "center",
+        paddingLeft: 16,
+        paddingTop: 32,
+        paddingBottom: 32,
+        paddingRight: 32
     },
     title: {
         fontSize: 16,
@@ -74,7 +89,6 @@ export default function ProfileMain({ navigation }) {
     const [userPhone, setuserPhone]=useState();
     const [userNick,setUserNick]=useState();
     const [haveProfile,setHaveProfile]=useState();
-    const [recommend, setRecommend] = useState(true);
     const [copiedText, setCopiedText] = useState('')
     const ref=firestore().collection("UserInfo");
     
@@ -136,18 +150,18 @@ export default function ProfileMain({ navigation }) {
         });
     };
     async function uploadImage(a){
-        const uri = a;
-        const filename = "프로필사진" + userNick
-        const reference = storage().ref("User/" + userNick + "/" + filename);
-        console.log(uri, imageOne, filename, reference)
-        const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
+        const uri=a;
+        const filename="프로필사진"+userNick
+        const reference = storage().ref("User/"+userNick+"/"+filename);
+        console.log(uri,imageOne,filename,reference)
+        const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
         await reference.putFile(uploadUri);
     }
-    async function hi() {
-        console.log("HI", "gs://blockers-8a128.appspot.com/" + userNick + "/프로필사진" + userNick)
+    async function hi(){
+    console.log("HI","gs://blockers-8a128.appspot.com/"+userNick+"/프로필사진"+userNick)
         const url = await storage()
-            .refFromURL("gs://blockers-8a128.appspot.com/" + "User/" + userNick + "/프로필사진" + userNick)
+          .refFromURL("gs://blockers-8a128.appspot.com/"+"User/"+userNick+"/프로필사진"+userNick)
             .getDownloadURL();
         setIsImage(true)
         setImageSource(url)
@@ -176,8 +190,8 @@ export default function ProfileMain({ navigation }) {
                     </View>
                 </View>
                 <ScrollView>
-                    <Text style={[style.title, { marginBottom: 10, marginLeft: 32, marginTop: 24 }]}>Profile</Text>
-                    <View style={style.box}>
+                    <Text style={[style.title, { marginLeft: 32, marginTop: 20, marginBottom: 0 }]}>Profile</Text>
+                    <View style={style.containerStatus}>
                         <View style={{ flexDirection: "row" }}>
                             <TouchableOpacity onPress={showCameraRoll1}>
                             {isImage===true?
@@ -185,22 +199,25 @@ export default function ProfileMain({ navigation }) {
                             :
                             <Image resizeMode="stretch" style={style.images} source={require('./icon/userprofile.png')}></Image>
                             }
-                            
+
                             </TouchableOpacity>
                             <View style={{
                                 marginLeft: 16,
                                 justifyContent: 'center',
                                 alignItems: 'flex-start'
                             }}>
-                                
-                                <Text style={style.profile}>LV5</Text>
+
+                                <Text style={style.profile}>스트레스형 예술가형</Text>
                                 <View style={{ flexDirection: "row", alignItems: 'center' }}>
-                        <Text style={style.profile}>{userNick}</Text>
+                                    <Text style={[style.profile, {color: "white", fontFamily: "NunitoSans-Bold"}]}>{userNick}</Text>
                                     <TouchableOpacity onPress={() => navigation.navigate('닉네임 변경')}>
-                                        <MaterialCommunityIcons name="pencil" size={25} style={{ marginLeft: 8 }} />
+                                        <MaterialCommunityIcons name="pencil" color="white" size={25} style={{ marginLeft: 8 }} />
                                     </TouchableOpacity>
                                 </View>
                             </View>
+                        </View>
+                        <View style={{width: 60, height: 24, backgroundColor: "white", alignItems: "center", justifyContent: "center", borderRadius: 15}}>
+                            <Text style={{fontFamily: "NunitoSans-Bold", fontSize: 12, color: "#303030"}}>Step 01</Text>
                         </View>
                     </View>
                     <View style={{ borderWidth: 0.5, borderColor: '#dddddd', width: "90%", alignSelf: 'center' }} />
@@ -239,32 +256,6 @@ export default function ProfileMain({ navigation }) {
                         </View>
                     </View>
                     <View style={{ borderWidth: 0.5, borderColor: '#dddddd', width: "90%", alignSelf: 'center' }} />
-                    {recommend === true ?
-                        <View>
-                            <View style={style.container}>
-                                <Text style={style.title}>추천인 코드</Text>
-                                <View style={{ flexDirection: "row", justifyContent: 'flex-start', alignItems: 'center' }}>
-                                    <Text style={[style.item, { marginRight: 8 }]}>Asd12lasl1</Text>
-                                    <TouchableOpacity onPress={copyToClipboard}>
-                                        <Image style={style.clipboard} source={require("./icon/clipboard.png")} />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                            <View style={{ borderWidth: 0.5, borderColor: '#dddddd', width: "90%", alignSelf: 'center' }} />
-                            <View style={style.container}>
-                                <Text style={style.title}>추천인 링크</Text>
-                                <View style={{ flexDirection: "row" }}>
-                                    <Text style={[style.item, { marginRight: 8 }]}>Bit/ly.cl1929</Text>
-                                    <TouchableOpacity onPress={copyToClipboard}>
-                                        <Image style={style.clipboard} source={require("./icon/clipboard.png")} />
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                            <View style={{ borderWidth: 0.5, borderColor: '#dddddd', width: "90%", alignSelf: 'center' }} />
-                        </View>
-                        :
-                        <View></View>
-                    }
                 </ScrollView>
             </SafeAreaView>
         </>

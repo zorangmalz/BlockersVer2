@@ -9,6 +9,7 @@ import {
     Image,
     TouchableOpacity
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const style = StyleSheet.create({
     largebox: {
@@ -79,16 +80,16 @@ export default function ReportCreator({ navigation }) {
                         }}>
                             <Text style={{ fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Regular', opacity: 0.4, marginRight: 24, marginBottom: 8 }}>ROOKIE</Text>
                             <Text style={[style.text, { fontSize: 16, marginRight: 4 }]}>크랩 TV</Text>
-                            <Image style={{ width: 16, height: 16 }} resizeMode="contain" source={require('./icon/heart.png')} />
+                            <Ionicons name="heart-outline" color="#202426" size={18} />
                         </View>
                         <View style={{
                             flexDirection: 'row',
                             alignItems: 'flex-start',
-                            justifyContent: 'space-evenly',
+                            paddingLeft: 16
                         }}>
                             <Image source={require('./icon/homeyoutuber.png')} />
                             <View style={{ marginLeft: 16 }}>
-                            <Text style={{ fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Regular', opacity: 0.4, marginBottom: 4 }}>구독자수</Text>
+                                <Text style={{ fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Regular', opacity: 0.4, marginBottom: 4 }}>구독자수</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
                                     <Text style={{ fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Bold' }}>1K</Text>
                                     <Image style={{ marginLeft: 4, marginRight: 4 }} source={require('./icon/reddownarrow.png')} />
@@ -96,16 +97,16 @@ export default function ReportCreator({ navigation }) {
                                 </View>
                                 <Image source={require('./icon/redgraph.png')} />
                             </View>
-                            <View style={{marginRight: 20, marginLeft: 20}}>
+                            <View style={{ marginRight: 20, marginLeft: 36 }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 4 }}>
                                     <Text style={{ fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Regular', marginRight: 2, opacity: 0.4 }}>조회수</Text>
                                     <View style={{ width: 12, height: 12, borderWidth: 1, borderColor: '#202426', backgroundColor: '#ffffff', borderRadius: 6, alignItems: 'center', justifyContent: 'center', opacity: 0.4 }}>
                                         <Text style={{ fontSize: 8, color: '#202426', fontFamily: 'Metropolis-Bold' }}>?</Text>
                                     </View>
                                 </View>
-                                <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 20}}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 20 }}>
                                     <Text style={{ fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Bold' }}>1.1K</Text>
-                                    <Image style={{marginLeft: 4, marginRight: 4}} source={require('./icon/greenuparrow.png')} />
+                                    <Image style={{ marginLeft: 4, marginRight: 4 }} source={require('./icon/greenuparrow.png')} />
                                     <Text style={{ fontSize: 12, color: '#78e185', fontFamily: 'Metropolis-Bold' }}>1.12%</Text>
                                 </View>
                                 <Image source={require('./icon/greengraph.png')} />
@@ -133,9 +134,9 @@ export default function ReportCreator({ navigation }) {
                             marginLeft: 16,
                             marginBottom: 16
                         }}>
-                            <Image style={{marginRight: 16}} source={require('./icon/youtube.png')} />
-                            <Image style={{marginRight: 16}} source={require('./icon/twitter.png')} />
-                            <Image style={{marginRight: 16}} source={require('./icon/instagram.png')} />
+                            <Ionicons style={{marginRight: 24}} name="logo-youtube" size={36} />
+                            <Ionicons style={{marginRight: 24}} name="logo-twitch" size={36} />
+                            <Ionicons style={{marginRight: 24}} name="logo-instagram" size={36} />
                         </View>
                         <Text style={{ fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Regular', opacity: 0.4, marginLeft: 16, marginBottom: 16 }}>최근 동영상</Text>
                         <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', marginBottom: 16}}>

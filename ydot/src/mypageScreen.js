@@ -11,6 +11,7 @@ import {
   FlatList
 } from 'react-native';
 import Clipboard from "@react-native-community/clipboard";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import * as RNFS from 'react-native-fs';
 
@@ -280,7 +281,7 @@ useEffect(()=>{
             </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('SignScreen')} style={{ marginLeft: 8 }}>
-            <Image source={require('./icon/setting.png')} />
+            <Ionicons name="settings-sharp" color="#161513" size={28} />
           </TouchableOpacity>
         </View>
         <ScrollView style={{ flex: 1 }}>
