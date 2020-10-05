@@ -1,4 +1,3 @@
-
 import React, { useLayoutEffect, useEffect } from 'react';
 import {
     StyleSheet,
@@ -10,6 +9,8 @@ import {
     Image,
     TouchableOpacity,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const community = StyleSheet.create({
     image: {
@@ -116,9 +117,9 @@ export default function CommunityHome({ navigation }) {
                         <Text style={community.content}>{content}</Text>
                         <View style={community.lowerbox}>
                             <Text style={[community.timethumbreply, {color: '#707070'}]}>방금전</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: "33%"}]} source={require("./icon/emptythumb.png")}></Image>
+                            <MaterialCommunityIcons style={{marginLeft: "33%"}} name="thumb-up-outline" color="#5cc27b" size={15} />
                             <Text style={[community.timethumbreply, {color: '#7cce95', marginLeft: 4}]} >{thumbnum}</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: 16}]} source={require("./icon/reply.png")}></Image>
+                            <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
                             <Text style={[community.timethumbreply, {color: '#ffb83d', marginLeft: 4}]}>{replynum}</Text>
                         </View>
                     </TouchableOpacity>
@@ -130,9 +131,9 @@ export default function CommunityHome({ navigation }) {
                         <Text style={community.content}>{content}</Text>
                         <View style={community.lowerbox}>
                             <Text style={[community.timethumbreply, {color: '#707070'}]}>방금전</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: "33%"}]} source={require("./icon/emptythumb.png")}></Image>
+                            <MaterialCommunityIcons style={{marginLeft: "33%"}} name="thumb-up-outline" color="#5cc27b" size={15} />
                             <Text style={[community.timethumbreply, {color: '#7cce95', marginLeft: 4}]} >{thumbnum}</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: 16}]} source={require("./icon/reply.png")}></Image>
+                            <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
                             <Text style={[community.timethumbreply, {color: '#ffb83d', marginLeft: 4}]}>{replynum}</Text>
                         </View>
                     </TouchableOpacity>
@@ -144,9 +145,9 @@ export default function CommunityHome({ navigation }) {
                         <Text style={community.content}>{content}</Text>
                         <View style={community.lowerbox}>
                             <Text style={[community.timethumbreply, {color: '#707070'}]}>방금전</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: "33%"}]} source={require("./icon/emptythumb.png")}></Image>
+                            <MaterialCommunityIcons style={{marginLeft: "33%"}} name="thumb-up-outline" color="#5cc27b" size={15} />
                             <Text style={[community.timethumbreply, {color: '#7cce95', marginLeft: 4}]} >{thumbnum}</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: 16}]} source={require("./icon/reply.png")}></Image>
+                            <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
                             <Text style={[community.timethumbreply, {color: '#ffb83d', marginLeft: 4}]}>{replynum}</Text>
                         </View>
                     </TouchableOpacity>
@@ -158,9 +159,9 @@ export default function CommunityHome({ navigation }) {
                         <Text style={community.content}>{content}</Text>
                         <View style={community.lowerbox}>
                             <Text style={[community.timethumbreply, {color: '#707070'}]}>방금전</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: "33%"}]} source={require("./icon/emptythumb.png")}></Image>
+                            <MaterialCommunityIcons style={{marginLeft: "33%"}} name="thumb-up-outline" color="#5cc27b" size={15} />
                             <Text style={[community.timethumbreply, {color: '#7cce95', marginLeft: 4}]} >{thumbnum}</Text>
-                            <Image resizeMode="contain" style={[community.thumbandreply, {marginLeft: 16}]} source={require("./icon/reply.png")}></Image>
+                            <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
                             <Text style={[community.timethumbreply, {color: '#ffb83d', marginLeft: 4}]}>{replynum}</Text>
                         </View>
                     </TouchableOpacity>

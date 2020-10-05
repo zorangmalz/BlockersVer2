@@ -662,7 +662,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                             data={items}
                             renderItem={({ item }) => (
                                 <View style={{ borderBottomWidth: 1, borderColor: '#E2E2E2', paddingTop: 5, paddingBottom: 5 }}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: "100%", }}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                                         <View style={{
                                             flexDirection: 'row',
                                             alignItems: 'center',
