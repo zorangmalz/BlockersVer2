@@ -10,11 +10,11 @@ import {
     StyleSheet,
     FlatList,
     Alert,
-    Modal
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Modal from 'react-native-modal';
 
 const style = StyleSheet.create({
     container: {
@@ -106,18 +106,20 @@ export default function MyPageScreen({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-                <Modal
+                {/* <Modal
                     animationType="none"
                     transparent={true}
                     visible={userlogin}
                     onRequestClose={() => setUserlogin(false)}
                 >
                     <View style={{ flex: 1, backgroundColor: '#303030', opacity: 0.4 }} />
-                </Modal>
+                </Modal> */}
                 <Modal
                     animationType="none"
                     transparent={true}
-                    visible={userlogin}
+                    isVisible={userlogin}
+                    backdropOpacity={0.4}
+                    onBackdropPress={() => setUserlogin(false)}
                     onRequestClose={() => setUserlogin(false)}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
