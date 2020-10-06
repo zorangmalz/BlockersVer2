@@ -43,7 +43,6 @@ import { WalletPassword } from './src/walletPassword';
 import CommunityHome from './src/Community';
 import CommunityClick from './src/CommunityClick';
 import CommunityOtherPost from './src/CommunityOtherPost';
-import MarketHome from './src/MarketHome';
 import MarketContentsList from './src/MarketContentsList';
 import ContentsInfo from './src/ContentsInfo'
 import ContentsBuy from './src/ContentsBuy';
@@ -120,10 +119,10 @@ function HomeTab({ navigation }) {
             iconName = focused ? 'ios-home-sharp' : 'ios-home-outline';
             return <Ionicons name={iconName} size={25} color={color} />;
           } else if (route.name === 'Information') {
-            iconName = focused ? 'text-box' : 'text-box-outline';
-            return <MaterialCommunityIcons name={iconName} size={25} color={color} /> 
-          } else if (route.name === 'CommunityScreen') {
             iconName = focused ? 'ios-people-sharp' : 'ios-people-outline';
+            return <Ionicons name={iconName} size={25} color={color} /> 
+          } else if (route.name === 'CommunityScreen') {
+            iconName = focused ? 'chatbox' : 'chatbox-outline';
             return <Ionicons name={iconName} size={25} color={color} />
           } else if (route.name === 'MyPageScreen') {
             iconName = focused ? 'ios-person' : 'ios-person-outline';
@@ -477,6 +476,14 @@ const App = ({ navigation }) => {
         component={SettingCompanyInfo}
         options={{
           gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen 
+        name="InformationMain"
+        component={InformationMain}
+        options={{
+          gestureDirection: 'vertical-inverted',
+          headerShown: false
         }}
       />
       <Stack.Screen 

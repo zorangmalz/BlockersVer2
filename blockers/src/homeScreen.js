@@ -16,10 +16,9 @@ import Swiper from 'react-native-swiper';
 import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
-import { useScreens } from 'react-native-screens';
-import { FlatList } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const Caver = require('caver-js')
 const WIDTH = Dimensions.get('window').width;
@@ -433,9 +432,9 @@ export default function HomeScreen({ navigation }) {
                         marginTop: 32,
                     }}>
                         <TouchableOpacity onPress={() => navigation.navigate('Calendar')}>
-                            <Image style={{ width: 48, height: 45.8 }} resizeMode="stretch" source={require('./icon/Iconcalendar.png')} />
+                            <MaterialCommunityIcons size={60} color="#5cc27b" name="calendar-blank" />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("InformationMain")}>
                             <FontAwesome5 name="robot" size={50} color="#5cc27b" />
                         </TouchableOpacity>
                         <TouchableOpacity>

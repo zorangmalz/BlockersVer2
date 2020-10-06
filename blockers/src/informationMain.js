@@ -9,6 +9,7 @@ import {
     StyleSheet,
     Image,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const information = StyleSheet.create({
     largeText: {
@@ -17,7 +18,7 @@ const information = StyleSheet.create({
         alignSelf: 'center',
         color: '#303030',
         marginTop: 16,
-        marginBottom: 16
+        marginBottom: 32
     },
     mediumText: {
         fontSize: 18,
@@ -110,7 +111,7 @@ export default function InformationMain({ navigation }) {
             if(select[0]==="금연 리포트") setOne(false);
             if(select[0]==="복약 등록") setTwo(false);
             if(select[0]==="금연 자료실") setThree(false);
-            if(select[0]==="금연 지원 사업 정보") setFour(false);
+            if (select[0] === "금연 지원 사업 정보") setFour(false);
             setSelect(select.slice(1, select.length));
             console.log(select);
             setClear(false);
@@ -120,28 +121,26 @@ export default function InformationMain({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-                <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
                     <View
                         style={{
                             height: 44,
                             flexDirection: 'row',
-                            paddingTop: 4,
                             justifyContent: "flex-start",
                             alignItems: 'center',
+                            marginLeft: 24
                         }}
                     >
                         <Text style={{ fontSize: 24 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#5CC27B' }}>Information</Text>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>금연 도우미</Text>
                         </Text>
-                    </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                        <TouchableOpacity style={{ marginLeft: 8 }}>
-                            <Image source={require('./icon/alram.png')} />
-                        </TouchableOpacity>
                     </View>
                 </View>
                 <ScrollView>
-                <Text style={information.largeText}>금연에 필요한 모든 것</Text>
+                    <Text style={information.largeText}>금연에 필요한 모든 것</Text>
                     {one === false ?
                         <TouchableOpacity onPressIn={pushone} onPress={()=>setOne(!one)}>
                             <View style={information.buttonBox}>

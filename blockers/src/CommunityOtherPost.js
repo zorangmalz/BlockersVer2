@@ -629,14 +629,13 @@ export default function CommunityOtherPost({ route, navigation }) {
                     <View style={{
                         flexDirection: 'row',
                         justifyContent: 'space-between',
-                        alignItems: 'center',
                         padding: 16,
                         paddingBottom: 32,
                         borderBottomWidth: 1,
                         borderBottomColor: '#E2E2E2'
                     }}>
                         <Text style={community.content}>{content}</Text>
-                        <View style={community.lowerbox}>
+                        <View style={[community.lowerbox, {alignSelf: "flex-end"}]}>
                             {meLike === true ?
                                 <TouchableOpacity onPress={pressLike}>
                                     <MaterialCommunityIcons name="thumb-up" color="#5cc27b" size={15} />
