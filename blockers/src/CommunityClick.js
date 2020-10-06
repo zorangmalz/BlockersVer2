@@ -116,7 +116,7 @@ export default function CommunityClick({ navigation }) {
         if (filtered) {
             const a = String(search)
             console.log(a.split(""))
-            ref.onSnapshot(querySnapshot => {
+            ref.orderBy("fullTime").onSnapshot(querySnapshot => {
                 querySnapshot.forEach(function (doc) {
 
                     const check = doc.data().fullText
@@ -130,7 +130,8 @@ export default function CommunityClick({ navigation }) {
                                     like: doc.data().whoLike.length,
                                     docname: doc.data().docName,
                                     replynum: doc.data().commentNum,
-                                    isPicture:doc.data().isPicture
+                                    isPicture:doc.data().isPicture,
+                                    fullTime:doc.data().fullTime
                                 });
                             }
                             else {
@@ -141,7 +142,8 @@ export default function CommunityClick({ navigation }) {
                                     like: doc.data().whoLike.length,
                                     docname: doc.data().docName,
                                     replynum: doc.data().commentNum,
-                                    isPicture:doc.data().isPicture
+                                    isPicture:doc.data().isPicture,
+                                    fullTime:doc.data().fullTime
                                 });
                             }
                         }
@@ -155,22 +157,9 @@ export default function CommunityClick({ navigation }) {
                 console.log("Error getting documents: ", error);
             });
         } else {
-            ref.onSnapshot(querySnapshot => {
+            ref.orderBy("fullTime").onSnapshot(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     if (doc.data().fullTime) {
-                        if (a[0] === doc.data().fullTime[0] && a[1] === doc.data().fullTime[1] && a[2] === doc.data().fullTime[2]) {
-
-                            list.push({
-                                title: doc.data().title,
-                                time: doc.data().time,
-                                context: doc.data().context,
-                                like: doc.data().whoLike.length,
-                                docname: doc.data().docName,
-                                replynum: doc.data().commentNum,
-                                isPicture:doc.data().isPicture
-                            });
-                        }
-                        else {
                             list.push({
                                 title: doc.data().title,
                                 time: doc.data().day,
@@ -178,13 +167,15 @@ export default function CommunityClick({ navigation }) {
                                 like: doc.data().whoLike.length,
                                 docname: doc.data().docName,
                                 replynum: doc.data().commentNum,
-                                isPicture:doc.data().isPicture
+                                isPicture:doc.data().isPicture,
+                                fullTime:doc.data().fullTime
                             });
                         }
-                    }
+                    
 
                 });
                 setItems(list);
+                console.log("here@@@@@@@@@",list)
                 if (loading) {
                     setLoading(false);
                 }
@@ -247,7 +238,7 @@ export default function CommunityClick({ navigation }) {
                         }
                         data={items}
                         inverted={true}
-                        keyExtractor={items.docname}
+                        
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname, Uid: user.uid })} >
                                 <View style={community.board}>
