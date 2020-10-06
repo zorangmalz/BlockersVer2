@@ -84,7 +84,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [user, setUser] = useState();
     const [createdate, setCreateDate] = useState();
     const [content, setContent] = useState();
-
+    const [docName,setDocName]=useState();
     const [like, setLike] = useState();
     const [items, setItems] = useState([]);
     const [itemss, setItemss] = useState([]);
@@ -113,6 +113,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [relikeState, setReLikeState] = useState()
     const [reMelike, setReMeLike] = useState()
     const [reLike, setReLike] = useState()
+    const [commentState,setCommentState]=useState()
 
     // async function reProfilePicture(a) {
     //     console.log(a)
@@ -125,7 +126,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     // }
     //댓글 작성하는 함수. 댓글 작성후에 reply collection에 추가를 하고 커멘트 숫자도 업로드한다
     async function writepost(b) {
-
+        
         var a = moment().toArray()
         console.log(b)
         if (a[1] === 12) {
@@ -146,7 +147,7 @@ export default function CommunityOtherPost({ route, navigation }) {
             rereply: false,
             whoLike: [],
             whoAlert: []
-
+            
         })
         await ref.doc(docID).update({
             commentNum: replynum + 1
@@ -186,6 +187,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                 setRealWriterUid(doc.data().writerUid)
                 setAlertList(doc.data().whoAlert)
                 setVmtk(doc.data().profilePicture)
+                setDocName(doc.data().docName)
 
             })
         }
@@ -196,16 +198,7 @@ export default function CommunityOtherPost({ route, navigation }) {
         if (likeList.includes(Uid)) {
 
             setMeLike(true)
-
-            // setImageSource(url)
         }
-
-
-
-        // profilePicture()
-
-
-
     }, [likeState, nick, title])
     useEffect(() => {
         hi()
@@ -217,15 +210,7 @@ export default function CommunityOtherPost({ route, navigation }) {
             console.log("no its not")
         }
     }, [time])
-    async function profilePicture() {
 
-        const url1 = await storage()
-            .refFromURL("gs://blockers-8a128.appspot.com/User/" + author + "/" + "프로필사진" + author)
-            .getDownloadURL();
-
-        setVmtk(url1)
-
-    }
     //사진 불러오는 함수
     async function hi() {
         console.log("comeins")
@@ -246,12 +231,14 @@ export default function CommunityOtherPost({ route, navigation }) {
         setParam(ID)
 
         async function reply() {
-            let list = [];
-
+            
+            
             firestore().collection('Community1').doc(ID).collection("Reply").onSnapshot(querySnapshot => {
+                let list = [];
                 console.log("comd")
                 setReplyNum(querySnapshot.size);
                 querySnapshot.forEach(docs => {
+                    console.log("check how many times")
                     if (docs.data().whoLike.includes(Uid)) {
                         setReMeLike(true)
                     } else {
@@ -274,19 +261,20 @@ export default function CommunityOtherPost({ route, navigation }) {
                         reWhoLikeList: docs.data().whoLike,
                         reWhoAlert: docs.data().whoAlert,
                         reMeLike: reMelike
-
+                        
                     });
 
                 });
 
                 setItems(list);
+                console.log(list)
             })
 
             // console.log("this is the final list",items)
         }
 
         reply()
-    }, [state, vmtk, loading])
+    }, [state, vmtk, loading,commentState])
 
     //게시글 좋아요 및 좋아요 취소
     function likeMinus(a) {
@@ -438,6 +426,7 @@ export default function CommunityOtherPost({ route, navigation }) {
         }).then(() => {
             console.log("minus success")
             setReLikeState(true)
+            setState(true)
         });
     }
     function relikePlus(a, b) {
@@ -446,6 +435,7 @@ export default function CommunityOtherPost({ route, navigation }) {
         }).then(() => {
             console.log("plus success")
             setReLikeState(true)
+            setCommentState(true)
         });
     }
 
@@ -463,21 +453,12 @@ export default function CommunityOtherPost({ route, navigation }) {
             relikePlus(relikeList, name);
         }
     }
-    function deletePost() {
-        return ref.doc(param).delete().then(() => {
-            const filename = title + nick + time
-            var desertRef = storage().ref("community1/" + filename);
-
-            // Delete the file
-            desertRef.delete().then(function () {
-                navigation.goBack()
-            }).catch(function (error) {
-                // Uh-oh, an error occurred!
-            });
-
-        })
+    function redeletePost(a) {
+        ref.doc(param).collection("Reply").doc(a).delete()
+        setCommentState(true)
+        
     }
-    function alertPost() {
+    function realertPost(a) {
         console.log(alertList, "fucking here")
         const userID = Uid
         if (alertList.includes(userID)) {
@@ -525,13 +506,13 @@ export default function CommunityOtherPost({ route, navigation }) {
                 ]
             )
             setAlertList(alertList.push(userID))
-            alertUpdate(alertList)
+            realertUpdate(a,alertList)
         }
 
     }
-    function alertUpdate(a) {
-        return ref.doc(param).update({
-            whoAlert: a,
+    function realertUpdate(a,b) {
+        return ref.doc(param).collection("Reply").doc(a).update({
+            whoAlert: b,
         }).then(() => {
             console.log("alert success")
 
@@ -660,6 +641,8 @@ export default function CommunityOtherPost({ route, navigation }) {
                     }}>
                         <FlatList
                             data={items}
+                            refreshing={true}
+                            extraData={items}
                             renderItem={({ item }) => (
                                 <View style={{ borderBottomWidth: 1, borderColor: '#E2E2E2', paddingTop: 5, paddingBottom: 5 }}>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
@@ -715,7 +698,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                                         text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
                                                                     },
                                                                     {
-                                                                        text: '삭제하기', onPress: () => Alert.alert(
+                                                                        text: '삭제하기', onPress: () => {redeletePost(item.reName),Alert.alert(
                                                                             '삭제완료',
                                                                             '',
                                                                             [
@@ -724,6 +707,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                                                 }
                                                                             ]
                                                                         )
+                                                                        }
                                                                     }
                                                                 ]
                                                             )
@@ -734,26 +718,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                     :
                                                     <View style={{ borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
                                                         <TouchableOpacity onPress={() =>
-                                                            Alert.alert(
-                                                                '신고하시겠습니까?',
-                                                                '신고가 누적되면 자동 삭제 됩니다.',
-                                                                [
-                                                                    {
-                                                                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
-                                                                    },
-                                                                    {
-                                                                        text: '신고하기', onPress: () => Alert.alert(
-                                                                            '신고완료',
-                                                                            '검토후 조치하겠습니다.',
-                                                                            [
-                                                                                {
-                                                                                    text: 'OK', onPress: () => console.log('OK Pressed')
-                                                                                }
-                                                                            ]
-                                                                        )
-                                                                    }
-                                                                ]
-                                                            )
+                                                            realertPost(item.reName)
                                                         }>
                                                             <Ionicons name="warning-outline" color="#8A8A8A" size={15} />
                                                         </TouchableOpacity>
