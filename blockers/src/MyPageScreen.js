@@ -125,8 +125,6 @@ export default function MyPageScreen({ navigation }) {
                             backgroundColor: '#ffffff',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            borderWidth: 1,
-                            borderColor: '#cccccc',
                         }}>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',

@@ -450,7 +450,7 @@ export default function HomeScreen({ navigation }) {
                         paddingLeft: 14,
                         paddingRight: 14,
                     }}>
-                        <View style={{ maxWidth: 300 }}>
+                        <View style={{ maxWidth: "75%" }}>
                             <View style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
@@ -482,7 +482,7 @@ export default function HomeScreen({ navigation }) {
                         paddingLeft: 14,
                         paddingRight: 14,
                     }}>
-                        <View style={{maxWidth: 300}}>
+                        <View style={{maxWidth: "75%"}}>
                             <View style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',
