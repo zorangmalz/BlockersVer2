@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,24 @@ function alramOne({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'flex-start', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>알림설정</Text>
+                        </Text>
+                    </View>
+                </View>
                 <ScrollView style={{ marginBottom: 30, marginTop: 32 }}>
                     <View>
                         <View style={{
@@ -164,6 +183,24 @@ function alramTwo({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'flex-start', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>알림설정</Text>
+                        </Text>
+                    </View>
+                </View>
                 <ScrollView style={{ marginBottom: 30, marginTop: 32 }}>
                     <View>
                         <View style={{
@@ -302,25 +339,7 @@ function alramTwo({ navigation }) {
 
 export default function SettingAlram({ navigation }) {
     return (
-        <>
-            <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'flex-start', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="chevron-back" size={35} />
-                </TouchableOpacity>
-                <View
-                    style={{
-                        height: 44,
-                        flexDirection: 'row',
-                        justifyContent: "flex-start",
-                        alignItems: 'center',
-                        marginLeft: 24
-                    }}
-                >
-                    <Text style={{ fontSize: 24 }}>
-                        <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>알림설정</Text>
-                    </Text>
-                </View>
-            </View>
+        <SafeAreaProvider>
             <Stack.Navigator>
                 <Stack.Screen
                     name="AlramOne"
@@ -337,6 +356,6 @@ export default function SettingAlram({ navigation }) {
                     }}
                 />
             </Stack.Navigator>
-        </>
+        </SafeAreaProvider>
     )
 }

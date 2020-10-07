@@ -8,71 +8,63 @@
 
 import React from 'react';
 import "./global"
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import HomeScreen from './src/homeScreen';
-import MissionScreen from './src/missionScreen';
-import ChallengeMain from './src/challengeMain';
-import ChallengeResisterOne from './src/challengeResisterOne';
-import ChallengeResisterTwo from './src/challengeResisterTwo';
+import HomeScreen from './src/HomeScreen';
+import MissionScreen from './src/MissionScreen';
+import ChallengeMain from './src/ChallengeMain';
+import ChallengeResisterOne from './src/ChallengeResisterOne';
+import ChallengeResisterTwo from './src/ChallengeResisterTwo';
 // import ChallengeConfirm from './src/challengeConfirm';
-import ChallengeVerification from './src/challengeVerification';
-import SettingMain from './src/settingMain';
-import SettingQuestion from './src/settingQuestion';
-import SettingAlram from './src/settingAlram';
-import SettingReset from './src/settingReset';
-import SettingVersion from './src/settingVersion';
-import SettingResetComplete from './src/settingResetComplete';
-import SettingExit from './src/settingExit';
-import SettingExitComplete from './src/settingExitComplete';
-import SettingOften from './src/settingOften';
-import WalletTransaction from './src/walletTransaction';
-import WalletCharge from './src/walletCharge';
-import { WalletWithdrawal, WalletWithdrawlComplete } from './src/walletWithdrawal';
-import { WalletPassword } from './src/walletPassword';
+import ChallengeVerification from './src/ChallengeVerification';
+import SettingMain from './src/SettingMain';
+import SettingQuestion from './src/SettingQuestion';
+import SettingAlram from './src/SettingAlram';
+import SettingReset from './src/SettingReset';
+import SettingVersion from './src/SettingVersion';
+import SettingResetComplete from './src/SettingResetComplete';
+import SettingExit from './src/SettingExit';
+import SettingExitComplete from './src/SettingExitComplete';
+import SettingOften from './src/SettingOften';
+import WalletTransaction from './src/WalletTransaction';
+import WalletCharge from './src/WalletCharge';
+import { WalletWithdrawal, WalletWithdrawlComplete } from './src/WalletWithdrawal';
+import { WalletPassword } from './src/WalletPassword';
 import CommunityHome from './src/Community';
 import CommunityClick from './src/CommunityClick';
 import CommunityOtherPost from './src/CommunityOtherPost';
-import MarketHome from './src/MarketHome';
 import MarketContentsList from './src/MarketContentsList';
 import ContentsInfo from './src/ContentsInfo'
 import ContentsBuy from './src/ContentsBuy';
 import Calendars from './src/Calendar';
 import MyPageScreen from './src/MyPageScreen';
 import Notification from './src/Notification';
-import ProfileMain from './src/profileMain';
-import ProfilePasswordChange from './src/profilePasswordChange';
-import MyPageRule from './src/mypageRule';
-import AddressFind from './src/addressFind';
+import ProfileMain from './src/ProfileMain';
+import ProfilePasswordChange from './src/ProfilePasswordChange';
+import MyPageRule from './src/MypageRule';
+import AddressFind from './src/AddressFind';
 import CommunityWrite from './src/CommunityWrite';
-import MypageMyWriting from './src/mypageMyWriting';
-import LoginSignup from './src/loginSignup';
-import LoginMain from './src/loginMain';
-import LoginFind from './src/loginFind';
-import LoginVerification from './src/loginVerification';
-import LoginFindId from './src/loginFindId';
+import MypageMyWriting from './src/MypageMyWriting';
+import LoginSignup from './src/LoginSignup';
+import LoginMain from './src/LoginMain';
+import LoginFind from './src/LoginFind';
+import LoginVerification from './src/LoginVerification';
+import LoginFindId from './src/LoginFindId';
 import ContentsComplete from './src/ContentsComplete';
-import ProfileNickname from './src/profileNickname';
-import LoginVerificationProfile from './src/loginVerificationProfile';
-import LoginPassword from "./src/loginPassword";
-import SolutionMain from './src/solutionMain';
-import SplashScreen from './src/splashscreen';
+import ProfileNickname from './src/ProfileNickname';
+import LoginVerificationProfile from './src/LoginVerificationProfile';
+import LoginPassword from "./src/LoginPassword";
+import SolutionMain from './src/SolutionMain';
+import SplashScreen from './src/Splashscreen';
 import SettingCompanyInfo from  "./src/companyInfo";
-import InformationMain from './src/informationMain';
-import InformationNonReport from './src/informationNonReport';
-import ModeSelect from './src/modeSelect';
-import ModeSelectSmoker from './src/modeSelectSmoker';
-import ModeSelectNonSmoker from './src/modeSelectNonSmoker';
+import InformationMain from './src/InformationMain';
+import InformationNonReport from './src/InformationNonReport';
+import ModeSelect from './src/ModeSelect';
+import ModeSelectSmoker from './src/ModeSelectSmoker';
+import ModeSelectNonSmoker from './src/ModeSelectNonSmoker';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -120,10 +112,10 @@ function HomeTab({ navigation }) {
             iconName = focused ? 'ios-home-sharp' : 'ios-home-outline';
             return <Ionicons name={iconName} size={25} color={color} />;
           } else if (route.name === 'Information') {
-            iconName = focused ? 'text-box' : 'text-box-outline';
-            return <MaterialCommunityIcons name={iconName} size={25} color={color} /> 
-          } else if (route.name === 'CommunityScreen') {
             iconName = focused ? 'ios-people-sharp' : 'ios-people-outline';
+            return <Ionicons name={iconName} size={25} color={color} /> 
+          } else if (route.name === 'CommunityScreen') {
+            iconName = focused ? 'chatbox' : 'chatbox-outline';
             return <Ionicons name={iconName} size={25} color={color} />
           } else if (route.name === 'MyPageScreen') {
             iconName = focused ? 'ios-person' : 'ios-person-outline';
@@ -477,6 +469,14 @@ const App = ({ navigation }) => {
         component={SettingCompanyInfo}
         options={{
           gestureDirection: 'vertical-inverted'
+        }}
+      />
+      <Stack.Screen 
+        name="InformationMain"
+        component={InformationMain}
+        options={{
+          gestureDirection: 'vertical-inverted',
+          headerShown: false
         }}
       />
       <Stack.Screen 

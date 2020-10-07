@@ -6,10 +6,8 @@ import {
     View,
     TouchableOpacity,
     Text,
-    Image,
     StyleSheet,
     FlatList,
-    Alert,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -26,9 +24,7 @@ const style = StyleSheet.create({
         paddingLeft: 10,
         fontSize: 16,
         marginTop: 32,
-        paddingBottom: 8,
-        borderBottomWidth: 1,
-        borderColor: "#DDDDDD",
+        marginBottom: 8,
         fontFamily: 'NunitoSans-Regular'
     },
     containerStatus: {
@@ -100,7 +96,6 @@ export default function MyPageScreen({ navigation }) {
     }, []);
     if (initializing) return null;
 
-
     const num = 1;
     return (
         <>
@@ -130,8 +125,6 @@ export default function MyPageScreen({ navigation }) {
                             backgroundColor: '#ffffff',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            borderWidth: 1,
-                            borderColor: '#cccccc'
                         }}>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
@@ -226,14 +219,14 @@ export default function MyPageScreen({ navigation }) {
                                         <Text style={{ textDecorationLine: 'underline', fontSize: 9, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>Transaction</Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{ flexDirection: 'row', marginTop: 34, alignItems: 'center', justifyContent: 'space-between' }}>
+                                <View style={{flexDirection: 'row', marginTop: 34, alignItems: 'center', justifyContent: 'space-between'}}>
                                     <Text style={{ fontSize: 24, fontFamily: 'NunitoSans-Bold', color: "white" }}>100,000 Block</Text>
-                                    <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                        <TouchableOpacity onPress={() => navigation.navigate('WalletWithDrawal')} style={{ width: 54, height: 32, alignItems: "center", justifyContent: "center", borderRadius: 15, borderWidth: 1, borderColor: "white" }}>
-                                            <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Bold', color: "white" }}>출금</Text>
+                                    <View style={{flexDirection: "row", alignItems: "center"}}>
+                                        <TouchableOpacity onPress={() => navigation.navigate('WalletWithDrawal')} style={{width: 54, height: 32, alignItems: "center", justifyContent: "center", borderRadius: 15, borderWidth: 1, borderColor: "white"}}>
+                                            <Text style={{fontSize: 12, fontFamily: 'NunitoSans-Bold', color: "white"}}>출금</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => navigation.navigate('입금')} style={{ width: 54, height: 32, alignItems: "center", justifyContent: "center", borderRadius: 15, borderWidth: 1, borderColor: "white", backgroundColor: "white", marginLeft: 16 }}>
-                                            <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Bold', color: "#303030" }}>입금</Text>
+                                        <TouchableOpacity onPress={() => navigation.navigate('입금')} style={{width: 54, height: 32, alignItems: "center", justifyContent: "center", borderRadius: 15, borderWidth: 1, borderColor: "white", backgroundColor: "white", marginLeft: 16}}>
+                                            <Text style={{fontSize: 12, fontFamily: 'NunitoSans-Bold', color: "#303030"}}>입금</Text>
                                         </TouchableOpacity>
                                     </View>
                                 </View>
@@ -254,16 +247,20 @@ export default function MyPageScreen({ navigation }) {
                                 { key: '내가 쓴 글', name: '내가 쓴글' },
                                 { key: '이용약관', name: '이용약관' },
                             ]}
-                            renderItem={({ item }) => (<TouchableOpacity
-                                onPress={() => {
-                                    userlogined === true ?
-                                        navigation.navigate(item.name)
-                                        :
-                                        loginview()
-                                }}>
-                                <Text style={style.item}>{item.key}</Text>
-                            </TouchableOpacity>)}
-                        />
+                            renderItem={({ item }) => (
+                                <>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                            userlogined === true ?
+                                                navigation.navigate(item.name)
+                                                :
+                                                loginview()
+                                        }}>
+                                        <Text style={style.item}>{item.key}</Text>
+                                    </TouchableOpacity>
+                                    <View style={{backgroundColor: "#DDDDDD", height: 1, width: "95%", alignSelf: "center"}} />
+                                </>
+                            )} />
                     </View>
                     <View style={{
                         marginTop: "25%",

@@ -10,10 +10,10 @@ import {
     Image,
     Alert,
     FlatList,
-    Modal
 } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Modal from 'react-native-modal';
 
 const challenge = StyleSheet.create({
     box: {
@@ -26,10 +26,6 @@ const challenge = StyleSheet.create({
         paddingLeft: 16,
         borderRadius: 10,
 
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.23,
-        shadowRadius: 2.62,
         borderBottomColor: '#979797',
         borderBottomWidth: 0.2,
 
@@ -150,15 +146,8 @@ export default function ChallengeMain({ navigation }) {
                 <Modal
                     animationType="none"
                     transparent={true}
-                    visible={userlogin}
-                    onRequestClose={() => setUserlogin(false)}
-                >
-                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
-                </Modal>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={userlogin}
+                    isVisible={userlogin}
+                    backdropOpacity={0.4}
                     onRequestClose={() => setUserlogin(false)}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -169,8 +158,6 @@ export default function ChallengeMain({ navigation }) {
                             backgroundColor: '#ffffff',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            borderWidth: 1,
-                            borderColor: '#cccccc'
                         }}>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
@@ -231,15 +218,8 @@ export default function ChallengeMain({ navigation }) {
                 <Modal
                     animationType="none"
                     transparent={true}
-                    visible={previousChallenge}
-                    onRequestClose={() => setPreviousChallenge(false)}
-                >
-                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
-                </Modal>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={previousChallenge}
+                    isVisible={previousChallenge}
+                    backdropOpacity={0.4}
                     onRequestClose={() => setPreviousChallenge(false)}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -250,8 +230,6 @@ export default function ChallengeMain({ navigation }) {
                             backgroundColor: '#ffffff',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            borderWidth: 1,
-                            borderColor: '#cccccc'
                         }}>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
@@ -310,7 +288,7 @@ export default function ChallengeMain({ navigation }) {
                     </View>
                 </Modal>
                 {ChallengeToken === false ?
-                    <ScrollView style={{ paddingTop: 27 }}>
+                    <ScrollView style={{ paddingTop: 16 }}>
                         <View style={challenge.box}>
                             <View>
                                 <Text style={challenge.largeText}>Step 01</Text>

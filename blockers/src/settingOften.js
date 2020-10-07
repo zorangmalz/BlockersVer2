@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const setting = StyleSheet.create({
     title : {
@@ -51,7 +52,7 @@ function commonTab() {
                             }
                         </View>
                     </TouchableWithoutFeedback>
-                    <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center', marginTop: 16, marginBottom: 32}} />
+                    <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center', marginTop: 16, marginBottom: 32 }} />
                 </ScrollView>
             </SafeAreaView>
         </>
@@ -62,7 +63,7 @@ function challengeTab() {
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                 <ScrollView>
 
                 </ScrollView>
@@ -75,7 +76,7 @@ function moneyTab() {
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{flex: 1, backgroundColor: '#FFFFFF'}}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                 <ScrollView>
 
                 </ScrollView>
@@ -84,10 +85,10 @@ function moneyTab() {
     )
 }
 
-export default function SettingOften() {
+export default function SettingOften({ navigation }) {
     return (
-        <>
-            <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'flex-start', height: 82, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff', paddingBottom: 32}}>
+        <SafeAreaProvider>
+            <SafeAreaView accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'flex-start', height: 102, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff', paddingBottom: 52 }}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="chevron-back" size={35} />
                 </TouchableOpacity>
@@ -104,7 +105,7 @@ export default function SettingOften() {
                         <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자주묻는 질문</Text>
                     </Text>
                 </View>
-            </View>
+            </SafeAreaView>
             <Tab.Navigator
                 initialRouteName="공통"
                 style={{ borderBottomColor: '#5CC27B' }}
@@ -132,6 +133,6 @@ export default function SettingOften() {
                     options={{ tabBarLabel: '입출금' }}
                 />
             </Tab.Navigator>
-        </>
+        </SafeAreaProvider>
     )
 }
