@@ -61,15 +61,6 @@ export default function LoginVerificationProfile({ navigation }) {
     const [haveProfile,setHaveProfile]=useState(false);
     const [revmtk,setRevmtk]=useState()
     const ref=firestore().collection("UserInfo");
- async function ProfilePicture(a) {
-        console.log(a)
-        const url2 = await storage()
-            .refFromURL("gs://blockers-8a128.appspot.com/User/" + a + "/" + "프로필사진" + a)
-            .getDownloadURL();
-        
-        setRevmtk(url2)
-
-    }
     
     async function updateInfo(code,bir,se,nick,pic){
     // await ProfilePicture(nickname)
@@ -98,12 +89,20 @@ export default function LoginVerificationProfile({ navigation }) {
 
      
       async function move(){
-        uploadImage()
-        const url2 = await storage()
-            .refFromURL("gs://blockers-8a128.appspot.com/User/" +nickname+ "/" + "프로필사진" +nickname)
-            .getDownloadURL();
-        updateInfo(user.uid,birthday,gender,nickname,url2)
-        navigation.navigate("ModeSelect")
+          if (haveProfile){
+            uploadImage()
+            const url2 = await storage()
+                .refFromURL("gs://blockers-8a128.appspot.com/User/" +nickname+ "/" + "프로필사진" +nickname)
+                .getDownloadURL();
+            updateInfo(user.uid,birthday,gender,nickname,url2)
+            navigation.navigate("ModeSelect")
+            
+          }else{
+            console.log("no")  
+            console.log(user.uid)
+            updateInfo(user.uid,birthday,gender,nickname,"null")
+            navigation.navigate("ModeSelect")
+          }
         
       }
       async function repeatchange(){
@@ -121,9 +120,11 @@ export default function LoginVerificationProfile({ navigation }) {
           setRepeat(true)
           SetNickState(true)
             })
-        })
+        }).catch(
+            setNickState(false)
+        )
         if (nickState===false){
-            
+            console.log("movemove")
             move()
         }else{
             console.log("same shit")

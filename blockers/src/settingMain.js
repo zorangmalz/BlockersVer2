@@ -6,12 +6,11 @@ import {
     ScrollView,
     SafeAreaView,
     TouchableOpacity,
-    StyleSheet,
-    Modal
+    StyleSheet
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { LoginManager } from 'react-native-fbsdk'
-
+import Modal from 'react-native-modal';
 const setting = StyleSheet.create({
     mainText : {
         fontSize: 16,
@@ -47,7 +46,7 @@ export default function SettingMain({ navigation }) {
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="chevron-back" size={35} />
+                        {/* <Ionicons name="chevron-back" size={35} /> */}
                     </TouchableOpacity>
                     <View
                         style={{
@@ -63,18 +62,13 @@ export default function SettingMain({ navigation }) {
                         </Text>
                     </View>
                 </View>
+               
                 <Modal
                     animationType="none"
                     transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
-                </Modal>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={modalVisible}
+                    isVisible={modalVisible}
+                    backdropOpacity={0.4}
+                    onBackdropPress={() => setModalVisible(false)}
                     onRequestClose={() => setModalVisible(false)}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
