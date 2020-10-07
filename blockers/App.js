@@ -8,17 +8,10 @@
 
 import React from 'react';
 import "./global"
-import {
-  View,
-  Text,
-  Image,
-  TouchableOpacity
-} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from './src/homeScreen';
 import MissionScreen from './src/missionScreen';
