@@ -52,7 +52,7 @@ import Notification from './src/Notification';
 import ProfileMain from './src/profileMain';
 import ProfilePasswordChange from './src/profilePasswordChange';
 import MyPageRule from './src/mypageRule';
-import AddressFind from './src/addressFind';
+import AddressFind from './src/AddressFind';
 import CommunityWrite from './src/CommunityWrite';
 import MypageMyWriting from './src/mypageMyWriting';
 import LoginSignup from './src/loginSignup';

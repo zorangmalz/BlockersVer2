@@ -8,9 +8,9 @@ import {
     TouchableOpacity,
     StyleSheet,
     Image,
-    Modal
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Modal from 'react-native-modal';
 
 const setting = StyleSheet.create({
     agree : {
@@ -72,15 +72,8 @@ export default function SettingExit({ navigation }) {
                 <Modal
                     animationType="none"
                     transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
-                </Modal>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={modalVisible}
+                    isVisible={modalVisible}
+                    backdropOpacity={0.4}
                     onRequestClose={() => setModalVisible(false)}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -91,8 +84,6 @@ export default function SettingExit({ navigation }) {
                             backgroundColor: '#ffffff',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            borderWidth: 1,
-                            borderColor: '#cccccc'
                         }}>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',

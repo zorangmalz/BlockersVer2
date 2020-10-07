@@ -7,10 +7,11 @@ import {
     SafeAreaView,
     TouchableOpacity,
     StyleSheet,
-    Modal
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import { LoginManager } from 'react-native-fbsdk'
+// import { LoginManager } from 'react-native-fbsdk';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import Modal from 'react-native-modal';
 
 const setting = StyleSheet.create({
     mainText : {
@@ -36,7 +37,7 @@ export default function SettingMain({ navigation }) {
         auth()
             .signOut()
             .then(() => console.log('User signed out!'));
-        LoginManager.logOut()
+        // LoginManager.logOut()
 
         navigation.popToTop();
         setModalVisible(false);
@@ -66,15 +67,8 @@ export default function SettingMain({ navigation }) {
                 <Modal
                     animationType="none"
                     transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
-                </Modal>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={modalVisible}
+                    isVisible={modalVisible}
+                    backdropOpacity={0.4}
                     onRequestClose={() => setModalVisible(false)}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -85,8 +79,6 @@ export default function SettingMain({ navigation }) {
                             backgroundColor: '#ffffff',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            borderWidth: 1,
-                            borderColor: '#cccccc'
                         }}>
                             <Text style={{
                                 fontFamily: 'NunitoSans-Bold',
