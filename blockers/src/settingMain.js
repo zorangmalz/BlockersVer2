@@ -152,7 +152,7 @@ export default function SettingMain({ navigation }) {
                         <Text style={setting.mainText}>초기화</Text>
                     </TouchableOpacity>
                     <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
-                    <View style={{flexDirection: 'row', marginRight: 25, marginTop: 32, justifyContent: 'space-between', alignItems: 'center'}}>
+                    <View style={{flexDirection: 'row', marginRight: 25, marginTop: 32, justifyContent: 'space-between', alignItems: 'center', paddingRight: 8}}>
                         <TouchableOpacity style={setting.mainBox} onPress={() => navigation.navigate('버전정보')}>
                             <Text style={setting.mainText}>버전정보</Text>
                         </TouchableOpacity>
