@@ -239,8 +239,8 @@ const App = ({ navigation }) => {
           name="WalletPassword"
           component={WalletPassword}
           options={{
-            headerTitle: "비밀번호 설정",
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen

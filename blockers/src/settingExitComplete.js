@@ -8,8 +8,33 @@ import {
     TouchableOpacity,
     Image
 } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import firebase from '@react-native-firebase/app';
+import { LoginManager } from 'react-native-fbsdk';
 
 export default function SettingExitComplete({navigation}) {
+    var user = firebase.auth().currentUser;
+    const DeleteAccount = () => {
+        firebase.auth().onAuthStateChanged(async (user) => {
+            if (user) {
+                //firestore에 있는 UserInfo 정보 삭제
+                firestore().collection("UserInfo")
+                    .doc(user.uid)
+                    .delete();
+                //Logout 만들기
+                auth()
+                    .signOut()
+                    .then(() => console.log('User signed out!'));
+                LoginManager.logOut();
+                //화면 전환
+                navigation.navigate("설정");
+            } else {
+                console.log("user needs to reauth");
+                return false;
+            }
+        });
+    };
     return (
         <>
             <StatusBar barStyle="light-content" />
