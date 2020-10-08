@@ -14,7 +14,7 @@ import {
     Dimensions,
     Modal
 } from 'react-native';
-import {challengeToken} from './challengeMain';
+import {challengeToken} from './ChallengeMain';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';

@@ -9,7 +9,7 @@ target 'blockers' do
   use_react_native!(:path => config["reactNativePath"])
 
 
-
+#  pod 'KakaoOpenSDK', '~> 1.21.0'
   target 'blockersTests' do
     inherit! :complete
     # Pods for testing

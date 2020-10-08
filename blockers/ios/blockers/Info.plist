@@ -42,6 +42,14 @@
 				<string>fb296710414890989</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kakao44e5c976a16b57d4aa7bee82b430e621</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
@@ -49,10 +57,18 @@
 	<string>296710414890989</string>
 	<key>FacebookDisplayName</key>
 	<string>Blockers</string>
+	<key>KAKAO_APP_KEY</key>
+	<string>44e5c976a16b57d4aa7bee82b430e621</string>
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+    <string>kakao44e5c976a16b57d4aa7bee82b430e621</string>
+		<string>kakaokompathauth</string>
+    <string>storykompassauth</string>
+		
+		<string>kakaolink</string>
+		<string>kakaotalk-5.9.7</string>
 		<string>fbapi</string>
 		<string>fbapi20130214</string>
 		<string>fbapi20130410</string>
