@@ -11,7 +11,6 @@ import {
     Dimensions,
     TextInput,
     Alert,
-    Modal
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import firestore from '@react-native-firebase/firestore';
@@ -20,6 +19,7 @@ import moment from "moment"
 import storage from '@react-native-firebase/storage';
 import { utils } from '@react-native-firebase/app';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Modal from 'react-native-modal';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -43,7 +43,9 @@ const community = StyleSheet.create({
         paddingLeft: 32,
         borderWidth: 0.5,
         borderColor: '#707070',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        justifyContent: "center",
+        height: 50
     },
     titleandcontent: {
         fontSize: 14,
@@ -57,6 +59,7 @@ const community = StyleSheet.create({
         height: WIDTH*1.2,
         borderBottomWidth: 0.5,
         borderColor: '#707070',
+        paddingTop: 8
     },
     picturetext: {
         fontSize: 14,
