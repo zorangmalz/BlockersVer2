@@ -9,26 +9,30 @@ import {
     Image
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
-import { LoginManager } from 'react-native-fbsdk';
 
 export default function SettingExitComplete({navigation}) {
-    var user = firebase.auth().currentUser;
-    const DeleteAccount = () => {
-        firebase.auth().onAuthStateChanged(async (user) => {
-            if (user) {
+    //User 탈퇴
+    const User = firebase.auth().currentUser;
+    async function DeleteAccount (user) {
+        await firebase.auth().onAuthStateChanged(async (user) => {
+            if (user.isAnonymous === false) {
                 //firestore에 있는 UserInfo 정보 삭제
                 firestore().collection("UserInfo")
                     .doc(user.uid)
                     .delete();
-                //Logout 만들기
-                auth()
-                    .signOut()
-                    .then(() => console.log('User signed out!'));
-                LoginManager.logOut();
+                //User 삭제
+                user.delete();
                 //화면 전환
-                navigation.navigate("설정");
+                navigation.navigate("Home");
+            } else if (user.isAnonymous === true) {
+                firestore().collection("UserInfo")
+                    .doc(user.uid)
+                    .delete();
+                //User 삭제
+                user.delete();
+                //화면 전환
+                navigation.navigate("Home");
             } else {
                 console.log("user needs to reauth");
                 return false;
