@@ -95,8 +95,6 @@ export default function MyPageScreen({ navigation }) {
         return subscriber; // unsubscribe on unmount
     }, []);
     if (initializing) return null;
-
-    const num = 1;
     return (
         <>
             <StatusBar barStyle="light-content" />

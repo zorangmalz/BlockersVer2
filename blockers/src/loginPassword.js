@@ -9,6 +9,7 @@ import {
     ScrollView,
     StyleSheet,
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const login = StyleSheet.create({
     title: {
@@ -44,7 +45,7 @@ export default function LoginPassword({ navigation }) {
     const [contrue, setContrue] = useState(true);
 
     const differ = () => {
-        if(passcon !== pass) {
+        if (passcon !== pass) {
             setContrue(false)
         }
         else {
@@ -52,7 +53,7 @@ export default function LoginPassword({ navigation }) {
         }
     }
     const leng = () => {
-        if(pass.length < 8) {
+        if (pass.length < 8) {
             setLen(false)
         }
         else {
@@ -64,6 +65,24 @@ export default function LoginPassword({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={35} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>비밀번호 재설정</Text>
+                        </Text>
+                    </View>
+                </View>
                 <ScrollView>
                     <Text style={login.title}>새로운 비밀번호를 설정해주세요</Text>
                     <TextInput onSubmitEditing={leng} textContentType="password" secureTextEntry={true} onChangeText={text => setPass(text)} style={login.textinput} placeholder="비밀번호(영문, 숫자 포함 8자리)" />
