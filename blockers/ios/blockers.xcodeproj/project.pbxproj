@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* blockersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* blockersTests.m */; };
 		0D2CC8CB24D7AC9E005BBC5F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D2CC8CA24D7AC9E005BBC5F /* GoogleService-Info.plist */; };
+		0DEEDF32252EB00300FD1B1B /* KakaoOpenSDK-1.23.5 in Resources */ = {isa = PBXBuildFile; fileRef = 0DEEDF31252EB00300FD1B1B /* KakaoOpenSDK-1.23.5 */; };
+		0DEEDF33252EB00300FD1B1B /* KakaoOpenSDK-1.23.5 in Resources */ = {isa = PBXBuildFile; fileRef = 0DEEDF31252EB00300FD1B1B /* KakaoOpenSDK-1.23.5 */; };
+		0DEEDF3D252EB01B00FD1B1B /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DEEDF3C252EB01B00FD1B1B /* KakaoOpenSDK.framework */; };
+		0DEEDF3E252EB01B00FD1B1B /* KakaoOpenSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DEEDF3C252EB01B00FD1B1B /* KakaoOpenSDK.framework */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -32,6 +36,13 @@
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
 			remoteInfo = blockers;
 		};
+		0DEEDF62252EB58500FD1B1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0DEEDF5E252EB58500FD1B1B /* RNKakaoLogins.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNKakaoLogins;
+		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
@@ -51,6 +62,10 @@
 		0D2CC8CA24D7AC9E005BBC5F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0D9E9C6425217AD00039946A /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
 		0DEEB08D252D639A003D142F /* blockers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = blockers.entitlements; path = blockers/blockers.entitlements; sourceTree = "<group>"; };
+		0DEEDEB8252D9C2C00FD1B1B /* kakao-login */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "kakao-login"; path = "../node_modules/@react-native-seoul/kakao-login"; sourceTree = "<group>"; };
+		0DEEDF31252EB00300FD1B1B /* KakaoOpenSDK-1.23.5 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "KakaoOpenSDK-1.23.5"; sourceTree = "<group>"; };
+		0DEEDF3C252EB01B00FD1B1B /* KakaoOpenSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = KakaoOpenSDK.framework; sourceTree = "<group>"; };
+		0DEEDF5E252EB58500FD1B1B /* RNKakaoLogins.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNKakaoLogins.xcodeproj; path = "../node_modules/@react-native-seoul/kakao-login/ios/RNKakaoLogins.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* blockers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = blockers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = blockers/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = blockers/AppDelegate.m; sourceTree = "<group>"; };
@@ -89,6 +104,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				41A8614713FEECF81178204D /* libPods-blockers.a in Frameworks */,
+				0DEEDF3D252EB01B00FD1B1B /* KakaoOpenSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +121,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				66DBA12E5BA93217BD9D4C33 /* libPods-blockers-tvOSTests.a in Frameworks */,
+				0DEEDF3E252EB01B00FD1B1B /* KakaoOpenSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +145,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0DEEDF5F252EB58500FD1B1B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0DEEDF63252EB58500FD1B1B /* libRNKakaoLogins.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		13B07FAE1A68108700A75B9A /* blockers */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,7 +172,9 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				0DEEDF31252EB00300FD1B1B /* KakaoOpenSDK-1.23.5 */,
 				0D9E9C6425217AD00039946A /* libswiftWebKit.tbd */,
+				0DEEDF3C252EB01B00FD1B1B /* KakaoOpenSDK.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				029B105B84E2039DBA61D529 /* libPods-blockers.a */,
@@ -161,6 +188,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				0DEEDF5E252EB58500FD1B1B /* RNKakaoLogins.xcodeproj */,
+				0DEEDEB8252D9C2C00FD1B1B /* kakao-login */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -343,6 +372,12 @@
 			);
 			productRefGroup = 83CBBA001A601CBA00E9B192 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 0DEEDF5F252EB58500FD1B1B /* Products */;
+					ProjectRef = 0DEEDF5E252EB58500FD1B1B /* RNKakaoLogins.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				13B07F861A680F5B00A75B9A /* blockers */,
@@ -352,6 +387,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		0DEEDF63252EB58500FD1B1B /* libRNKakaoLogins.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNKakaoLogins.a;
+			remoteRef = 0DEEDF62252EB58500FD1B1B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		00E356EC1AD99517003FC87E /* Resources */ = {
@@ -367,6 +412,7 @@
 			files = (
 				CC3882BD24D252F5001EBAD6 /* Fonts in Resources */,
 				0D2CC8CB24D7AC9E005BBC5F /* GoogleService-Info.plist in Resources */,
+				0DEEDF32252EB00300FD1B1B /* KakaoOpenSDK-1.23.5 in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 			);
@@ -384,6 +430,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DEEDF33252EB00300FD1B1B /* KakaoOpenSDK-1.23.5 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,6 +822,12 @@
 				DEVELOPMENT_TEAM = U7S379N29K;
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KakaoOpenSDK-1.23.5",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/KakaoOpenSDK.framework",
+				);
 				GCC_NO_COMMON_BLOCKS = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -854,6 +907,7 @@
 					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
 					"\"${PODS_TARGET_SRCROOT}/Sources/FBLPromises/include\"",
 					"\"$(PODS_ROOT)/Headers/Private/React-Core\"",
+					"$(SRCROOT)/../../../ios/Pods/Headers/Public/**",
 				);
 				INFOPLIST_FILE = blockers/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -880,6 +934,12 @@
 				CODE_SIGN_ENTITLEMENTS = blockers/blockers.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = U7S379N29K;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KakaoOpenSDK-1.23.5",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/KakaoOpenSDK.framework",
+				);
 				GCC_NO_COMMON_BLOCKS = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -959,6 +1019,7 @@
 					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
 					"\"${PODS_TARGET_SRCROOT}/Sources/FBLPromises/include\"",
 					"\"$(PODS_ROOT)/Headers/Private/React-Core\"",
+					"$(SRCROOT)/../../../ios/Pods/Headers/Public/**",
 				);
 				INFOPLIST_FILE = blockers/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1045,6 +1106,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/KakaoOpenSDK-1.23.5",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "blockers-tvOSTests/Info.plist";
@@ -1076,6 +1138,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/KakaoOpenSDK-1.23.5",
 				);
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "blockers-tvOSTests/Info.plist";

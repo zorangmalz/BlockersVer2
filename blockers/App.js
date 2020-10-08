@@ -59,7 +59,7 @@ import LoginVerificationProfile from './src/LoginVerificationProfile';
 import LoginPassword from "./src/LoginPassword";
 import SolutionMain from './src/SolutionMain';
 import SplashScreen from './src/Splashscreen';
-import SettingCompanyInfo from  "./src/companyInfo";
+import SettingCompanyInfo from  "./src/CompanyInfo";
 import InformationMain from './src/InformationMain';
 import InformationNonReport from './src/InformationNonReport';
 import ModeSelect from './src/ModeSelect';

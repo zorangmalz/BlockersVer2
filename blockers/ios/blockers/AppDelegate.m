@@ -11,6 +11,7 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
+#import <KakaoOpenSDK/KakaoOpenSDK.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -25,8 +26,10 @@ static void InitializeFlipper(UIApplication *application) {
 @import Firebase;
 @implementation AppDelegate
 
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
@@ -35,7 +38,10 @@ static void InitializeFlipper(UIApplication *application) {
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"blockers"
                                             initialProperties:nil];
-
+  
+  
+  [KOSession sharedSession].automaticPeriodicRefresh = YES;
+  
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -46,7 +52,32 @@ static void InitializeFlipper(UIApplication *application) {
   [FIRApp configure];
   return YES;
 }
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+                                      sourceApplication:(NSString *)sourceApplication
+                                              annotation:(id)annotation {
+    if ([KOSession isKakaoAccountLoginCallback:url]) {
+        return [KOSession handleOpenURL:url];
+    }
 
+    return false;
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+                                                options:(NSDictionary<NSString *,id> *)options {
+    if ([KOSession isKakaoAccountLoginCallback:url]) {
+        return [KOSession handleOpenURL:url];
+    }
+
+    return false;
+}
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    
+    [KOSession handleDidEnterBackground];
+}
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    [KOSession handleDidBecomeActive];
+}
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
 #if DEBUG
