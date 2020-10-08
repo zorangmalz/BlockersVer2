@@ -51,7 +51,6 @@ const community = StyleSheet.create({
         fontSize: 14,
         fontFamily: 'NunitoSans-Regular',
         color: '#666666',
-        
     },
     contentbox: {
         paddingLeft: 32,
