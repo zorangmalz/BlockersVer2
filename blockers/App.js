@@ -346,49 +346,56 @@ const App = ({ navigation }) => {
           name="회원가입"
           component={LoginSignup}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen
           name="로그인"
           component={LoginMain}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen 
           name="아이디/비밀번호 찾기"
           component={LoginFind}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen 
           name="본인인증"
           component={LoginVerification}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen 
           name="프로필 설정"
           component={LoginVerificationProfile}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen 
           name="아이디 찾기"
           component={LoginFindId}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
          <Stack.Screen 
           name="LoginPassword"
           component={LoginPassword}
           options={{
-            gestureDirection: 'vertical-inverted'
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
           }}
         />
         <Stack.Screen 
