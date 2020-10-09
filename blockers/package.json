@@ -29,6 +29,7 @@
     "browserify-zlib": "0.1.4",
     "caver-js": "1.5.1",
     "dns.js": "1.0.1",
+    "dotenv": "8.2.0",
     "events": "1.1.1",
     "https-browserify": "0.0.1",
     "iamport-react-native": "1.5.1",
