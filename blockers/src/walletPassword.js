@@ -1,4 +1,4 @@
-import React, {useState, useReducer, useEffect} from 'react';
+import React, { useState, useReducer, useEffect } from 'react';
 import {
     View,
     Text,
@@ -7,10 +7,8 @@ import {
     SafeAreaView,
     TouchableOpacity,
     StyleSheet,
-    Image,
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import { NavigationContainer } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
@@ -19,19 +17,19 @@ const password = StyleSheet.create({
         position: 'absolute',
         bottom: 60,
     },
-    mediumBox : {
+    mediumBox: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-evenly',
         marginBottom: "7%"
     },
-    smallBox : {
+    smallBox: {
         justifyContent: 'center',
         alignItems: 'center',
         width: "34%",
         height: 40
-    }, 
-    number : {
+    },
+    number: {
         fontSize: 30,
         fontFamily: 'NunitoSans-Regular',
         color: '#303030',
@@ -51,7 +49,7 @@ const password = StyleSheet.create({
     }
 })
 
-export function WalletPassword ({navigation}) {
+export function WalletPassword({ navigation }) {
     let a = 1;
     const [one, setOne] = useState(false);
     const [two, setTwo] = useState(false);
@@ -59,38 +57,36 @@ export function WalletPassword ({navigation}) {
     const [four, setFour] = useState(false);
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
-  
 
     //create userInfo
-    const ref=firestore().collection("UserInfo");
+    const ref = firestore().collection("UserInfo");
 
-
-    async function addInfo(mail,code,pass){
-      await ref.doc(code).set({
-        birth:"",
-        cellphone:"",
-        email:mail,
-        password:pass,
-        sex:"",
-        nickname:"",
-        SmokingTime:""
-      })
+    async function addInfo(mail, code, pass) {
+        await ref.doc(code).set({
+            birth: "",
+            cellphone: "",
+            email: mail,
+            password: pass,
+            sex: "",
+            nickname: "",
+            SmokingTime: ""
+        })
     }
 
+    const OneImage = one === true ? <Ionicons name="ios-medical-sharp" color="#303030" size={20} /> : <View style={{width: 20, height: 20, backgroundColor: "#ffffff"}} />
+    const TwoImage = two === true ? <Ionicons name="ios-medical-sharp" color="#303030" size={20} /> : <View style={{width: 20, height: 20, backgroundColor: "#ffffff"}} />
+    const ThreeImage = three === true ? <Ionicons name="ios-medical-sharp" color="#303030" size={20} /> : <View style={{width: 20, height: 20, backgroundColor: "#ffffff"}} />
+    const FourImage = four === true ? <Ionicons name="ios-medical-sharp" color="#303030" size={20} /> : <View style={{width: 20, height: 20, backgroundColor: "#ffffff"}} />
 
-
-    const OneImage = one === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
-    const TwoImage = two === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
-    const ThreeImage = three === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
-    const FourImage = four === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
     function onAuthStateChanged(user) {
         setUser(user);
         if (initializing) setInitializing(false);
-      }
-      function move(){
-        addInfo(user.email,user.uid,passWord)
-          navigation.navigate("프로필 설정")
-      }
+    }
+    function move() {
+        addInfo(user.email, user.uid, passWord);
+        navigation.navigate("프로필 설정");
+    }
+
     function pass(count, action) {
         switch (action.type) {
             case 'plus':
@@ -155,7 +151,7 @@ export function WalletPassword ({navigation}) {
         setPassWord(passWord.concat(0));
     }
     const onDeleteOne = () => {
-        setPassWord(passWord.slice(0, passWord.length-1))
+        setPassWord(passWord.slice(0, passWord.length - 1))
     }
     const onDeleteAll = () => {
         setPassWord(passWord.slice(0, 0))
@@ -165,7 +161,7 @@ export function WalletPassword ({navigation}) {
     useEffect(() => {
         if (count > 4) {
             console.log("초과되었습니다.");
-            setPassWord(passWord.slice(0, passWord.length-1))
+            setPassWord(passWord.slice(0, passWord.length - 1))
             dispatch({
                 type: 'minus'
             })
@@ -221,7 +217,7 @@ export function WalletPassword ({navigation}) {
             console.log("4")
         }
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; 
+        return subscriber;
     }, [count])
 
     return (
@@ -259,20 +255,20 @@ export function WalletPassword ({navigation}) {
                         paddingRight: 60
                     }}>
                         <View style={password.iconBox}>
-                            <Image resizeMode="contain" style={{width: 20, height: 60}} source={OneImage} />
-                            <View style={{backgroundColor: '#5cc27b', width: 48, height: 1.5}}/>
+                            {OneImage}
+                            <View style={{ backgroundColor: '#5cc27b', width: 48, height: 1.5, marginTop: 12 }} />
                         </View>
                         <View style={password.iconBox}>
-                            <Image resizeMode="contain" style={{width: 20, height: 60}} source={TwoImage} />
-                            <View style={{backgroundColor: '#5cc27b', width: 48, height: 1.5}}/>
+                            {TwoImage}
+                            <View style={{ backgroundColor: '#5cc27b', width: 48, height: 1.5, marginTop: 12 }} />
                         </View>
                         <View style={password.iconBox}>
-                            <Image resizeMode="contain" style={{width: 20, height: 60}} source={ThreeImage} />
-                            <View style={{backgroundColor: '#5cc27b', width: 48, height: 1.5}}/>
+                            {ThreeImage}
+                            <View style={{ backgroundColor: '#5cc27b', width: 48, height: 1.5, marginTop: 12 }} />
                         </View>
                         <View style={password.iconBox}>
-                            <Image resizeMode="contain" style={{width: 20, height: 60}} source={FourImage} />
-                            <View style={{backgroundColor: '#5cc27b', width: 48, height: 1.5}}/>
+                            {FourImage}
+                            <View style={{ backgroundColor: '#5cc27b', width: 48, height: 1.5, marginTop: 12 }} />
                         </View>
                     </View>
                 </ScrollView>
@@ -322,7 +318,7 @@ export function WalletPassword ({navigation}) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                {count===4 ?
+                {count === 4 ?
                     <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={move}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>다음</Text>

@@ -142,6 +142,15 @@ export default function LoginSignup({ navigation }) {
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
             console.log('That email address is already in use!');
+            navigation.navigate("로그인")
+            Alert.alert(
+              "이미 존재하는 아이디입니다.",
+              [
+                {
+                  text: "OK", onPress: () => navigation.navigate("로그인")
+                }
+              ]
+            )
           }
 
           if (error.code === 'auth/invalid-email') {
@@ -163,7 +172,15 @@ export default function LoginSignup({ navigation }) {
 
     // Sign-in the user with the credential
     auth().signInWithCredential(googleCredential);
-    navigation.navigate("WalletPassword")
+    setTimeout(() => {
+      const user = firebase.auth().currentUser;
+      if (user != null) {
+          navigation.navigate("Home");
+      }
+      else if (user == null) {
+          navigation.navigate("WalletPassword");
+      }
+  }, 1500)
   }
 
   async function onFacebookButtonPress() {
@@ -179,7 +196,16 @@ export default function LoginSignup({ navigation }) {
     }
     console.log(data)
     const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-    return auth().signInWithCredential(facebookCredential);
+    auth().signInWithCredential(facebookCredential);
+    setTimeout(() => {
+      const user = firebase.auth().currentUser;
+      if (user != null) {
+          navigation.navigate("Home");
+      }
+      else if (user == null) {
+          navigation.navigate("WalletPassword");
+      }
+  }, 1500)
   }
 
   useEffect(() => {

@@ -45,7 +45,7 @@ export default function LoginPassword({ navigation }) {
     const [contrue, setContrue] = useState(true);
 
     const differ = () => {
-        if (passcon !== pass) {
+        if(passcon !== pass) {
             setContrue(false)
         }
         else {
@@ -53,7 +53,7 @@ export default function LoginPassword({ navigation }) {
         }
     }
     const leng = () => {
-        if (pass.length < 8) {
+        if(pass.length < 8) {
             setLen(false)
         }
         else {
