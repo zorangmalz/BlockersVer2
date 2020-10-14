@@ -7,15 +7,20 @@ import {
     ScrollView,
     StyleSheet,
     TouchableOpacity,
+    TextInput,
+    Dimensions
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+const HEIGHT = Dimensions.get("screen").height;
 
 const solution = StyleSheet.create({
     largeText: {
-        fontSize: 20,
+        fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
-        color: '#5CC27B',
+        color: '#303030',
         marginLeft: 24,
-        marginBottom: 50
+        marginBottom: 50,
+        marginTop: 28
     },
     mediumText: {
         fontSize: 18,
@@ -31,7 +36,7 @@ const solution = StyleSheet.create({
         borderColor: '#5CC27B',
         marginLeft: 38,
         marginRight: 38,
-        marginBottom: 16,
+        marginBottom: HEIGHT * 0.024,
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -42,7 +47,7 @@ const solution = StyleSheet.create({
         backgroundColor: '#5CC27B',
         marginLeft: 38,
         marginRight: 38,
-        marginBottom: 16,
+        marginBottom: HEIGHT * 0.024,
         justifyContent: 'center',
         alignItems: 'center',
     }
@@ -142,17 +147,22 @@ export default function SolutionGOne({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-                <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "5%", paddingRight: "5%", marginBottom: 12 }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={25} />
+                    </TouchableOpacity>
                     <View
                         style={{
                             height: 44,
                             flexDirection: 'row',
-                            paddingTop: 4,
                             justifyContent: "flex-start",
                             alignItems: 'center',
+                            marginLeft: 20
                         }}
                     >
-                        
+                        <Text style={{ fontSize: 18 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>흡연유형 알아보기</Text>
+                        </Text>
                     </View>
                 </View>
                 <ScrollView>
