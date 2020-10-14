@@ -353,7 +353,7 @@ export function WalletWithdrawal({ navigation }) {
                                 :
                                 <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 12, color: '#ff0000', marginTop: 19, alignSelf: 'center' }}>비밀번호가 다릅니다. 다시 입력해주세요</Text>
                             }
-                            <View style={modal.modalPasswordBox}>
+                            <View style={[modal.modalPasswordBox, {marginTop: oneTime ? twoTime ? 19 : 0 : 0}]}>
                                 {Time === false ?
                                     <View style={modal.largeBox}>
                                         <View style={modal.mediumBox}>
