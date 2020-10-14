@@ -42,7 +42,7 @@ const community = StyleSheet.create({
         fontFamily: 'NunitoSans-Bold',
         color: "#000000",
         height: 22,
-        width:topposition*0.7
+        width: topposition * 0.7
     },
     content: {
         fontSize: 14,
@@ -83,7 +83,7 @@ const community = StyleSheet.create({
 
 export default function CommunityClick({ navigation }) {
     const [search, setSearch] = useState('');
-    const ref = firestore().collection('Community1');
+    const ref = firestore().collection('Community1').orderBy("fullTime");
     const [loading, setLoading] = useState(true);
     const [items, setItems] = useState([]);
     const [replyNum, setReplyNum] = useState();
@@ -98,12 +98,16 @@ export default function CommunityClick({ navigation }) {
             setTimeout(resolve, timeout);
         });
     }
-  useEffect(() => {
+    
+    //로그인 상태 확인
+    useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
         console.log(user)
-    },[user])
+    }, [user])
+
+    //글 가져오는 함수
     async function load() {
         const list = [];
         var a = moment().toArray()
@@ -130,8 +134,8 @@ export default function CommunityClick({ navigation }) {
                                     like: doc.data().whoLike.length,
                                     docname: doc.data().docName,
                                     replynum: doc.data().commentNum,
-                                    isPicture:doc.data().isPicture,
-                                    fullTime:doc.data().fullTime
+                                    isPicture: doc.data().isPicture,
+                                    fullTime: doc.data().fullTime
                                 });
                             }
                             else {
@@ -142,8 +146,8 @@ export default function CommunityClick({ navigation }) {
                                     like: doc.data().whoLike.length,
                                     docname: doc.data().docName,
                                     replynum: doc.data().commentNum,
-                                    isPicture:doc.data().isPicture,
-                                    fullTime:doc.data().fullTime
+                                    isPicture: doc.data().isPicture,
+                                    fullTime: doc.data().fullTime
                                 });
                             }
                         }
@@ -160,33 +164,32 @@ export default function CommunityClick({ navigation }) {
             ref.orderBy("fullTime").onSnapshot(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     if (doc.data().fullTime) {
-                            list.push({
-                                title: doc.data().title,
-                                time: doc.data().day,
-                                context: doc.data().context,
-                                like: doc.data().whoLike.length,
-                                docname: doc.data().docName,
-                                replynum: doc.data().commentNum,
-                                isPicture:doc.data().isPicture,
-                                fullTime:doc.data().fullTime
-                            });
-                        }
-                    
-
+                        list.push({
+                            title: doc.data().title,
+                            time: doc.data().day,
+                            context: doc.data().context,
+                            like: doc.data().whoLike.length,
+                            docname: doc.data().docName,
+                            replynum: doc.data().commentNum,
+                            isPicture: doc.data().isPicture,
+                            fullTime: doc.data().fullTime
+                        });
+                    }
                 });
                 setItems(list);
-                console.log("here@@@@@@@@@",list)
+                console.log("here@@@@@@@@@", list)
                 if (loading) {
                     setLoading(false);
                 }
-
             });
         }
     }
-    useEffect(() => {
 
+    //실시간으로 글 가져오기
+    useEffect(() => {
         load()
     }, [filtered]);
+
     const onRefresh = useCallback(() => {
         setRefreshing(true);
         load()
@@ -197,7 +200,7 @@ export default function CommunityClick({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',  height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
@@ -238,7 +241,7 @@ export default function CommunityClick({ navigation }) {
                         }
                         data={items}
                         inverted={true}
-                        
+
                         renderItem={({ item }) => (
                             <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname, Uid: user.uid })} >
                                 <View style={community.board}>
