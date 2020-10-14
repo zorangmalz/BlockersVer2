@@ -56,7 +56,7 @@ export default function LoginVerification({ navigation }) {
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="chevron-back" size={35} />
+                        <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
                     <View
                         style={{
@@ -67,7 +67,7 @@ export default function LoginVerification({ navigation }) {
                             marginLeft: 24
                         }}
                     >
-                        <Text style={{ fontSize: 24 }}>
+                        <Text style={{ fontSize: 18 }}>
                             <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>본인인증</Text>
                         </Text>
                     </View>

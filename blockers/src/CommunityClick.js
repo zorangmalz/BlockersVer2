@@ -199,7 +199,7 @@ export default function CommunityClick({ navigation }) {
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',  height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="chevron-back" size={35} />
+                        <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
                     <View
                         style={{
@@ -208,7 +208,7 @@ export default function CommunityClick({ navigation }) {
                             alignItems: 'center',
                         }}
                     >
-                        <Text style={{ fontSize: 24 }}>
+                        <Text style={{ fontSize: 18 }}>
                             <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자유게시판</Text>
                         </Text>
                     </View>
