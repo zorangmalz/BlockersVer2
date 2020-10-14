@@ -88,7 +88,7 @@ function moneyTab() {
 export default function SettingOften({ navigation }) {
     return (
         <SafeAreaProvider>
-            <SafeAreaView accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'flex-start', height: 102, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff', paddingBottom: 52 }}>
+            <SafeAreaView accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 102, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff', paddingBottom: 52 }}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="chevron-back" size={25} />
                 </TouchableOpacity>

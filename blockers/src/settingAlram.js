@@ -39,7 +39,7 @@ function alramOne({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'flex-start', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
@@ -183,9 +183,9 @@ function alramTwo({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'flex-start', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="chevron-back" size={35} />
+                        <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
                     <View
                         style={{
@@ -196,7 +196,7 @@ function alramTwo({ navigation }) {
                             marginLeft: 24
                         }}
                     >
-                        <Text style={{ fontSize: 24 }}>
+                        <Text style={{ fontSize: 18 }}>
                             <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>알림설정</Text>
                         </Text>
                     </View>
