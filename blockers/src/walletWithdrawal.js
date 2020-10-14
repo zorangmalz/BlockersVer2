@@ -12,6 +12,7 @@ import {
     Modal,
     Dimensions,
 } from 'react-native';
+import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -78,32 +79,19 @@ export function WalletWithdrawal({ navigation }) {
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
 
-    //create userInfo
-    const ref = firestore().collection("UserInfo");
-
-
-    async function addInfo(mail, code, pass) {
-        await ref.doc(code).set({
-            birth: "",
-            cellphone: "",
-            email: mail,
-            password: pass,
-            sex: "",
-            nickname: "",
-            SmokingTime: ""
-        })
-    }
-
-    const OneImage = one === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
-    const TwoImage = two === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
-    const ThreeImage = three === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
-    const FourImage = four === true ? require('./icon/passwordicon.png') : require('./icon/blank.png')
-
+    //상태 확인
     function onAuthStateChanged(user) {
         setUser(user);
         if (initializing) setInitializing(false);
     }
 
+    //프론트 상 이미지 처리
+    const OneImage = one === true ? <Ionicons name="ios-medical-sharp" color="#303030" size={20} /> : <View style={{width: 20, height: 20, backgroundColor: "#ffffff"}} />
+    const TwoImage = two === true ? <Ionicons name="ios-medical-sharp" color="#303030" size={20} /> : <View style={{width: 20, height: 20, backgroundColor: "#ffffff"}} />
+    const ThreeImage = three === true ? <Ionicons name="ios-medical-sharp" color="#303030" size={20} /> : <View style={{width: 20, height: 20, backgroundColor: "#ffffff"}} />
+    const FourImage = four === true ? <Ionicons name="ios-medical-sharp" color="#303030" size={20} /> : <View style={{width: 20, height: 20, backgroundColor: "#ffffff"}} />
+
+    //각각의 경우
     function pass(count, action) {
         switch (action.type) {
             case 'plus':
@@ -119,41 +107,6 @@ export function WalletWithdrawal({ navigation }) {
             case 'confirmwrong':
                 return count = 0;
         }
-    }
-
-    const [oneTime, setOneTime] = useState(false);
-    const [twoTime, setTwoTime] = useState(true);
-    function Twopassword() {
-        onDelete();
-        setOneTime(true);
-    }
-    function confirmTrue() {
-        addInfo(user.email, user.uid, passWord);
-        setPasswordVisible(false)
-        navigation.navigate("WalletWithDrawlComplete");
-    }
-    const confirmWrong = () => {
-        setTwoTime(false);
-        onDelete();
-        onDeleteAll();
-    }
-    function compareArray(arr1, arr2) {
-        var rst = false;
-
-        if (arr1.length != arr2.length) {
-            return rst;
-        }
-
-        arr1.forEach(function (item) {
-            var i = arr2.indexOf(item);
-            if (i > -1) arr2.splice(i, 1);
-        });
-        rst = arr2.length == 0;
-        return rst;
-    }
-
-    function WrongPass() {
-        compareArray(passWord, passWordTwo) === true ? confirmTrue() : confirmWrong()
     }
 
     const [count, dispatch] = useReducer(pass, 0);
@@ -174,50 +127,105 @@ export function WalletWithdrawal({ navigation }) {
         })
     }
 
+    //첫번째 비밀번호, 두번째 비밀번호 선언
     const [passWord, setPassWord] = useState([]);
     const [passWordTwo, setPassWordTwo] = useState([]);
+
+    //비밀번호 배열에 비밀번호 넣기
     const onAddOne = () => {
-        oneTime === false ? setPassWord(passWord.concat(1)) : setPassWordTwo(passWordTwo.concat(1))
+        Time === false ? setPassWord(passWord.concat(1)) : setPassWordTwo(passWordTwo.concat(1))
     }
     const onAddTwo = () => {
-        oneTime === false ? setPassWord(passWord.concat(2)) : setPassWordTwo(passWordTwo.concat(2))
+        Time === false ? setPassWord(passWord.concat(2)) : setPassWordTwo(passWordTwo.concat(2))
     }
     const onAddThree = () => {
-        oneTime === false ? setPassWord(passWord.concat(3)) : setPassWordTwo(passWordTwo.concat(3))
+        Time === false ? setPassWord(passWord.concat(3)) : setPassWordTwo(passWordTwo.concat(3))
     }
     const onAddFour = () => {
-        oneTime === false ? setPassWord(passWord.concat(4)) : setPassWordTwo(passWordTwo.concat(4))
+        Time === false ? setPassWord(passWord.concat(4)) : setPassWordTwo(passWordTwo.concat(4))
     }
     const onAddFive = () => {
-        oneTime === false ? setPassWord(passWord.concat(5)) : setPassWordTwo(passWordTwo.concat(5))
+        Time === false ? setPassWord(passWord.concat(5)) : setPassWordTwo(passWordTwo.concat(5))
     }
     const onAddSix = () => {
-        oneTime === false ? setPassWord(passWord.concat(6)) : setPassWordTwo(passWordTwo.concat(6))
+        Time === false ? setPassWord(passWord.concat(6)) : setPassWordTwo(passWordTwo.concat(6))
     }
     const onAddSeven = () => {
-        oneTime === false ? setPassWord(passWord.concat(7)) : setPassWordTwo(passWordTwo.concat(7))
+        Time === false ? setPassWord(passWord.concat(7)) : setPassWordTwo(passWordTwo.concat(7))
     }
     const onAddEight = () => {
-        oneTime === false ? setPassWord(passWord.concat(8)) : setPassWordTwo(passWordTwo.concat(8))
+        Time === false ? setPassWord(passWord.concat(8)) : setPassWordTwo(passWordTwo.concat(8))
     }
     const onAddNine = () => {
-        oneTime === false ? setPassWord(passWord.concat(9)) : setPassWordTwo(passWordTwo.concat(9))
+        Time === false ? setPassWord(passWord.concat(9)) : setPassWordTwo(passWordTwo.concat(9))
     }
     const onAddZero = () => {
-        oneTime === false ? setPassWord(passWord.concat(0)) : setPassWordTwo(passWordTwo.concat(0))
+        Time === false ? setPassWord(passWord.concat(0)) : setPassWordTwo(passWordTwo.concat(0))
     }
     const onDeleteOne = () => {
-        oneTime === false ? setPassWord(passWord.slice(0, passWord.length - 1)) : setPassWordTwo(passWordTwo.slice(0, passWordTwo.length - 1))
+        Time === false ? setPassWord(passWord.slice(0, passWord.length - 1)) : setPassWordTwo(passWordTwo.slice(0, passWordTwo.length - 1))
     }
     const onDeleteAll = () => {
-        oneTime === false ? setPassWord(passWord.slice(0, 0)) : setPassWordTwo(passWordTwo.slice(0, 0))
+        Time === false ? setPassWord(passWord.slice(0, 0)) : setPassWordTwo(passWordTwo.slice(0, 0))
     }
 
+    //실제 비밀번호랑 맞는지 확인 과정
+    //0. 비밀번호 입력 횟수/첫번째가 같은지 다른지 알수 있는 변수/두번째가 같은지 다른지 알수 있는 변수 선언
+    const [Time, setTime] = useState(false);
+    const [oneTime, setOneTime] = useState(true);
+    const [twoTime, setTwoTime] = useState(true);
+    let i = 0;
+    //1. 현재 User 조회
+    const User = firebase.auth().currentUser;
+    //2. 배열 비교 함수 선언
+    function compareArray(arr1, arr2) {
+        for (i=0; i<arr1.length || i<arr2.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            } else {
+                continue;
+            }
+        }
+        return true;
+    }
+    //3. 같으면 두번째 비밀번호를 입력하는 Twopassword()함수로 가고 passWordTwo가 입력됨
+    const Twopassword = () => {
+        setOneTime(true);
+        onDelete();
+        setTime(true);
+    }
+    //4. 다르면 처음부터 입력하는 confirmWrong()으로 감
+    const confirmWrong = () => {
+        setOneTime(false);
+        onDelete();
+        onDeleteAll();
+    }
+    //5. 같으면 완료화면으로 넘어가는 confirmTrue()로 감
+    const confirmTrue = () => {
+        setTwoTime(true);
+        setPasswordVisible(false);
+        navigation.navigate("WalletWithDrawlComplete");
+    }
+    //6. 다르면 두번째 passWordTwo를 다시 입력하도록 하는 confirmWrongTwo()로 감
+    const confirmWrongTwo = () => {
+        setTwoTime(false);
+        onDelete();
+        onDeleteAll();
+    }
+    //7. firestore에 저장된 비밀번호 가져와 비교하기
+    async function UserPassword(USER) {
+        const arr = []
+        const data = await (await firestore().collection("UserInfo").doc(USER.uid).get()).data().password
+        data.forEach(number => {
+            arr.push(number)
+        })
+        Time ? compareArray(passWordTwo, arr) ? confirmTrue() : confirmWrongTwo() : compareArray(passWord, arr) ? Twopassword() : confirmWrong();
+    }
 
     useEffect(() => {
         if (count > 4) {
             console.log("초과되었습니다.");
-            oneTime === false ? setPassWord(passWord.slice(0, passWord.length - 1)) : setPassWordTwo(passWordTwo.slice(0, passWordTwo.length - 1))
+            Time === false ? setPassWord(passWord.slice(0, passWord.length - 1)) : setPassWordTwo(passWordTwo.slice(0, passWordTwo.length - 1))
             dispatch({
                 type: 'minus'
             })
@@ -237,7 +245,7 @@ export function WalletWithdrawal({ navigation }) {
             setTwo(false);
             setThree(false);
             setFour(false);
-            console.log(oneTime === false ? passWord : passWordTwo);
+            console.log(Time === false ? passWord : passWordTwo);
             console.log("0");
         }
         else if (count === 1) {
@@ -245,7 +253,7 @@ export function WalletWithdrawal({ navigation }) {
             setTwo(false);
             setThree(false);
             setFour(false);
-            console.log(oneTime === false ? passWord : passWordTwo);
+            console.log(Time === false ? passWord : passWordTwo);
             console.log("1");
         }
         else if (count === 2) {
@@ -253,7 +261,7 @@ export function WalletWithdrawal({ navigation }) {
             setTwo(true);
             setThree(false);
             setFour(false);
-            console.log(oneTime === false ? passWord : passWordTwo);
+            console.log(Time === false ? passWord : passWordTwo);
             console.log("2")
         }
         else if (count === 3) {
@@ -261,7 +269,7 @@ export function WalletWithdrawal({ navigation }) {
             setTwo(true);
             setThree(true);
             setFour(false);
-            console.log(oneTime === false ? passWord : passWordTwo);
+            console.log(Time === false ? passWord : passWordTwo);
             console.log("3")
         }
         else if (count === 4) {
@@ -269,18 +277,10 @@ export function WalletWithdrawal({ navigation }) {
             setTwo(true);
             setThree(true);
             setFour(true);
-            console.log(oneTime === false ? passWord : passWordTwo);
+            console.log(Time === false ? passWord : passWordTwo);
             console.log("4")
-            {
-                oneTime === false ?
-                setTimeout(() => {
-                    Twopassword();
-                }, 300)
-                    :
-                    setTimeout(() => {
-                        WrongPass();
-                    }, 300)
-            }
+            //실제와 같은지 비교
+            UserPassword(User)
         }
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber;
@@ -292,7 +292,7 @@ export function WalletWithdrawal({ navigation }) {
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="chevron-back" size={35} />
+                        <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
                     <View
                         style={{
@@ -303,7 +303,7 @@ export function WalletWithdrawal({ navigation }) {
                             marginLeft: 24
                         }}
                     >
-                        <Text style={{ fontSize: 24 }}>
+                        <Text style={{ fontSize: 18 }}>
                             <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>출금</Text>
                         </Text>
                     </View>
@@ -331,25 +331,30 @@ export function WalletWithdrawal({ navigation }) {
                                 marginTop: 16
                             }}>
                                 <View style={[modal.iconBox, { marginRight: 12 }]}>
-                                    <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={OneImage} />
+                                    {OneImage}
                                 </View>
                                 <View style={[modal.iconBox, { marginRight: 6 }]}>
-                                    <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={TwoImage} />
+                                    {TwoImage}
                                 </View>
                                 <View style={[modal.iconBox, { marginLeft: 6 }]}>
-                                    <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={ThreeImage} />
+                                    {ThreeImage}
                                 </View>
                                 <View style={[modal.iconBox, { marginLeft: 12 }]}>
-                                    <Image resizeMode="contain" style={{ width: 20, height: 60 }} source={FourImage} />
+                                    {FourImage}
                                 </View>
                             </View>
+                            {oneTime ? 
+                                <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 12, color: '#ff0000', alignSelf: 'center' }}></Text>
+                                :
+                                <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 12, color: '#ff0000', marginTop: 19, alignSelf: 'center' }}>비밀번호가 다릅니다. 다시 입력해주세요</Text>
+                            }
                             {twoTime ?
-                                <Text></Text>
+                                <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 12, color: '#ff0000', alignSelf: 'center' }}></Text>
                                 :
                                 <Text style={{ fontFamily: 'NunitoSans-Regular', fontSize: 12, color: '#ff0000', marginTop: 19, alignSelf: 'center' }}>비밀번호가 다릅니다. 다시 입력해주세요</Text>
                             }
                             <View style={modal.modalPasswordBox}>
-                                {oneTime === false ?
+                                {Time === false ?
                                     <View style={modal.largeBox}>
                                         <View style={modal.mediumBox}>
                                             <TouchableOpacity style={modal.smallBox} onPress={onIncrease} onPressIn={onAddOne}>
