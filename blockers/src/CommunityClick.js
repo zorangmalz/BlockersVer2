@@ -17,15 +17,16 @@ import auth from '@react-native-firebase/auth';
 import moment from "moment";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Modal from 'react-native-modal';
 
 const topposition = Dimensions.get('window').width;
 
 const community = StyleSheet.create({
     board: {
         flex: 1,
-        paddingTop: "5%",
+        paddingTop: 16,
         paddingLeft: "5%",
-        paddingBottom: 16,
+        paddingBottom: "5%",
 
         borderBottomWidth: 1,
         borderColor: "#E5E5E5",
@@ -81,7 +82,13 @@ const community = StyleSheet.create({
     }
 })
 
-export default function CommunityClick({ navigation }) {
+const wait = (timeout) => {
+    return new Promise(resolve => {
+        setTimeout(resolve, timeout);
+    });
+}
+
+export default function CommunityHome({ navigation }) {
     const [search, setSearch] = useState('');
     const ref = firestore().collection('Community1').orderBy("fullTime");
     const [loading, setLoading] = useState(true);
@@ -93,16 +100,24 @@ export default function CommunityClick({ navigation }) {
     const [author, setAuthor] = useState();
     const [user, setUser] = useState();
 
-    const wait = (timeout) => {
-        return new Promise(resolve => {
-            setTimeout(resolve, timeout);
-        });
+    //로그인 모달 폼
+    const [userlogin, setUserlogin] = useState(false);
+    const loginview = () => {
+        setTimeout(()=>{
+            setUserlogin(true)
+        }, 200)
     }
-    
+
     //로그인 상태 확인
+    const [userlogined, setUserlogined] = useState(false);
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
+            if (user) {
+                setUserlogined(true)
+            } else {
+                setUserlogined(false)
+            }
         })
         console.log(user)
     }, [user])
@@ -120,7 +135,7 @@ export default function CommunityClick({ navigation }) {
         if (filtered) {
             const a = String(search)
             console.log(a.split(""))
-            ref.orderBy("fullTime").onSnapshot(querySnapshot => {
+            ref.onSnapshot(querySnapshot => {
                 querySnapshot.forEach(function (doc) {
 
                     const check = doc.data().fullText
@@ -134,8 +149,7 @@ export default function CommunityClick({ navigation }) {
                                     like: doc.data().whoLike.length,
                                     docname: doc.data().docName,
                                     replynum: doc.data().commentNum,
-                                    isPicture: doc.data().isPicture,
-                                    fullTime: doc.data().fullTime
+                                    isPicture: doc.data().isPicture
                                 });
                             }
                             else {
@@ -146,8 +160,7 @@ export default function CommunityClick({ navigation }) {
                                     like: doc.data().whoLike.length,
                                     docname: doc.data().docName,
                                     replynum: doc.data().commentNum,
-                                    isPicture: doc.data().isPicture,
-                                    fullTime: doc.data().fullTime
+                                    isPicture: doc.data().isPicture
                                 });
                             }
                         }
@@ -161,26 +174,39 @@ export default function CommunityClick({ navigation }) {
                 console.log("Error getting documents: ", error);
             });
         } else {
-            ref.orderBy("fullTime").onSnapshot(querySnapshot => {
+            ref.onSnapshot(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     if (doc.data().fullTime) {
-                        list.push({
-                            title: doc.data().title,
-                            time: doc.data().day,
-                            context: doc.data().context,
-                            like: doc.data().whoLike.length,
-                            docname: doc.data().docName,
-                            replynum: doc.data().commentNum,
-                            isPicture: doc.data().isPicture,
-                            fullTime: doc.data().fullTime
-                        });
+                        if (a[0] === doc.data().fullTime[0] && a[1] === doc.data().fullTime[1] && a[2] === doc.data().fullTime[2]) {
+
+                            list.push({
+                                title: doc.data().title,
+                                time: doc.data().time,
+                                context: doc.data().context,
+                                like: doc.data().whoLike.length,
+                                docname: doc.data().docName,
+                                replynum: doc.data().commentNum,
+                                isPicture: doc.data().isPicture
+                            });
+                        }
+                        else {
+                            list.push({
+                                title: doc.data().title,
+                                time: doc.data().day,
+                                context: doc.data().context,
+                                like: doc.data().whoLike.length,
+                                docname: doc.data().docName,
+                                replynum: doc.data().commentNum,
+                                isPicture: doc.data().isPicture
+                            });
+                        }
                     }
                 });
                 setItems(list);
-                console.log("here@@@@@@@@@", list)
                 if (loading) {
                     setLoading(false);
                 }
+
             });
         }
     }
@@ -200,50 +226,116 @@ export default function CommunityClick({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="chevron-back" size={25} />
-                    </TouchableOpacity>
+                <View accessibilityRole="header" style={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    height: 50,
+                    width: "100%",
+                    paddingLeft: "5%",
+                    paddingRight: "5%",
+                    borderBottomColor: "#E5E5E5",
+                    borderBottomWidth: 1
+                }}>
                     <View
                         style={{
+                            height: 44,
                             flexDirection: 'row',
+                            paddingTop: 4,
                             justifyContent: "flex-start",
                             alignItems: 'center',
                         }}
                     >
-                        <Text style={{ fontSize: 18 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자유게시판</Text>
+                        <Text style={{ fontSize: 24 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#5CC27B' }}>Community</Text>
                         </Text>
                     </View>
-                    <TouchableOpacity>
-                        <Ionicons name="notifications" color="#666666" size={25} />
-                    </TouchableOpacity>
-                </View>
-                <ScrollView>
-                    <View style={{
-                        marginRight: 14,
-                        marginTop: 16,
-                        marginBottom: 16,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        justifyContent: 'flex-end',
-                        alignSelf: 'flex-end',
-                    }}
-                    >
-                        <TextInput value={search} onChangeText={text => setSearch(text)} placeholder="검색어를 입력하세요" style={community.textinput} />
-                        <TouchableOpacity onPress={() => setFiltered(true)}>
-                            <Ionicons size={30} name="search" color="#666666" />
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                        <TouchableOpacity style={{ marginLeft: 8 }}>
+                            <Image source={require('./icon/alram.png')} />
                         </TouchableOpacity>
                     </View>
+                </View>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    isVisible={userlogin}
+                    backdropOpacity={0.4}
+                    onBackdropPress={() => setUserlogin(false)}
+                    onRequestClose={() => setUserlogin(false)}
+                >
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{
+                            width: 280,
+                            height: 180,
+                            borderRadius: 20,
+                            backgroundColor: '#ffffff',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                        }}>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Bold',
+                                fontSize: 16,
+                                color: '#303030',
+                                opacity: 0.8,
+                                marginTop: 20
+                            }}>로그인이 필요한서비스입니다.</Text>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Regular',
+                                fontSize: 14,
+                                color: '#303030',
+                                opacity: 0.6,
+                                textAlign: 'center'
+                            }}>로그인하고 다양한 혜택을 만나보세요</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                marginTop: 15
+                            }}>
+                                <TouchableOpacity onPress={() => setUserlogin(false)} style={{
+                                    width: 140,
+                                    height: 55,
+                                    borderBottomLeftRadius: 20,
+                                    backgroundColor: '#999999',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>둘러보기</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {
+                                    navigation.navigate('회원가입')
+                                    setUserlogin(false)
+                                }}
+                                    style={{
+                                        width: 140,
+                                        height: 55,
+                                        borderBottomRightRadius: 20,
+                                        backgroundColor: '#5cc27b',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>로그인</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
+                <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     <FlatList
-                        refreshControl={
-                            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-                        }
                         data={items}
                         inverted={true}
-
+                        keyExtractor={items.docname}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname, Uid: user.uid })} >
+                            <TouchableOpacity onPress={userlogined===true ? () => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname, Uid: user.uid }) : loginview} >
                                 <View style={community.board}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                         <View style={community.circle} />
