@@ -115,8 +115,6 @@ const challenge = StyleSheet.create({
 
 export default function ChallengeResisterTwo({navigation}) {
     const [passwordVisible, setPasswordVisible] = useState(false);
-    const [check, setCheck] = useState(false)
-    const checkColor = check === true ? "#5CC27B" : "#FFFFFF";
     const [one, setOne] = useState(false);
     const [two, setTwo] = useState(false);
     const [three, setThree] = useState(false);
