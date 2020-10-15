@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -15,6 +15,9 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Dropdown } from 'react-native-material-dropdown';
+
 
 const login = StyleSheet.create({
     rule: {
@@ -27,7 +30,7 @@ const login = StyleSheet.create({
         textAlign: 'center',
     },
     textinput: {
-        fontSize: 21, 
+        fontSize: 21,
         fontFamily: 'NunitoSans-Bold',
         opacity: 0.7,
         color: '#000000',
@@ -50,86 +53,90 @@ export default function LoginVerificationProfile({ navigation }) {
     const [gender, setGender] = useState('');
     const [birthday, setBirthday] = useState('');
     const [repeat, setRepeat] = useState(false);
-    
+    const GenderData = [{
+        value: '남성',
+    }, {
+        value: '여성',
+    }];
+
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
-    const [nickState,setNickState]=useState(false)
+    const [nickState, setNickState] = useState(false)
     const [imageOne, setImageOne] = useState(undefined);
     const [picone, setPicone] = useState(true);
     const [imageSource, setImageSource] = useState(undefined);
-    const [isImage,setIsImage]=useState(false);
-    const [haveProfile,setHaveProfile]=useState(false);
-    const [revmtk,setRevmtk]=useState()
-    const ref=firestore().collection("UserInfo");
-    
-    async function updateInfo(code,bir,se,nick,pic){
-    // await ProfilePicture(nickname)
-    console.log("시발 여기라고",revmtk)
-      await ref.doc(code).update({
-        birth:bir,
-        sex:se,
-        nickname:nick,
-        gotProfile:haveProfile,
-        profilePicture:pic
-      })
-  
+    const [isImage, setIsImage] = useState(false);
+    const [haveProfile, setHaveProfile] = useState(false);
+    const [revmtk, setRevmtk] = useState()
+    const ref = firestore().collection("UserInfo");
+    async function ProfilePicture(a) {
+        console.log(a)
+        const url2 = await storage()
+            .refFromURL("gs://blockers-8a128.appspot.com/User/" + a + "/" + "프로필사진" + a)
+            .getDownloadURL();
+        setRevmtk(url2)
+    }
+
+    async function updateInfo(code, bir, se, nick, pic) {
+        // await ProfilePicture(nickname)
+        console.log("시발 여기라고", revmtk)
+        await ref.doc(code).update({
+            birth: bir,
+            sex: se,
+            nickname: nick,
+            gotProfile: haveProfile,
+            profilePicture: pic
+        })
+
     }
     function onAuthStateChanged(user) {
         setUser(user);
-       
+
         if (initializing) setInitializing(false);
-      }
-    
-      useEffect(() => {
+    }
+
+    useEffect(() => {
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
-      }, []);
+    }, []);
 
-      if (initializing) return null;
+    if (initializing) return null;
 
-     
-      async function move(){
-          if (haveProfile){
-            uploadImage()
-            const url2 = await storage()
-                .refFromURL("gs://blockers-8a128.appspot.com/User/" +nickname+ "/" + "프로필사진" +nickname)
-                .getDownloadURL();
-            updateInfo(user.uid,birthday,gender,nickname,url2)
-            navigation.navigate("ModeSelect")
-            
-          }else{
-            console.log("no")  
-            console.log(user.uid)
-            updateInfo(user.uid,birthday,gender,nickname,"null")
-            navigation.navigate("ModeSelect")
-          }
-        
-      }
-      async function repeatchange(){
-          console.log("gere")
-          console.log(nickname,"nickname")
-          console.log(nickState,'Nickstate')
+
+    async function move() {
+        uploadImage()
+        const url2 = await storage()
+            .refFromURL("gs://blockers-8a128.appspot.com/User/" + nickname + "/" + "프로필사진" + nickname)
+            .getDownloadURL();
+        updateInfo(user.uid, birthday, gender, nickname, url2)
+        navigation.navigate("ModeSelect")
+    }
+    
+    async function repeatchange() {
+        console.log("gere")
+        console.log(nickname, "nickname")
+        console.log(nickState, 'Nickstate')
         await firestore()
-        .collection('UserInfo')
-        .where('nickname', '==', nickname)
-        .get()
-        .then(querySnapshot => {
-            querySnapshot.forEach(function(doc){
-          console.log("samehere")
-          console.log(doc.data())
-          setRepeat(true)
-          SetNickState(true)
+            .collection('UserInfo')
+            .where('nickname', '==', nickname)
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(function (doc) {
+                    console.log("samehere")
+                    console.log(doc.data())
+                    setRepeat(true)
+                    SetNickState(true)
+                })
             })
-        }).catch(
-            setNickState(false)
-        )
-        if (nickState===false){
-            console.log("movemove")
+        if (nickState === false) {
+
             move()
-        }else{
+        } else {
             console.log("same shit")
         }
-    } const options = {
+    }
+
+    const options = {
         title: '사진가져오기',
         customButtons: [
             { name: 'button_id_1', title: 'CustomButton 1' },
@@ -139,27 +146,27 @@ export default function LoginVerificationProfile({ navigation }) {
             skipBackup: true,
             path: 'images',
         },
-        quality:0.3
+        quality: 0.3
     };
 
 
     const showCameraRoll1 = () => {
         ImagePicker.launchImageLibrary(options, (response) => {
-          if (response.error) {
-            console.log('LaunchImageLibrary Error: ', response.error);
-          }
-          else {
-            setImageOne(response.uri);
-            setPicone(false);
-            setIsImage(true)
-          }
+            if (response.error) {
+                console.log('LaunchImageLibrary Error: ', response.error);
+            }
+            else {
+                setImageOne(response.uri);
+                setPicone(false);
+                setIsImage(true)
+            }
         });
     };
-    async function uploadImage(){
-        const uri=imageOne;
-        const filename="프로필사진"+nickname
-        const reference = storage().ref("User/"+nickname+"/"+filename);
-        const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
+    async function uploadImage() {
+        const uri = imageOne;
+        const filename = "프로필사진" + nickname
+        const reference = storage().ref("User/" + nickname + "/" + filename);
+        const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
         await reference.putFile(uploadUri);
         setHaveProfile(true)
@@ -169,24 +176,52 @@ export default function LoginVerificationProfile({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={25} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 18 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>프로필 설정</Text>
+                        </Text>
+                    </View>
+                </View>
                 <ScrollView>
-                    <TouchableOpacity onPress={showCameraRoll1} style={{alignSelf: 'center', marginTop: 16}}>
-                    {isImage===true?
-                            imageOne&&<Image resizeMode="stretch" source={{ uri: imageOne}} style={{ width: 92, height: 92 }} />
+                    <TouchableOpacity onPress={showCameraRoll1} style={{ alignSelf: 'center', marginTop: 16 }}>
+                        {isImage === true ?
+                            imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 92, height: 92 }} />
                             :
-                            <Image source={require('./icon/userprofile.png')} style={{width: 132, height: 132}} resizeMode="contain" />    
-                            }
-                        
+                            <Image source={require('./icon/userprofile.png')} style={{ width: 132, height: 132 }} resizeMode="contain" />
+                        }
+
                     </TouchableOpacity>
                     <View>
                         <TextInput onChangeText={text => setNickname(text)} style={[login.textinput, { width: "80%", marginTop: 32 }]} placeholder="닉네임" />
                         {repeat === true ?
                             <Text style={login.repeat}>중복된 닉네임입니다.</Text>
                             :
-                            <Text></Text>
+                            <Text style={{ marginBottom: 28 }}></Text>
                         }
                         <View style={{ marginLeft: "10%", flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                            <TextInput onChangeText={text => setGender(text)} style={[login.textinput, { width: "20%" }]} placeholder="성별" />
+                            <Dropdown
+                                baseColor="#5cc27b"
+                                itemTextStyle={{fontSize: 21, fontFamily: 'NunitoSans-Bold', color: "#303030"}}
+                                dropdownOffset={{ top: 0, left: 0 }}
+                                dropdownPosition={0}
+                                pickerStyle={{width: "25%"}}
+                                containerStyle={{ width: "25%" }}
+                                label="성별"
+                                data={GenderData}
+                                onChangeText={(value) => setGender(value)}
+                            />
                             <TextInput keyboardType="number-pad" onChangeText={text => setBirthday(text)} style={[login.textinput, { width: "40%", marginLeft: "12%" }]} placeholder="생년월일" />
                         </View>
                     </View>

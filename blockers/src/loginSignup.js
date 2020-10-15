@@ -170,17 +170,15 @@ export default function LoginSignup({ navigation }) {
     // Create a Google credential with the token
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
 
+    const NewUser = (await auth().signInWithCredential(googleCredential)).additionalUserInfo.isNewUser
     // Sign-in the user with the credential
-    auth().signInWithCredential(googleCredential);
-    setTimeout(() => {
-      const user = firebase.auth().currentUser;
-      if (user != null) {
-          navigation.navigate("Home");
-      }
-      else if (user == null) {
-          navigation.navigate("WalletPassword");
-      }
-  }, 1500)
+    if (NewUser === true) {
+      auth().signInWithCredential(googleCredential);
+      navigation.navigate("WalletPassword");
+    } else if (NewUser === false) {
+      auth().signInWithCredential(googleCredential);
+      navigation.navigate("Home");
+    }
   }
 
   async function onFacebookButtonPress() {
@@ -194,18 +192,15 @@ export default function LoginSignup({ navigation }) {
     if (!data) {
       throw 'Something went wrong obtaining access token';
     }
-    console.log(data)
     const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-    auth().signInWithCredential(facebookCredential);
-    setTimeout(() => {
-      const user = firebase.auth().currentUser;
-      if (user != null) {
-          navigation.navigate("Home");
-      }
-      else if (user == null) {
-          navigation.navigate("WalletPassword");
-      }
-  }, 1500)
+    const NewUser = (await auth().signInWithCredential(facebookCredential)).additionalUserInfo.isNewUser
+    if (NewUser === true) {
+      auth().signInWithCredential(facebookCredential);
+      navigation.navigate("WalletPassword");
+    } else if (NewUser === false) {
+      auth().signInWithCredential(facebookCredential);
+      navigation.navigate("Home");
+    }
   }
 
   useEffect(() => {

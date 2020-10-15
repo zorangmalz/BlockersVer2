@@ -7,7 +7,6 @@ import {
     SafeAreaView,
     TouchableOpacity,
     StyleSheet,
-    Image,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
@@ -42,10 +41,10 @@ export default function SettingExit({ navigation }) {
     const [agreeTwo, setAgreeTwo] = useState(true);
     const OneCheck = () => { setAgreeOne(!agreeOne) }
     const TwoCheck = () => { setAgreeTwo(!agreeTwo) }
-    const OneAgree = agreeOne === true ? require('./icon/exitcheck.png') : '';
-    const noOneAgree = agreeOne === false ? require('./icon/exitcheck.png') : '';
-    const TwoAgree = agreeTwo === true ? require('./icon/exitcheck.png') : '';
-    const noTwoAgree = agreeTwo === false ? require('./icon/exitcheck.png') : '';
+    const OneAgree = agreeOne === true ? <Ionicons size={12} color="#303030" name="checkmark" /> : <View />;
+    const noOneAgree = agreeOne === false ? <Ionicons size={12} color="#303030" name="checkmark" /> : <View />;
+    const TwoAgree = agreeTwo === true ? <Ionicons size={12} color="#303030" name="checkmark" /> : <View />;
+    const noTwoAgree = agreeTwo === false ? <Ionicons size={12} color="#303030" name="checkmark" /> : <View />;
 
     return (
         <>
@@ -198,13 +197,13 @@ export default function SettingExit({ navigation }) {
                         }}>
                             <TouchableOpacity onPress={OneCheck}>
                                 <View style={setting.agreeBox}>
-                                    <Image source={noOneAgree} />
+                                    {noOneAgree}
                                 </View>
                             </TouchableOpacity>
                             <Text style={setting.agree}>비동의</Text>
                             <TouchableOpacity onPress={OneCheck}>
                                 <View style={[setting.agreeBox, { marginLeft: 16 }]}>
-                                    <Image source={OneAgree} />
+                                    {OneAgree}
                                 </View>
                             </TouchableOpacity>
                             <Text style={setting.agree}>동의</Text>
@@ -261,13 +260,13 @@ export default function SettingExit({ navigation }) {
                         }}>
                             <TouchableOpacity onPress={TwoCheck}>
                                 <View style={setting.agreeBox}>
-                                    <Image source={noTwoAgree} />
+                                    {noTwoAgree}
                                 </View>
                             </TouchableOpacity>
                             <Text style={setting.agree}>비동의</Text>
                             <TouchableOpacity onPress={TwoCheck}>
                                 <View style={[setting.agreeBox, { marginLeft: 16 }]}>
-                                    <Image source={TwoAgree} />
+                                    {TwoAgree}
                                 </View>
                             </TouchableOpacity>
                             <Text style={setting.agree}>동의</Text>
