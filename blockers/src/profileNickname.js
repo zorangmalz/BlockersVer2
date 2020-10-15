@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
+import firestore from '@react-native-firebase/firestore';
+import { firebase } from '@react-native-firebase/auth';
 
 const login = StyleSheet.create({
     rule: {
@@ -45,14 +47,54 @@ const login = StyleSheet.create({
 export default function ProfileNickname({ navigation }) {
     const [nickname, setNickname] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
-    const modalbutton = () => {
-        setTimeout(() => {
-            setModalVisible(true)
-        }, 200)
+    const [same, setSame] = useState(false);
+
+    async function NicknameUpdate() {
+        const user = firebase.auth().currentUser;
+        await firestore().collection("UserInfo").get()
+            .then(documentSnapshot => {
+                documentSnapshot.forEach(doc => {
+                    const data = doc.data().nickname
+                    if(data === nickname) {
+                        setSame(true)
+                    }
+                })
+            }).catch(error => {
+                console.log(error)
+            })
+        if (nickname.length === 0) {
+            Alert.alert(
+                "닉네임을 입력해주세요",
+                "",
+                [
+                    {
+                        text: "OK",
+                        onPress: () => console.log("OK")
+                    }
+                ]
+            )
+        } else if (nickname.length > 0 && same === false) {
+            console.log("변경")
+            await firestore().collection("UserInfo").doc(user.uid)
+                .update({
+                    nickname: nickname
+                });
+            setTimeout(() => {
+                setModalVisible(true)
+            }, 200)
+        } else if (same === true) {
+            Alert.alert(
+                "중복된 닉네임입니다.",
+                "",
+                [
+                    {
+                        text: "OK",
+                        onPress: () => setSame(false)
+                    }
+                ]
+            )
+        }
     }
-    const [same, setSame] = useState(true);
-    const [repeat, setRepeat] = useState(false);
-    const repeatchange = () => setRepeat(!repeat);
 
     return (
         <>
@@ -124,8 +166,8 @@ export default function ProfileNickname({ navigation }) {
                 </Modal>
                 <ScrollView>
                     <View>
-                        <TextInput onSubmitEditing={repeatchange} onChangeText={text => setNickname(text)} style={[login.textinput, { width: "80%", marginTop: 32 }]} placeholder="닉네임" />
-                        {repeat === true ?
+                        <TextInput onChangeText={text => setNickname(text)} style={[login.textinput, { width: "80%", marginTop: 32 }]} placeholder="닉네임" />
+                        {same === true ?
                             <Text style={login.repeat}>중복된 닉네임입니다.</Text>
                             :
                             <Text></Text>
@@ -134,7 +176,7 @@ export default function ProfileNickname({ navigation }) {
                 </ScrollView>
                 {nickname.length > 0 ?
                     <TouchableOpacity
-                        onPress={modalbutton}
+                        onPress={NicknameUpdate}
                         style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>변경하기</Text>
