@@ -8,6 +8,7 @@ import {
     Text,
     StyleSheet,
     FlatList,
+    RefreshControl
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -62,10 +63,24 @@ const style = StyleSheet.create({
     }
 })
 
+const wait = (timeout) => {
+    return new Promise(resolve => {
+        setTimeout(resolve, timeout);
+    });
+}
+
 export default function MyPageScreen({ navigation }) {
     const [userlogined, setUserlogined] = useState(false);
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState("");
+    const [nickname, setNickname] = useState("");
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
     //Modal 띄울때 사용
     const [userlogin, setUserlogin] = useState(false);
     const loginview = () => {
@@ -85,15 +100,24 @@ export default function MyPageScreen({ navigation }) {
 
         if (initializing) setInitializing(false);
     }
+    const User = firebase.auth().currentUser;
 
     useEffect(() => {
+        {userlogined === true ? 
+            firestore().collection("UserInfo").doc(User.uid).get()
+                .then(data => {
+                    setNickname(data.data().nickname)
+                })
+            :
+            setNickname("닉네임을 설정해주세요");
+        }
         if (!user) {
             setUserlogined(false)
 
         }
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
-    }, []);
+    }, [refreshing]);
     if (initializing) return null;
     return (
         <>
@@ -205,14 +229,14 @@ export default function MyPageScreen({ navigation }) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <ScrollView style={style.container}>
+                <ScrollView style={style.container} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     </View>
                     {userlogined === true ?
                         <View style={style.containerStatus}>
                             <View style={{ marginTop: 16, marginLeft: 16, marginRight: 16 }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', }}>
-                                    <Text style={{ fontSize: 12, fontFamily: "HelveticaNeue", fontFamily: 'NunitoSans-Bold', color: "white" }}>{user.displayName}님</Text>
+                                    <Text style={{ fontSize: 12, fontFamily: "HelveticaNeue", fontFamily: 'NunitoSans-Bold', color: "white" }}>{nickname}</Text>
                                     <TouchableOpacity onPress={() => navigation.navigate('Transaction')}>
                                         <Text style={{ textDecorationLine: 'underline', fontSize: 9, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>Transaction</Text>
                                     </TouchableOpacity>
