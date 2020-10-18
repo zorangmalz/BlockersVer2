@@ -18,7 +18,6 @@ const style = StyleSheet.create({
         width: '90%',
         alignSelf: 'center',
         backgroundColor: "#ffffff",
-        height: 250,
         borderRadius: 10,
         paddingTop: 24,
         paddingLeft: 14,
@@ -110,9 +109,9 @@ export default function CommunityScreen({navigation}) {
                                         alignItems: 'center',
                                     }}>
                                         <MaterialCommunityIcons name="thumb-up-outline" color="#202426" size={16} />
-                                        <Text style={{fontFamily: 'Metropolis=Regular', fontSize: 12, color: '#202426', marginLeft: 4, marginRight: 16}}>10</Text>
+                                        <Text style={{fontFamily: 'Metropolis-Regular', fontSize: 12, color: '#202426', marginLeft: 4, marginRight: 16}}>10</Text>
                                         <Ionicons name="chatbubble-ellipses-outline" color="#202426" size={16} />
-                                        <Text style={{fontFamily: 'Metropolis=Regular', fontSize: 12, color: '#202426', marginLeft: 4}}>5</Text>
+                                        <Text style={{fontFamily: 'Metropolis-Regular', fontSize: 12, color: '#202426', marginLeft: 4}}>5</Text>
                                     </View>
                                 </View>
                             </View>

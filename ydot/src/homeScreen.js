@@ -23,7 +23,7 @@ const style = StyleSheet.create({
         width: '90%',
         alignSelf: 'center',
         backgroundColor: "#ffffff",
-        height: 160,
+        height: 150,
         borderRadius: 10,
         marginTop: 16,
         paddingTop: 19,
@@ -44,7 +44,7 @@ const style = StyleSheet.create({
     },
     topbox: {
         width: '90%',
-        height: 480,
+        height: 400,
         borderRadius: 10,
         backgroundColor: '#ffffff',
         alignSelf: 'center',
