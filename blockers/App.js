@@ -195,6 +195,7 @@ const App = ({ navigation }) => {
           name="주소찾기"
           component={AddressFind}
           options={{
+            headerShown: false,
             gestureDirection: 'vertical-inverted'
           }}
         />
@@ -202,6 +203,7 @@ const App = ({ navigation }) => {
           name="Calendar"
           component={Calendars}
           options={{
+            headerShown: false,
             gestureDirection: 'vertical-inverted'
           }}
         />
@@ -209,6 +211,7 @@ const App = ({ navigation }) => {
           name="Transaction"
           component={WalletTransaction}
           options={{
+            headerShown: false,
             gestureDirection: 'vertical-inverted'
           }}
         />
@@ -216,6 +219,7 @@ const App = ({ navigation }) => {
           name="입금"
           component={WalletCharge}
           options={{
+            headerShown: false,
             gestureDirection: 'vertical-inverted'
           }}
         />
@@ -224,6 +228,7 @@ const App = ({ navigation }) => {
           component={WalletWithdrawal}
           options={{
             headerTitle: "출금",
+            headerShown: false,
             gestureDirection: 'vertical-inverted'
           }}
         />
@@ -247,6 +252,7 @@ const App = ({ navigation }) => {
           name="개인정보"
           component={ProfileMain}
           options={{
+            headerShown: false,
             gestureDirection: 'vertical-inverted'
           }}
         />
@@ -261,6 +267,7 @@ const App = ({ navigation }) => {
           name="닉네임 변경"
           component={ProfileNickname}
           options={{
+            headerShown: false,
             gestureDirection: 'vertical-inverted'
           }}
         />
@@ -292,6 +299,7 @@ const App = ({ navigation }) => {
           name="Food"
           component={MarketContentsList}
           options={{
+            headerShown: false,
             gestureDirection: 'vertical-inverted'
           }}
         />
@@ -410,6 +418,7 @@ const App = ({ navigation }) => {
         name="설정"
         component={SettingMain}
         options={{
+          headerShown: false,
           gestureDirection: 'vertical-inverted'
         }}
       />
@@ -417,6 +426,7 @@ const App = ({ navigation }) => {
         name="문의하기"
         component={SettingQuestion}
         options={{
+          headerShown: false,
           gestureDirection: 'vertical-inverted'
         }}
       />
@@ -424,6 +434,7 @@ const App = ({ navigation }) => {
         name="알림설정"
         component={SettingAlram}
         options={{
+          headerShown: false,
           gestureDirection: 'vertical-inverted'
         }}
       />
@@ -431,6 +442,7 @@ const App = ({ navigation }) => {
         name="초기화"
         component={SettingReset}
         options={{
+          headerShown: false,
           gestureDirection: 'vertical-inverted'
         }}
       />
@@ -439,6 +451,7 @@ const App = ({ navigation }) => {
         component={SettingResetComplete}
         options={{
           headerTitle: "초기화",
+          headerShown: false,
           gestureDirection: 'vertical-inverted'
         }}
       />
@@ -446,6 +459,7 @@ const App = ({ navigation }) => {
         name="버전정보"
         component={SettingVersion}
         options={{
+          headerShown: false,
           gestureDirection: 'vertical-inverted'
         }}
       />
@@ -453,6 +467,7 @@ const App = ({ navigation }) => {
         name="탈퇴"
         component={SettingExit}
         options={{
+          headerShown: false,
           gestureDirection: 'vertical-inverted'
         }}
       />
@@ -468,6 +483,7 @@ const App = ({ navigation }) => {
         name="자주묻는 질문"
         component={SettingOften}
         options={{
+          headerShown: false,
           gestureDirection: 'vertical-inverted'
         }}
       />
@@ -475,6 +491,7 @@ const App = ({ navigation }) => {
         name="회사소개"
         component={SettingCompanyInfo}
         options={{
+          headerShown: false,
           gestureDirection: 'vertical-inverted'
         }}
       />
