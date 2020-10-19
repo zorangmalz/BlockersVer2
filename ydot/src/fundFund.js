@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import {
     StatusBar,
     StyleSheet,
@@ -9,14 +9,17 @@ import {
     Text,
     TouchableOpacity,
     Modal,
-    TextInput
+    TextInput,
+    Dimensions
 } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const WIDTH = Dimensions.get("screen").width;
 
 const style = StyleSheet.create({
     largebox: {
         width: '90%',
-        height: 270,
         borderRadius: 10,
         backgroundColor: '#ffffff',
         alignSelf: 'center',
@@ -101,11 +104,11 @@ export default function FundFund({ navigation }) {
     const onTwoCheck = () => { setCheckTwo(!checkTwo) }
     const onThreeCheck = () => { setCheckThree(!checkThree) }
     const onFourCheck = () => { setCheckFour(!checkFour) }
-    const OneCheck = checkTotal === true ? require('./icon/check.png') : checkOne === true ? require('./icon/check.png') : undefined;
-    const TwoCheck = checkTotal === true ? require('./icon/check.png') : checkTwo === true ? require('./icon/check.png') : undefined;
-    const ThreeCheck = checkTotal === true ? require('./icon/check.png') : checkThree === true ? require('./icon/check.png') : undefined;
-    const FourCheck = checkFour === true ? require('./icon/check.png') : undefined;
-    const TotalCheck = checkTotal === true ? require('./icon/check.png') : undefined;
+    const OneCheck = checkTotal === true ? <Ionicons name="checkmark-sharp" size={12} /> : checkOne === true ? <Ionicons name="checkmark-sharp" size={12} /> : <View />;
+    const TwoCheck = checkTotal === true ? <Ionicons name="checkmark-sharp" size={12} /> : checkTwo === true ? <Ionicons name="checkmark-sharp" size={12} /> : <View />;
+    const ThreeCheck = checkTotal === true ? <Ionicons name="checkmark-sharp" size={12} /> : checkThree === true ? <Ionicons name="checkmark-sharp" size={12} /> : <View />;
+    const FourCheck = checkFour === true ? <Ionicons name="checkmark-sharp" size={12} /> : <View />;
+    const TotalCheck = checkTotal === true ? <Ionicons name="checkmark-sharp" size={12} /> : <View />;
 
     //펀딩 금액 설정
     const [fundvisible, setFundvisible] = useState(false);
@@ -183,14 +186,12 @@ export default function FundFund({ navigation }) {
                                 :
                                 <Image style={{marginBottom: 32}} source={require('./icon/checkcomplete.png')} />
                             }
-                            <Text style={[style.text, { color: '#161513', fontSize: 20, marginTop: 16, alignSelf: 'center' }]}>{fundComplete === false ? "Smart Contract Address" : "Transaction Success"}</Text>
-                            <Text style={{ fontSize: 12, marginTop: 16, alignSelf: 'center', fontFamily: 'Metropolis-Regular', color: '#202426' }}>{fundComplete === false ? "0xCFAf7E7337466ce5444219b84741F2039611a382" : ""}</Text>
-                            <Text style={{ fontSize: 12, marginTop:1, alignSelf: 'center', fontFamily: 'Metropolis-Regular', color: '#202426', textDecorationLine: "underline" }}>Check in Klaytnscope</Text>
+                            <Text style={[style.text, { color: '#161513', fontSize: 14, marginTop: 16, alignSelf: 'center' }]}>{fundComplete === false ? "Smart Contract Address" : "Tx hash"}</Text>
+                            <Text style={{ fontSize: 12, marginTop: 16, alignSelf: 'center', fontFamily: 'Metropolis-Regular', color: '#202426' }}>{fundComplete === false ? "0xCFAf7E7337466ce5444219b84741F2039611a382" : "0x649640518e043295c86e674b4904…e6989215db2"}</Text>
+                            <Text style={{ fontSize: 12, marginTop: 16, alignSelf: 'flex-end', fontFamily: 'Metropolis-Regular', color: '#202426', marginRight: "9%", textDecorationLine: "underline" }}>View In Klaytnscope</Text>
                         </View>
                     </View>
-                    <TouchableOpacity onPress={() => { fundComplete === false ? setTimeout(() => {
-      setFundComplete(true) 
-    }, 1000): navigation.navigate("Home") }} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                    <TouchableOpacity onPress={() => { fundComplete === false ? setFundComplete(true) : navigation.navigate("Home") }} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                         <View style={{
                             width: "100%",
                             height: 60,
@@ -232,7 +233,7 @@ export default function FundFund({ navigation }) {
                                 </View>
                             </View>
                         </View>
-                        <ProgressBar style={{ alignSelf: 'center', marginTop: 28, marginBottom: 16 }} progress={0.6} width={320} height={8} color={'black'} unfilledColor="#acacac" borderWidth={0} />
+                        <ProgressBar style={{ alignSelf: 'center', marginTop: 16, marginBottom: 16 }} progress={0.6} width={WIDTH * 0.83} height={8} color={'black'} unfilledColor="#acacac" borderWidth={0} />
                         <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginLeft: '4%', marginRight: '4%' }}>
                             <View style={{ alignItems: 'flex-start' }}>
                                 <Text style={{ marginBottom: 8, fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold' }}>10명 참여중!</Text>
@@ -240,10 +241,10 @@ export default function FundFund({ navigation }) {
                             </View>
                             <View>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', marginBottom: 24, marginTop: 8 }}>
-                                    <Image style={{ width: 24, height: 24, marginRight: 4 }} resizeMode="contain" source={require('./icon/heart.png')} />
-                                    <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold' }}>100</Text>
-                                    <Image style={{ width: 24, height: 24, marginLeft: 10, marginRight: 4 }} resizeMode="contain" source={require('./icon/share.png')} />
-                                    <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold' }}>50</Text>
+                                    <Ionicons name="md-heart-outline" size={32} />
+                                    <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold', marginLeft: 4, marginRight: 10 }}>100</Text>
+                                    <Ionicons name="md-share-social-outline" size={32} />
+                                    <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold', marginLeft: 4 }}>50</Text>
                                 </View>
                             </View>
                         </View>
@@ -251,7 +252,7 @@ export default function FundFund({ navigation }) {
                     <View style={style.agreebox}>
                         <Text style={{ fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold' }}>약관 전체동의</Text>
                         <TouchableOpacity onPress={() => setCheckTotal(!checkTotal)} style={{width: 16, height: 16, borderWidth: 1, borderColor: '#202426', backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center'}}>
-                            <Image source={TotalCheck} />
+                            {TotalCheck}
                         </TouchableOpacity>
                     </View>
                     <View style={{alignSelf: 'center', width: 320, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8}}>
@@ -259,7 +260,7 @@ export default function FundFund({ navigation }) {
                             <Text style={{textDecorationLine: 'underline'}}>개인정보 처리</Text> 약관(필수)
                         </Text>
                         <TouchableOpacity onPress={onOneCheck} style={{width: 16, height: 16, borderWidth: 1, borderColor: '#202426', backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center'}}>
-                            <Image source={OneCheck} />
+                            {OneCheck}
                         </TouchableOpacity>
                     </View>
                     <View style={{alignSelf: 'center', width: 320, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8}}>
@@ -267,7 +268,7 @@ export default function FundFund({ navigation }) {
                             <Text style={{textDecorationLine: 'underline'}}>이용약관</Text> 동의(필수)
                         </Text>
                         <TouchableOpacity onPress={onTwoCheck} style={{width: 16, height: 16, borderWidth: 1, borderColor: '#202426', backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center'}} >
-                            <Image source={TwoCheck} />
+                            {TwoCheck}
                         </TouchableOpacity>
                     </View>
                     <View style={{alignSelf: 'center', width: 320, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8}}>
@@ -275,7 +276,7 @@ export default function FundFund({ navigation }) {
                             <Text style={{textDecorationLine: 'underline'}}>자산손실의 위험</Text>을 인지했습니다(필수)
                         </Text>
                         <TouchableOpacity onPress={onThreeCheck} style={{width: 16, height: 16, borderWidth: 1, borderColor: '#202426', backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center'}} >
-                            <Image source={ThreeCheck} />
+                            {ThreeCheck}
                         </TouchableOpacity>
                     </View>
                     <View style={{alignSelf: 'center', width: 320, paddingLeft: 16, paddingRight: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 8}}>
@@ -283,7 +284,7 @@ export default function FundFund({ navigation }) {
                             펀딩완료시 SNS, Email 알람 수신(선택)
                         </Text>
                         <TouchableOpacity onPress={onFourCheck} style={{width: 16, height: 16, borderWidth: 1, borderColor: '#202426', backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center'}}>
-                            <Image source={FourCheck} />
+                            {FourCheck}
                         </TouchableOpacity>
                     </View>
                 </ScrollView>

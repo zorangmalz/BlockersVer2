@@ -7,9 +7,13 @@ import {
     View,
     Image,
     Text,
-    TouchableOpacity
+    TouchableOpacity,
+    Dimensions
 } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const WIDTH = Dimensions.get("screen").width;
 
 const style = StyleSheet.create({
     largebox: {
@@ -19,7 +23,8 @@ const style = StyleSheet.create({
         backgroundColor: '#ffffff',
         alignSelf: 'center',
         marginTop: 20,
-        marginBottom: 80
+        marginBottom: 80,
+        zIndex: 1
     },
     line: {
         height: 0.7,
@@ -71,30 +76,69 @@ export default function HomeFund({ navigation }) {
                     <Text style={{ fontFamily: 'Metropolis-Bold', color: '#161513', fontSize: 20 }}>Fund Detail</Text>
                     <View />
                 </View>
-                <ScrollView>
+                <ScrollView style={{ zIndex: 1 }}>
                     <View style={style.largebox}>
+                        <View style={{
+                            backgroundColor: "#e78276",
+                            width: 100,
+                            height: 0,
+                            borderBottomWidth: 25,
+                            borderBottomColor: "#e78276",
+                            borderLeftWidth: 25,
+                            borderLeftColor: '#efefef',
+                            borderRightWidth: 25,
+                            borderRightColor: '#efefef',
+                            borderStyle: "solid",
+                            zIndex: 2,
+                            marginTop: 20,
+
+                            position: "absolute",
+                            right: -23,
+                            top: -6,
+                            transform: [{
+                                rotate: "45deg",
+                            }]
+                        }} />
+                        <Text style={{ 
+                            fontFamily: "Metropolis-Bold", 
+                            fontSize: 14, 
+                            color: "#ffffff", 
+                            textAlign: "center", 
+                            textAlignVertical: "center", 
+                            zIndex: 2, 
+                            position: "absolute",
+                            top: 21,
+                            right: 9,
+                            transform: [{
+                                rotate: "45deg"
+                            }]
+                        }}>D-20</Text>
                         <View style={{
                             flexDirection: 'row',
                             alignItems: 'center',
-                            justifyContent: 'space-evenly',
-                            marginTop: 16
+                            marginTop: 16,
+                            marginRight: "4%",
+                            marginLeft: "4%",
+                            zIndex: 1,
                         }}>
                             <View style={{
                                 flexDirection: 'row',
-                                alignItems: 'center'
+                                alignItems: 'center',
                             }}>
                                 <Image source={require('./icon/homeyoutuber.png')} />
                                 <View style={{
-                                    marginLeft: 12
+                                    marginLeft: WIDTH * 0.032,
+                                    alignItems: "flex-start",
+                                    justifyContent: "space-between"
                                 }}>
-                                    <Text style={[style.text, { fontSize: 16, marginBottom: 8 }]}>크랩 TV</Text>
-                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 4 }}>자금 모집 유형 : 초기자금</Text>
-                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 4 }}>한줄 소개 : 해산물 먹방 특화 크리에이터</Text>
+                                    <Text style={[style.text, { fontSize: 16, marginBottom: 10 }]}>크랩 TV</Text>
+                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 8 }}>자금 모집 유형 : 초기자금</Text>
+                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 8 }}>한줄 소개 : 해산물 먹방 특화 크리에이터</Text>
                                     <View style={{
                                         flexDirection: 'row',
                                         alignItems: 'center',
                                     }}>
-                                        <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 7 }}>섹터 분류 : </Text>
+                                        <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular' }}>섹터 분류 : </Text>
                                         <View style={[style.smallbox, { backgroundColor: '#78e185' }]}><Text style={style.smalltext}>#먹방</Text></View>
                                         <View style={[style.smallbox, { backgroundColor: '#9ddadb' }]}><Text style={style.smalltext}>#일상</Text></View>
                                         <View style={[style.smallbox, { backgroundColor: '#ffcf77' }]}><Text style={style.smalltext}>#ASMR</Text></View>
@@ -102,7 +146,7 @@ export default function HomeFund({ navigation }) {
                                 </View>
                             </View>
                         </View>
-                        <ProgressBar style={{alignSelf: 'center', marginTop: 28, marginBottom: 16}} progress={0.6} width={320} height={8} color={'black'} unfilledColor="#acacac" borderWidth={0} />
+                        <ProgressBar style={{alignSelf: 'center', marginTop: 28, marginBottom: 16}} progress={0.6} width={WIDTH * 0.83} height={8} color={'black'} unfilledColor="#acacac" borderWidth={0} />
                         <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginLeft: '4%', marginRight: '4%'}}>
                             <View style={{alignItems: 'flex-start'}}>
                                 <Text style={{marginBottom: 8, fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold'}}>10명 참여중!</Text>
@@ -112,12 +156,12 @@ export default function HomeFund({ navigation }) {
                             </View>
                             <View>
                                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', marginBottom: 24, marginTop: 8}}>
-                                    <Image style={{width: 24, height: 24, marginRight: 4}} resizeMode="contain" source={require('./icon/heart.png')} />
-                                    <Text style={{fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold'}}>100</Text>
-                                    <Image style={{width: 24, height: 24, marginLeft: 10, marginRight: 4}} resizeMode="contain" source={require('./icon/share.png')} />
-                                    <Text style={{fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold'}}>50</Text>
+                                    <Ionicons name="md-heart-outline" size={32} />
+                                    <Text style={{fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold', marginLeft: 4, marginRight: 10}}>100</Text>
+                                    <Ionicons name="md-share-social-outline" size={32} />
+                                    <Text style={{fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold', marginLeft: 4}}>50</Text>
                                 </View>
-                                <Text style={{marginBottom: 8, fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Regular'}}>100% 완료시 펀딩 진행</Text>
+                                <Text style={{marginBottom: 8, fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Regular', alignSelf: "flex-end"}}>100% 완료시 펀딩 진행</Text>
                             </View>
                         </View>
                         <View style={style.line} />
@@ -130,22 +174,42 @@ export default function HomeFund({ navigation }) {
                         <View style={{
                             flexDirection: 'row',
                             alignItems: 'center',
-                            marginLeft: 25
+                            justifyContent: "center"
                         }}>
-                            <Image source={require('./icon/youtube.png')} />
-                            <Text style={{ marginLeft: 4, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginRight: 16 }}>구독자 : 1 K</Text>
-                            <Image source={require('./icon/twitter.png')} />
-                            <Text style={{ marginLeft: 4, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginRight: 16 }}>구독자 : 2 K</Text>
-                        </View>
-                        <View style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            marginLeft: 25
-                        }}>
-                            <Image source={require('./icon/instagram.png')} />
-                            <Text style={{ marginLeft: 4, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginRight: 16 }}>팔로워 : 1 K</Text>
-                            <Text style={{ width: 48, height: 48, textAlign: 'center', fontSize: 35, color: '#202426', fontFamily: 'Metropolis-Bold' }}>$</Text>
-                            <Text style={{ marginLeft: 4, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginRight: 16 }}>채널 통계 보러가기</Text>
+                            <View>
+                                <View style={{
+                                    flexDirection: "row",
+                                    alignItems: "center"
+                                }}>
+                                    <Ionicons name="logo-youtube" size={32} />
+                                    <Text style={{ marginLeft: 16, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginRight: 20 }}>구독자 : 1 K</Text>
+                                </View>
+                                <View style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    marginTop: 8
+                                }}>
+                                    <Ionicons name="logo-instagram" size={32} />
+                                    <Text style={{ marginLeft: 16, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginRight: 24 }}>팔로워 : 1 K</Text>
+                                </View>
+                            </View>
+                            <View>
+                                <View style={{
+                                    flexDirection: "row",
+                                    alignItems: "center"
+                                }}>
+                                    <Ionicons name="logo-twitch" size={32} />
+                                    <Text style={{ marginLeft: 16, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular' }}>구독자 : 2 K</Text>
+                                </View>
+                                <View style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    marginTop: 8
+                                }}>
+                                    <Text style={{ width: 32, textAlign: 'center', fontSize: 35, color: '#202426', fontFamily: 'Metropolis-Bold' }}>$</Text>
+                                    <Text style={{ marginLeft: 16, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular' }}>채널 통계 보러가기</Text>
+                                </View>
+                            </View>
                         </View>
                         <Text style={{alignSelf: 'center', marginTop: 20, fontSize: 16, color: '#161513', fontFamily: 'Metropolis-Bold', marginBottom: 16}}>채널 소개</Text>
                         <Image style={{alignSelf: 'center', marginBottom: 16}} source={require('./icon/krab.png')} />
@@ -157,7 +221,7 @@ export default function HomeFund({ navigation }) {
                         <Text style={{alignSelf: 'center', marginBottom: 16, width: 300, opacity: 0.8, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular'}}>{example}</Text>
                     </View>
                 </ScrollView>
-                <TouchableOpacity onPress={() => navigation.navigate("FundFund")} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                <TouchableOpacity onPress={() => navigation.navigate("FundFund")} style={{ position: 'absolute', bottom: 0, right: 0, left: 0, zIndex: 2 }}>
                     <View style={{ 
                         width: "100%", 
                         height: 60, 
