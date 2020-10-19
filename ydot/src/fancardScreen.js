@@ -96,11 +96,10 @@ function FancardScreen({navigation}) {
           <View style={{
             marginTop: 16,
             width: '90%',
-            height: 380,
             paddingTop: 16,
             paddingLeft: 14.5,
             paddingRight: 14.5,
-            paddingBottom: 40,
+            paddingBottom: 12,
             backgroundColor: '#ffffff',
             alignSelf: 'center',
             borderRadius: 10
