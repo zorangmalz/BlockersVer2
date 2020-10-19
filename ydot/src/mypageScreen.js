@@ -253,14 +253,15 @@ useEffect(()=>{
 },[])
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <SafeAreaView style={{ flex: 0, backgroundColor: "#ffffff" }}>
+        <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+      </SafeAreaView>
       <SafeAreaView style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
         <View accessibilityRole="header" style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
-          alignItems: 'flex-end',
-          height: 87,
-          paddingBottom: 14,
+          alignItems: "center",
+          height: 50,
           backgroundColor: '#ffffff',
           width: "100%",
           paddingLeft: "5%",
@@ -274,11 +275,9 @@ useEffect(()=>{
               marginLeft: '37.5%'
             }}
           >
-            <TouchableOpacity onPress={()=>sendFetch()}>
             <Text style={{ fontSize: 24 }}>
-              <Text style={{ fontFamily: 'Metropolis-Bold', color: '#161513', fontSize: 20, }}>My Page</Text>
+              <Text style={{ fontFamily: 'Metropolis-Bold', color: '#161513', fontSize: 20 }}>My Page</Text>
             </Text>
-            </TouchableOpacity>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate('SignScreen')} style={{ marginLeft: 8 }}>
             <Ionicons name="settings-sharp" color="#161513" size={28} />

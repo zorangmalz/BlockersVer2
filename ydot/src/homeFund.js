@@ -57,26 +57,26 @@ const example = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed di
 export default function HomeFund({ navigation }) {
     return (
         <>
-            <StatusBar barStyle="dark-content" />
-            <SafeAreaView style={{ flex: 1, backgroundColor: '#efefef' }}>
+            {Platform.OS === "ios" && <View style={{ position: "absolute", top: 0, left: 0, width: "100%", height: WIDTH * 0.15, backgroundColor: "#ffffff", zIndex: 1 }} />}
+            <StatusBar backgroundColor="#ffffff" />
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#efefef', marginTop: 0 }}>
                 <View accessibilityRole="header" style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'flex-end',
-                    height: 87,
-                    paddingBottom: 14,
+                    alignItems: "center",
+                    height: 50,
                     backgroundColor: '#ffffff',
                     width: "100%",
                     paddingLeft: "5%",
-                    paddingRight: "5%"
+                    paddingRight: "5%",
                 }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginBottom: 4 }}>
-                        <Image source={require('./icon/back.png')} />
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back-outline" size={30} />
                     </TouchableOpacity>
                     <Text style={{ fontFamily: 'Metropolis-Bold', color: '#161513', fontSize: 20 }}>Fund Detail</Text>
                     <View />
                 </View>
-                <ScrollView style={{ zIndex: 1 }}>
+                <ScrollView style={{ zIndex: 0 }}>
                     <View style={style.largebox}>
                         <View style={{
                             backgroundColor: "#e78276",
@@ -221,15 +221,17 @@ export default function HomeFund({ navigation }) {
                         <Text style={{alignSelf: 'center', marginBottom: 16, width: 300, opacity: 0.8, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular'}}>{example}</Text>
                     </View>
                 </ScrollView>
-                <TouchableOpacity onPress={() => navigation.navigate("FundFund")} style={{ position: 'absolute', bottom: 0, right: 0, left: 0, zIndex: 2 }}>
-                    <View style={{ 
-                        width: "100%", 
-                        height: 60, 
+            </SafeAreaView>
+            <SafeAreaView style={{flex: 0}}>
+                <TouchableOpacity onPress={() => setFundvisible(true)} >
+                    <View style={{
+                        width: "100%",
+                        height: 60,
                         backgroundColor: '#202426',
-                        justifyContent: 'center', 
-                        alignItems: 'center' 
+                        justifyContent: 'center',
+                        alignItems: 'center'
                     }}>
-                        <Text style={{ fontSize: 16, color: '#ffffff', fontFamily: 'Metropolis-Bold' }}>펀딩하기</Text>
+                        <Text style={{ fontSize: 16, color: '#ffffff', fontFamily: 'Metropolis-Bold' }}>확인</Text>
                     </View>
                 </TouchableOpacity>
             </SafeAreaView>

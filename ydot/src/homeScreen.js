@@ -75,27 +75,27 @@ const style = StyleSheet.create({
 export default function HomeScreen({ navigation }) {
     return (
         <>
-            <StatusBar barStyle="dark-content" />
+            <SafeAreaView style={{ flex: 0, backgroundColor: "#ffffff" }}>
+                <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+            </SafeAreaView>
             <SafeAreaView style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
                 <View accessibilityRole="header" style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'flex-end',
-                    height: 87,
-                    paddingBottom: 14,
+                    alignItems: "center",
+                    height: 50,
                     backgroundColor: '#ffffff',
                     width: "100%",
                     paddingLeft: "5%",
-                    paddingRight: "5%"
+                    paddingRight: "5%",
                 }}>
-                    <TouchableOpacity onPress={() => navigation.navigate('SignScreen')} style={{ marginLeft: 8 }}>
+                    <TouchableOpacity onPress={() => navigation.navigate('SignScreen')} style={{ marginLeft: 8}}>
                         <Ionicons name="search" size={27} />
                     </TouchableOpacity>
                     <View
                         style={{
                             flexDirection: 'row',
                             justifyContent: "center",
-                            alignItems: 'center',
                         }}
                     >
                         <Text style={{ fontSize: 40 }}>

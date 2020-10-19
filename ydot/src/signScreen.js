@@ -63,7 +63,9 @@ navigation.navigate("Home")
   }
   return (
     <>
-      <StatusBar barStyle="dark-content" />
+      <SafeAreaView style={{ flex: 0, backgroundColor: "#ffffff" }}>
+        <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+      </SafeAreaView>
       <SafeAreaView style={{ flex: 1, backgroundColor: '#EFEFEF', alignItems: 'center', justifyContent: 'center' }}>
         <Modal
           animationType="slide"

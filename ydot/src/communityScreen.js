@@ -6,7 +6,6 @@ import {
     ScrollView,
     View,
     Text,
-    Image,
     TouchableOpacity,
     ImageBackground
 } from 'react-native';
@@ -33,14 +32,15 @@ export default function CommunityScreen({navigation}) {
     const list = [1, 2];
     return (
         <>
-            <StatusBar barStyle="dark-content" />
+            <SafeAreaView style={{ flex: 0, backgroundColor: "#ffffff" }}>
+                <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+            </SafeAreaView>
             <SafeAreaView style={{ flex: 1, backgroundColor: '#EFEFEF' }}>
                 <View accessibilityRole="header" style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'flex-end',
-                    height: 87,
-                    paddingBottom: 14,
+                    alignItems: "center",
+                    height: 50,
                     backgroundColor: '#ffffff',
                     width: "100%",
                     paddingLeft: "5%",

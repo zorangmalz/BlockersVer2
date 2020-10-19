@@ -123,21 +123,22 @@ export default function FundFund({ navigation }) {
     const [fundComplete, setFundComplete] = useState(false);
     return (
         <>
-            <StatusBar barStyle="dark-content" />
+            <SafeAreaView style={{ flex: 0, backgroundColor: "#ffffff" }}>
+                <StatusBar barStyle="dark-content" backgroundColor="#ffffff" />
+            </SafeAreaView>
             <SafeAreaView style={{ flex: 1, backgroundColor: '#efefef' }}>
                 <View accessibilityRole="header" style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between',
-                    alignItems: 'flex-end',
-                    height: 87,
-                    paddingBottom: 14,
+                    alignItems: "center",
+                    height: 50,
                     backgroundColor: '#ffffff',
                     width: "100%",
                     paddingLeft: "5%",
                     paddingRight: "5%"
                 }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginBottom: 4 }}>
-                        <Image source={require('./icon/back.png')} />
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back-outline" size={30} />
                     </TouchableOpacity>
                     <Text style={{ fontFamily: 'Metropolis-Bold', color: '#161513', fontSize: 20 }}>Funding</Text>
                     <View />
@@ -288,7 +289,9 @@ export default function FundFund({ navigation }) {
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-                <TouchableOpacity onPress={() => setFundvisible(true)} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+            </SafeAreaView>
+            <SafeAreaView style={{flex: 0}}>
+                <TouchableOpacity onPress={() => setFundvisible(true)} >
                     <View style={{
                         width: "100%",
                         height: 60,
