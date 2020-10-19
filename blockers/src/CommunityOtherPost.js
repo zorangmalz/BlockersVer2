@@ -649,7 +649,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                             flexDirection: 'row',
                                             alignItems: 'center',
                                         }}>
-                                            <Image resizeMode="contain" style={community.icon} source={{ uri: item.reProfile }} />
+                                            {item.reProfile ? <Image resizeMode="contain" style={community.icon} source={{ uri: item.reProfile }} /> : <Ionicons name="ios-person-circle" style={{marginRight: 4}} size={20} /> }
                                             <Text style={community.author}>{item.reNick}</Text>
                                             <Text style={[community.date, { fontSize: 12, marginLeft: 8 }]}>{item.reTime}</Text>
                                             {item.reMelike === true ?
