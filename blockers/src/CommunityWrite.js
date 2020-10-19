@@ -91,6 +91,7 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
             
         })
         if(user){
+            console.log(user)
             firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot=>{
                 console.log(documentSnapshot.data().nickname,"hihi")
                 setNick(documentSnapshot.data().nickname)
