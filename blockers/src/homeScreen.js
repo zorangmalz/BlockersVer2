@@ -123,7 +123,7 @@ export default function HomeScreen({ navigation }) {
         //     console.log(keyring._key._privateKey)
         // }
         // testFunction()
-        
+  
     }, [])
     useEffect(() => {
         if (user) {

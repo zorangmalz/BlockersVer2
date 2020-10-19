@@ -10,12 +10,14 @@ import {
     FlatList,
     RefreshControl
 } from 'react-native';
+import firebase from "@react-native-firebase/app";
 import auth from '@react-native-firebase/auth';
 import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modal';
+import firestore from "@react-native-firebase/firestore";
 
 const style = StyleSheet.create({
     container: {

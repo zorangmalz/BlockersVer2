@@ -16,6 +16,9 @@ import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import firestore from '@react-native-firebase/firestore';
 import KakaoLogins, { KAKAO_AUTH_TYPES } from '@react-native-seoul/kakao-login';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { firebase } from '@react-native-firebase/functions';
+import { Extrapolate } from 'react-native-reanimated';
+// import { kakaoCustomAuth } from '../functions';
 
 
 if (!KakaoLogins) {
@@ -97,21 +100,55 @@ export default function LoginSignup({ navigation }) {
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
   const [unlinkLoading, setUnlinkLoading] = useState(false);
-
-  const [token, setToken] = useState(TOKEN_EMPTY);
+  const [user,setUser]=useState();
+  // const [token, setToken] = useState(TOKEN_EMPTY);
   const [profile, setProfile] = useState(PROFILE_EMPTY);
 
-  const kakaoLogin = () => {
+  var kakaoAuth=firebase.functions().httpsCallable("kakaoCustomAuth");
+  // var kakaoAuth=firebase.functions().httpsCallable("helloworld");
+async function kakaoCheck(firebaseToken){
+const user= await auth().signInWithCustomToken(firebaseToken)
+console.log(user)
+let check=false
+await firestore()
+            .collection('UserInfo')
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(function (doc) {
+                  if(doc.id===user.user.uid){
+                    check=true
+                  }
+                    
+                })
+            })
+  if (check){
+    console.log("old")
+    navigation.navigate("Home")
+  }else{
+    console.log("new")
+    navigation.navigate("WalletPassword")
+  }
+}
+  async function kakaoLogin(){
     console.log("come")
     logCallback('Login Start', setLoginLoading(true));
-
-    KakaoLogins.login([KAKAO_AUTH_TYPES.Talk, KAKAO_AUTH_TYPES.Account])
+     KakaoLogins.login([KAKAO_AUTH_TYPES.Talk, KAKAO_AUTH_TYPES.Account])
       .then(result => {
-        setToken(result.accessToken);
+        const realToken=result.accessToken
+         kakaoAuth({token:realToken}).then(function(res){
+        kakaoCheck(res.data.firebase_token)
+       
+        // kakaoGetProfile()
+        }).catch(err=>{
+          logCallback(
+            `Failed:${err.code}:he ${err.message}`,  
+          );
+        })
         logCallback(
           `Login Finished:${JSON.stringify(result)}`,
           setLoginLoading(false),
         );
+        
       })
       .catch(err => {
         if (err.code === 'E_CANCELLED_OPERATION') {
@@ -122,6 +159,24 @@ export default function LoginSignup({ navigation }) {
             setLoginLoading(false),
           );
         }
+      });
+  };
+  const kakaoGetProfile = () => {
+    logCallback('Get Profile Start', setProfileLoading(true));
+
+    KakaoLogins.getProfile()
+      .then(result => {
+        setProfile(result);
+        logCallback(
+          `Get Profile Finished:${JSON.stringify(result)}`,
+          setProfileLoading(false),
+        );
+      })
+      .catch(err => {
+        logCallback(
+          `Get Profile Failed:${err.code} ${err.message}`,
+          setProfileLoading(false),
+        );
       });
   };
 
@@ -188,8 +243,8 @@ export default function LoginSignup({ navigation }) {
     if (result.isCancelled) {
       throw 'User cancelled the login process';
     }
-    const data = await AccessToken.getCurrentAccessToken();
-    if (!data) {
+    const dataa = await AccessToken.getCurrentAccessToken();
+    if (!dataa) {
       throw 'Something went wrong obtaining access token';
     }
     const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
@@ -225,7 +280,7 @@ export default function LoginSignup({ navigation }) {
       console.log("wow!!same!")
     } else {
       setTexts("비밀번호가 일치하지 않습니다!!")
-      console.log("damn")
+      
     }
   })
   return (
