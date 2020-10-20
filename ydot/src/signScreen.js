@@ -13,6 +13,9 @@ import {
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 
+const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get("window").height;
+
 const style = StyleSheet.create({
   logo: {
     fontFamily: 'Metropolis-Bold',
