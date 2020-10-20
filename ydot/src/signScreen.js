@@ -8,7 +8,8 @@ import {
   Image,
   TouchableOpacity,
   Modal,
-  TextInput
+  TextInput,
+  KeyboardAvoidingView
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 
@@ -73,10 +74,16 @@ navigation.navigate("Home")
           visible={accountvisible}
           onRequestClose={() => setAccountvisible(!accountvisible)}
         >
-          <View style={{ flex: 1, backgroundColor: '#B7B7B7', alignItems: 'center', justifyContent: 'space-between' }}>
-            <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 70, width: "100%", paddingLeft: "5%", paddingRight: "5%", marginTop: 32 }}>
-              <Text style={style.logo}>Y.</Text>
-            </View>
+          <SafeAreaView accessibilityRole="header" style={{
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 0,
+            paddingTop: HEIGHT * 0.1,
+            backgroundColor: "#B7B7B7",
+          }}>
+            <Text style={style.logo}>Y.</Text>
+          </SafeAreaView>
+          <SafeAreaView style={{ flex: 1, backgroundColor: '#B7B7B7', alignItems: 'center', justifyContent: "flex-end" }}>
             <View style={{
               width: "100%",
               height: 557,
@@ -86,22 +93,24 @@ navigation.navigate("Home")
               alignItems: 'center',
             }}>
               <Text style={[style.text, { color: '#161513', fontSize: 24, marginTop: 26, marginBottom: 48 }]}>Create account</Text>
-              <View style={{flexDirection: "row", alignItems: "center", justifyContent: "center", alignSelf: "center"}}>
-                <View style={{borderWidth: 1, borderColor: "#303030", width: 80, height: 80, borderRadius: 40, alignItems: "center", justifyContent: "center"}}>
-                  <Image resizeMode="contain" style={{width: 60, height: 60}} source={require('./icon/kakao.png')} />
+              <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "center", alignSelf: "center" }}>
+                <View style={{ borderWidth: 1, borderColor: "#303030", width: 80, height: 80, borderRadius: 40, alignItems: "center", justifyContent: "center" }}>
+                  <Image resizeMode="contain" style={{ width: 60, height: 60 }} source={require('./icon/kakao.png')} />
                 </View>
-                <Entypo style={{marginLeft: 16, marginRight: 16}} name="twitter-with-circle" size={80} color="#303030" />
+                <Entypo style={{ marginLeft: 16, marginRight: 16 }} name="twitter-with-circle" size={80} color="#303030" />
                 <Entypo name="facebook-with-circle" size={80} color="#303030" />
               </View>
               <Text style={[style.text, { color: '#161513', fontSize: 16, marginTop: 16, marginBottom: 16 }]}>or</Text>
-              <TextInput placeholder="Email Address" placeholderTextColor="#D2D3D3" style={style.textinput} />
-              <TextInput placeholder="Password" secureTextEntry={true} placeholderTextColor="#D2D3D3" style={style.textinput} />
-              <TextInput placeholder="Password Confirm" secureTextEntry={true} placeholderTextColor="#D2D3D3" style={style.textinput} />
-              <TouchableOpacity onPress={() => {setAccountvisible(false)}} style={[style.box, { backgroundColor: '#202426' }]}>
+              <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "padding"} enabled>
+                <TextInput placeholder="Email Address" placeholderTextColor="#D2D3D3" style={style.textinput} />
+                <TextInput placeholder="Password" secureTextEntry={true} placeholderTextColor="#D2D3D3" style={style.textinput} />
+                <TextInput placeholder="Password Confirm" secureTextEntry={true} placeholderTextColor="#D2D3D3" style={style.textinput} />
+              </KeyboardAvoidingView>
+              <TouchableOpacity onPress={() => { setAccountvisible(false) }} style={[style.box, { backgroundColor: '#202426' }]}>
                 <Text style={style.text}>Create account</Text>
               </TouchableOpacity>
             </View>
-          </View>
+          </SafeAreaView>
         </Modal>
         <Modal
           animationType="slide"
@@ -109,10 +118,16 @@ navigation.navigate("Home")
           visible={signvisible}
           onRequestClose={() => setSignvisible(!signvisible)}
         >
-          <View style={{ flex: 1, backgroundColor: '#B7B7B7', alignItems: 'center', justifyContent: 'space-between' }}>
-            <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 70, width: "100%", paddingLeft: "5%", paddingRight: "5%", marginTop: 32 }}>
-              <Text style={style.logo}>Y.</Text>
-            </View>
+          <SafeAreaView accessibilityRole="header" style={{
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 0,
+            paddingTop: HEIGHT * 0.1,
+            backgroundColor: "#B7B7B7",
+          }}>
+            <Text style={style.logo}>Y.</Text>
+          </SafeAreaView>
+          <SafeAreaView style={{ flex: 1, backgroundColor: '#B7B7B7', alignItems: 'center', justifyContent: "flex-end" }}>
             <View style={{
               width: "100%",
               height: 557,
@@ -132,8 +147,10 @@ navigation.navigate("Home")
                     <Entypo name="facebook-with-circle" size={80} color="#303030" />
                   </View>
                   <Text style={[style.text, { color: '#161513', fontSize: 16, marginTop: 16, marginBottom: 16 }]}>or</Text>
-                  <TextInput placeholder="Email Address" placeholderTextColor="#D2D3D3" style={style.textinput} />
-                  <TextInput placeholder="Password" secureTextEntry={true} placeholderTextColor="#D2D3D3" style={style.textinput} />
+                  <KeyboardAvoidingView behavior={Platform.OS == "ios" ? "padding" : "height"}>
+                    <TextInput placeholder="Email Address" placeholderTextColor="#D2D3D3" style={style.textinput} />
+                    <TextInput placeholder="Password" secureTextEntry={true} placeholderTextColor="#D2D3D3" style={style.textinput} />
+                  </KeyboardAvoidingView>
                   <View style={{ height: 75, width: 50 }} />
                 </>
                 :
@@ -152,7 +169,7 @@ navigation.navigate("Home")
                 </TouchableOpacity>
               }
             </View>
-          </View>
+          </SafeAreaView>
         </Modal>
         <View style={{ alignItems: 'center', justifyContent: 'center', marginBottom: 30 }}>
           <Text style={[style.logo, { marginBottom: 4 }]}>Y.</Text>
