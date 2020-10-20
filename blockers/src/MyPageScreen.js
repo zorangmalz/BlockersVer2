@@ -271,7 +271,7 @@ export default function MyPageScreen({ navigation }) {
                                 { key: '개인정보', name: '개인정보' },
                                 { key: '공지사항', name: '공지사항' },
                                 { key: '내가 쓴 글', name: '내가 쓴글' },
-                                { key: '이용약관', name: '이용약관' },
+                                { key: '정보', name: "정보" },
                             ]}
                             renderItem={({ item }) => (
                                 <>
