@@ -2,20 +2,24 @@ import React, { useReducer, useState } from 'react';
 import {
     StatusBar,
     StyleSheet,
-    SafeAreaView,
     ScrollView,
     View,
     Image,
     Text,
     TouchableOpacity,
-    Modal,
     TextInput,
-    Dimensions
+    Dimensions,
+    TouchableHighlight,
+    SafeAreaView,
+    Modal,
+    KeyboardAvoidingView,
+    Platform
 } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const WIDTH = Dimensions.get("screen").width;
+const WIDTH = Dimensions.get("window").width;
+const HEIGHT = Dimensions.get("window").height;
 
 const style = StyleSheet.create({
     largebox: {
@@ -114,10 +118,10 @@ export default function FundFund({ navigation }) {
     const [fundvisible, setFundvisible] = useState(false);
     const [klayvalue, setKlayvalue] = useState(0);
     const [percentvalue, percentpatch] = useReducer(Percent, 0);
-    const onTwentyFive = () => {percentpatch({type: "25%"})}
-    const onFifty = () => {percentpatch({type: "50%"})}
-    const onSeventyFive = () => {percentpatch({type: "75%"})}
-    const onMax = () => {percentpatch({type: "MAX"})}
+    const onTwentyFive = () => { percentpatch({ type: "25%" }) }
+    const onFifty = () => { percentpatch({ type: "50%" }) }
+    const onSeventyFive = () => { percentpatch({ type: "75%" }) }
+    const onMax = () => { percentpatch({ type: "MAX" }) }
 
     //펀딩 완료
     const [fundComplete, setFundComplete] = useState(false);
@@ -144,15 +148,15 @@ export default function FundFund({ navigation }) {
                     <View />
                 </View>
                 <Modal
-                    animationType="slide"
-                    transparent={true}
                     visible={fundvisible}
+                    transparent={true}
                     onRequestClose={() => setFundvisible(!fundvisible)}
                 >
-                    <View style={{ flex: 1, backgroundColor: '#303030', opacity: 0.9, alignItems: 'center', justifyContent: 'flex-end' }}>
-                        <View style={{
-                            width: "100%",
-                            height: 439,
+                    <SafeAreaView style={{zIndex: 0, flex: 1, backgroundColor: "#303030", opacity: 0.4 }} />
+                    <SafeAreaView style={{ alignItems: "center", justifyContent: "flex-end", flex: 1}}>
+                        <KeyboardAvoidingView behavior={Platform.OS==="ios" ? "padding" : "height"} enabled style={{
+                            width: WIDTH,
+                            height: 420,
                             borderTopLeftRadius: 50,
                             borderTopRightRadius: 50,
                             backgroundColor: '#ffffff',
@@ -185,24 +189,24 @@ export default function FundFund({ navigation }) {
                                     <Image source={require('./icon/arrowdown.png')} />
                                 </>
                                 :
-                                <Image style={{marginBottom: 32}} source={require('./icon/checkcomplete.png')} />
+                                <Image style={{ marginBottom: 32 }} source={require('./icon/checkcomplete.png')} />
                             }
                             <Text style={[style.text, { color: '#161513', fontSize: 14, marginTop: 16, alignSelf: 'center' }]}>{fundComplete === false ? "Smart Contract Address" : "Tx hash"}</Text>
                             <Text style={{ fontSize: 12, marginTop: 16, alignSelf: 'center', fontFamily: 'Metropolis-Regular', color: '#202426' }}>{fundComplete === false ? "0xCFAf7E7337466ce5444219b84741F2039611a382" : "0x649640518e043295c86e674b4904…e6989215db2"}</Text>
                             <Text style={{ fontSize: 12, marginTop: 16, alignSelf: 'flex-end', fontFamily: 'Metropolis-Regular', color: '#202426', marginRight: "9%", textDecorationLine: "underline" }}>View In Klaytnscope</Text>
-                        </View>
-                    </View>
-                    <TouchableOpacity onPress={() => { fundComplete === false ? setFundComplete(true) : navigation.navigate("Home") }} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
-                        <View style={{
-                            width: "100%",
-                            height: 60,
-                            backgroundColor: '#202426',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <Text style={{ fontSize: 16, color: '#ffffff', fontFamily: 'Metropolis-Bold' }}>{fundComplete===false ? "확인" : "돌아가기"}</Text>
-                        </View>
-                    </TouchableOpacity>
+                        </KeyboardAvoidingView>
+                        <TouchableHighlight onPress={() => { fundComplete === false ? setFundComplete(true) : navigation.navigate("Home") }} >
+                            <View style={{
+                                width: WIDTH,
+                                height: 60,
+                                backgroundColor: '#202426',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{ fontSize: 16, color: '#ffffff', fontFamily: 'Metropolis-Bold' }}>{fundComplete === false ? "확인" : "돌아가기"}</Text>
+                            </View>
+                        </TouchableHighlight>
+                    </SafeAreaView>
                 </Modal>
                 <ScrollView>
                     <View style={style.largebox}>
@@ -284,13 +288,11 @@ export default function FundFund({ navigation }) {
                         <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Bold', opacity: 0.6 }}>
                             펀딩완료시 SNS, Email 알람 수신(선택)
                         </Text>
-                        <TouchableOpacity onPress={onFourCheck} style={{width: 16, height: 16, borderWidth: 1, borderColor: '#202426', backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center'}}>
+                        <TouchableOpacity onPress={onFourCheck} style={{ width: 16, height: 16, borderWidth: 1, borderColor: '#202426', backgroundColor: '#ffffff', alignItems: 'center', justifyContent: 'center' }}>
                             {FourCheck}
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
-            </SafeAreaView>
-            <SafeAreaView style={{flex: 0}}>
                 <TouchableOpacity onPress={() => setFundvisible(true)} >
                     <View style={{
                         width: "100%",

@@ -2,13 +2,14 @@ import React from 'react';
 import {
     StatusBar,
     StyleSheet,
-    SafeAreaView,
     ScrollView,
     View,
     Image,
     Text,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    Platform,
+    SafeAreaView
 } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -23,7 +24,6 @@ const style = StyleSheet.create({
         backgroundColor: '#ffffff',
         alignSelf: 'center',
         marginTop: 20,
-        marginBottom: 80,
         zIndex: 1
     },
     line: {
@@ -76,7 +76,7 @@ export default function HomeFund({ navigation }) {
                     <Text style={{ fontFamily: 'Metropolis-Bold', color: '#161513', fontSize: 20 }}>Fund Detail</Text>
                     <View />
                 </View>
-                <ScrollView style={{ zIndex: 0 }}>
+                <ScrollView style={{zIndex: 0}}>
                     <View style={style.largebox}>
                         <View style={{
                             backgroundColor: "#e78276",
@@ -119,7 +119,7 @@ export default function HomeFund({ navigation }) {
                             marginTop: 16,
                             marginRight: "4%",
                             marginLeft: "4%",
-                            zIndex: 1,
+                            zIndex: 0,
                         }}>
                             <View style={{
                                 flexDirection: 'row',
@@ -146,8 +146,8 @@ export default function HomeFund({ navigation }) {
                                 </View>
                             </View>
                         </View>
-                        <ProgressBar style={{alignSelf: 'center', marginTop: 28, marginBottom: 16}} progress={0.6} width={WIDTH * 0.83} height={8} color={'black'} unfilledColor="#acacac" borderWidth={0} />
-                        <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginLeft: '4%', marginRight: '4%'}}>
+                        <ProgressBar style={{alignSelf: 'center', marginTop: 28, marginBottom: 16, zIndex: 0}} progress={0.6} width={WIDTH * 0.83} height={8} color={'black'} unfilledColor="#acacac" borderWidth={0} />
+                        <View style={{flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', marginLeft: '4%', marginRight: '4%', zIndex: 0}}>
                             <View style={{alignItems: 'flex-start'}}>
                                 <Text style={{marginBottom: 8, fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold'}}>10명 참여중!</Text>
                                 <Text style={{marginBottom: 8, fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold'}}>600,000 원 펀딩</Text>
@@ -165,7 +165,7 @@ export default function HomeFund({ navigation }) {
                             </View>
                         </View>
                         <View style={style.line} />
-                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16, marginLeft: 18 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 16, marginLeft: 18, zIndex: 0 }}>
                             <Text style={{ fontSize: 14, marginRight: 16, color: '#161513', fontFamily: 'Metropolis-Bold' }}>소개</Text>
                             <Text style={{ fontSize: 14, marginRight: 16, fontFamily: 'Metropolis-Regular', color: '#202426' }}>Fund</Text>
                             <Text style={{ fontSize: 14, marginRight: 16, fontFamily: 'Metropolis-Regular', color: '#202426' }}>상환계획</Text>
@@ -213,25 +213,23 @@ export default function HomeFund({ navigation }) {
                         </View>
                         <Text style={{alignSelf: 'center', marginTop: 20, fontSize: 16, color: '#161513', fontFamily: 'Metropolis-Bold', marginBottom: 16}}>채널 소개</Text>
                         <Image style={{alignSelf: 'center', marginBottom: 16}} source={require('./icon/krab.png')} />
-                        <Text style={{alignSelf: 'center', marginBottom: 16, width: 300, opacity: 0.8, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular'}}>{example}</Text>
-                        <Text style={{alignSelf: 'center', fontSize: 16, color: '#161513', fontFamily: 'Metropolis-Bold', marginBottom: 16}}>성장 계획</Text>
-                        <Image style={{alignSelf: 'center', marginBottom: 16}} source={require('./icon/graph.png')} />
-                        <Text style={{alignSelf: 'center', marginBottom: 30, width: 300, opacity: 0.8, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular'}}>{example}</Text>
-                        <Text style={{alignSelf: 'center', fontSize: 16, color: '#161513', fontFamily: 'Metropolis-Bold', marginBottom: 16}}>지속 가능성</Text>
-                        <Text style={{alignSelf: 'center', marginBottom: 16, width: 300, opacity: 0.8, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular'}}>{example}</Text>
+                        <Text style={{ alignSelf: 'center', marginBottom: 16, width: 300, opacity: 0.8, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular' }}>{example}</Text>
+                        <Text style={{ alignSelf: 'center', fontSize: 16, color: '#161513', fontFamily: 'Metropolis-Bold', marginBottom: 16 }}>성장 계획</Text>
+                        <Image style={{ alignSelf: 'center', marginBottom: 16 }} source={require('./icon/graph.png')} />
+                        <Text style={{ alignSelf: 'center', marginBottom: 30, width: 300, opacity: 0.8, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular' }}>{example}</Text>
+                        <Text style={{ alignSelf: 'center', fontSize: 16, color: '#161513', fontFamily: 'Metropolis-Bold', marginBottom: 16 }}>지속 가능성</Text>
+                        <Text style={{ alignSelf: 'center', marginBottom: 16, width: 300, opacity: 0.8, fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular' }}>{example}</Text>
                     </View>
                 </ScrollView>
-            </SafeAreaView>
-            <SafeAreaView style={{flex: 0}}>
-                <TouchableOpacity onPress={() => setFundvisible(true)} >
+                <TouchableOpacity onPress={() => navigation.navigate("FundFund")}>
                     <View style={{
                         width: "100%",
                         height: 60,
                         backgroundColor: '#202426',
                         justifyContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'center',
                     }}>
-                        <Text style={{ fontSize: 16, color: '#ffffff', fontFamily: 'Metropolis-Bold' }}>확인</Text>
+                        <Text style={{ fontSize: 16, color: '#ffffff', fontFamily: 'Metropolis-Bold' }}>펀딩하기</Text>
                     </View>
                 </TouchableOpacity>
             </SafeAreaView>
