@@ -65,6 +65,10 @@ import InformationNonReport from './src/InformationNonReport';
 import ModeSelect from './src/ModeSelect';
 import ModeSelectSmoker from './src/ModeSelectSmoker';
 import ModeSelectNonSmoker from './src/ModeSelectNonSmoker';
+import PersonalInformation from "./src/PersonalInformation";
+import Personal from "./src/Personal";
+import TermsOfUse from "./src/TermsOfUse";
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -528,6 +532,30 @@ const App = ({ navigation }) => {
         }}
       />
       <Stack.Screen 
+        name="정보"
+        component={PersonalInformation}
+        options={{
+          gestureDirection: 'vertical-inverted',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="서비스 이용 약관"
+        component={TermsOfUse}
+        options={{
+          gestureDirection: 'vertical-inverted',
+          
+        }}
+      />
+      <Stack.Screen 
+        name="개인정보처리방침"
+        component={Personal}
+        options={{
+          gestureDirection: 'vertical-inverted',
+          
+        }}
+      />
+      <Stack.Screen 
         name="ModeSelectNonSmoker"
         component={ModeSelectNonSmoker}
         options={{
@@ -535,6 +563,7 @@ const App = ({ navigation }) => {
           headerShown: false
         }}
       />
+      
       </Stack.Navigator>
     </NavigationContainer>
   );

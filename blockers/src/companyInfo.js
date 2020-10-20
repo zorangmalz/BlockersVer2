@@ -76,7 +76,7 @@ export default function SettingCompanyInfo({ navigation }) {
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
                     <TouchableOpacity style={[setting.mainBox, { marginTop: 10 }]} >
                         <Text style={setting.mainText}>유선연락처</Text>
-                        <Text style={setting.subText}></Text>
+                        <Text style={setting.subText}>02-3676-1541</Text>
                     </TouchableOpacity>
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
 
