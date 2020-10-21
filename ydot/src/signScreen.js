@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,9 +9,12 @@ import {
   TouchableOpacity,
   Modal,
   TextInput,
-  KeyboardAvoidingView
+  Dimensions,
+  KeyboardAvoidingView,
+  AsyncStorage
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
+import CaverExtKAS from "caver-js-ext-kas";
 
 const style = StyleSheet.create({
   logo: {
@@ -50,18 +53,37 @@ const style = StyleSheet.create({
     borderBottomColor: '#EFEFEF',
   }
 })
-
-function SignScreen({navigation}) {
+const HEIGHT = Dimensions.get("window").height;
+export default function SignScreen({navigation}) {
   const [accountvisible, setAccountvisible] = useState(false);
   const [signvisible, setSignvisible] = useState(false);
   const [walletvisible, setWalletvisible] = useState(false);
+  
+ 
+  async function requestCall(){
+    console.log("imhere")
+const caver=new CaverExtKAS()
+console.log("enxt")
+caver.initKASAPI(1001,"KASK799VQ5VDG5O2WJ8KGWZZ","7hE6dzkae0jz+4TjqD8JtKOnsdY4h0Vg/oKY9sl6")
+    // const blockNumber=await caver.rpc.klay.getBlockNumber()
+    // console.log(blockNumber)
+const account =await caver.kas.wallet.createAccount()
+console.log(account.address)
+try {
+  await AsyncStorage.setItem(
+    "wallet",
+    account.address
+  )
+}catch(err){
+  console.error(err)
+}
 
-  function requestCall(){
-    setWalletvisible(false)
-    setSignvisible(false)
-    setAccountvisible(false)
+setWalletvisible(false)
+setSignvisible(false)
+setAccountvisible(false)
 navigation.navigate("Home")
   }
+
   return (
     <>
       <SafeAreaView style={{ flex: 0, backgroundColor: "#ffffff" }}>
@@ -198,4 +220,29 @@ navigation.navigate("Home")
   );
 };
 
-export default SignScreen;
+
+
+
+
+//     var request = require('request');
+
+// var headers = {
+//     'x-chain-id': '1001'
+// };
+
+// var options = {
+//     url: 'https://wallet-api.klaytnapi.com/v2/account',
+//     headers: headers,
+//     auth: {
+//         'user': 'KASK799VQ5VDG5O2WJ8KGWZZ',
+//         'pass': '7hE6dzkae0jz+4TjqD8JtKOnsdY4h0Vg/oKY9sl6'
+//     }
+// };
+
+// function callback(error, response, body) {
+//     if (!error && response.statusCode == 200) {
+//         console.log(body.items)
+//     }
+// }
+
+// request(options, callback);
