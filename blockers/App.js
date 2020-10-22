@@ -68,6 +68,12 @@ import ModeSelectNonSmoker from './src/ModeSelectNonSmoker';
 import PersonalInformation from "./src/PersonalInformation";
 import Personal from "./src/Personal";
 import TermsOfUse from "./src/TermsOfUse";
+import Zero, { One, Two, Three, Four, Five, Six, Seven, Eight, Nine } from './src/SelfEsteem/SelfEsteemScreen';
+import SOne, { STwo, SThree, SFour, SFive, SSix, SSeven, SEight, SNine, STen, SEleven, STwelve } from './src/Stress/StressScreen';
+import AOne, { ATwo, AThree, AFour, AFive, ASix, ASeven, AEight, ANine } from './src/Alcohol/AlcoholScreen';
+import { SelfEsteemMain } from './src/SelfEsteem/Style';
+import { AlcoholMain } from './src/Alcohol/Style';
+import { StressMain } from './src/Stress/Style';
 
 
 const Tab = createBottomTabNavigator();
@@ -157,7 +163,7 @@ const App = ({ navigation }) => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen 
+        <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}
           options={{
@@ -267,7 +273,7 @@ const App = ({ navigation }) => {
             gestureDirection: 'vertical-inverted'
           }}
         />
-        <Stack.Screen 
+        <Stack.Screen
           name="닉네임 변경"
           component={ProfileNickname}
           options={{
@@ -283,7 +289,7 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
-        <Stack.Screen 
+        <Stack.Screen
           name="내가 쓴글"
           component={MypageMyWriting}
           options={{
@@ -322,7 +328,7 @@ const App = ({ navigation }) => {
             gestureDirection: 'vertical-inverted'
           }}
         />
-        <Stack.Screen 
+        <Stack.Screen
           name="ContentsComplete"
           component={ContentsComplete}
           options={{
@@ -370,7 +376,7 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
-        <Stack.Screen 
+        <Stack.Screen
           name="아이디/비밀번호 찾기"
           component={LoginFind}
           options={{
@@ -378,7 +384,7 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
-        <Stack.Screen 
+        <Stack.Screen
           name="본인인증"
           component={LoginVerification}
           options={{
@@ -386,7 +392,7 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
-        <Stack.Screen 
+        <Stack.Screen
           name="프로필 설정"
           component={LoginVerificationProfile}
           options={{
@@ -394,7 +400,7 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
-        <Stack.Screen 
+        <Stack.Screen
           name="아이디 찾기"
           component={LoginFindId}
           options={{
@@ -402,7 +408,7 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
-         <Stack.Screen 
+        <Stack.Screen
           name="LoginPassword"
           component={LoginPassword}
           options={{
@@ -410,7 +416,7 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
-        <Stack.Screen 
+        <Stack.Screen
           name="SolutionMain"
           component={SolutionMain}
           options={{
@@ -419,151 +425,422 @@ const App = ({ navigation }) => {
           }}
         />
         <Stack.Screen
-        name="설정"
-        component={SettingMain}
-        options={{
-          headerShown: false,
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="문의하기"
-        component={SettingQuestion}
-        options={{
-          headerShown: false,
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="알림설정"
-        component={SettingAlram}
-        options={{
-          headerShown: false,
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="초기화"
-        component={SettingReset}
-        options={{
-          headerShown: false,
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="ResetComplete"
-        component={SettingResetComplete}
-        options={{
-          headerTitle: "초기화",
-          headerShown: false,
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="버전정보"
-        component={SettingVersion}
-        options={{
-          headerShown: false,
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="탈퇴"
-        component={SettingExit}
-        options={{
-          headerShown: false,
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="ExitComplete"
-        component={SettingExitComplete}
-        options={{ 
-          headerShown: false,
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="자주묻는 질문"
-        component={SettingOften}
-        options={{
-          headerShown: false,
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen
-        name="회사소개"
-        component={SettingCompanyInfo}
-        options={{
-          headerShown: false,
-          gestureDirection: 'vertical-inverted'
-        }}
-      />
-      <Stack.Screen 
-        name="InformationMain"
-        component={InformationMain}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          headerShown: false
-        }}
-      />
-      <Stack.Screen 
-        name="InformationNonReport"
-        component={InformationNonReport}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          headerShown: false
-        }}
-      />
-      <Stack.Screen 
-        name="ModeSelect"
-        component={ModeSelect}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          headerShown: false
-        }}
-      />
-      <Stack.Screen 
-        name="ModeSelectSmoker"
-        component={ModeSelectSmoker}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          headerShown: false
-        }}
-      />
-      <Stack.Screen 
-        name="정보"
-        component={PersonalInformation}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          headerShown: false
-        }}
-      />
-      <Stack.Screen 
-        name="서비스 이용 약관"
-        component={TermsOfUse}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          
-        }}
-      />
-      <Stack.Screen 
-        name="개인정보처리방침"
-        component={Personal}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          
-        }}
-      />
-      <Stack.Screen 
-        name="ModeSelectNonSmoker"
-        component={ModeSelectNonSmoker}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          headerShown: false
-        }}
-      />
-      
+          name="설정"
+          component={SettingMain}
+          options={{
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+          name="문의하기"
+          component={SettingQuestion}
+          options={{
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+          name="알림설정"
+          component={SettingAlram}
+          options={{
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+          name="초기화"
+          component={SettingReset}
+          options={{
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+          name="ResetComplete"
+          component={SettingResetComplete}
+          options={{
+            headerTitle: "초기화",
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+          name="버전정보"
+          component={SettingVersion}
+          options={{
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+          name="탈퇴"
+          component={SettingExit}
+          options={{
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+          name="ExitComplete"
+          component={SettingExitComplete}
+          options={{
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+          name="자주묻는 질문"
+          component={SettingOften}
+          options={{
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+          name="회사소개"
+          component={SettingCompanyInfo}
+          options={{
+            headerShown: false,
+            gestureDirection: 'vertical-inverted'
+          }}
+        />
+        <Stack.Screen
+          name="InformationMain"
+          component={InformationMain}
+          options={{
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="InformationNonReport"
+          component={InformationNonReport}
+          options={{
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="ModeSelect"
+          component={ModeSelect}
+          options={{
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="ModeSelectSmoker"
+          component={ModeSelectSmoker}
+          options={{
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="정보"
+          component={PersonalInformation}
+          options={{
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="서비스 이용 약관"
+          component={TermsOfUse}
+          options={{
+            gestureDirection: 'vertical-inverted',
+
+          }}
+        />
+        <Stack.Screen
+          name="개인정보처리방침"
+          component={Personal}
+          options={{
+            gestureDirection: 'vertical-inverted',
+
+          }}
+        />
+        <Stack.Screen
+          name="ModeSelectNonSmoker"
+          component={ModeSelectNonSmoker}
+          options={{
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="SelfEsteemMain"
+          component={SelfEsteemMain}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="SelfEsteemZero"
+          component={Zero}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="SelfEsteemOne"
+          component={One}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="SelfEsteemTwo"
+          component={Two}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="SelfEsteemThree"
+          component={Three}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="SelfEsteemFour"
+          component={Four}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="SelfEsteemFive"
+          component={Five}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="SelfEsteemSix"
+          component={Six}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="SelfEsteemSeven"
+          component={Seven}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="SelfEsteemEight"
+          component={Eight}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="SelfEsteemNine"
+          component={Nine}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressMain"
+          component={StressMain}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressOne"
+          component={SOne}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressTwo"
+          component={STwo}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressThree"
+          component={SThree}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressFour"
+          component={SFour}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressFive"
+          component={SFive}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressSix"
+          component={SSix}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressSeven"
+          component={SSeven}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressEight"
+          component={SEight}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressNine"
+          component={SNine}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressTen"
+          component={STen}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressEleven"
+          component={SEleven}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="StressTwelve"
+          component={STwelve}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="AlcoholMain"
+          component={AlcoholMain}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="AlcoholOne"
+          component={AOne}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="AlcoholTwo"
+          component={ATwo}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="AlcoholThree"
+          component={AThree}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="AlcoholFour"
+          component={AFour}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="AlcoholFive"
+          component={AFive}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="AlcoholSix"
+          component={ASix}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="AlcoholSeven"
+          component={ASeven}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="AlcoholEight"
+          component={AEight}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name="AlcoholNine"
+          component={ANine}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
