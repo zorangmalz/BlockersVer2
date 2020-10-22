@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState,useEffect } from 'react';
 import {
     StatusBar,
     StyleSheet,
@@ -17,6 +17,8 @@ import {
 } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Caver from "caver-js";
+import CaverExtKAS from "caver-js-ext-kas";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -113,18 +115,96 @@ export default function FundFund({ navigation }) {
     const ThreeCheck = checkTotal === true ? <Ionicons name="checkmark-sharp" size={12} /> : checkThree === true ? <Ionicons name="checkmark-sharp" size={12} /> : <View />;
     const FourCheck = checkFour === true ? <Ionicons name="checkmark-sharp" size={12} /> : <View />;
     const TotalCheck = checkTotal === true ? <Ionicons name="checkmark-sharp" size={12} /> : <View />;
-
+    const [iHave,setIHave]=useState()
     //펀딩 금액 설정
     const [fundvisible, setFundvisible] = useState(false);
-    const [klayvalue, setKlayvalue] = useState(0);
+    const [klayvalue, setKlayvalue] = useState();
     const [percentvalue, percentpatch] = useReducer(Percent, 0);
     const onTwentyFive = () => { percentpatch({ type: "25%" }) }
     const onFifty = () => { percentpatch({ type: "50%" }) }
     const onSeventyFive = () => { percentpatch({ type: "75%" }) }
     const onMax = () => { percentpatch({ type: "MAX" }) }
 
+    const [transactionHash,setTransactionHash]=useState()
     //펀딩 완료
     const [fundComplete, setFundComplete] = useState(false);
+    const caver=new Caver("https://api.baobab.klaytn.net:8651/")
+    
+    async function getBalance(){
+        
+        const balance=await caver.klay.getBalance("0x10dAa2D245AB7f9CD388eAA38434a2aA0776d03b")
+        // console.log(caver.utils.fromPeb(balance,"KLAY"))
+        setIHave(caver.utils.fromPeb(balance,"KLAY"))
+      
+      }
+async function useCaver(){
+    const address="0x023739e69d468636080be83692200e5af3837227"
+    const pk="0xc69081c55b503df5752239ae75d039da7b34b52d2d28585a55043c516d17f37f"
+    const keyring=caver.wallet.keyring.create(address,pk)
+    await caver.wallet.add(keyring)
+console.log(keyring)
+console.log("here")
+await caver.kct.kip7.deploy({
+    name:"KrabTv",
+    symbol:"KRKR",
+    decimals:18,
+    initialSupply:'100000000000000000000'
+},keyring.address)
+.then(console.log)
+}
+
+async function sendKlay(){
+
+    const cavers=new CaverExtKAS()
+cavers.initKASAPI(1001,"KASK799VQ5VDG5O2WJ8KGWZZ","7hE6dzkae0jz+4TjqD8JtKOnsdY4h0Vg/oKY9sl6")
+    // const blockNumber=await caver.rpc.klay.getBlockNumber()
+    // console.log(blockNumber)
+// const account =await caver.kas.wallet.createAccount()
+
+
+    // const address="0x14ee95ce5537737724db9f61dfb760527b786a18"
+    // const pk="0xb56d4e3e328c068d68a050e81a4cdc538ac3c2cab6eb0077aea761ed1dc1d825"
+    // const keyring=caver.wallet.keyring.create(address,pk)
+    // await caver.wallet.add(keyring)
+    // console.log(caver.wallet._address)
+
+    const tx = { 
+        from: "0x10dAa2D245AB7f9CD388eAA38434a2aA0776d03b",
+        to: '0x023739e69d468636080be83692200e5af3837227',
+        value: klayvalue*1000000000000000000,
+        gas: 25000,
+        memo: 'memo',
+        submit: true
+      }
+      const result = await cavers.kas.wallet.requestValueTransfer(tx)
+      console.log(result,"result!!")
+      token()
+}
+async function token(){
+    const address="0x023739e69d468636080be83692200e5af3837227"
+    const pk="0xc69081c55b503df5752239ae75d039da7b34b52d2d28585a55043c516d17f37f"
+    const keyring=caver.wallet.keyring.create(address,pk)
+    await caver.wallet.add(keyring)
+    const kip=new caver.kct.kip7("0x3c3Ce9E395B8B7Ca50c5f6BAae983c8ea40630b9")
+    // kip.approve(keyring.address,100000,{from:keyring.address}).then(console.log)
+    // kip.isMinter(keyring.address).then(console.log)
+    kip.transferFrom(keyring.address,"0x10dAa2D245AB7f9CD388eAA38434a2aA0776d03b",klayvalue*100,{from:keyring.address})
+    .then(function(res){
+        setTransactionHash(res.events.Transfer.transactionHash)
+        console.log(res.events.Transfer.transactionHash)
+        setFundvisible(true)
+        setFundComplete(true)
+    })
+    kip.balanceOf("0x10dAa2D245AB7f9CD388eAA38434a2aA0776d03b").then(console.log)
+    
+}
+
+    useEffect(()=>{
+        getBalance()
+        
+        // token()
+        // useCaver()
+    })
     return (
         <>
             <SafeAreaView style={{ flex: 0, backgroundColor: "#ffffff" }}>
@@ -167,7 +247,7 @@ export default function FundFund({ navigation }) {
                                 <>
                                     <View style={{ width: 250, marginBottom: 16 }}>
                                         <View style={{ width: 250, height: 50, borderBottomColor: '#161513', borderBottomWidth: 2, flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between' }}>
-                                            <TextInput value={klayvalue} keyboardType="number-pad" style={{ fontFamily: 'Metropolis-Bold', color: '#161513', fontSize: 20, width: 180 }} />
+                                            <TextInput value={klayvalue} onChangeText={text => setKlayvalue(text)}keyboardType="number-pad" style={{ fontFamily: 'Metropolis-Bold', color: '#161513', fontSize: 20, width: 180 }} />
                                             <Text style={{ fontFamily: 'Metropolis-Bold', color: '#161513', fontSize: 20, marginBottom: 8 }}>KLAY</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', marginTop: 8, alignSelf: 'flex-end' }}>
@@ -184,7 +264,7 @@ export default function FundFund({ navigation }) {
                                                 <Text style={[style.percent, { color: percentvalue === 100 ? '#ffffff' : '#202426' }]}>MAX</Text>
                                             </TouchableOpacity>
                                         </View>
-                                        <Text style={[style.text, { color: '#ed3f2b', fontSize: 13, marginTop: 8, alignSelf: 'flex-end' }]}>MAX: 1,000 KLAY</Text>
+                                        <Text style={[style.text, { color: '#ed3f2b', fontSize: 13, marginTop: 8, alignSelf: 'flex-end' }]}>MAX: {iHave} KLAY</Text>
                                     </View>
                                     <Image source={require('./icon/arrowdown.png')} />
                                 </>
@@ -192,10 +272,10 @@ export default function FundFund({ navigation }) {
                                 <Image style={{ marginBottom: 32 }} source={require('./icon/checkcomplete.png')} />
                             }
                             <Text style={[style.text, { color: '#161513', fontSize: 14, marginTop: 16, alignSelf: 'center' }]}>{fundComplete === false ? "Smart Contract Address" : "Tx hash"}</Text>
-                            <Text style={{ fontSize: 12, marginTop: 16, alignSelf: 'center', fontFamily: 'Metropolis-Regular', color: '#202426' }}>{fundComplete === false ? "0xCFAf7E7337466ce5444219b84741F2039611a382" : "0x649640518e043295c86e674b4904…e6989215db2"}</Text>
+                            <Text style={{ fontSize: 12, marginTop: 16, alignSelf: 'center', fontFamily: 'Metropolis-Regular', color: '#202426' }}>{fundComplete === false ? "0x3c3Ce9E395B8B7Ca50c5f6BAae983c8ea40630b9" : transactionHash}</Text>
                             <Text style={{ fontSize: 12, marginTop: 16, alignSelf: 'flex-end', fontFamily: 'Metropolis-Regular', color: '#202426', marginRight: "9%", textDecorationLine: "underline" }}>View In Klaytnscope</Text>
                         </KeyboardAvoidingView>
-                        <TouchableHighlight onPress={() => { fundComplete === false ? setFundComplete(true) : navigation.navigate("Home") }} >
+                        <TouchableHighlight onPress={() => { fundComplete === false ? sendKlay(): navigation.navigate("Home") }} >
                             <View style={{
                                 width: WIDTH,
                                 height: 60,

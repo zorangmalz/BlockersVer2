@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Clipboard from "@react-native-community/clipboard";
 import firestore from '@react-native-firebase/firestore';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const style = StyleSheet.create({
     bigbox: {

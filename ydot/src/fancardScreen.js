@@ -12,6 +12,7 @@ import {
   Dimensions
 } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const WIDTH = Dimensions.get('screen').width;
 

@@ -56,7 +56,7 @@ const style = StyleSheet.create({
     borderBottomColor: '#EFEFEF',
   }
 })
-const HEIGHT = Dimensions.get("window").height;
+
 export default function SignScreen({navigation}) {
   const [accountvisible, setAccountvisible] = useState(false);
   const [signvisible, setSignvisible] = useState(false);
@@ -65,17 +65,18 @@ export default function SignScreen({navigation}) {
  
   async function requestCall(){
     console.log("imhere")
-const caver=new CaverExtKAS()
-console.log("enxt")
-caver.initKASAPI(1001,"KASK799VQ5VDG5O2WJ8KGWZZ","7hE6dzkae0jz+4TjqD8JtKOnsdY4h0Vg/oKY9sl6")
-    // const blockNumber=await caver.rpc.klay.getBlockNumber()
-    // console.log(blockNumber)
-const account =await caver.kas.wallet.createAccount()
-console.log(account.address)
+// const caver=new CaverExtKAS()
+// console.log("enxt")
+// caver.initKASAPI(1001,"KASK799VQ5VDG5O2WJ8KGWZZ","7hE6dzkae0jz+4TjqD8JtKOnsdY4h0Vg/oKY9sl6")
+//     // const blockNumber=await caver.rpc.klay.getBlockNumber()
+//     // console.log(blockNumber)
+// const account =await caver.kas.wallet.createAccount()
+
+// console.log(account)
 try {
   await AsyncStorage.setItem(
     "wallet",
-    account.address
+    "0x10dAa2D245AB7f9CD388eAA38434a2aA0776d03b"
   )
 }catch(err){
   console.error(err)

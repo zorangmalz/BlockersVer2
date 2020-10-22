@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     StatusBar,
     StyleSheet,
@@ -13,7 +13,10 @@ import {
 } from 'react-native';
 import ProgressBar from 'react-native-progress/Bar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Caver from "caver-js";
+import CaverExtKAS from "caver-js-ext-kas";
 
+const tokenABI=require("./tokenABI.json")
 const WIDTH = Dimensions.get("screen").width;
 
 const style = StyleSheet.create({
@@ -53,8 +56,21 @@ const style = StyleSheet.create({
 })
 
 const example = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et.";
-
+const caver=new Caver("https://api.baobab.klaytn.net:8651/")
 export default function HomeFund({ navigation }) {
+    async function hi(){
+    
+    const ki=new caver.kct.kip7("0x0ce14670317aca8e184579da39717b9246ffd591")
+        ki.symbol().then(console.log)
+        ki.totalSupply().then(console.log)
+        ki.balanceOf("0x7160a9d133b2b1288ec278ba4f5aea38fea6cd44").then(console.log)
+
+        // ki.isMinter("0x7160a9d133b2b1288ec278ba4f5aea38fea6cd44").then(console.log)
+        // ki.addMinter("0x43457512278fA87909b0b10931e83132c96c701f",{from:"0x7160a9d133b2b1288ec278ba4f5aea38fea6cd44"}).then(console.log)
+    }
+
+
+    
     return (
         <>
             {Platform.OS === "ios" && <View style={{ position: "absolute", top: 0, left: 0, width: "100%", height: WIDTH * 0.15, backgroundColor: "#ffffff", zIndex: 1 }} />}

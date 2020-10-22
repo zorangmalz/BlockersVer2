@@ -13,7 +13,8 @@ import {
 } from 'react-native';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import CaverExtKAS from "caver-js-ext-kas";
+import Caver from "caver-js";
 
 
 const style = StyleSheet.create({
@@ -39,9 +40,19 @@ const style = StyleSheet.create({
 function MypageScreen({navigation}) {
  const [copiedText, setCopiedText] = useState('')
 const [wallet,setWallet]=useState('')
+const [balacne,setBalance]=useState('')
   const copyToClipboard = () => {
     Clipboard.setString('hello world')
   }
+
+
+async function getBalance(){
+  const caver=new Caver("https://api.baobab.klaytn.net:8651/")
+  const balance=await caver.klay.getBalance("0x10dAa2D245AB7f9CD388eAA38434a2aA0776d03b")
+  // console.log(caver.utils.fromPeb(balance,"KLAY"))
+  setBalance(caver.utils.fromPeb(balance,"KLAY"))
+
+}
 async function retrieveData(){
   try{
     const value=await AsyncStorage.getItem("wallet")
@@ -54,7 +65,7 @@ async function retrieveData(){
 }
 useEffect(()=>{
   retrieveData()
-  
+  getBalance()
 },[])
   return (
     <>
@@ -102,7 +113,7 @@ useEffect(()=>{
                   <Text style={{ textDecorationLine: 'underline', fontSize: 12, fontFamily: 'Metropolis-Regular', color: "white" }}>Transaction</Text>
                 </TouchableOpacity>
               </View>
-              <Text style={{ marginTop: 32, fontSize: 16, fontFamily: 'Metropolis-Bold', color: "white" }}>5.8 Klay</Text>
+              <Text style={{ marginTop: 32, fontSize: 16, fontFamily: 'Metropolis-Bold', color: "white" }}>{balacne} Klay</Text>
             </View>
             <View style={{ flexDirection: "row", marginTop: 2, justifyContent: 'flex-end', alignItems: 'center' }}>
               <TouchableOpacity style={[style.buttonStyle, { backgroundColor: '#35363b', borderBottomLeftRadius: 20 }]}>
