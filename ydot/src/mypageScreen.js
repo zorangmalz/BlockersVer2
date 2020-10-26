@@ -49,8 +49,11 @@ const [balacne,setBalance]=useState('')
 async function getBalance(){
   const caver=new Caver("https://api.baobab.klaytn.net:8651/")
   const balance=await caver.klay.getBalance("0x10dAa2D245AB7f9CD388eAA38434a2aA0776d03b")
-  // console.log(caver.utils.fromPeb(balance,"KLAY"))
-  setBalance(caver.utils.fromPeb(balance,"KLAY"))
+  console.log(caver.utils.fromPeb(balance,"KLAY"))
+  var result=caver.utils.fromPeb(balance,"KLAY")
+  result=Number(result)
+  console.log(result.toFixed(2))
+  setBalance(Number(result).toFixed(2))
 
 }
 async function retrieveData(){
@@ -110,7 +113,7 @@ useEffect(()=>{
                   </TouchableOpacity>
                 </View>
                 <TouchableOpacity onPress={() => navigation.navigate('Transaction')}>
-                  <Text style={{ textDecorationLine: 'underline', fontSize: 12, fontFamily: 'Metropolis-Regular', color: "white" }}>Transaction</Text>
+                  <Text style={{ textDecorationLine: 'underline', fontSize: 8, fontFamily: 'Metropolis-Regular', color: "white" }}>Transaction</Text>
                 </TouchableOpacity>
               </View>
               <Text style={{ marginTop: 32, fontSize: 16, fontFamily: 'Metropolis-Bold', color: "white" }}>{balacne} Klay</Text>

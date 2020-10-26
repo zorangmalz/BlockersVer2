@@ -134,7 +134,11 @@ export default function FundFund({ navigation }) {
         
         const balance=await caver.klay.getBalance("0x10dAa2D245AB7f9CD388eAA38434a2aA0776d03b")
         // console.log(caver.utils.fromPeb(balance,"KLAY"))
-        setIHave(caver.utils.fromPeb(balance,"KLAY"))
+        var result=caver.utils.fromPeb(balance,"KLAY")
+        result=Number(result)
+        console.log(result.toFixed(2))
+        setIHave(Number(result).toFixed(2))
+        
       
       }
 async function useCaver(){
@@ -304,9 +308,9 @@ async function token(){
                                 <View style={{
                                     marginLeft: 16
                                 }}>
-                                    <Text style={[style.text, { fontSize: 16, marginBottom: 8 }]}>크랩 TV</Text>
+                                    <Text style={[style.text, { fontSize: 16, marginBottom: 8 }]}>제주 TV</Text>
                                     <Text style={{ fontSize: 12, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 8 }}>목표금액 : 1,000,000 KLAY</Text>
-                                    <Text style={{ fontSize: 12, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 8 }}>펀딩기간 : 2020/9/4~9/30</Text>
+                                    <Text style={{ fontSize: 12, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 8 }}>펀딩기간 : 2020/10/20~11/20</Text>
                                     <Text style={{ marginBottom: 8 }}>
                                         <Text style={{ fontSize: 12, color: '#161513', fontFamily: 'Metropolis-Bold' }}>100% </Text>
                                         <Text style={{ fontSize: 12, color: '#161513', fontFamily: 'Metropolis-Regular' }}>완료시 펀딩 진행</Text>

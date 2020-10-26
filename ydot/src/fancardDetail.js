@@ -73,11 +73,11 @@ function FancardDetail({navigation}) {
               <TouchableOpacity style={[style.box, { backgroundColor: '#E78276', marginBottom: 8 }]}>
                 <Image source={require('./icon/youtuber.png')} />
               </TouchableOpacity>
-              <Text style={[style.text, { width: 100, fontSize: 12, textAlign: 'center' }]}>KRAB</Text>
+              <Text style={[style.text, { width: 100, fontSize: 12, textAlign: 'center' }]}>JEJU</Text>
             </View>
             <FlatList
               data={[
-                { key: 1, getdate: '2020/9/20', nftaddress: '0xdcd…b9d6c', fantoken: '40 KRAB' },
+                { key: 1, getdate: '2020/10/24', nftaddress: '0xdcd…b9d6c', fantoken: 'JEJU' },
               ]}
               renderItem={({ item }) => (
                 <>

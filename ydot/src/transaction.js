@@ -10,8 +10,10 @@ import {
     Image
 } from 'react-native';
 import Clipboard from "@react-native-community/clipboard";
-import firestore from '@react-native-firebase/firestore';
+
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
+import CaverExtKAS from "caver-js-ext-kas";
 
 const style = StyleSheet.create({
     bigbox: {
@@ -29,7 +31,7 @@ const style = StyleSheet.create({
 })
 
 export default function Transaction({ navigation }) {
-    const ref = firestore().collection('Ydot');
+    
     const [first, setFirst] = useState();
     const [second, setSecond] = useState();
     const [third, setThird] = useState();
@@ -51,17 +53,22 @@ export default function Transaction({ navigation }) {
         }
     ];
     const [copiedText, setCopiedText] = useState('')
-    useEffect(() => {
-        async function load() {
-            firestore().collection("Ydot").doc("abcd").get().then(documentSnapshot => {
-                setFirst(documentSnapshot.data().first)
-                setSecond(documentSnapshot.data().second)
-                setThird(documentSnapshot.data().third)
-            })
-            console.log(first, second, third)
-        }
-        load()
-    }, [])
+  async function search(){
+    
+    const cavers=new CaverExtKAS()
+    cavers.initKASAPI(1001,"KASK799VQ5VDG5O2WJ8KGWZZ","7hE6dzkae0jz+4TjqD8JtKOnsdY4h0Vg/oKY9sl6")
+
+    const query = {
+        
+        size:5,
+        caFilter: "0x3c3Ce9E395B8B7Ca50c5f6BAae983c8ea40630b9",
+    }
+    const result = await cavers.kas.tokenHistory.getTransferHistoryByAccount('0x10dAa2D245AB7f9CD388eAA38434a2aA0776d03b', query)
+    console.log(result)
+  }
+  useEffect(()=>{
+      search()
+  })
     const copyToClipboard = () => {
         Clipboard.setString('hello world')
     }

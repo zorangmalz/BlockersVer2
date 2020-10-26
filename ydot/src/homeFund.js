@@ -147,17 +147,17 @@ export default function HomeFund({ navigation }) {
                                     alignItems: "flex-start",
                                     justifyContent: "space-between"
                                 }}>
-                                    <Text style={[style.text, { fontSize: 16, marginBottom: 10 }]}>크랩 TV</Text>
+                                    <Text style={[style.text, { fontSize: 16, marginBottom: 10 }]}>제주 TV</Text>
                                     <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 8 }}>자금 모집 유형 : 초기자금</Text>
-                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 8 }}>한줄 소개 : 해산물 먹방 특화 크리에이터</Text>
+                                    <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular', marginBottom: 8 }}>한줄 소개 : 제주도에서 한달 살아보기</Text>
                                     <View style={{
                                         flexDirection: 'row',
                                         alignItems: 'center',
                                     }}>
                                         <Text style={{ fontSize: 14, color: '#161513', fontFamily: 'Metropolis-Regular' }}>섹터 분류 : </Text>
-                                        <View style={[style.smallbox, { backgroundColor: '#78e185' }]}><Text style={style.smalltext}>#먹방</Text></View>
+                                        <View style={[style.smallbox, { backgroundColor: '#78e185' }]}><Text style={style.smalltext}>#여행</Text></View>
                                         <View style={[style.smallbox, { backgroundColor: '#9ddadb' }]}><Text style={style.smalltext}>#일상</Text></View>
-                                        <View style={[style.smallbox, { backgroundColor: '#ffcf77' }]}><Text style={style.smalltext}>#ASMR</Text></View>
+                                        <View style={[style.smallbox, { backgroundColor: '#ffcf77' }]}><Text style={style.smalltext}>#제주</Text></View>
                                     </View>
                                 </View>
                             </View>
@@ -168,7 +168,7 @@ export default function HomeFund({ navigation }) {
                                 <Text style={{marginBottom: 8, fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold'}}>10명 참여중!</Text>
                                 <Text style={{marginBottom: 8, fontSize: 14, color: '#202426', fontFamily: 'Metropolis-Bold'}}>600,000 원 펀딩</Text>
                                 <Text style={{marginBottom: 8, fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Regular'}}>목표금액 1,000,000 원 </Text>
-                                <Text style={{marginBottom: 8, fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Regular'}}>펀딩기간 2020/9/4~9/30</Text>
+                                <Text style={{marginBottom: 8, fontSize: 12, color: '#202426', fontFamily: 'Metropolis-Regular'}}>펀딩기간 2020/10/20~11/20</Text>
                             </View>
                             <View>
                                 <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', marginBottom: 24, marginTop: 8}}>
