@@ -453,6 +453,9 @@ PODS:
     - GTMSessionFetcher/Core (= 1.4.0)
   - IamportReactNative (1.5.1):
     - React
+  - kakao-login (2.10.1):
+    - KakaoOpenSDK (~> 1.21.0)
+    - React
   - KakaoOpenSDK (1.21.1):
     - KakaoOpenSDK/KakaoCommon (= 1.21.1)
     - KakaoOpenSDK/KakaoLink (= 1.21.1)
@@ -809,7 +812,7 @@ DEPENDENCIES:
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - IamportReactNative (from `../node_modules/iamport-react-native`)
-  - KakaoOpenSDK (~> 1.21.0)
+  - "kakao-login (from `../node_modules/@react-native-seoul/kakao-login`)"
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
   - React (from `../node_modules/react-native/`)
@@ -917,6 +920,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
   IamportReactNative:
     :path: "../node_modules/iamport-react-native"
+  kakao-login:
+    :path: "../node_modules/@react-native-seoul/kakao-login"
   RCTRequired:
     :path: "../node_modules/react-native/Libraries/RCTRequired"
   RCTTypeSafety:
@@ -1049,6 +1054,7 @@ SPEC CHECKSUMS:
   GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
   GTMSessionFetcher: 6f5c8abbab8a9bce4bb3f057e317728ec6182b10
   IamportReactNative: 6e670114125c029264fc926c9cac32222b71589b
+  kakao-login: 7111f3ee3231418c4bcd310d273651a637a46eac
   KakaoOpenSDK: 7a7b728491fc199bf2186fec5bbf2c70ba14f474
   leveldb-library: 55d93ee664b4007aac644a782d11da33fba316f7
   nanopb: c43f40fadfe79e8b8db116583945847910cbabc9
@@ -1101,6 +1107,6 @@ SPEC CHECKSUMS:
   Yoga: d5bd05a2b6b94c52323745c2c2b64557c8c66f64
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: ccddc7cbc6ebe782a56f4ab8cf2d6d58aad79015
+PODFILE CHECKSUM: 138e68cb69c029df3d21518b76183a656406c141
 
 COCOAPODS: 1.10.0.beta.1

@@ -43,7 +43,7 @@ static void InitializeFlipper(UIApplication *application) {
                                             initialProperties:nil];
   
   
-  [KOSession sharedSession].automaticPeriodicRefresh = YES;
+//  [KOSession sharedSession].automaticPeriodicRefresh = YES;
   
   
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
@@ -83,10 +83,10 @@ static void InitializeFlipper(UIApplication *application) {
 {
     [KOSession handleDidBecomeActive];
 }
-- (void)applicationDidEnterBackground:(UIApplication *)application {
-    
-    [KOSession handleDidEnterBackground];
-}
+//- (void)applicationDidEnterBackground:(UIApplication *)application {
+//    
+//    [KOSession handleDidEnterBackground];
+//}
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {
