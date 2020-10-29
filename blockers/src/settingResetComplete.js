@@ -35,7 +35,7 @@ export default function SettingResetComplete({navigation}) {
                         marginTop: 16
                     }}>어플리케이션을 종료하시면 다시 시작할 수 있습니다.</Text>
                 </ScrollView>
-                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => navigation.navigate("설정")}>
+                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => navigation.popToTop()}>
                     <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>종료</Text>
                     </View>

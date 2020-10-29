@@ -135,15 +135,18 @@ export default function LoginMain({navigation}) {
                     <TouchableOpacity onPress={() => navigation.navigate('아이디/비밀번호 찾기')}>
                         <Text style={login.signtext}>아이디/비밀번호 찾기</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('회원가입')}>
+                        <Text style={login.signtext}>회원가입</Text>
+                    </TouchableOpacity>
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
                     <TouchableOpacity activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#4a67ad'}]}>
-                        <Text style={login.buttontext}>Facebook으로 시작하기</Text>
+                        <Text style={login.buttontext}>Facebook으로 로그인</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={onGoogleButtonPress} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#c45545'}]}>
-                        <Text style={login.buttontext}>Gmail로 시작하기</Text>
+                        <Text style={login.buttontext}>Gmail로 로그인</Text>
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#f6e14b'}]}>
-                        <Text style={[login.buttontext, {color: '#000000'}]}>Kakaotalk으로 시작하기</Text>
+                        <Text style={[login.buttontext, {color: '#000000'}]}>Kakaotalk으로 로그인</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>

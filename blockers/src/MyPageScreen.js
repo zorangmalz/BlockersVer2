@@ -185,7 +185,7 @@ export default function MyPageScreen({ navigation }) {
                                     }}>둘러보기</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
-                                    navigation.navigate('회원가입')
+                                    navigation.navigate('로그인')
                                     setUserlogin(false)
                                 }}
                                     style={{

@@ -9,10 +9,10 @@ import {
     TouchableOpacity,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
-
+import moment from "moment"
 
 const setting = StyleSheet.create({
     largeText: {
@@ -69,6 +69,8 @@ export default function SettingReset({ navigation }) {
     const [user, setUser] = useState();
     const [uid, setuid] = useState();
     const [initializing, setInitializing] = useState(true);
+    const [fullTime,setFullTime]=useState();
+
     var count = 4;
     const ref = firestore().collection("UserInfo");
 
@@ -105,14 +107,27 @@ export default function SettingReset({ navigation }) {
     }
     async function reset() {
         setModalVisible(false)
-        if (user) {
-            await ref.doc(user.uid).update({
-                SmokingTime: ""
-            })
-        }
-        navigation.navigate("ResetComplete")
+        var a = moment().toArray()
+        var b=fullTime
+        var c = (b.diff(a, "seconds")) * -1
+        updateAndReset(a,c)
+            
+    }
+    async function updateAndReset(a,c){
+        
+        await ref.doc(user.uid).update({
+            SmokingTime: "",
+            failedReason:firebase.firestore.FieldValue.arrayUnion(a+"/"+select+"/"+c)
+        })
+    
+    navigation.navigate("ResetComplete")
     }
     useEffect(() => {
+        if(user){
+        ref.doc(user.uid).get().then(document=>{
+            setFullTime(moment(document.data().SmokingTime))
+        })}
+
         stress === true ? count = count + 1 : count = count - 1;
         symptom === true ? count = count + 1 : count = count - 1;
         environ === true ? count = count + 1 : count = count - 1;
@@ -129,7 +144,7 @@ export default function SettingReset({ navigation }) {
             console.log(select);
             setClear(false);
         }
-    }, [stress, symptom, environ, habit]);
+    }, [stress, symptom, environ, habit,user]);
 
     function onAuthStateChanged(users) {
         setUser(users);
