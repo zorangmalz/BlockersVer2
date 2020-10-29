@@ -98,7 +98,12 @@ export default function MyPageScreen({ navigation }) {
         if (user) {
             const sexs = "boy"
             setUserlogined(true)
+            firestore().collection("UserInfo").doc(user.uid).get()
+                .then(data => {
+                    setNickname(data.data().nickname)
+                })
         } else {
+            setNickname("닉네임을 설정해주세요");
             setUserlogined(false)
         }
 
@@ -107,21 +112,14 @@ export default function MyPageScreen({ navigation }) {
     const User = firebase.auth().currentUser;
 
     useEffect(() => {
-        {userlogined === true ? 
-            firestore().collection("UserInfo").doc(User.uid).get()
-                .then(data => {
-                    setNickname(data.data().nickname)
-                })
-            :
-            setNickname("닉네임을 설정해주세요");
-        }
+       
         if (!user) {
             setUserlogined(false)
 
         }
         const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
         return subscriber; // unsubscribe on unmount
-    }, [refreshing]);
+    }, [refreshing,userlogined]);
     if (initializing) return null;
     return (
         <>

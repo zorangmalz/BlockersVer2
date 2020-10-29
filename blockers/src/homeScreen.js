@@ -10,7 +10,8 @@ import {
     Image,
     StyleSheet,
     TouchableWithoutFeedback,
-    Dimensions
+    Dimensions,
+    RefreshControl
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import moment from "moment"
@@ -60,6 +61,11 @@ const resource = StyleSheet.create({
         opacity: 0.6
     }
 })
+const wait = (timeout) => {
+    return new Promise(resolve => {
+        setTimeout(resolve, timeout);
+    });
+}
 
 export default function HomeScreen({ navigation }) {
     //금연자인지 흡연자인지 구분
@@ -93,6 +99,15 @@ export default function HomeScreen({ navigation }) {
     const [smokingShow,setSmokingShow]=useState(0)
     const [smokingMoney,setSmokingMoney]=useState()
     const [stats,setStats]=useState()
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
+
     async function updateInfo(code) {
         var a = moment().toArray()
         await ref.doc(code).update({
@@ -150,7 +165,7 @@ export default function HomeScreen({ navigation }) {
         } else {
             setViewOpacity(false)
         }
-    }, [user, viewopacity, check])
+    }, [user, viewopacity, check,refreshing])
     useEffect(() => {
         //    auth().onAuthStateChanged(onAuthStateChanged);
         //    console.log(user)
@@ -199,7 +214,7 @@ export default function HomeScreen({ navigation }) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <ScrollView>
+                <ScrollView  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     <Swiper dotStyle={{ borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 250 }}>
                         <View>
                            

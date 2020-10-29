@@ -39,7 +39,7 @@ export default function SettingMain({ navigation }) {
             .then(() => console.log('User signed out!'));
         LoginManager.logOut()
 
-        navigation.goBack();
+        navigation.popToTop();
         setModalVisible(false);
     }
     return (
