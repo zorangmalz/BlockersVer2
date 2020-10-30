@@ -11,15 +11,17 @@ import {
     StyleSheet,
     TouchableWithoutFeedback,
     Dimensions,
-    RefreshControl
+    RefreshControl,
+    Alert
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useScreens } from 'react-native-screens';
 
 const Caver = require('caver-js')
 const WIDTH = Dimensions.get('window').width;
@@ -68,19 +70,15 @@ const wait = (timeout) => {
 }
 
 export default function HomeScreen({ navigation }) {
-    //금연자인지 흡연자인지 구분
-    
-
-    //흡연자일 경우 담배 색깔
-    const smokeProof = [true, false, false, false, false, false, false, false, false, false]
-    const smokeProofTwo = [false, false, false, false, false, false, false, false, false, false]
-    const smokeProofThree = [false, false, false, false, false, false, false, false, false, false]
-    const smokeProofFour = [false, false, false, false, false, false, false, false, false, false]
-
+  
     const ref = firestore().collection("UserInfo");
-
     const DATA = [];
     const num = 1;
+    const [smokingCount,setSmokingCount]=useState(0)
+    const [smokeProof,setSmokeProof]=useState([0,0,0,0,0,0,0,0,0,0,])
+    const [smokeProofTwo,setSmokeProofTwo]=useState([0,0,0,0,0,0,0,0,0,0,])
+    const [smokeProofThree,setSmokeProofThree]=useState([0,0,0,0,0,0,0,0,0,0,])
+    const [smokeProofFour,setSmokeProofFour]=useState([0,0,0,0,0,0,0,0,0,0,])
     const [month, setMonth] = useState('00');
     const [day, setDay] = useState(0);
     const [hour, setHour] = useState(0);
@@ -98,10 +96,12 @@ export default function HomeScreen({ navigation }) {
     const [smokingAmount,setSmokingAmount]=useState()
     const [smokingShow,setSmokingShow]=useState(0)
     const [smokingMoney,setSmokingMoney]=useState()
+    const [smokingDaily,setSmokingDaily]=useState(0)
     const [stats,setStats]=useState()
-
+    const [totals,setTotals]=useState()
+    const [today,setToday]=useState()
     const [refreshing, setRefreshing] = React.useState(false);
-
+    var total=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
 
@@ -116,18 +116,75 @@ export default function HomeScreen({ navigation }) {
     }
 
     function timeCounter(seconds) {
-        // console.log(seconds)
         setDay(parseInt(seconds / 86400))
-        // console.log(day,"day")
         setHour(parseInt(seconds % 86400 / 3600))
         setMinu(parseInt(seconds % 86400 % 3600 / 60))
         setSec(parseInt(seconds % 86400 % 3600 % 60))
-        
-        
-        // console.log("smokingShow:",smokingShow,"sec",sec,"day:",day,"smokingAmount:",smokingAmount,"hour:",hour,"fulltime:",fullTime)
     }
-
+    async function cutting(range){
+        var a=moment().toArray()
+        for(var i=0;i<range;i++){
+            total[i]=1
+        }
+        for(var i=0;i<smokingDaily;i++){
+            total[i]=2
+        }
+        setTotals(total)
+        // console.log(total)
+        setSmokeProof(total.slice(0,10))
+        setSmokeProofTwo(total.slice(10,20))
+        setSmokeProofThree(total.slice(20,30))
+        setSmokeProofFour(total.slice(30,40))
+        await ref.doc(user.uid).update({
+            smokeToday:a[2]
+        })
+    }
+    async function smokeClick(){
+        // console.log(totals,"init")
+        
+        var smoke=smokingDaily
+        console.log(smoke,stats,"compare")
+        if (Number(smoke)===Number(stats)){
+            Alert.alert("고마펴싀발")
+        }
+        setSmokingDaily(smoke+1)
+        // console.log(smoke,smokingDaily)
+        var total=totals
+        for(var i=0;i<smoke+1;i++){
+            total[i]=2
+        }
+        // console.log(total)
+        setSmokeProof(total.slice(0,10))
+        setSmokeProofTwo(total.slice(10,20))
+        setSmokeProofThree(total.slice(20,30))
+        setSmokeProofFour(total.slice(30,40))
+        await ref.doc(user.uid).update({
+            smokeDaily:smoke+1
+        })
+    }
+    async function timeCheck(){
+        var a=moment().toArray()
+        console.log(a)
+        await ref.doc(user.uid).get().then(documentSnapshot=>{
+            if(a[2]===documentSnapshot.data().smokeToday){
+                console.log("same")
+            }else{
+                console.log("different")
+                ref.doc(user.uid).update({
+                    smokeDaily:0,
+                    smokeToday:a[2],
+                    smokeStats:firebase.firestore.FieldValue.arrayUnion(a+"/흡연량 : "+smokingDaily)
+                    
+                })
+                setToday(false)
+            }
+        })
+        
+    }
     useEffect(() => {
+        var a =moment().toArray()
+        console.log(a)
+        // console.log(total)
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
@@ -146,8 +203,9 @@ export default function HomeScreen({ navigation }) {
                 setSmoker(documentSnapshot.data().smoker)
                 setSmokeInfo(documentSnapshot.data().smokeInfo)
                 setStats(documentSnapshot.data().smokingAmount)
-                
-                console.log("smokeInfo and stats",smokeInfo,stats)
+                setSmokingDaily(documentSnapshot.data().smokeDaily)
+                cutting(documentSnapshot.data().smokingAmount)
+                console.log("smokeInfo and stats",smokeInfo,stats,smokingDaily)
                 
                 if (!documentSnapshot.data().SmokingTime) {
                     setcheck(false)
@@ -159,30 +217,27 @@ export default function HomeScreen({ navigation }) {
                     // console.log(fullTime)
                 }
             })
+            timeCheck()
         }
         if (!check) {
             setViewOpacity(true)
         } else {
             setViewOpacity(false)
         }
-    }, [user, viewopacity, check,refreshing])
+    }, [user, viewopacity, check,refreshing,today])
     useEffect(() => {
-        //    auth().onAuthStateChanged(onAuthStateChanged);
-        //    console.log(user)
-
+        console.log("s")
         var b = moment(fullTime)
         if(fullTime){
         const interval = setInterval(() => {
-            // console.log(hour*smokingAmount)
             var a = moment().toArray()
             var c = (b.diff(a, "seconds")) * -1
-            // console.log(c)
             timeCounter(c)
             setSmokingShow(parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))
             setSmokingMoney(((parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))*125).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
-            // console.log(stats,day,hour)
+            
             var hi=100000
-            // console.log("real",hi.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+            
         }, 1000)
         return () => clearInterval(interval)
     }
@@ -223,11 +278,11 @@ export default function HomeScreen({ navigation }) {
                                     <>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 16, marginBottom: 16 }}>
                                             <View style={resource.container}>
-                                                <Text style={resource.smallText}>얼마나 안폈지?</Text>
+                                                <Text style={resource.smallText}>얼마나 피웠지?</Text>
                                                 <Text style={resource.largeText}>{smokingShow}대</Text>
                                             </View>
                                             <View style={resource.container}>
-                                                <Text style={resource.smallText}>얼마나 아꼈지?</Text>
+                                                <Text style={resource.smallText}>얼마나 썼지?</Text>
                                                 
                                 <Text style={resource.largeText}>{smokingMoney}원</Text>
                                             </View>
@@ -345,22 +400,22 @@ export default function HomeScreen({ navigation }) {
                                         <View style={{ marginTop: 24 }}>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center' }}>
                                                 {smokeProof.map((backColor) => (
-                                                    <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === true ? '#ff0000' : '#cc9a67' }} />
+                                                    <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : (backColor===2 ? '#ff0000':"#cc9a67")}}/>
                                                 ))}
                                             </View>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center', marginTop: 8 }}>
                                                 {smokeProofTwo.map((backColor) => (
-                                                    <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === true ? '#ffffff' : '#cc9a67' }} />
+                                                   <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : backColor===2 ? '#ff0000':"#cc9a67" }}/>
                                                 ))}
                                             </View>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center', marginTop: 8 }}>
                                                 {smokeProofThree.map((backColor) => (
-                                                    <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === true ? '#cc9a67' : '#ffffff' }} />
+                                                    <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : backColor===2 ? '#ff0000':"#cc9a67" }} />
                                                 ))}
                                             </View>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center', marginTop: 8 }}>
                                                 {smokeProofFour.map((backColor) => (
-                                                    <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === true ? '#cc9a67' : '#ffffff' }} />
+                                                    <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : backColor===2 ? '#ff0000':"#cc9a67" }} />
                                                 ))}
                                             </View>
                                         </View>
@@ -370,7 +425,7 @@ export default function HomeScreen({ navigation }) {
                                             fontSize: 24,
                                             alignSelf: 'center',
                                             marginTop: 10
-                                        }}>1/10</Text>
+                                        }}>{smokingDaily}/{stats}</Text>
                                         <TouchableOpacity style={{
                                             width: 100,
                                             height: 35,
@@ -380,7 +435,8 @@ export default function HomeScreen({ navigation }) {
                                             alignItems: 'center',
                                             marginTop: 8,
                                             alignSelf: 'center'
-                                        }}>
+                                        }}
+                                        onPress={smokeClick}>
                                             <Text style={{
                                                 fontFamily: 'NunitoSans-Bold',
                                                 fontSize: 16,
