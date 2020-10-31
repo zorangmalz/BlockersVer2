@@ -226,34 +226,53 @@ export default function CommunityHome({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-                <View accessibilityRole="header" style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    height: 50,
+            <View accessibilityRole="header" style={{
+                    height: 100,
                     width: "100%",
                     paddingLeft: "5%",
                     paddingRight: "5%",
-                    borderBottomColor: "#E5E5E5",
+                    borderBottomColor: "#3B3B3B",
                     borderBottomWidth: 1
                 }}>
-                    <View
-                        style={{
-                            height: 44,
-                            flexDirection: 'row',
-                            paddingTop: 4,
-                            justifyContent: "flex-start",
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Text style={{ fontSize: 24 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#5CC27B' }}>Community</Text>
-                        </Text>
+                    <View style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }}>
+                        <View
+                            style={{
+                                height: 44,
+                                flexDirection: 'row',
+                                paddingTop: 4,
+                                justifyContent: "flex-start",
+                                alignItems: 'center',
+                            }}
+                        >
+                            <Text style={{ fontSize: 24 }}>
+                                <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#5CC27B' }}>Community</Text>
+                            </Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                            <TouchableOpacity style={{ marginLeft: 8 }}>
+                                <Image source={require('./icon/alram.png')} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                        <TouchableOpacity style={{ marginLeft: 8 }}>
-                            <Image source={require('./icon/alram.png')} />
-                        </TouchableOpacity>
+                    <View style={{ 
+                        width: "60%", 
+                        height: 40, 
+                        backgroundColor: "#DBDBDB", 
+                        borderRadius: 18, 
+                        flexDirection: "row", 
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        paddingLeft: 12, 
+                        paddingRight: 12, 
+                        alignSelf: "flex-end" ,
+                        marginTop: 8
+                    }}>
+                        <TextInput placeholder="검색어를 입력해주세요." />
+                        <Ionicons name="search" size={24} />
                     </View>
                 </View>
                 <Modal
@@ -366,7 +385,8 @@ export default function CommunityHome({ navigation }) {
                     style={{
                         position: 'absolute',
                         top: topposition * 1.3,
-                        right: "10%"
+                        right: "10%",
+                        backgroundColor: "white"
                     }}>
                     <View style={{
                         width: 36,

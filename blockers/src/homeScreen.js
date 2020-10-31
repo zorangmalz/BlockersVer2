@@ -11,7 +11,8 @@ import {
     StyleSheet,
     TouchableWithoutFeedback,
     Dimensions,
-    RefreshControl
+    RefreshControl,
+    ImageBackground
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import moment from "moment"
@@ -436,24 +437,34 @@ export default function HomeScreen({ navigation }) {
                         }
                     </Swiper>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: "12%" }}>
-                        <Image style={{ width: 15, height: 20, marginRight: 8 }} resizeMode="stretch" source={require('./icon/lightbulb.png')} />
-                        <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', color: '#303030', opacity: 0.6 }}>오늘의 팁</Text>
+                        <ImageBackground style={{ width: 25, height: 15, marginRight: 8, alignItems: "center", justifyContent: "center" }} resizeMode="stretch" source={require('./icon/tipbox.png')} >
+                            <Text style={{fontSize: 9, fontFamily: 'NunitoSans-Bold', color: "#ffffff" }}>TIP</Text>
+                        </ImageBackground>
+                        <Text style={{ alignSelf: 'center', fontSize: 16, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.6 }}>물을 많이 마시면 니코틴 배출이 빨라집니다!</Text>
                     </View>
-                    <Text style={{ alignSelf: 'center', fontSize: 16, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.6, marginTop: 8 }}>물을 많이 마시면 니코틴 배출이 빨라집니다!</Text>
                     <View style={{
                         flexDirection: 'row',
                         alignItems: 'center',
                         justifyContent: 'space-evenly',
                         marginTop: 32,
                     }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('Calendar')}>
+                        <TouchableOpacity style={{
+                            alignItems: "center",
+                        }} onPress={() => navigation.navigate('Calendar')}>
                             <MaterialCommunityIcons size={60} color="#5cc27b" name="calendar-blank" />
+                            <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 8}}>금연달력</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate("InformationMain")}>
+                        <TouchableOpacity style={{
+                            alignItems: "center",
+                        }} onPress={() => navigation.navigate("AlcoholMain")}>
                             <FontAwesome5 name="robot" size={50} color="#5cc27b" />
+                            <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 18}}>금연 리포트 & 정보</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity>
-                            <Ionicons name="alert-circle-outline" size={52} color="#FF0000" />
+                        <TouchableOpacity style={{
+                            alignItems: "center",
+                        }} onPress={() => navigation.navigate("SelfEsteemMain")}>
+                            <Ionicons name="alert-circle-outline" size={60} color="#FF0000" />
+                            <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#ff0000", marginTop: 4}}>흡연 경보</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center', marginTop: 16 }} />
