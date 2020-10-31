@@ -521,70 +521,27 @@ export default function HomeScreen({ navigation }) {
                             <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#ff0000", marginTop: 4}}>흡연 경보</Text>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center', marginTop: 16 }} />
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-around',
-                        alignItems: 'center',
-                        paddingTop: 17,
-                        paddingLeft: 14,
-                        paddingRight: 14,
+                    <TouchableOpacity style={{
+                        alignItems: "flex-start",
+                        marginTop: 40,
+                        marginLeft: "10%",
+                        marginRight: "10%"
                     }}>
-                        <View style={{ maxWidth: "75%" }}>
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'flex-start',
-                                paddingBottom: 16,
-                                paddingLeft: 14,
-                                paddingRight: 14
-                            }}>
-                                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#FFB83D' }} />
-                                <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 10, color: '#303030' }}>Challenge {num}</Text>
-                            </View>
-                            <Text style={{ marginLeft: 32 }}>
-                                <Text style={{ fontSize: 14, color: '#979797', fontFamily: 'NunitoSans-Regular' }}>180 days Smoking Cessation Challenge with</Text>
-                                <Text style={{ fontSize: 14, color: '#303030', fontFamily: 'NunitoSans-Bold' }}> Blockers</Text>
-                            </Text>
+                        <View style={{
+                            flexDirection: 'row',
+                            alignItems: "center",
+                            justifyContent: 'flex-start',
+                            paddingBottom: 16,
+                            paddingLeft: 14,
+                            paddingRight: 14
+                        }}>
+                            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
+                            <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 8, color: '#303030' }}>금연일기</Text>
                         </View>
-                        <TouchableOpacity style={{ marginTop: 40, marginRight: 20 }} onPress={()=> navigation.navigate('Challenge')}>
-                            <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>Start</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center', marginTop: 16}} />
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-around',
-                        alignItems: 'center',
-                        paddingTop: 16,
-                        paddingLeft: 14,
-                        paddingRight: 14,
-                    }}>
-                        <View style={{maxWidth: "75%"}}>
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'flex-start',
-                                paddingBottom: 16,
-                                paddingLeft: 14,
-                                paddingRight: 14,
-                            }}>
-                                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#FFB83D' }} />
-                                <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 10, color: '#303030' }}>Mission {num}</Text>
-                            </View>
-                            <Text style={{ marginLeft: 32 }}>
-                                <Text style={{ fontSize: 14, color: '#979797', fontFamily: 'NunitoSans-Regular' }}>180 days Smoking Cessation Challenge with</Text>
-                                <Text style={{ fontSize: 14, color: '#303030', fontFamily: 'NunitoSans-Bold' }}> Blockers</Text>
-                            </Text>
-                        </View>
-                        <TouchableOpacity style={{ marginTop: 40, marginRight: 20 }} onPress={()=> navigation.navigate('Mission')}>
-                            <View style={{ borderColor: '#5CC27B', width: 80, height: 30, borderRadius: 15, borderWidth: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ fontSize: 12, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>Start</Text>
-                            </View>
-                        </TouchableOpacity>
-                    </View>
+                        <Text style={{ marginLeft: 32 }}>
+                            <Text style={{ fontSize: 16, color: '#979797', fontFamily: 'NunitoSans-Regular' }}>오늘의 금연 일기를 작성해보세요.</Text>
+                        </Text>
+                    </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>
         </>

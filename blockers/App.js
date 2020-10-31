@@ -74,6 +74,7 @@ import AOne, { ATwo, AThree, AFour, AFive, ASix, ASeven, AEight, ANine } from '.
 import { SelfEsteemMain } from './src/SelfEsteem/Style';
 import { AlcoholMain } from './src/Alcohol/Style';
 import { StressMain } from './src/Stress/Style';
+import DiaryWrite, { DiaryList } from './src/Diary/DiaryScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -841,6 +842,22 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
+        <Stack.Screen 
+            name="DiaryWrite"
+            component={DiaryWrite}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="DiaryList"
+            component={DiaryList}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
       </Stack.Navigator>
     </NavigationContainer>
   );
