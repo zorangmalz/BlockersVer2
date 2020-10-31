@@ -12,7 +12,8 @@ import {
     TouchableWithoutFeedback,
     Dimensions,
     RefreshControl,
-    Alert
+    Alert,
+    ImageBackground
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import moment from "moment"
