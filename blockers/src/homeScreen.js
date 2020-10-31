@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import {
     StatusBar,
     SafeAreaView,
@@ -22,7 +21,6 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useScreens } from 'react-native-screens';
 
 const Caver = require('caver-js')
 const WIDTH = Dimensions.get('window').width;
