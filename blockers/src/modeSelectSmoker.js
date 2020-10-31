@@ -116,16 +116,12 @@ export default function ModeSelectSmoker({navigation}) {
 
     async function move(){
 if(ten==true){
-    setSelect(select.push(num))
-    console.log(select) 
-    updateInfo(user.uid,select)
+    updateInfo(user.uid,select,num,0)
 }else if(twenty==true){
-    setSelect(select.push(several))
-    setSelect(select.push(mg))
-    updateInfo(user.uid,select)
+    updateInfo(user.uid,select,num,mg)
 }else if(thirty==true){
-    setSelect(select.push(num2))
-    updateInfo(user.uid,select)
+    
+    updateInfo(user.uid,select,num2,0)
 }
     
       
@@ -133,9 +129,12 @@ if(ten==true){
     }
 
     const ref=firestore().collection("UserInfo");
-    async function updateInfo(code,state){
+    async function updateInfo(code,state,amount,mg){
       await ref.doc(code).update({
-          smokeInfo:state
+          smokeInfo:state,
+          smokingAmount:amount,
+          smokingMg:mg,
+          smokeDaily:0
       })
       navigation.navigate("Home")
     }

@@ -30,6 +30,7 @@
     "axios": "0.20.0",
     "browserify-zlib": "0.1.4",
     "caver-js": "1.5.1",
+    "css-tree": "1.0.0-alpha.39",
     "dns.js": "1.0.1",
     "dotenv": "8.2.0",
     "events": "1.1.1",
