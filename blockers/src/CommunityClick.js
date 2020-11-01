@@ -222,6 +222,9 @@ export default function CommunityHome({ navigation }) {
         wait(2000).then(() => setRefreshing(false));
     }, [refreshing]);
 
+    //검색어 입력
+    const [searchWord, setSearchWord] = useState("");
+
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -271,7 +274,7 @@ export default function CommunityHome({ navigation }) {
                         alignSelf: "flex-end" ,
                         marginTop: 8
                     }}>
-                        <TextInput placeholder="검색어를 입력해주세요." />
+                        <TextInput value={searchWord} onChangeText={text => setSearchWord(text)} placeholder="검색어를 입력해주세요." />
                         <Ionicons name="search" size={24} />
                     </View>
                 </View>

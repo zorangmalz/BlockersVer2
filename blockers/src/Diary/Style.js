@@ -213,7 +213,7 @@ export function Create({navigation}) {
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
-                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>완료</Text>
+                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
                     </View>
                 </TouchableOpacity>
             </SafeAreaView>

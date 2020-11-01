@@ -264,6 +264,9 @@ export default function HomeScreen({ navigation }) {
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                         <TouchableOpacity>
+                            <Ionicons name="sync" size={27} color="#5cc27b" style={{ marginRight: 16 }} />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
                             <Image source={require('./icon/alram.png')} />
                         </TouchableOpacity>
                     </View>
