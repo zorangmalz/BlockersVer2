@@ -126,7 +126,7 @@ await firestore()
     navigation.navigate("Home")
   }else{
     console.log("new")
-    navigation.navigate("WalletPassword")
+    navigation.navigate("프로필 설정")
   }
 }
   async function kakaoLogin(){
@@ -192,7 +192,7 @@ await firestore()
         .createUserWithEmailAndPassword(email, password)
         .then(() => {
           console.log('User account created & signed in!');
-          navigation.navigate("WalletPassword")
+          navigation.navigate("프로필 설정")
         })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
@@ -229,7 +229,7 @@ await firestore()
     // Sign-in the user with the credential
     if (NewUser === true) {
       auth().signInWithCredential(googleCredential);
-      navigation.navigate("WalletPassword");
+      navigation.navigate("프로필 설정");
     } else if (NewUser === false) {
       auth().signInWithCredential(googleCredential);
       navigation.navigate("Home");
@@ -251,7 +251,7 @@ await firestore()
     const NewUser = (await auth().signInWithCredential(facebookCredential)).additionalUserInfo.isNewUser
     if (NewUser === true) {
       auth().signInWithCredential(facebookCredential);
-      navigation.navigate("WalletPassword");
+      navigation.navigate("프로필 설정");
     } else if (NewUser === false) {
       auth().signInWithCredential(facebookCredential);
       navigation.navigate("Home");

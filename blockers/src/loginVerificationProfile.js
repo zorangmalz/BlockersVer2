@@ -68,6 +68,7 @@ export default function LoginVerificationProfile({ navigation }) {
     const [isImage, setIsImage] = useState(false);
     const [haveProfile, setHaveProfile] = useState(false);
     const [revmtk, setRevmtk] = useState()
+    const [totalUser,setTotalUser]=useState()
     const ref = firestore().collection("UserInfo");
     async function ProfilePicture(a) {
         console.log(a)
@@ -78,16 +79,28 @@ export default function LoginVerificationProfile({ navigation }) {
     }
 
     async function updateInfo(code, bir, se, nick, pic) {
+        if (haveProfile){
         // await ProfilePicture(nickname)
         console.log("시발 여기라고", revmtk)
         await ref.doc(code).update({
             birth: bir,
             sex: se,
-            nickname: nick,
+            nickname:"Blockers"+totalUser,
             gotProfile: haveProfile,
-            profilePicture: pic
+            profilePicture: pic,
+            name:nick
         })
-
+    }else{
+        await uploadNonImage()
+        await ref.doc(code).update({
+            birth: bir,
+            sex: se,
+            nickname: "Blockers"+totalUsers,
+            gotProfile: haveProfile,
+            profilePicture: pic,
+            name:nick
+        })
+    }
     }
     function onAuthStateChanged(user) {
         setUser(user);
@@ -101,7 +114,12 @@ export default function LoginVerificationProfile({ navigation }) {
     }, []);
 
     if (initializing) return null;
-
+    useEffect(()=>{
+        firestore().collection("TotalUser").doc("userNum").get().then(doc=>{
+            setTotalUser(doc.data().numCount)
+        
+        })
+            },[user])
 
     async function move() {
         uploadImage()
@@ -171,6 +189,15 @@ export default function LoginVerificationProfile({ navigation }) {
         await reference.putFile(uploadUri);
         setHaveProfile(true)
     }
+    async function uploadNonImage() {
+        const uri = imageOne;
+        const filename = "프로필사진" + nickname
+        const reference = storage().ref("User/" + nickname + "/" + filename);
+        const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
+
+        await reference.putFile(uploadUri);
+        setHaveProfile(true)
+    }
 
     return (
         <>
@@ -204,7 +231,7 @@ export default function LoginVerificationProfile({ navigation }) {
 
                     </TouchableOpacity>
                     <View>
-                        <TextInput onChangeText={text => setNickname(text)} style={[login.textinput, { width: "80%", marginTop: 32 }]} placeholder="닉네임" />
+                        <TextInput onChangeText={text => setNickname(text)} style={[login.textinput, { width: "80%", marginTop: 32 }]} placeholder="이름" />
                         {repeat === true ?
                             <Text style={login.repeat}>중복된 닉네임입니다.</Text>
                             :
