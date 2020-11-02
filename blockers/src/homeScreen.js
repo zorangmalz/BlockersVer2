@@ -524,7 +524,7 @@ export default function HomeScreen({ navigation }) {
                             <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#ff0000", marginTop: 4}}>흡연 경보</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity style={{
+                    <TouchableOpacity onPress={() => navigation.navigate("DiaryWrite")} style={{
                         alignItems: "flex-start",
                         marginTop: 40,
                         marginLeft: "10%",
