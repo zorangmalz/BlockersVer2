@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
@@ -14,7 +14,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 
 const setting = StyleSheet.create({
-    mainText : {
+    mainText: {
         fontSize: 16,
         fontFamily: 'NunitoSans-Regular',
         alignSelf: 'flex-start',
@@ -39,7 +39,7 @@ export default function SettingMain({ navigation }) {
             .then(() => console.log('User signed out!'));
         LoginManager.logOut()
 
-        navigation.popToTop();
+        navigation.goBack();
         setModalVisible(false);
     }
     return (
@@ -48,7 +48,7 @@ export default function SettingMain({ navigation }) {
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="chevron-back" size={35} />
+                        <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
                     <View
                         style={{
@@ -64,13 +64,11 @@ export default function SettingMain({ navigation }) {
                         </Text>
                     </View>
                 </View>
-               
                 <Modal
                     animationType="none"
                     transparent={true}
                     isVisible={modalVisible}
                     backdropOpacity={0.4}
-                    onBackdropPress={() => setModalVisible(false)}
                     onRequestClose={() => setModalVisible(false)}
                 >
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -138,41 +136,29 @@ export default function SettingMain({ navigation }) {
                     </View>
                 </Modal>
                 <ScrollView>
-                    <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('문의하기')}>
-                        <Text style={setting.mainText}>문의하기</Text>
-                    </TouchableOpacity>
-                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
-                    <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('자주묻는 질문')}>
-                        <Text style={setting.mainText}>자주 묻는 질문</Text>
-                    </TouchableOpacity>
-                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
-                    <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={()=>navigation.navigate('알림설정')} >
+                    <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('알림설정')} >
                         <Text style={setting.mainText}>알림설정</Text>
                     </TouchableOpacity>
-                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
-                    <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={()=>navigation.navigate('초기화')}>
+                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
+                    <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('초기화')}>
                         <Text style={setting.mainText}>초기화</Text>
                     </TouchableOpacity>
-                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
-                    <View style={{flexDirection: 'row', marginRight: 25, marginTop: 32, justifyContent: 'space-between', alignItems: 'center', paddingRight: 8}}>
+                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
+                    <View style={{ flexDirection: 'row', marginRight: 25, marginTop: 32, justifyContent: 'space-between', alignItems: 'center', paddingRight: 8 }}>
                         <TouchableOpacity style={setting.mainBox} onPress={() => navigation.navigate('버전정보')}>
                             <Text style={setting.mainText}>버전정보</Text>
                         </TouchableOpacity>
-                        <Text style={{fontSize: 16, fontWeight: 'normal', color: '#000000', opacity: 0.4}}>최신버전입니다.</Text>
+                        <Text style={{ fontSize: 16, fontWeight: 'normal', color: '#000000', opacity: 0.4 }}>최신버전입니다.</Text>
                     </View>
-                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
+                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
                     <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('탈퇴')}>
                         <Text style={setting.mainText}>탈퇴하기</Text>
                     </TouchableOpacity>
-                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
+                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
                     <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={modalbutton} >
                         <Text style={setting.mainText}>로그아웃</Text>
                     </TouchableOpacity>
-                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
-                    <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={()=>navigation.navigate("회사소개")} >
-                        <Text style={setting.mainText}>회사소개</Text>
-                    </TouchableOpacity>
-                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center'}} />
+                    <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
                 </ScrollView>
             </SafeAreaView>
         </>

@@ -267,9 +267,10 @@ export default function MyPageScreen({ navigation }) {
                         <FlatList
                             data={[
                                 { key: '개인정보', name: '개인정보' },
-                                { key: '공지사항', name: '공지사항' },
                                 { key: '내가 쓴 글', name: '내가 쓴글' },
-                                { key: '정보', name: "정보" },
+                                { key: '이용약관', name: '이용약관' },
+                                { key: "자주묻는 질문", name: "자주묻는 질문" },
+                                { key: "공지사항", name: "공지사항" }
                             ]}
                             renderItem={({ item }) => (
                                 <>
