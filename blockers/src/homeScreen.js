@@ -513,7 +513,7 @@ export default function HomeScreen({ navigation }) {
                         </TouchableOpacity>
                         <TouchableOpacity style={{
                             alignItems: "center",
-                        }} onPress={() => navigation.navigate("AlcoholMain")}>
+                        }} onPress={() => navigation.navigate("ChatbotMain")}>
                             <FontAwesome5 name="robot" size={50} color="#5cc27b" />
                             <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 18}}>금연 리포트 & 정보</Text>
                         </TouchableOpacity>

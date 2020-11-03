@@ -235,34 +235,100 @@ export default function MyPageScreen({ navigation }) {
                     <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                     </View>
                     {userlogined === true ?
-                        <View style={style.containerStatus}>
-                            <View style={{ marginTop: 16, marginLeft: 16, marginRight: 16 }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'flex-start', justifyContent: 'space-between', }}>
-                                    <Text style={{ fontSize: 12, fontFamily: "HelveticaNeue", fontFamily: 'NunitoSans-Bold', color: "white" }}>{nickname}</Text>
-                                    <TouchableOpacity onPress={() => navigation.navigate('Transaction')}>
-                                        <Text style={{ textDecorationLine: 'underline', fontSize: 9, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>Transaction</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{flexDirection: 'row', marginTop: 34, alignItems: 'center', justifyContent: 'space-between'}}>
-                                    <Text style={{ fontSize: 24, fontFamily: 'NunitoSans-Bold', color: "white" }}>100,000 Block</Text>
-                                    <View style={{flexDirection: "row", alignItems: "center"}}>
-                                        <TouchableOpacity onPress={() => navigation.navigate('WalletWithDrawal')} style={{width: 54, height: 32, alignItems: "center", justifyContent: "center", borderRadius: 15, borderWidth: 1, borderColor: "white"}}>
-                                            <Text style={{fontSize: 12, fontFamily: 'NunitoSans-Bold', color: "white"}}>출금</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => navigation.navigate('입금')} style={{width: 54, height: 32, alignItems: "center", justifyContent: "center", borderRadius: 15, borderWidth: 1, borderColor: "white", backgroundColor: "white", marginLeft: 16}}>
-                                            <Text style={{fontSize: 12, fontFamily: 'NunitoSans-Bold', color: "#303030"}}>입금</Text>
+                        <>
+                            <View style={{ marginTop: 16, marginHorizontal: "8%", flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+                                <TouchableOpacity style={{ marginRight: 18 }} >
+                                    {isImage ?
+                                        <Image resizeMode="cover" style={{ width: 68, height: 68, borderRadius: 34 }} />
+                                        :
+                                        <Ionicons name="person-circle" size={90} color="#dbdbdb" />
+                                    }
+                                </TouchableOpacity>
+                                <View style={{
+                                    height: 68,
+                                    alignItems: "flex-start",
+                                    justifyContent: "space-evenly"
+                                }}>
+                                    <Text style={{ fontSize: 14, fontFamily: 'NunitoSans-Regular', color: "#303030" }}>{User.displayName}님</Text>
+                                    <View style={{
+                                        flexDirection: "row",
+                                        alignItems: "center",
+                                    }}>
+                                        <Text style={{
+                                            fontSize: 16,
+                                            fontFamily: "NunitoSans-Bold",
+                                            color: "#303030",
+                                            marginRight: 8
+                                        }}>{nickname}</Text>
+                                        <TouchableOpacity onPress={() => navigation.navigate('닉네임 변경')}>
+                                            <Ionicons name="pencil-sharp" size={20} />
                                         </TouchableOpacity>
                                     </View>
                                 </View>
                             </View>
-                        </View>
+                        </>
                         :
-                        <TouchableOpacity style={[style.containerStatus, { alignItems: 'center', justifyContent: 'center' }]} onPress={() =>
+                        <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 68, marginTop: 16, marginBottom: 16, alignSelf: "center" }} onPress={() =>
                             loginview()
                         }>
                             <Text style={{ fontSize: 24, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>로그인이 필요한 서비스입니다.</Text>
                         </TouchableOpacity>
                     }
+                    <ScrollView horizontal={true}>
+                        <FlatList
+                            data={Success}
+                            keyExtractor={(item) => item.id}
+                            horizontal={true}
+                            renderItem={({ item }) => (
+                                <View style={{
+                                    width: 120,
+                                    height: 124,
+                                    borderRadius: 15,
+                                    backgroundColor: "#646464",
+                                    marginRight: 8
+                                }}>
+                                    {item.action ?
+                                        <>
+                                            <Text style={{
+                                                fontFamily: "NunitoSans-Regular",
+                                                fontSize: 12,
+                                                color: "#ffffff",
+                                                alignSelf: "center",
+                                                marginTop: 16,
+                                                marginBottom: 16
+                                            }}>챌린지 성공카드</Text>
+                                            <Image style={{ width: 36, height: 36, alignSelf: "center" }} resizeMode="contain" source={require("./icon/climbing.png")} />
+                                            <Text style={{
+                                                fontFamily: "NunitoSans-Bold",
+                                                fontSize: 12,
+                                                color: "#ffffff",
+                                                alignSelf: "center",
+                                                marginTop: 8
+                                            }}>{item.month}개월</Text>
+                                        </>
+                                        :
+                                        <>
+                                            <Text style={{
+                                                fontFamily: "NunitoSans-Bold",
+                                                fontSize: 12,
+                                                color: "#ffffff",
+                                                marginTop: 28,
+                                                marginLeft: 22,
+                                                marginBottom: 16
+                                            }}>Locked</Text>
+                                            <Text style={{
+                                                fontFamily: "NunitoSans-Regular",
+                                                fontSize: 12,
+                                                color: "#ffffff",
+                                                width: 80,
+                                                marginLeft: 22
+                                            }}>{item.month}개월 챌린지를 성공해보세요</Text>
+                                        </>
+                                    }
+                                </View>
+                            )}
+                        />
+                    </ScrollView>
                     <View style={style.container}>
                         <FlatList
                             data={[

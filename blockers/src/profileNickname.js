@@ -174,16 +174,17 @@ export default function ProfileNickname({ navigation }) {
                         }
                     </View>
                 </ScrollView>
+            </SafeAreaView>
+            <SafeAreaView style={{ flex: 0 }}>
                 {nickname.length > 0 ?
                     <TouchableOpacity
-                        onPress={NicknameUpdate}
-                        style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                        onPress={NicknameUpdate}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>변경하기</Text>
                         </View>
                     </TouchableOpacity>
                     :
-                    <View style={{ position: 'absolute', bottom: 0, width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>변경하기</Text>
                     </View>
                 }

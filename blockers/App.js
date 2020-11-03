@@ -76,7 +76,7 @@ import { AlcoholMain } from './src/Alcohol/Style';
 import { StressMain } from './src/Stress/Style';
 import DiaryWrite, { DiaryList } from './src/Diary/DiaryScreen';
 import Challenge, { ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowHow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage } from './src/Challenge/ChallengeScreen';
-
+import ChatbotMain, { ChatbotOne, ChatbotTwo } from './src/Chatbot/ChatbotScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -958,6 +958,30 @@ const App = ({ navigation }) => {
           <Stack.Screen 
             name="ChallengeGDResult"
             component={ChallengeGDResult}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChatbotMain"
+            component={ChatbotMain}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChatbotOne"
+            component={ChatbotOne}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChatbotTwo"
+            component={ChatbotTwo}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false
