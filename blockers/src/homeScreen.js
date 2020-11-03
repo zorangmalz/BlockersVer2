@@ -233,7 +233,7 @@ export default function HomeScreen({ navigation }) {
             var c = (b.diff(a, "seconds")) * -1
             timeCounter(c)
             setSmokingShow(parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))
-            setSmokingMoney(((parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))*125).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+            setSmokingMoney(((parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))*225).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
             
             var hi=100000
             
