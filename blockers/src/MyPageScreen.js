@@ -354,7 +354,7 @@ export default function MyPageScreen({ navigation }) {
                             )} />
                     </View>
                     <View style={{
-                        marginTop: "25%",
+                        marginTop: "15%",
                         width: "50%",
                         flexDirection: 'row',
                         justifyContent: 'space-between',
