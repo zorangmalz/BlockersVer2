@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import {
     View,
     Text,
@@ -12,10 +12,16 @@ import {
     FlatList
 } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from "moment"
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 
 const HEIGHT = Dimensions.get("window").height;
 
-export default function Header({ navigation, Create }) {
+export default function Header({ navigation, Create}) {
+
+
     return (
         <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between", height: 50, paddingTop: 5, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
             <View style={{ flexDirection: "row", alignItems: "center"}}>
@@ -68,14 +74,55 @@ export function Create({navigation}) {
     const [when, setWhen] = useState("");
     const [how, setHow] = useState("");
     const [advice, setAdvice] = useState("");
+    
+    const [user,setUser]=useState()
 
+
+useEffect(()=>{
+    
+    auth().onAuthStateChanged(userAuth => {
+        setUser(userAuth)
+        // console.log(userAuth)
+    })
+    
+    
+})
+
+async function writeDiary(){
+    var a=moment().toArray()
+
+    if(a[1]===12){
+        a[1]=1
+    }else{
+        a[1]=a[1]+1
+    }
+    
+    if(state===1){
+        var check="있었다"
+    }else{
+        var check="없었다"
+    }
+    
+    await firestore().collection("UserInfo").doc(user.uid).collection("Diary").doc(a+"diary").set({
+        impulse:check,
+        when:when,
+        how:how,
+        advice:advice,
+        date:a[0]+"/"+a[1]+"/"+a[2]
+    }).then(
+        navigation.navigate("DiaryList")
+    )
+}
     //흡연충동 여부
     const [state, dispatch] = useReducer(YesorNo, 0);
     const Yes = () => {
         dispatch({type : "Yes"})
+        // console.log(state)
     }
     const No = () => {
+        
         dispatch({type : "No"})
+        // console.log(state)
     }
     return (
         <>
@@ -205,7 +252,7 @@ export function Create({navigation}) {
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={writeDiary}>
                     <View style={{
                         width: "100%",
                         height: 60,
@@ -292,16 +339,33 @@ const renderItem = ({item}) => {
 }
 
 export function List({ navigation }) {
-    const DiaryData = [
-        {
-            id: 1,
-            date: "10/1",
-            impulse: 1,
-            when: "점심먹고 나서",
-            how: "물을 마시고 스트레칭을 했다",
-            advice: "고생했고 내일도 화이팅"
-        }
-    ]
+    const [user,setUser]=useState()
+    const [items,setItems]=useState()
+
+    useEffect(()=>{
+    auth().onAuthStateChanged(userAuth => {
+        setUser(userAuth)
+        // console.log(userAuth)
+    })
+    if(user){
+    load()}
+    },[user])
+
+    async function load(){
+        const list = [];
+        firestore().collection("UserInfo").doc(user.uid).collection("Diary").onSnapshot(querySnapshot => {
+            querySnapshot.forEach(function (doc) {
+                            list.push({
+                                date:doc.data().date,
+                                impulse:doc.data().impulse,
+                                when:doc.data().impulse,
+                                how:doc.data().how,
+                                advice:doc.data().advice
+                            });
+            })
+            setItems(list);
+        })
+    }
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -309,7 +373,7 @@ export function List({ navigation }) {
                 <Header navigation={navigation} Create={false} />
                 <ScrollView>
                     <FlatList
-                        data={DiaryData}
+                        data={items}
                         keyExtractor={(item) => item.id}
                         renderItem={renderItem}
                     />
