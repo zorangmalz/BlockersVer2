@@ -75,6 +75,7 @@ import { SelfEsteemMain } from './src/SelfEsteem/Style';
 import { AlcoholMain } from './src/Alcohol/Style';
 import { StressMain } from './src/Stress/Style';
 import DiaryWrite, { DiaryList } from './src/Diary/DiaryScreen';
+import Challenge, { ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowHow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage } from './src/Challenge/ChallengeScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -122,7 +123,7 @@ function HomeTab({ navigation }) {
           if (route.name === 'HomeScreen') {
             iconName = focused ? 'ios-home-sharp' : 'ios-home-outline';
             return <Ionicons name={iconName} size={25} color={color} />;
-          } else if (route.name === 'Information') {
+          } else if (route.name === 'ChallengeTab') {
             iconName = focused ? 'ios-people-sharp' : 'ios-people-outline';
             return <Ionicons name={iconName} size={25} color={color} /> 
           } else if (route.name === 'CommunityScreen') {
@@ -145,8 +146,8 @@ function HomeTab({ navigation }) {
         component={HomeScreen}
       />
       <Tab.Screen
-        name="Information"
-        component={InformationMain}
+        name="ChallengeTab"
+        component={Challenge}
       />
       <Tab.Screen
         name="CommunityScreen"
@@ -853,6 +854,110 @@ const App = ({ navigation }) => {
           <Stack.Screen 
             name="DiaryList"
             component={DiaryList}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeSupport"
+            component={ChallengeSupport}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeSwear"
+            component={ChallengeSwear}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeHistory"
+            component={ChallengeHistory}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeMission"
+            component={ChallengeMission}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeRegister"
+            component={ChallengeRegister}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeMotivation"
+            component={ChallengeMotivation}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeVeri"
+            component={ChallengeVeri}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeVeriImage"
+            component={ChallengeVeriImage}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeReview"
+            component={ChallengeReview}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeKnowHow"
+            component={ChallengeKnowHow}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeSuccess"
+            component={ChallengeSuccess}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeGD"
+            component={ChallengeGD}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChallengeGDResult"
+            component={ChallengeGDResult}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false
