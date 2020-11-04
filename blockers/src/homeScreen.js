@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,useRef} from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -236,7 +236,7 @@ export default function HomeScreen({ navigation }) {
                 timeCounter(c)
                 setSmokingShow(parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24))
                 setSmokingMoney(((parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24)) * 225).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
-
+                
                 var hi = 100000
 
             }, 1000)
@@ -247,7 +247,7 @@ export default function HomeScreen({ navigation }) {
 
     const AnimatedIonicons = Animated.createAnimatedComponent(Ionicons)
     const Rotate = useRef(new Animated.Value(0)).current;
-    const Rotation = () => {
+    async function Rotation(){
         Rotate.setValue(0);
         Animated.timing(Rotate, {
             toValue: 1,
@@ -255,6 +255,35 @@ export default function HomeScreen({ navigation }) {
             easing: Easing.linear,
             useNativeDriver: true
         }).start()
+        console.log(user.uid)
+        
+        Alert.alert(
+            "금연을 시작하시겠습니까?",
+            "",
+            [
+                {
+                    text: '취소', onPress: () => console.log('CANCEL Pressed')
+                },
+                {
+                    text: '시작하기', onPress: () => {changeToSmoker(), Alert.alert(
+                        '금연모드 활성화',
+                        '앱 새로고침 후 사용',
+                        [
+                            {
+                                text: 'OK', onPress: () => console.log('OK Pressed')
+                            }
+                        ]
+                    )
+                }}
+            ]
+        )
+    }
+    async function changeToSmoker(){
+        await firestore().collection("UserInfo").doc(user.uid).update({
+            smoker:false,
+            smokedLoss:smokingMoney,
+            smokedAmount:smokingShow 
+         })
     }
     const Sync = Rotate.interpolate({
         inputRange: [0, 1],
@@ -298,7 +327,7 @@ export default function HomeScreen({ navigation }) {
                                     <>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 16, marginBottom: 16 }}>
                                             <View style={resource.container}>
-                                                <Text style={resource.smallText}>얼마나 피웠지?</Text>
+                                                <Text style={resource.smallText}>나 피웠지?</Text>
                                                 <Text style={resource.largeText}>{smokingShow}대</Text>
                                             </View>
                                             <View style={resource.container}>
