@@ -358,7 +358,7 @@ export function List({ navigation }) {
                 list.push({
                     date: doc.data().date,
                     impulse: doc.data().impulse,
-                    when: doc.data().impulse,
+                    when: doc.data().when,
                     how: doc.data().how,
                     advice: doc.data().advice
                 });

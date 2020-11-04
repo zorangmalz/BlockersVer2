@@ -234,11 +234,18 @@ export default function LoginVerificationProfile({ navigation }) {
                         에 동의하게 됩니다.(마케팅 정보 수신동의 포함)</Text>
                     </View>
                 </ScrollView>
-                <TouchableOpacity onPress={move} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
-                    <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>시작하기</Text>
-                    </View>
-                </TouchableOpacity>
+                {nickname.length>0 && birthday.length>0 ?
+            <TouchableOpacity onPress={move} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+            <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>시작하기</Text>
+            </View>
+        </TouchableOpacity>
+            :
+<View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>시작하기</Text>
+            </View>
+            }
+                
             </SafeAreaView>
         </>
     )
