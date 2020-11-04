@@ -155,7 +155,7 @@ function useInterval(callback, delay) {
 
 export default function SmokeAlertOne({navigation}) {
     const [delay, setDelay] = useState(1000);
-    const [second, setSecond] = useState(90);
+    const [second, setSecond] = useState(0);
     const [isRunning, setIsRunning] = useState(true);
     useInterval(() => {
         if(second >= 100) {

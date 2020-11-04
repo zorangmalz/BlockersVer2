@@ -23,6 +23,9 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+// import { BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+
+// const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-8262202601779055~8151923810'
 
 const Caver = require('caver-js')
 const WIDTH = Dimensions.get('window').width;
@@ -635,13 +638,21 @@ export default function HomeScreen({ navigation }) {
                             </Text>
                         </TouchableOpacity>
                     }
+                     {/* <BannerAd
+      unitId={adUnitId}
+      size={BannerAdSize.FULL_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+    /> */}
                     <TouchableOpacity style={{
                         width: "100%",
                         height: 90,
                         backgroundColor: "#303030",
                         paddingVertical: 16,
                         paddingHorizontal: 32,
-                        marginTop: 24
+                        marginTop: 24,
+                        
                     }}>
                         <Text style={{
                             fontFamily: "NunitoSans-Bold",
