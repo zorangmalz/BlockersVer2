@@ -77,7 +77,7 @@ export function ANine ({navigation}) {
     const title = "친척이나 친구, 또는 의사가 당신이 술 마시는 것을 걱정하거나 술끊기를 권유한 적이 있었습니까?";
     return (
         <>
-            <AlcoholThree navigation={navigation} Nextpage="Home" Title={title} />
+            <AlcoholThree navigation={navigation} Nextpage="AlcoholFinal" Title={title} />
         </>
     )
 }

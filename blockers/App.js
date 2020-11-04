@@ -71,9 +71,9 @@ import TermsOfUse from "./src/TermsOfUse";
 import Zero, { One, Two, Three, Four, Five, Six, Seven, Eight, Nine } from './src/SelfEsteem/SelfEsteemScreen';
 import SOne, { STwo, SThree, SFour, SFive, SSix, SSeven, SEight, SNine, STen, SEleven, STwelve } from './src/Stress/StressScreen';
 import AOne, { ATwo, AThree, AFour, AFive, ASix, ASeven, AEight, ANine } from './src/Alcohol/AlcoholScreen';
-import { SelfEsteemMain } from './src/SelfEsteem/Style';
-import { AlcoholMain } from './src/Alcohol/Style';
-import { StressMain } from './src/Stress/Style';
+import { SelfEsteemFinal, SelfEsteemMain } from './src/SelfEsteem/Style';
+import { AlcoholFinal, AlcoholMain } from './src/Alcohol/Style';
+import { StressFinal, StressMain } from './src/Stress/Style';
 import DiaryWrite, { DiaryList } from './src/Diary/DiaryScreen';
 import Challenge, { ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowHow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage } from './src/Challenge/ChallengeScreen';
 import ChatbotMain, { ChatbotOne, ChatbotTwo } from './src/Chatbot/ChatbotScreen';
@@ -1015,6 +1015,30 @@ const App = ({ navigation }) => {
           <Stack.Screen 
             name="SmokeAlertFour"
             component={SmokeAlertFour}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="AlcoholFinal"
+            component={AlcoholFinal}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="StressFinal"
+            component={StressFinal}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SelfEsteemFinal"
+            component={SelfEsteemFinal}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false

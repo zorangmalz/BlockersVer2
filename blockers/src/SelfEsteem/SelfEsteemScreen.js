@@ -86,7 +86,7 @@ export function Nine({navigation}) {
     const title = "나는 내가 하고자 하는 일이 무엇이든지 간에 내 상황을 조정할 수 있다.";
     return (
         <>
-            <SelfEsteem navigation={navigation} Nextpage="Home" Title={title} />
+            <SelfEsteem navigation={navigation} Nextpage="SelfEsteemFinal" Title={title} />
         </>
     )
 }
