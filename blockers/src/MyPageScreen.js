@@ -80,6 +80,9 @@ export default function MyPageScreen({ navigation }) {
     const [nickname, setNickname] = useState("");
     const [refreshing, setRefreshing] = React.useState(false);
 
+    const [imageSource, setImageSource] = useState(undefined);
+    const [isImage, setIsImage] = useState(false);
+
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
 

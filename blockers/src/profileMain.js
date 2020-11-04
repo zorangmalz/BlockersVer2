@@ -35,10 +35,10 @@ const history = StyleSheet.create({
 export default function ProfileMain({ navigation }) {
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState();
-    const [userBirth, setuserBirth] = useState();
+    const [userBirth, setuserBirth] = useState("");
     const [userNick, setUserNick] = useState();
     const [haveProfile, setHaveProfile] = useState();
-    const [sex, setSex] = useState();
+    const [sex, setSex] = useState("");
 
     const [imageOne, setImageOne] = useState(undefined);
     const [picone, setPicone] = useState(true);

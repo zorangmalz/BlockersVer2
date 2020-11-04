@@ -50,6 +50,7 @@ const MissionItem = ({item}) => {
             borderRadius: 10,
             justifyContent: "space-between",
             marginLeft: 16,
+            marginBottom: 4,
             shadowOpacity : 0.24,
             shadowRadius: 2.22,
             shadowColor: "#303030",
