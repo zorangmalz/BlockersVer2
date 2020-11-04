@@ -289,67 +289,82 @@ export default function MyPageScreen({ navigation }) {
                             </View>
                         </>
                         :
-                        <TouchableOpacity style={{ alignItems: 'center', justifyContent: 'center', height: 68, marginTop: 16, marginBottom: 16, alignSelf: "center" }} onPress={() =>
+                        <TouchableOpacity style={{ 
+                            width: "100%",
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            height: 100, 
+                            marginTop: 16, 
+                            marginBottom: 16, 
+                            alignSelf: "center",
+                            backgroundColor: "#646464",
+                            borderRadius: 20
+                        }} onPress={() =>
                             loginview()
                         }>
-                            <Text style={{ fontSize: 24, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "white" }}>로그인이 필요한 서비스입니다.</Text>
+                            <Text style={{ fontSize: 21, fontFamily: "arial", fontFamily: 'NunitoSans-Bold', color: "#ffffff" }}>로그인이 필요한 서비스입니다.</Text>
                         </TouchableOpacity>
                     }
-                    <ScrollView horizontal={true}>
-                        <FlatList
-                            data={Success}
-                            keyExtractor={(item) => item.id}
-                            horizontal={true}
-                            renderItem={({ item }) => (
-                                <View style={{
-                                    width: 120,
-                                    height: 124,
-                                    borderRadius: 15,
-                                    backgroundColor: "#646464",
-                                    marginRight: 8
-                                }}>
-                                    {item.action ?
-                                        <>
-                                            <Text style={{
-                                                fontFamily: "NunitoSans-Regular",
-                                                fontSize: 12,
-                                                color: "#ffffff",
-                                                alignSelf: "center",
-                                                marginTop: 16,
-                                                marginBottom: 16
-                                            }}>챌린지 성공카드</Text>
-                                            <Image style={{ width: 36, height: 36, alignSelf: "center" }} resizeMode="contain" source={require("./icon/climbing.png")} />
-                                            <Text style={{
-                                                fontFamily: "NunitoSans-Bold",
-                                                fontSize: 12,
-                                                color: "#ffffff",
-                                                alignSelf: "center",
-                                                marginTop: 8
-                                            }}>{item.month}개월</Text>
-                                        </>
-                                        :
-                                        <>
-                                            <Text style={{
-                                                fontFamily: "NunitoSans-Bold",
-                                                fontSize: 12,
-                                                color: "#ffffff",
-                                                marginTop: 28,
-                                                marginLeft: 22,
-                                                marginBottom: 16
-                                            }}>Locked</Text>
-                                            <Text style={{
-                                                fontFamily: "NunitoSans-Regular",
-                                                fontSize: 12,
-                                                color: "#ffffff",
-                                                width: 80,
-                                                marginLeft: 22
-                                            }}>{item.month}개월 챌린지를 성공해보세요</Text>
-                                        </>
-                                    }
-                                </View>
-                            )}
-                        />
-                    </ScrollView>
+                    {userlogined === true ?
+                        <ScrollView horizontal={true}>
+                            <FlatList
+                                data={Success}
+                                keyExtractor={(item) => item.id}
+                                horizontal={true}
+                                renderItem={({ item }) => (
+                                    <View style={{
+                                        width: 120,
+                                        height: 124,
+                                        borderRadius: 15,
+                                        backgroundColor: "#646464",
+                                        marginRight: 8
+                                    }}>
+                                        {item.action ?
+                                            <>
+                                                <Text style={{
+                                                    fontFamily: "NunitoSans-Regular",
+                                                    fontSize: 12,
+                                                    color: "#ffffff",
+                                                    alignSelf: "center",
+                                                    marginTop: 16,
+                                                    marginBottom: 16
+                                                }}>챌린지 성공카드</Text>
+                                                <Image style={{ width: 36, height: 36, alignSelf: "center" }} resizeMode="contain" source={require("./icon/climbing.png")} />
+                                                <Text style={{
+                                                    fontFamily: "NunitoSans-Bold",
+                                                    fontSize: 12,
+                                                    color: "#ffffff",
+                                                    alignSelf: "center",
+                                                    marginTop: 8
+                                                }}>{item.month}개월</Text>
+                                            </>
+                                            :
+                                            <>
+                                                <Text style={{
+                                                    fontFamily: "NunitoSans-Bold",
+                                                    fontSize: 12,
+                                                    color: "#ffffff",
+                                                    marginTop: 28,
+                                                    marginLeft: 22,
+                                                    marginBottom: 16
+                                                }}>Locked</Text>
+                                                <Text style={{
+                                                    fontFamily: "NunitoSans-Regular",
+                                                    fontSize: 12,
+                                                    color: "#ffffff",
+                                                    width: 80,
+                                                    marginLeft: 22
+                                                }}>{item.month}개월 챌린지를 성공해보세요</Text>
+                                            </>
+                                        }
+                                    </View>
+                                )}
+                            />
+                        </ScrollView>
+                        :
+                        <>
+                        </>
+                    }
                     <View style={style.container}>
                         <FlatList
                             data={[
