@@ -152,7 +152,7 @@ function HomeTab({ navigation }) {
       />
       <Tab.Screen
         name="CommunityScreen"
-        component={CommunityHome}
+        component={CommunityClick}
       />
       <Tab.Screen
         name="MyPageScreen"
