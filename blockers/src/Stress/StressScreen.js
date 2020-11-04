@@ -104,7 +104,7 @@ export function STwelve ({navigation}) {
     const title = "힘든 일이 많아서 제대로 조절할 수 없었나요?";
     return (
         <>
-            <Stress navigation={navigation} Nextpage="Home" Title={title} />
+            <Stress navigation={navigation} Nextpage="StressFinal" Title={title} />
         </>
     )
 }

@@ -357,3 +357,81 @@ export function StressMain({ navigation }) {
         </>
     )
 }
+
+export function StressFinal({navigation}) {
+    const result = "Good";
+    const resultcontent = "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!"
+    return (
+        <>
+            <StatusBar barStyle="light-content" />
+            <SafeAreaView style={{flex: 1, backgroundColor: "#ffffff"}}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={25} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 20
+                        }}
+                    >
+                        <Text style={{ fontSize: 18 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>평가 결과</Text>
+                        </Text>
+                    </View>
+                </View>
+                <ScrollView>
+                    <Text style={{
+                        fontFamily: "NunitoSans-Bold",
+                        fontSize: 18,
+                        color: "#5cc27b",
+                        alignSelf: "center",
+                        marginTop: 20
+                    }}>김현명님의 스트레스 평가 결과</Text>
+                    <ProgressCircle
+                        style={{
+                            marginTop: 20,
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                        size={160}
+                        borderWidth={0}
+                        thickness={10}
+                        progress={0.75}
+                        color={result === "Good" ? "#5cc27b" : result="Normal" ? "#ffb83d" : "#fb5757"}
+                        unfilledColor="#E0E5EC"
+                    >
+                        <Text style={{ position: "absolute", flex: 1, color: "#303030", textAlign: "center" }}>
+                            <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{result}</Text>
+                        </Text>
+                    </ProgressCircle>
+                    <Text style={{
+                        fontFamily: "NunitoSans-Bold",
+                        fontSize: 16,
+                        color: "#303030",
+                        lineHeight: 30,
+                        alignSelf: "center",
+                        textAlign: "center",
+                        marginTop: 20
+                    }}>{resultcontent}</Text>
+                </ScrollView>
+            </SafeAreaView>
+            <SafeAreaView style={{ flex: 0 }}>
+                <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                    <View style={{
+                        width: "100%",
+                        height: 60,
+                        backgroundColor: '#5cc27b',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                    </View>
+                </TouchableOpacity>
+            </SafeAreaView>
+        </>
+    )
+}
