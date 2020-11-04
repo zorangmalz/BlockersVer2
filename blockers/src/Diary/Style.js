@@ -19,12 +19,10 @@ import auth from '@react-native-firebase/auth';
 
 const HEIGHT = Dimensions.get("window").height;
 
-export default function Header({ navigation, Create}) {
-
-
+export default function Header({ navigation, Create }) {
     return (
         <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between", height: 50, paddingTop: 5, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
-            <View style={{ flexDirection: "row", alignItems: "center"}}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Ionicons name="chevron-back" size={25} />
                 </TouchableOpacity>
@@ -69,65 +67,59 @@ function YesorNo(state, action) {
     }
 }
 
-export function Create({navigation}) {
+export function Create({ navigation }) {
     //TextInput 내용
     const [when, setWhen] = useState("");
     const [how, setHow] = useState("");
     const [advice, setAdvice] = useState("");
-    
-    const [user,setUser]=useState()
+    const [user, setUser] = useState();
 
-
-useEffect(()=>{
-    
-    auth().onAuthStateChanged(userAuth => {
-        setUser(userAuth)
-        // console.log(userAuth)
+    useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+            // console.log(userAuth)
+        })
     })
-    
-    
-})
 
-async function writeDiary(){
-    var a=moment().toArray()
+    async function writeDiary() {
+        var a = moment().toArray()
 
-    if(a[1]===12){
-        a[1]=1
-    }else{
-        a[1]=a[1]+1
+        if (a[1] === 12) {
+            a[1] = 1
+        } else {
+            a[1] = a[1] + 1
+        }
+
+        if (state === 1) {
+            var check = "있었다"
+        } else {
+            var check = "없었다"
+        }
+
+        await firestore().collection("UserInfo").doc(user.uid).collection("Diary").doc(a + "diary").set({
+            impulse: check,
+            when: when,
+            how: how,
+            advice: advice,
+            date: a[0] + "/" + a[1] + "/" + a[2]
+        }).then(
+            navigation.navigate("DiaryList")
+        )
     }
-    
-    if(state===1){
-        var check="있었다"
-    }else{
-        var check="없었다"
-    }
-    
-    await firestore().collection("UserInfo").doc(user.uid).collection("Diary").doc(a+"diary").set({
-        impulse:check,
-        when:when,
-        how:how,
-        advice:advice,
-        date:a[0]+"/"+a[1]+"/"+a[2]
-    }).then(
-        navigation.navigate("DiaryList")
-    )
-}
     //흡연충동 여부
     const [state, dispatch] = useReducer(YesorNo, 0);
     const Yes = () => {
-        dispatch({type : "Yes"})
+        dispatch({ type: "Yes" })
         // console.log(state)
     }
     const No = () => {
-        
-        dispatch({type : "No"})
+        dispatch({ type: "No" })
         // console.log(state)
     }
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{flex: 1, backgroundColor: "#ffffff"}}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
                 <Header navigation={navigation} Create={true} />
                 <ScrollView>
                     <View style={{
@@ -161,33 +153,33 @@ async function writeDiary(){
                                 width: 74,
                                 height: 36,
                                 borderRadius: 28,
-                                backgroundColor: state===1 ? "#ffb83d" : "#ffffff",
+                                backgroundColor: state === 1 ? "#ffb83d" : "#ffffff",
                                 alignItems: "center",
                                 justifyContent: "center",
                                 marginRight: 20,
-                                borderWidth: state===1 ? 0 : 1,
-                                borderColor: state===1 ? "#ffb83d" : "#303030"
+                                borderWidth: state === 1 ? 0 : 1,
+                                borderColor: state === 1 ? "#ffb83d" : "#303030"
                             }}>
                                 <Text style={{
                                     fontSize: 16,
-                                    fontFamily: state===1 ? "NunitoSans-Bold" : "NunitoSans-Regular",
-                                    color: state===1 ? "#ffffff" : "#303030",
+                                    fontFamily: state === 1 ? "NunitoSans-Bold" : "NunitoSans-Regular",
+                                    color: state === 1 ? "#ffffff" : "#303030",
                                 }}>있었다</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={No} style={{
                                 width: 74,
                                 height: 36,
                                 borderRadius: 28,
-                                backgroundColor: state===2 ? "#ffb83d" : "#ffffff",
+                                backgroundColor: state === 2 ? "#ffb83d" : "#ffffff",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                borderWidth: state===2 ? 0 : 1,
-                                borderColor: state===2 ? "#ffb83d" : "#303030"
+                                borderWidth: state === 2 ? 0 : 1,
+                                borderColor: state === 2 ? "#ffb83d" : "#303030"
                             }}>
                                 <Text style={{
                                     fontSize: 16,
-                                    fontFamily: state===2 ? "NunitoSans-Bold" : "NunitoSans-Regular",
-                                    color: state===2 ? "#ffffff" : "#303030",
+                                    fontFamily: state === 2 ? "NunitoSans-Bold" : "NunitoSans-Regular",
+                                    color: state === 2 ? "#ffffff" : "#303030",
                                 }}>없었다</Text>
                             </TouchableOpacity>
                         </View>
@@ -279,18 +271,25 @@ const style = StyleSheet.create({
     }
 })
 
-const renderItem = ({item}) => {
+const renderItem = ({ item }) => {
     return (
         <View style={{
             alignSelf: "center",
             width: "92%",
             backgroundColor: "#ffffff",
-            borderColor: "#c6c6c6",
-            borderWidth: 1,
             borderRadius: 15,
             padding: 16,
             alignItems: "flex-start",
-            marginTop: 32
+            marginTop: 16,
+            elevation: 3,
+            shadowColor: "#303030",
+            shadowOffset: {
+                width: 0,
+                height: 1,
+            },
+            shadowOpacity: 0.22,
+            shadowRadius: 2.22,
+            marginBottom: 16,
         }}>
             <Text style={{
                 fontFamily: "NunitoSans-Bold",
@@ -339,29 +338,30 @@ const renderItem = ({item}) => {
 }
 
 export function List({ navigation }) {
-    const [user,setUser]=useState()
-    const [items,setItems]=useState()
+    const [user, setUser] = useState()
+    const [items, setItems] = useState()
 
-    useEffect(()=>{
-    auth().onAuthStateChanged(userAuth => {
-        setUser(userAuth)
-        // console.log(userAuth)
-    })
-    if(user){
-    load()}
-    },[user])
+    useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+            // console.log(userAuth)
+        })
+        if (user) {
+            load()
+        }
+    }, [user])
 
-    async function load(){
+    async function load() {
         const list = [];
         firestore().collection("UserInfo").doc(user.uid).collection("Diary").onSnapshot(querySnapshot => {
             querySnapshot.forEach(function (doc) {
-                            list.push({
-                                date:doc.data().date,
-                                impulse:doc.data().impulse,
-                                when:doc.data().impulse,
-                                how:doc.data().how,
-                                advice:doc.data().advice
-                            });
+                list.push({
+                    date: doc.data().date,
+                    impulse: doc.data().impulse,
+                    when: doc.data().impulse,
+                    how: doc.data().how,
+                    advice: doc.data().advice
+                });
             })
             setItems(list);
         })
@@ -371,7 +371,7 @@ export function List({ navigation }) {
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
                 <Header navigation={navigation} Create={false} />
-                <ScrollView>
+                <ScrollView style={{paddingTop: 16}}>
                     <FlatList
                         data={items}
                         keyExtractor={(item) => item.id}
