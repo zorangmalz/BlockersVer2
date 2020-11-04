@@ -8,7 +8,8 @@ import {
     Text,
     StyleSheet,
     FlatList,
-    RefreshControl
+    RefreshControl,
+    Image
 } from 'react-native';
 import firebase from "@react-native-firebase/app";
 import auth from '@react-native-firebase/auth';
@@ -77,6 +78,8 @@ export default function MyPageScreen({ navigation }) {
     const [userlogined, setUserlogined] = useState(false);
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState("");
+    const [name,setName]=useState()
+
     const [nickname, setNickname] = useState("");
     const [refreshing, setRefreshing] = React.useState(false);
 
@@ -96,34 +99,42 @@ export default function MyPageScreen({ navigation }) {
         }, 200)
     }
 
-    function onAuthStateChanged(user) {
-        setUser(user);
-        if (user) {
-            const sexs = "boy"
+    // function onAuthStateChanged(user) {
+    //     setUser(user);
+    //     if (user) {
+    //         const sexs = "boy"
+    //         setUserlogined(true)
+    //         firestore().collection("UserInfo").doc(user.uid).get()
+    //             .then(data => {
+    //                 setNickname(data.data().nickname)
+    //             })
+    //     } else {
+    //         setNickname("닉네임을 설정해주세요");
+    //         setUserlogined(false)
+    //     }
+
+        
+    // }
+    const User=firebase.auth().currentUser; 
+    useEffect(()=>{
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+    },[])
+
+    useEffect(() => {
+        if (!user) {
+            setUserlogined(false)
+        }else{
             setUserlogined(true)
             firestore().collection("UserInfo").doc(user.uid).get()
                 .then(data => {
                     setNickname(data.data().nickname)
-                })
-        } else {
-            setNickname("닉네임을 설정해주세요");
-            setUserlogined(false)
+                    setName(data.data().name)
+                }) 
         }
-
-        if (initializing) setInitializing(false);
-    }
-    const User = firebase.auth().currentUser;
-
-    useEffect(() => {
-       
-        if (!user) {
-            setUserlogined(false)
-
-        }
-        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-        return subscriber; // unsubscribe on unmount
-    }, [refreshing,userlogined]);
-    if (initializing) return null;
+    }, [refreshing,userlogined,user]);
+    
 
     const Success = [
         {
@@ -270,7 +281,7 @@ export default function MyPageScreen({ navigation }) {
                                     alignItems: "flex-start",
                                     justifyContent: "space-evenly"
                                 }}>
-                                    <Text style={{ fontSize: 14, fontFamily: 'NunitoSans-Regular', color: "#303030" }}>{User.displayName}님</Text>
+                                    <Text style={{ fontSize: 14, fontFamily: 'NunitoSans-Regular', color: "#303030" }}>{name}님</Text>
                                     <View style={{
                                         flexDirection: "row",
                                         alignItems: "center",

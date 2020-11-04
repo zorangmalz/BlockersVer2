@@ -79,10 +79,11 @@ export default function LoginVerificationProfile({ navigation }) {
     }
 
     async function updateInfo(code, bir, se, nick, pic) {
+        console.log(code,bir,se,nick,pic)
         if (haveProfile){
         // await ProfilePicture(nickname)
         console.log("시발 여기라고", revmtk)
-        await ref.doc(code).update({
+        await ref.doc(code).set({
             birth: bir,
             sex: se,
             nickname:"Blockers"+totalUser,
@@ -91,68 +92,48 @@ export default function LoginVerificationProfile({ navigation }) {
             name:nick
         })
     }else{
-        await uploadNonImage()
-        await ref.doc(code).update({
+        await ref.doc(code).set({
             birth: bir,
             sex: se,
-            nickname: "Blockers"+totalUsers,
+            nickname: "Blockers"+totalUser,
             gotProfile: haveProfile,
-            profilePicture: pic,
             name:nick
         })
     }
+    firestore().collection("TotalUser").doc("userNum").set(
+     {
+         numCount:totalUser+1
+     }
+    )
     }
-    function onAuthStateChanged(user) {
-        setUser(user);
-
-        if (initializing) setInitializing(false);
-    }
+    
 
     useEffect(() => {
-        const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-        return subscriber; // unsubscribe on unmount
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
     }, []);
 
-    if (initializing) return null;
     useEffect(()=>{
+        if(user){
         firestore().collection("TotalUser").doc("userNum").get().then(doc=>{
             setTotalUser(doc.data().numCount)
-        
-        })
-            },[user])
+        })}
+    },[user])
 
     async function move() {
-        uploadImage()
-        const url2 = await storage()
+        if(isImage){
+            await uploadImage()
+            var url2 = await storage()
             .refFromURL("gs://blockers-8a128.appspot.com/User/" + nickname + "/" + "프로필사진" + nickname)
             .getDownloadURL();
+        }else{
+            var url2=""
+        }
         updateInfo(user.uid, birthday, gender, nickname, url2)
         navigation.navigate("ModeSelect")
     }
-    
-    async function repeatchange() {
-        console.log("gere")
-        console.log(nickname, "nickname")
-        console.log(nickState, 'Nickstate')
-        await firestore()
-            .collection('UserInfo')
-            .where('nickname', '==', nickname)
-            .get()
-            .then(querySnapshot => {
-                querySnapshot.forEach(function (doc) {
-                    console.log("samehere")
-                    console.log(doc.data())
-                    setRepeat(true)
-                    SetNickState(true)
-                })
-            })
-        if (nickState === false) {
 
-            move()
-        } else {
-            console.log("same shit")
-        }
-    }
 
     const options = {
         title: '사진가져오기',
@@ -189,16 +170,7 @@ export default function LoginVerificationProfile({ navigation }) {
         await reference.putFile(uploadUri);
         setHaveProfile(true)
     }
-    async function uploadNonImage() {
-        const uri = imageOne;
-        const filename = "프로필사진" + nickname
-        const reference = storage().ref("User/" + nickname + "/" + filename);
-        const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
-
-        await reference.putFile(uploadUri);
-        setHaveProfile(true)
-    }
-
+  
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -262,7 +234,7 @@ export default function LoginVerificationProfile({ navigation }) {
                         에 동의하게 됩니다.(마케팅 정보 수신동의 포함)</Text>
                     </View>
                 </ScrollView>
-                <TouchableOpacity onPress={repeatchange} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
+                <TouchableOpacity onPress={move} style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>시작하기</Text>
                     </View>
