@@ -12,7 +12,9 @@ import {
     Dimensions,
     RefreshControl,
     Alert,
-    ImageBackground
+    ImageBackground,
+    Animated,
+    Easing
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import moment from "moment"
@@ -204,8 +206,8 @@ export default function HomeScreen({ navigation }) {
                 setStats(documentSnapshot.data().smokingAmount)
                 setSmokingDaily(documentSnapshot.data().smokeDaily)
                 cutting(documentSnapshot.data().smokingAmount)
-                console.log("smokeInfo and stats",smokeInfo,stats,smokingDaily)
-                
+                console.log("smokeInfo and stats", smokeInfo, stats, smokingDaily)
+
                 if (!documentSnapshot.data().SmokingTime) {
                     setcheck(false)
                 } else {
@@ -223,25 +225,41 @@ export default function HomeScreen({ navigation }) {
         } else {
             setViewOpacity(false)
         }
-    }, [user, viewopacity, check,refreshing,today])
+    }, [user, viewopacity, check, refreshing, today, Rotate])
     useEffect(() => {
         console.log("s")
         var b = moment(fullTime)
-        if(fullTime){
-        const interval = setInterval(() => {
-            var a = moment().toArray()
-            var c = (b.diff(a, "seconds")) * -1
-            timeCounter(c)
-            setSmokingShow(parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))
-            setSmokingMoney(((parseInt(c/86400)*stats+parseInt(parseInt(c%86400/3600)*stats/24))*225).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
-            
-            var hi=100000
-            
-        }, 1000)
-        return () => clearInterval(interval)
-    }
-        
+        if (fullTime) {
+            const interval = setInterval(() => {
+                var a = moment().toArray()
+                var c = (b.diff(a, "seconds")) * -1
+                timeCounter(c)
+                setSmokingShow(parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24))
+                setSmokingMoney(((parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24)) * 225).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
+
+                var hi = 100000
+
+            }, 1000)
+            return () => clearInterval(interval)
+        }
+
     }, [fullTime])
+
+    const AnimatedIonicons = Animated.createAnimatedComponent(Ionicons)
+    const Rotate = useRef(new Animated.Value(0)).current;
+    const Rotation = () => {
+        Rotate.setValue(0);
+        Animated.timing(Rotate, {
+            toValue: 1,
+            duration: 1000,
+            easing: Easing.linear,
+            useNativeDriver: true
+        }).start()
+    }
+    const Sync = Rotate.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '360deg']
+    })
 
     return (
         <>
@@ -263,8 +281,8 @@ export default function HomeScreen({ navigation }) {
                         </Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                        <TouchableOpacity>
-                            <Ionicons name="sync" size={27} color="#5cc27b" style={{ marginRight: 16 }} />
+                        <TouchableOpacity onPress={Rotation}>
+                            <AnimatedIonicons name="sync" size={27} color="#5cc27b" style={{ marginRight: 16, transform: [{ rotate: Sync }] }} />
                         </TouchableOpacity>
                         <TouchableOpacity>
                             <Image source={require('./icon/alram.png')} />
