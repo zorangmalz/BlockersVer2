@@ -77,6 +77,7 @@ import { StressMain } from './src/Stress/Style';
 import DiaryWrite, { DiaryList } from './src/Diary/DiaryScreen';
 import Challenge, { ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowHow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage } from './src/Challenge/ChallengeScreen';
 import ChatbotMain, { ChatbotOne, ChatbotTwo } from './src/Chatbot/ChatbotScreen';
+import SmokeAlertOne, { SmokeAlertFour, SmokeAlertThree, SmokeAlertTwo } from './src/SmokeAlert/SmokeAlert';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -982,6 +983,38 @@ const App = ({ navigation }) => {
           <Stack.Screen 
             name="ChatbotTwo"
             component={ChatbotTwo}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SmokeAlertOne"
+            component={SmokeAlertOne}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SmokeAlertTwo"
+            component={SmokeAlertTwo}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SmokeAlertThree"
+            component={SmokeAlertThree}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SmokeAlertFour"
+            component={SmokeAlertFour}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false

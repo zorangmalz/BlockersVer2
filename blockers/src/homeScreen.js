@@ -537,7 +537,7 @@ export default function HomeScreen({ navigation }) {
                         </TouchableOpacity>
                         <TouchableOpacity style={{
                             alignItems: "center",
-                        }} onPress={() => navigation.navigate("SelfEsteemMain")}>
+                        }} onPress={() => navigation.navigate("SmokeAlertOne")}>
                             <Ionicons name="alert-circle-outline" size={60} color="#FF0000" />
                             <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#ff0000", marginTop: 4}}>흡연 경보</Text>
                         </TouchableOpacity>

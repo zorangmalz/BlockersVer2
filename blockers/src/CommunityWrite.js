@@ -295,15 +295,6 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
                     </View>
                 </Modal>
                 <ScrollView>
-                    <TouchableOpacity style={community.buttonbox}
-                        onPress={() => {
-                            (title.length > 0) && (content.length > 0) ?
-                                writePost()
-                                :
-                                errorview()
-                        }}>
-                        <Text style={community.buttontext} >완료</Text>
-                    </TouchableOpacity>
                     <View style={community.titlebox}>
                         <TextInput value={title} onChangeText={text => setTitle(text)} style={community.titleandcontent} placeholder="제목" placeholderTextColor="#707070" />
                     </View>
@@ -351,6 +342,14 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
+            </SafeAreaView>
+            <SafeAreaView style={{ flex: 0 }}>
+                <TouchableOpacity onPress={() =>
+                    (title.length > 0) && (content.length > 0) ? writePost() : errorview()}>
+                    <View style={{ width: "100%", height: 60, backgroundColor: (title.length > 0) && (content.length > 0) ? '#5cc27b' : "#c6c6c6", justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>작성완료</Text>
+                    </View>
+                </TouchableOpacity>
             </SafeAreaView>
         </>
     )

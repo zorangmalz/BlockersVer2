@@ -7,12 +7,10 @@ import {
     Dimensions,
     StatusBar,
     SafeAreaView,
-    ScrollView
+    ScrollView,
+    FlatList
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import firebase from '@react-native-firebase/app';
-import auth from '@react-native-firebase/auth';
-import { LineChart } from "react-native-chart-kit";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -22,7 +20,7 @@ const solution = StyleSheet.create({
         fontSize: 16,
         fontFamily: 'NunitoSans-Bold',
         color: '#303030',
-        marginLeft: 24,
+        marginLeft: "8%",
         marginBottom: 50,
         marginTop: 28,
         marginRight: 24
@@ -245,44 +243,21 @@ export default function Stress({ navigation, Nextpage, Title }) {
 }
 
 export function StressMain({ navigation }) {
-    const title = "스트레스는 금연의 적! 스트레스를 체크하고 금연 실패를 예방해보세요.";
-    const User = auth().currentUser.displayName;
-
-    //차트 데이터 및 디자인
-    const data = {
-        labels: ["1회", "2회", "3회", "4회", "5회", "6회"],
-        datasets: [
-            {
-                data: [ 2, 4, 6, 8, 8, 10],
-                color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                strokeWidth: 2 // optional
-            }
-        ]
-    };
-
-    const chartConfig = {
-        backgroundGradientFrom: "#ffffff",
-        backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: "#ffffff",
-        backgroundGradientToOpacity: 0,
-        fillShadowGradient: "#5cc27b",
-        fillShadowGradientOpacity: 0.5,
-        color: (opacity = 1) => `rgba(48, 48, 48, ${opacity})`,
-        strokeWidth: 2, // optional, default 3
-        barPercentage: 0.5,
-        useShadowColorFromDataset: false, // optional
-        propsForDots: {
-            r: "3",
-            strokeWidth: "1.5",
-            stroke: "#5cc27b"
+    const title = "스트레스는 금연의 적! 스트레스를 체크하고 \n금연 실패를 예방해보세요.";
+    const data = [
+        {
+            num: 1,
+            degree: "높음"
         },
-        propsForBackgroundLines: {
-            strokeWidth: "1"
+        {
+            num: 2,
+            degree: "높음"
         },
-        propsForVerticalLabels: {
-            
-        }
-    };
+        {
+            num: 3,
+            degree: "높음"
+        },
+    ]
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -308,20 +283,62 @@ export function StressMain({ navigation }) {
                 <ScrollView>
                     <Text style={[solution.largeText, {marginBottom: HEIGHT * 0.07, lineHeight: 30}]}>{title}</Text>
                     <Text style={{
-                        alignSelf: "center",
+                        marginLeft: "8%",
                         fontFamily: "NunitoSans-Bold",
-                        fontSize: 18,
+                        fontSize: 16,
                         color: "#5cc27b",
-                        marginBottom: HEIGHT * 0.07
-                    }}>{User} 님의 스트레스 평가</Text>
-                    <LineChart 
-                        width={WIDTH * 0.9}
-                        height={HEIGHT * 0.3}
+                        marginBottom: HEIGHT * 0.025
+                    }}>평가기록</Text>
+                    <FlatList
+                        style={{
+                            marginLeft: "8%"
+                        }}
                         data={data}
-                        chartConfig={chartConfig}
-                        style={{alignSelf: "center"}}
-                        withInnerLines={false}
+                        renderItem={({item}) => (
+                            <>
+                            <View style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "flex-start"
+                            }}>
+                                <View style={{
+                                    width: "22%",
+                                    height: 30,
+                                    borderColor: "#77bf81",
+                                    borderLeftWidth: 2,
+                                    borderRightWidth: 2,
+                                    borderTopWidth: 2,
+                                    backgroundColor: "#ffffff",
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}>
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#303030"
+                                    }}>{item.num}회</Text>
+                                </View>
+                                <View style={{
+                                    width: "55%",
+                                    height: 30,
+                                    borderColor: "#77bf81",
+                                    borderRightWidth: 2,
+                                    borderTopWidth: 2,
+                                    backgroundColor: "#ffffff",
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}>
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#5cc27b"
+                                    }}>{item.degree}</Text>
+                                </View>
+                            </View>
+                            </>
+                        )}
                     />
+                    <View style={{width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: "8%"}} />
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
