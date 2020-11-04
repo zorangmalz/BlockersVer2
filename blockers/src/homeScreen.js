@@ -542,26 +542,89 @@ export default function HomeScreen({ navigation }) {
                             <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#ff0000", marginTop: 4}}>흡연 경보</Text>
                         </TouchableOpacity>
                     </View>
-                    <TouchableOpacity onPress={() => navigation.navigate("DiaryWrite")} style={{
-                        alignItems: "flex-start",
-                        marginTop: 40,
-                        marginLeft: "10%",
-                        marginRight: "10%"
-                    }}>
+                    {smoker ?
                         <View style={{
-                            flexDirection: 'row',
+                            flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: 'flex-start',
-                            paddingBottom: 16,
-                            paddingLeft: 14,
-                            paddingRight: 14
+                            justifyContent: "space-between",
+                            marginTop: 40,
+                            marginLeft: "10%",
+                            marginRight: "10%"
                         }}>
-                            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
-                            <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 8, color: '#303030' }}>금연일기</Text>
+                            <View>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    alignItems: "center",
+                                    justifyContent: 'flex-start',
+                                    paddingBottom: 16,
+                                    paddingLeft: 14,
+                                    paddingRight: 14
+                                }}>
+                                    <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
+                                    <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 8, color: '#303030' }}>챌린지 시작하기</Text>
+                                </View>
+                                <Text style={{ marginLeft: 32 }}>
+                                    <Text style={{ fontSize: 16, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>금연을 시작해 보세요!</Text>
+                                </Text>
+                            </View>
+                            <TouchableOpacity onPress={() => navigation.navigate("ChallengeRegister")} style={{
+                                width: 100,
+                                height: 35,
+                                borderRadius: 18,
+                                borderWidth: 2,
+                                borderColor: "#5cc27b",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}>
+                                <Text style={{
+                                    fontFamily: "NunitoSans-Bold",
+                                    fontSize: 16,
+                                    color: "#303030"
+                                }}>시작하기</Text>
+                            </TouchableOpacity>
                         </View>
-                        <Text style={{ marginLeft: 32 }}>
-                            <Text style={{ fontSize: 16, color: '#979797', fontFamily: 'NunitoSans-Regular' }}>오늘의 금연 일기를 작성해보세요.</Text>
-                        </Text>
+                        :
+                        <TouchableOpacity onPress={() => navigation.navigate("DiaryWrite")} style={{
+                            alignItems: "flex-start",
+                            marginTop: 40,
+                            marginLeft: "10%",
+                            marginRight: "10%"
+                        }}>
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: "center",
+                                justifyContent: 'flex-start',
+                                paddingBottom: 16,
+                                paddingLeft: 14,
+                                paddingRight: 14
+                            }}>
+                                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
+                                <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 8, color: '#303030' }}>금연일기</Text>
+                            </View>
+                            <Text style={{ marginLeft: 32 }}>
+                                <Text style={{ fontSize: 16, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>오늘의 금연 일기를 작성해보세요.</Text>
+                            </Text>
+                        </TouchableOpacity>
+                    }
+                    <TouchableOpacity style={{
+                        width: "100%",
+                        height: 90,
+                        backgroundColor: "#303030",
+                        paddingVertical: 16,
+                        paddingHorizontal: 32,
+                        marginTop: 24
+                    }}>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 21,
+                            color: "#ffffff",
+                            marginBottom: 8
+                        }}>Blockers 챌린지는 무엇인가요?</Text>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 16,
+                            color: "#ffffff"
+                        }}>실천형 금연 서비스 알아보기</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>
