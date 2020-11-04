@@ -124,6 +124,24 @@ export default function MyPageScreen({ navigation }) {
         return subscriber; // unsubscribe on unmount
     }, [refreshing,userlogined]);
     if (initializing) return null;
+
+    const Success = [
+        {
+            id: 1,
+            month: 1,
+            action: true,
+        },
+        {
+            id: 2,
+            month: 3,
+            action: false,
+        },
+        {
+            id: 3,
+            month: 6,
+            action: false,
+        },
+    ]
     return (
         <>
             <StatusBar barStyle="light-content" />
