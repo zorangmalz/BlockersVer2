@@ -23,9 +23,9 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-// import { BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+import {AdEventType,InterstitialAd,BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
 
-// const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-8262202601779055~8151923810'
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
 const Caver = require('caver-js')
 const WIDTH = Dimensions.get('window').width;
@@ -186,6 +186,20 @@ export default function HomeScreen({ navigation }) {
         
     }
     useEffect(() => {
+   
+
+// const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+//     requestNonPersonalizedAdsOnly: true,
+// });
+// interstitial.onAdEvent((type) => {
+//     if (type === AdEventType.LOADED) {
+//       interstitial.show();
+//     }
+//   });
+  
+//   interstitial.load();
+
+
         var a =moment().toArray()
         console.log(a)
         // console.log(total)
@@ -209,15 +223,12 @@ export default function HomeScreen({ navigation }) {
                 setStats(documentSnapshot.data().smokingAmount)
                 setSmokingDaily(documentSnapshot.data().smokeDaily)
                 cutting(documentSnapshot.data().smokingAmount)
-                console.log("smokeInfo and stats", smokeInfo, stats, smokingDaily)
-
+                console.log("smokeInfo and stats",smoker, smokeInfo, stats, smokingDaily)
                 if (!documentSnapshot.data().SmokingTime) {
                     setcheck(false)
                 } else {
-
                     setfullTime(documentSnapshot.data().SmokingTime)
                     setcheck(true)
-
                     // console.log(fullTime)
                 }
             })
@@ -237,16 +248,15 @@ export default function HomeScreen({ navigation }) {
                 var a = moment().toArray()
                 var c = (b.diff(a, "seconds")) * -1
                 timeCounter(c)
+                
                 setSmokingShow(parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24))
                 setSmokingMoney(((parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24)) * 225).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
                 
-                var hi = 100000
-
             }, 1000)
             return () => clearInterval(interval)
         }
-
-    }, [fullTime])
+console.log(smoker,"smoker")
+    }, [fullTime,refreshing])
 
     const AnimatedIonicons = Animated.createAnimatedComponent(Ionicons)
     const Rotate = useRef(new Animated.Value(0)).current;
@@ -259,7 +269,7 @@ export default function HomeScreen({ navigation }) {
             useNativeDriver: true
         }).start()
         console.log(user.uid)
-        
+        if(smoker){
         Alert.alert(
             "금연을 시작하시겠습니까?",
             "",
@@ -280,14 +290,50 @@ export default function HomeScreen({ navigation }) {
                 }}
             ]
         )
+        }else{
+            Alert.alert(
+                "금연을 포기하시겠습니까?",
+                "",
+                [
+                    {
+                        text: '취소', onPress: () => console.log('CANCEL Pressed')
+                    },
+                    {
+                        text: '포기하기', onPress: () => {changeToNonSmoker(), Alert.alert(
+                            '흡연모드 활성화',
+                            '앱 새로고침 후 사용',
+                            [
+                                {
+                                    text: 'OK', onPress: () => console.log('OK Pressed')
+                                }
+                            ]
+                        )
+                    }}
+                ]
+            )
+        }
     }
     async function changeToSmoker(){
+        var a = moment().toArray()
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker:false,
-            smokedLoss:smokingMoney,
-            smokedAmount:smokingShow 
+            SmokingTime:a,
+            smokedLoss:firebase.firestore.FieldValue.arrayUnion(smokingMoney),
+            smokedAmount:firebase.firestore.FieldValue.arrayUnion(smokingShow) 
          })
     }
+    async function changeToNonSmoker(){
+        var a = moment().toArray()
+        await firestore().collection("UserInfo").doc(user.uid).update({
+            smoker:true,
+            SmokingTime:a,
+            smokedSavedLoss:firebase.firestore.FieldValue.arrayUnion(smokingMoney),
+            smokedSavedAmount:firebase.firestore.FieldValue.arrayUnion(smokingShow),
+            smokeDaily:0,
+            smokeStats:firebase.firestore.FieldValue.arrayUnion(a+"/흡연량 : "+smokingDaily) 
+         })
+    }
+
     const Sync = Rotate.interpolate({
         inputRange: [0, 1],
         outputRange: ['0deg', '360deg']
@@ -330,7 +376,7 @@ export default function HomeScreen({ navigation }) {
                                     <>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 16, marginBottom: 16 }}>
                                             <View style={resource.container}>
-                                                <Text style={resource.smallText}>나 피웠지?</Text>
+                                                <Text style={resource.smallText}>얼마나 피웠지?</Text>
                                                 <Text style={resource.largeText}>{smokingShow}대</Text>
                                             </View>
                                             <View style={resource.container}>
@@ -638,14 +684,29 @@ export default function HomeScreen({ navigation }) {
                             </Text>
                         </TouchableOpacity>
                     }
-                     {/* <BannerAd
-      unitId={adUnitId}
-      size={BannerAdSize.FULL_BANNER}
+          
+         <View
+         style={{flex:1,
+            flexDirection:"row",
+        alignItems:"center",
+    justifyContent:"center",
+}}
+         >
+
+         
+<BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
       requestOptions={{
         requestNonPersonalizedAdsOnly: true,
       }}
-    /> */}
-                    <TouchableOpacity style={{
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+         </View> 
+         
+                    {/* <TouchableOpacity style={{
                         width: "100%",
                         height: 90,
                         backgroundColor: "#303030",
@@ -665,7 +726,7 @@ export default function HomeScreen({ navigation }) {
                             fontSize: 16,
                             color: "#ffffff"
                         }}>실천형 금연 서비스 알아보기</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </ScrollView>
             </SafeAreaView>
         </>

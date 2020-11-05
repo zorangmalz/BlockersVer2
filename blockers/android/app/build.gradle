@@ -131,7 +131,7 @@ android {
     android {
         dexOptions {
             incremental true
-            javaMaxHeapSize "2048M"
+            javaMaxHeapSize "4g"
         }
     }
     defaultConfig {
@@ -201,6 +201,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.3.1'
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
     implementation 'com.google.firebase:firebase-messaging:20.2.4'
+
+
     implementation project(':react-native-image-picker')
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
