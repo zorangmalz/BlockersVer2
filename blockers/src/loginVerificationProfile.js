@@ -67,27 +67,20 @@ export default function LoginVerificationProfile({ navigation }) {
     const [imageSource, setImageSource] = useState(undefined);
     const [isImage, setIsImage] = useState(false);
     const [haveProfile, setHaveProfile] = useState(false);
-    const [revmtk, setRevmtk] = useState()
+    
     const [totalUser,setTotalUser]=useState()
     const ref = firestore().collection("UserInfo");
-    async function ProfilePicture(a) {
-        console.log(a)
-        const url2 = await storage()
-            .refFromURL("gs://blockers-8a128.appspot.com/User/" + a + "/" + "프로필사진" + a)
-            .getDownloadURL();
-        setRevmtk(url2)
-    }
 
     async function updateInfo(code, bir, se, nick, pic) {
         console.log(code,bir,se,nick,pic)
-        if (haveProfile){
+        if (pic.length>0){
         // await ProfilePicture(nickname)
-        console.log("시발 여기라고", revmtk)
+        
         await ref.doc(code).set({
             birth: bir,
             sex: se,
             nickname:"Blockers"+totalUser,
-            gotProfile: haveProfile,
+            gotProfile:true,
             profilePicture: pic,
             name:nick
         })
@@ -96,7 +89,7 @@ export default function LoginVerificationProfile({ navigation }) {
             birth: bir,
             sex: se,
             nickname: "Blockers"+totalUser,
-            gotProfile: haveProfile,
+            gotProfile: false,
             name:nick
         })
     }
@@ -106,7 +99,6 @@ export default function LoginVerificationProfile({ navigation }) {
      }
     )
     }
-    
 
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
@@ -127,10 +119,12 @@ export default function LoginVerificationProfile({ navigation }) {
             var url2 = await storage()
             .refFromURL("gs://blockers-8a128.appspot.com/User/" + nickname + "/" + "프로필사진" + nickname)
             .getDownloadURL();
+        
         }else{
             var url2=""
         }
-        updateInfo(user.uid, birthday, gender, nickname, url2)
+        console.log(url2,"url2~~~")
+        await updateInfo(user.uid, birthday, gender, nickname, url2)
         navigation.navigate("ModeSelect")
     }
 
@@ -156,6 +150,7 @@ export default function LoginVerificationProfile({ navigation }) {
             }
             else {
                 setImageOne(response.uri);
+                console.log(response.uri,"uri!!!!!")
                 setPicone(false);
                 setIsImage(true)
             }
@@ -166,7 +161,7 @@ export default function LoginVerificationProfile({ navigation }) {
         const filename = "프로필사진" + nickname
         const reference = storage().ref("User/" + nickname + "/" + filename);
         const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
-
+        console.log(uploadUri,"uploadUri")
         await reference.putFile(uploadUri);
         setHaveProfile(true)
     }

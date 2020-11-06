@@ -39,7 +39,7 @@ export default function ProfileMain({ navigation }) {
     const [userNick, setUserNick] = useState();
     const [haveProfile, setHaveProfile] = useState();
     const [sex, setSex] = useState("");
-
+    const [name,setUserName]=useState();
     const [imageOne, setImageOne] = useState(undefined);
     const [picone, setPicone] = useState(true);
     const [imageSource, setImageSource] = useState(undefined);
@@ -58,19 +58,30 @@ export default function ProfileMain({ navigation }) {
                 setUser(userAuth)
             })
             if (user) {
-                firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot => {
+                await firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot => {
                     console.log(documentSnapshot.data().nickname, "hihi")
                     setUserNick(documentSnapshot.data().nickname)
+                    setUserName(documentSnapshot.data().name)
                     setuserBirth(documentSnapshot.data().birth)
                     setHaveProfile(documentSnapshot.data().gotProfile)
                     setSex(documentSnapshot.data().sex)
                 })
+               
                 console.log(user)
                 console.log(haveProfile, "profile")
                 hi()
             }
         } hello()
-    }, [userNick, user, imageOne, refreshing]);
+         
+        async function uploadImage(){
+            var profile=await storage()
+                .refFromURL("gs://blockers-8a128.appspot.com/User/" + name + "/" + "프로필사진" + name)
+                .getDownloadURL();
+                setImageSource(profile)
+                setIsImage(true)}
+                console.log(name,"name!")
+                    uploadImage()
+    }, [userNick, user, imageOne, refreshing,name]);
 
     const options = {
         title: '사진가져오기',

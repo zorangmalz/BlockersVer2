@@ -18,7 +18,7 @@ import firestore from '@react-native-firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modal';
-
+import storage from '@react-native-firebase/storage';
 
 const style = StyleSheet.create({
     container: {
@@ -132,6 +132,14 @@ export default function MyPageScreen({ navigation }) {
                     setNickname(data.data().nickname)
                     setName(data.data().name)
                 }) 
+                async function uploadImage(){
+            var profile=await storage()
+                .refFromURL("gs://blockers-8a128.appspot.com/User/" + name + "/" + "프로필사진" + name)
+                .getDownloadURL();
+                setImageSource(profile)
+                setIsImage(true)}
+                    uploadImage()
+            
         }
     }, [refreshing,userlogined,user]);
     
@@ -271,7 +279,9 @@ export default function MyPageScreen({ navigation }) {
                             <View style={{ marginTop: 16, marginHorizontal: "8%", flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
                                 <TouchableOpacity style={{ marginRight: 18 }} >
                                     {isImage ?
-                                        <Image resizeMode="cover" style={{ width: 68, height: 68, borderRadius: 34 }} />
+                                    <>
+                                        {imageSource && <Image style={{ width: 68, height: 68, borderRadius: 34 }} resizeMode="cover" source={{ uri: imageSource }} />}
+                                        </>
                                         :
                                         <Ionicons name="person-circle" size={90} color="#dbdbdb" />
                                     }
