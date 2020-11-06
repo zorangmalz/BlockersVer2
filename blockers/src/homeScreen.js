@@ -90,7 +90,7 @@ export default function HomeScreen({ navigation }) {
     const [sec, setSec] = useState(0);
     const [timestart, setTimestart] = useState(false);
     const [viewopacity, setViewOpacity] = useState(true);
-    const [startButton, setStartButton] = useState(false);
+    
     const [user, setUser] = useState()
     const [initializing, setInitializing] = useState(true);
     const [fullTime, setfullTime] = useState()
@@ -166,6 +166,7 @@ export default function HomeScreen({ navigation }) {
             smokeDaily:smoke+1
         })
     }
+    //보완...
     async function timeCheck(){
         var a=moment().toArray()
         console.log(a)
@@ -177,7 +178,7 @@ export default function HomeScreen({ navigation }) {
                 ref.doc(user.uid).update({
                     smokeDaily:0,
                     smokeToday:a[2],
-                    smokeStats:firebase.firestore.FieldValue.arrayUnion(a+"/흡연량 : "+smokingDaily)
+                    smokeStats:firebase.firestore.FieldValue.arrayUnion(a+"/흡연량:"+smokingDaily)
                     
                 })
                 setToday(false)
@@ -232,7 +233,7 @@ export default function HomeScreen({ navigation }) {
                     // console.log(fullTime)
                 }
             })
-            timeCheck()
+            
         }
         if (!check) {
             setViewOpacity(true)
@@ -241,6 +242,7 @@ export default function HomeScreen({ navigation }) {
         }
     }, [user, viewopacity, check, refreshing, today, Rotate])
     useEffect(() => {
+        timeCheck()
         console.log("s")
         var b = moment(fullTime)
         if (fullTime) {
@@ -313,22 +315,25 @@ console.log(smoker,"smoker")
             )
         }
     }
+
+    //금연 포기시
     async function changeToSmoker(){
         var a = moment().toArray()
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker:false,
             SmokingTime:a,
-            smokedLoss:firebase.firestore.FieldValue.arrayUnion(smokingMoney),
-            smokedAmount:firebase.firestore.FieldValue.arrayUnion(smokingShow) 
+            smokedLoss:firebase.firestore.FieldValue.arrayUnion(smokingMoney+"/"+a),
+            smokedAmount:firebase.firestore.FieldValue.arrayUnion(smokingShow+"/"+a) 
          })
     }
+    //금연 시작시에
     async function changeToNonSmoker(){
         var a = moment().toArray()
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker:true,
             SmokingTime:a,
-            smokedSavedLoss:firebase.firestore.FieldValue.arrayUnion(smokingMoney),
-            smokedSavedAmount:firebase.firestore.FieldValue.arrayUnion(smokingShow),
+            smokedSavedLoss:firebase.firestore.FieldValue.arrayUnion(smokingMoney+"/"+a),
+            smokedSavedAmount:firebase.firestore.FieldValue.arrayUnion(smokingShow+"/"+a),
             smokeDaily:0,
             smokeStats:firebase.firestore.FieldValue.arrayUnion(a+"/흡연량 : "+smokingDaily) 
          })
@@ -368,6 +373,7 @@ console.log(smoker,"smoker")
                     </View>
                 </View>
                 <ScrollView  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+               
                     <Swiper dotStyle={{ borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 250 }}>
                         <View>
                            
@@ -491,7 +497,7 @@ console.log(smoker,"smoker")
                                 }
                             </View>
                         </View>
-                        {startButton ?
+                        
                             <View style={{ width: "100%" }}>
                                 {smoker === true ?
                                     <>
@@ -575,19 +581,8 @@ console.log(smoker,"smoker")
                                     </>
                                 }
                             </View>
-                            :
-                            <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 33 }}>
-                                <Text style={{ fontSize: 24, textAlign: 'center' }}>
-                                    <Text style={{ fontFamily: 'NunitoSans-ExtraBold', color: '#303030', opacity: 0.8 }}>Start your Smoking Cessation With </Text>
-                                    <Text style={{ fontFamily: 'NunitoSans-ExtraBold', color: '#5CC27B' }}>Blockers</Text>
-                                </Text>
-                                <TouchableOpacity style={{ marginTop: 32 }} onPress={() => setStartButton(true)}>
-                                    <View style={{ backgroundColor: '#5CC27B', width: 100, borderRadius: 18, height: 35, alignItems: 'center', justifyContent: 'center' }}>
-                                        <Text style={{ color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>시작하기</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>
-                        }
+                          
+                        
                     </Swiper>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: "12%" }}>
                         <ImageBackground style={{ width: 25, height: 15, marginRight: 8, alignItems: "center", justifyContent: "center" }} resizeMode="stretch" source={require('./icon/tipbox.png')} >

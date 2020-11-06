@@ -11,7 +11,29 @@ import {
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin,statusCodes } from '@react-native-community/google-signin';
+import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import firestore from '@react-native-firebase/firestore';
+import KakaoLogins, { KAKAO_AUTH_TYPES } from '@react-native-seoul/kakao-login';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { firebase } from '@react-native-firebase/functions';
+import { Extrapolate } from 'react-native-reanimated';
+
+
+if (!KakaoLogins) {
+    console.error('Module is Not Linked');
+  }
+  
+  const logCallback = (log, callback) => {
+    console.log(log);
+    callback;
+  };
+  
+  const TOKEN_EMPTY = 'token has not fetched';
+  const PROFILE_EMPTY = {
+    id: 'profile has not fetched',
+    email: 'profile has not fetched',
+    profile_image_url: '',
+  };
 
 const login = StyleSheet.create({
     textinput: {
@@ -66,6 +88,72 @@ const login = StyleSheet.create({
 export default function LoginMain({navigation}) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+
+    const [loginLoading, setLoginLoading] = useState(false);
+    const [code, setCode] = useState('')
+    const [passState, setpassState] = useState(false)
+    const [texts, setTexts] = useState("")
+
+    
+
+  var kakaoAuth=firebase.functions().httpsCallable("kakaoCustomAuth");
+  // var kakaoAuth=firebase.functions().httpsCallable("helloworld");
+async function kakaoCheck(firebaseToken){
+const user= await auth().signInWithCustomToken(firebaseToken)
+console.log(user)
+let check=false
+await firestore()
+            .collection('UserInfo')
+            .get()
+            .then(querySnapshot => {
+                querySnapshot.forEach(function (doc) {
+                  if(doc.id===user.user.uid){
+                    check=true
+                  }
+                    
+                })
+            })
+  if (check){
+    console.log("old")
+    navigation.navigate("Home")
+  }else{
+    console.log("new")
+    navigation.navigate("프로필 설정")
+  }
+}
+  async function kakaoLogin(){
+    console.log("come")
+    logCallback('Login Start', setLoginLoading(true));
+     KakaoLogins.login([KAKAO_AUTH_TYPES.Talk, KAKAO_AUTH_TYPES.Account])
+      .then(result => {
+        const realToken=result.accessToken
+         kakaoAuth({token:realToken}).then(function(res){
+        kakaoCheck(res.data.firebase_token)
+       
+        // kakaoGetProfile()
+        }).catch(err=>{
+          logCallback(
+            `Failed:${err.code}:he ${err.message}`,  
+          );
+        })
+        logCallback(
+          `Login Finished:${JSON.stringify(result)}`,
+          setLoginLoading(false),
+        );
+        
+      })
+      .catch(err => {
+        if (err.code === 'E_CANCELLED_OPERATION') {
+          logCallback(`Login Cancelled:${err.message}`, setLoginLoading(false));
+        } else {
+          logCallback(
+            `Login Failed:${err.code} ${err.message}`,
+            setLoginLoading(false),
+          );
+        }
+      });
+  };
+
     async function onGoogleButtonPress() {
         // Get the users ID token
         const { idToken } = await GoogleSignin.signIn();
@@ -100,7 +188,27 @@ export default function LoginMain({navigation}) {
         });
            
     }
+    // async function onFacebookButtonPress() {
 
+    //     const result = await LoginManager.logInWithPermissions(['public_profile', 'email', 'user_friends']);
+    
+    //     if (result.isCancelled) {
+    //       throw 'User cancelled the login process';
+    //     }
+    //     const dataa = await AccessToken.getCurrentAccessToken();
+    //     if (!dataa) {
+    //       throw 'Something went wrong obtaining access token';
+    //     }
+    //     const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+    //     const NewUser = (await auth().signInWithCredential(facebookCredential)).additionalUserInfo.isNewUser
+    //     if (NewUser === true) {
+    //       auth().signInWithCredential(facebookCredential);
+    //       navigation.navigate("프로필 설정");
+    //     } else if (NewUser === false) {
+    //       auth().signInWithCredential(facebookCredential);
+    //       navigation.navigate("Home");
+    //     }
+    //   }
 
     return (
         <>
@@ -139,13 +247,13 @@ export default function LoginMain({navigation}) {
                         <Text style={login.signtext}>회원가입</Text>
                     </TouchableOpacity>
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
-                    <TouchableOpacity activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#4a67ad'}]}>
+                    {/* <TouchableOpacity onPress={onFacebookButtonPress} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#4a67ad'}]}>
                         <Text style={login.buttontext}>Facebook으로 로그인</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                     <TouchableOpacity onPress={onGoogleButtonPress} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#c45545'}]}>
                         <Text style={login.buttontext}>Gmail로 로그인</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#f6e14b'}]}>
+                    <TouchableOpacity onPress={kakaoLogin} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#f6e14b'}]}>
                         <Text style={[login.buttontext, {color: '#000000'}]}>Kakaotalk으로 로그인</Text>
                     </TouchableOpacity>
                 </ScrollView>

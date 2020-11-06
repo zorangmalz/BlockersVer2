@@ -236,27 +236,27 @@ await firestore()
     }
   }
 
-  async function onFacebookButtonPress() {
+  // async function onFacebookButtonPress() {
 
-    const result = await LoginManager.logInWithPermissions(['public_profile', 'email', 'user_friends']);
+  //   const result = await LoginManager.logInWithPermissions(['public_profile', 'email', 'user_friends']);
 
-    if (result.isCancelled) {
-      throw 'User cancelled the login process';
-    }
-    const dataa = await AccessToken.getCurrentAccessToken();
-    if (!dataa) {
-      throw 'Something went wrong obtaining access token';
-    }
-    const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
-    const NewUser = (await auth().signInWithCredential(facebookCredential)).additionalUserInfo.isNewUser
-    if (NewUser === true) {
-      auth().signInWithCredential(facebookCredential);
-      navigation.navigate("프로필 설정");
-    } else if (NewUser === false) {
-      auth().signInWithCredential(facebookCredential);
-      navigation.navigate("Home");
-    }
-  }
+  //   if (result.isCancelled) {
+  //     throw 'User cancelled the login process';
+  //   }
+  //   const dataa = await AccessToken.getCurrentAccessToken();
+  //   if (!dataa) {
+  //     throw 'Something went wrong obtaining access token';
+  //   }
+  //   const facebookCredential = auth.FacebookAuthProvider.credential(data.accessToken);
+  //   const NewUser = (await auth().signInWithCredential(facebookCredential)).additionalUserInfo.isNewUser
+  //   if (NewUser === true) {
+  //     auth().signInWithCredential(facebookCredential);
+  //     navigation.navigate("프로필 설정");
+  //   } else if (NewUser === false) {
+  //     auth().signInWithCredential(facebookCredential);
+  //     navigation.navigate("Home");
+  //   }
+  // }
 
   useEffect(() => {
 
@@ -321,9 +321,9 @@ await firestore()
             <Text style={login.signtext}>이미 회원이신가요?</Text>
           </TouchableOpacity>
           <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
-          <TouchableOpacity onPress={onFacebookButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#4a67ad' }]}>
+          {/* <TouchableOpacity onPress={onFacebookButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#4a67ad' }]}>
             <Text style={login.buttontext}>Facebook으로 시작하기</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
           <TouchableOpacity onPress={onGoogleButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#c45545' }]}>
             <Text style={login.buttontext}>Gmail로 시작하기</Text>
           </TouchableOpacity>
