@@ -224,7 +224,7 @@ export default function HomeScreen({ navigation }) {
                 setStats(documentSnapshot.data().smokingAmount)
                 setSmokingDaily(documentSnapshot.data().smokeDaily)
                 cutting(documentSnapshot.data().smokingAmount)
-                console.log("smokeInfo and stats",smoker, smokeInfo, stats, smokingDaily)
+                console.log("smokeInfo and stats", smoker, smokeInfo, stats, smokingDaily)
                 if (!documentSnapshot.data().SmokingTime) {
                     setcheck(false)
                 } else {
@@ -233,7 +233,7 @@ export default function HomeScreen({ navigation }) {
                     // console.log(fullTime)
                 }
             })
-            
+
         }
         if (!check) {
             setViewOpacity(true)
@@ -250,19 +250,19 @@ export default function HomeScreen({ navigation }) {
                 var a = moment().toArray()
                 var c = (b.diff(a, "seconds")) * -1
                 timeCounter(c)
-                
+
                 setSmokingShow(parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24))
                 setSmokingMoney(((parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24)) * 225).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
-                
+
             }, 1000)
             return () => clearInterval(interval)
         }
-console.log(smoker,"smoker")
-    }, [fullTime,refreshing])
+        console.log(smoker, "smoker")
+    }, [fullTime, refreshing])
 
     const AnimatedIonicons = Animated.createAnimatedComponent(Ionicons)
     const Rotate = useRef(new Animated.Value(0)).current;
-    async function Rotation(){
+    async function Rotation() {
         Rotate.setValue(0);
         Animated.timing(Rotate, {
             toValue: 1,
@@ -271,28 +271,30 @@ console.log(smoker,"smoker")
             useNativeDriver: true
         }).start()
         console.log(user.uid)
-        if(smoker){
-        Alert.alert(
-            "금연을 시작하시겠습니까?",
-            "",
-            [
-                {
-                    text: '취소', onPress: () => console.log('CANCEL Pressed')
-                },
-                {
-                    text: '시작하기', onPress: () => {changeToSmoker(), Alert.alert(
-                        '금연모드 활성화',
-                        '앱 새로고침 후 사용',
-                        [
-                            {
-                                text: 'OK', onPress: () => console.log('OK Pressed')
-                            }
-                        ]
-                    )
-                }}
-            ]
-        )
-        }else{
+        if (smoker) {
+            Alert.alert(
+                "금연을 시작하시겠습니까?",
+                "",
+                [
+                    {
+                        text: '취소', onPress: () => console.log('CANCEL Pressed')
+                    },
+                    {
+                        text: '시작하기', onPress: () => {
+                            changeToSmoker(), Alert.alert(
+                                '금연모드 활성화',
+                                '앱 새로고침 후 사용',
+                                [
+                                    {
+                                        text: 'OK', onPress: () => console.log('OK Pressed')
+                                    }
+                                ]
+                            )
+                        }
+                    }
+                ]
+            )
+        } else {
             Alert.alert(
                 "금연을 포기하시겠습니까?",
                 "",
@@ -301,42 +303,44 @@ console.log(smoker,"smoker")
                         text: '취소', onPress: () => console.log('CANCEL Pressed')
                     },
                     {
-                        text: '포기하기', onPress: () => {changeToNonSmoker(), Alert.alert(
-                            '흡연모드 활성화',
-                            '앱 새로고침 후 사용',
-                            [
-                                {
-                                    text: 'OK', onPress: () => console.log('OK Pressed')
-                                }
-                            ]
-                        )
-                    }}
+                        text: '포기하기', onPress: () => {
+                            changeToNonSmoker(), Alert.alert(
+                                '흡연모드 활성화',
+                                '앱 새로고침 후 사용',
+                                [
+                                    {
+                                        text: 'OK', onPress: () => console.log('OK Pressed')
+                                    }
+                                ]
+                            )
+                        }
+                    }
                 ]
             )
         }
     }
 
     //금연 포기시
-    async function changeToSmoker(){
+    async function changeToSmoker() {
         var a = moment().toArray()
         await firestore().collection("UserInfo").doc(user.uid).update({
-            smoker:false,
-            SmokingTime:a,
-            smokedLoss:firebase.firestore.FieldValue.arrayUnion(smokingMoney+"/"+a),
-            smokedAmount:firebase.firestore.FieldValue.arrayUnion(smokingShow+"/"+a) 
-         })
+            smoker: false,
+            SmokingTime: a,
+            smokedLoss: firebase.firestore.FieldValue.arrayUnion(smokingMoney + "/" + a),
+            smokedAmount: firebase.firestore.FieldValue.arrayUnion(smokingShow + "/" + a)
+        })
     }
     //금연 시작시에
-    async function changeToNonSmoker(){
+    async function changeToNonSmoker() {
         var a = moment().toArray()
         await firestore().collection("UserInfo").doc(user.uid).update({
-            smoker:true,
-            SmokingTime:a,
-            smokedSavedLoss:firebase.firestore.FieldValue.arrayUnion(smokingMoney+"/"+a),
-            smokedSavedAmount:firebase.firestore.FieldValue.arrayUnion(smokingShow+"/"+a),
-            smokeDaily:0,
-            smokeStats:firebase.firestore.FieldValue.arrayUnion(a+"/흡연량 : "+smokingDaily) 
-         })
+            smoker: true,
+            SmokingTime: a,
+            smokedSavedLoss: firebase.firestore.FieldValue.arrayUnion(smokingMoney + "/" + a),
+            smokedSavedAmount: firebase.firestore.FieldValue.arrayUnion(smokingShow + "/" + a),
+            smokeDaily: 0,
+            smokeStats: firebase.firestore.FieldValue.arrayUnion(a + "/흡연량 : " + smokingDaily)
+        })
     }
 
     const Sync = Rotate.interpolate({
@@ -372,13 +376,11 @@ console.log(smoker,"smoker")
                         </TouchableOpacity>
                     </View>
                 </View>
-                <ScrollView  refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-               
-                    <Swiper dotStyle={{ borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 250 }}>
-                        <View>
-                           
-                            <View style={{ zIndex: 0 }}>
-                                {smoker === true ?
+                <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
+                    {smoker === true ?
+                        <Swiper dotStyle={{ borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 250 }}>
+                            <View>
+                                <View style={{ zIndex: 0 }}>
                                     <>
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 16, marginBottom: 16 }}>
                                             <View style={resource.container}>
@@ -387,8 +389,8 @@ console.log(smoker,"smoker")
                                             </View>
                                             <View style={resource.container}>
                                                 <Text style={resource.smallText}>얼마나 썼지?</Text>
-                                                
-                                <Text style={resource.largeText}>{smokingMoney}원</Text>
+
+                                                <Text style={resource.largeText}>{smokingMoney}원</Text>
                                             </View>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -418,10 +420,62 @@ console.log(smoker,"smoker")
                                             }}>금연하기</Text>
                                         </TouchableOpacity>
                                     </>
-                                    :
-                                    
-                                    <>
-                                     {viewopacity === true ?
+                                </View>
+                            </View>
+                            <View style={{ width: "100%" }}>
+                                <>
+                                    <View style={{ marginTop: 24 }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center' }}>
+                                            {smokeProof.map((backColor) => (
+                                                <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : (backColor === 2 ? '#ff0000' : "#cc9a67") }} />
+                                            ))}
+                                        </View>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center', marginTop: 8 }}>
+                                            {smokeProofTwo.map((backColor) => (
+                                                <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : backColor === 2 ? '#ff0000' : "#cc9a67" }} />
+                                            ))}
+                                        </View>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center', marginTop: 8 }}>
+                                            {smokeProofThree.map((backColor) => (
+                                                <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : backColor === 2 ? '#ff0000' : "#cc9a67" }} />
+                                            ))}
+                                        </View>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center', marginTop: 8 }}>
+                                            {smokeProofFour.map((backColor) => (
+                                                <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : backColor === 2 ? '#ff0000' : "#cc9a67" }} />
+                                            ))}
+                                        </View>
+                                    </View>
+                                    <Text style={{
+                                        fontFamily: 'NunitoSans-Bold',
+                                        color: '#5cc27b',
+                                        fontSize: 24,
+                                        alignSelf: 'center',
+                                        marginTop: 10
+                                    }}>{smokingDaily}/{stats}</Text>
+                                    <TouchableOpacity style={{
+                                        width: 100,
+                                        height: 35,
+                                        borderRadius: 18,
+                                        backgroundColor: '#5cc27b',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        marginTop: 8,
+                                        alignSelf: 'center'
+                                    }}
+                                        onPress={smokeClick}>
+                                        <Text style={{
+                                            fontFamily: 'NunitoSans-Bold',
+                                            fontSize: 16,
+                                            color: '#ffffff',
+                                        }}>담배 +1</Text>
+                                    </TouchableOpacity>
+                                </>
+                            </View>
+                        </Swiper>
+                        :
+                        <>
+                            {viewopacity === true ?
                                 <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={() => {
                                     setViewOpacity(false);
                                     setTimestart(true);
@@ -444,149 +498,60 @@ console.log(smoker,"smoker")
                                 :
                                 <View />
                             }
-                                        <View style={{
-                                            backgroundColor: '#5CC27B',
-                                            marginRight: 33,
-                                            marginLeft: 33,
-                                            height: 64,
-                                            borderRadius: 29,
-                                            marginTop: 30
-                                        }}>
-                                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                                                <View style={date.viewcontainer}>
-                                                    <Text style={date.largedate}>{day}</Text>
-                                                    <Text style={date.smalldate}>days</Text>
-                                                </View>
-                                                <View style={{ justifyContent: 'space-evenly', alignItems: 'center', height: 64, paddingTop: 16, paddingBottom: 16 }}>
-                                                    <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
-                                                    <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
-                                                </View>
-                                                <View style={date.viewcontainer}>
-                                                    <Text style={date.largedate}>{hour}</Text>
-                                                    <Text style={date.smalldate}>hours</Text>
-                                                </View>
-                                                <View style={{ justifyContent: 'space-evenly', alignItems: 'center', height: 64, paddingTop: 16, paddingBottom: 16 }}>
-                                                    <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
-                                                    <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
-                                                </View>
-                                                <View style={date.viewcontainer}>
-                                                    <Text style={date.largedate}>{minu}</Text>
-                                                    <Text style={date.smalldate}>minutes</Text>
-                                                </View>
-                                                <View style={{ justifyContent: 'space-evenly', alignItems: 'center', height: 64, paddingTop: 16, paddingBottom: 16 }}>
-                                                    <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
-                                                    <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
-                                                </View>
-                                                <View style={date.viewcontainer}>
-                                                    <Text style={date.largedate}>{sec}</Text>
-                                                    <Text style={date.smalldate}>seconds</Text>
-                                                </View>
-                                            </View>
-                                        </View>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 48 }}>
-                                            <View style={resource.container}>
-                                                <Text style={resource.smallText}>얼마나 안폈지?</Text>
+                            <View style={{
+                                backgroundColor: '#5CC27B',
+                                marginRight: 33,
+                                marginLeft: 33,
+                                height: 64,
+                                borderRadius: 29,
+                                marginTop: 30
+                            }}>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
+                                    <View style={date.viewcontainer}>
+                                        <Text style={date.largedate}>{day}</Text>
+                                        <Text style={date.smalldate}>days</Text>
+                                    </View>
+                                    <View style={{ justifyContent: 'space-evenly', alignItems: 'center', height: 64, paddingTop: 16, paddingBottom: 16 }}>
+                                        <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
+                                        <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
+                                    </View>
+                                    <View style={date.viewcontainer}>
+                                        <Text style={date.largedate}>{hour}</Text>
+                                        <Text style={date.smalldate}>hours</Text>
+                                    </View>
+                                    <View style={{ justifyContent: 'space-evenly', alignItems: 'center', height: 64, paddingTop: 16, paddingBottom: 16 }}>
+                                        <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
+                                        <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
+                                    </View>
+                                    <View style={date.viewcontainer}>
+                                        <Text style={date.largedate}>{minu}</Text>
+                                        <Text style={date.smalldate}>minutes</Text>
+                                    </View>
+                                    <View style={{ justifyContent: 'space-evenly', alignItems: 'center', height: 64, paddingTop: 16, paddingBottom: 16 }}>
+                                        <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
+                                        <View style={{ width: 3, height: 3, backgroundColor: '#FFFFFF' }} />
+                                    </View>
+                                    <View style={date.viewcontainer}>
+                                        <Text style={date.largedate}>{sec}</Text>
+                                        <Text style={date.smalldate}>seconds</Text>
+                                    </View>
+                                </View>
+                            </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 48, marginBottom: 32 }}>
+                                <View style={resource.container}>
+                                    <Text style={resource.smallText}>얼마나 안폈지?</Text>
                                     <Text style={resource.largeText}>{smokingShow}대</Text>
-                                            </View>
-                                            <View style={resource.container}>
-                                                <Text style={resource.smallText}>얼마나 아꼈지?</Text>
+                                </View>
+                                <View style={resource.container}>
+                                    <Text style={resource.smallText}>얼마나 아꼈지?</Text>
                                     <Text style={resource.largeText}>{smokingMoney}원</Text>
-                                            </View>
-                                        </View>
-                                    </>
-                                }
+                                </View>
                             </View>
-                        </View>
-                        
-                            <View style={{ width: "100%" }}>
-                                {smoker === true ?
-                                    <>
-                                        <View style={{ marginTop: 24 }}>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center' }}>
-                                                {smokeProof.map((backColor) => (
-                                                    <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : (backColor===2 ? '#ff0000':"#cc9a67")}}/>
-                                                ))}
-                                            </View>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center', marginTop: 8 }}>
-                                                {smokeProofTwo.map((backColor) => (
-                                                   <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : backColor===2 ? '#ff0000':"#cc9a67" }}/>
-                                                ))}
-                                            </View>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center', marginTop: 8 }}>
-                                                {smokeProofThree.map((backColor) => (
-                                                    <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : backColor===2 ? '#ff0000':"#cc9a67" }} />
-                                                ))}
-                                            </View>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: "90%", alignSelf: 'center', marginTop: 8 }}>
-                                                {smokeProofFour.map((backColor) => (
-                                                    <View style={{ width: 16, height: 16, borderRadius: 8, borderColor: '#cc9a67', borderWidth: 1, backgroundColor: backColor === 0 ? '#ffffff' : backColor===2 ? '#ff0000':"#cc9a67" }} />
-                                                ))}
-                                            </View>
-                                        </View>
-                                        <Text style={{
-                                            fontFamily: 'NunitoSans-Bold',
-                                            color: '#5cc27b',
-                                            fontSize: 24,
-                                            alignSelf: 'center',
-                                            marginTop: 10
-                                        }}>{smokingDaily}/{stats}</Text>
-                                        <TouchableOpacity style={{
-                                            width: 100,
-                                            height: 35,
-                                            borderRadius: 18,
-                                            backgroundColor: '#5cc27b',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            marginTop: 8,
-                                            alignSelf: 'center'
-                                        }}
-                                        onPress={smokeClick}>
-                                            <Text style={{
-                                                fontFamily: 'NunitoSans-Bold',
-                                                fontSize: 16,
-                                                color: '#ffffff',
-                                            }}>담배 +1</Text>
-                                        </TouchableOpacity>
-                                    </>
-                                    :
-                                    <>
-                                        <Text style={{ alignSelf: 'center', fontSize: 16, fontFamily: 'NunitoSans-Bold', marginTop: 16, marginBottom: 32, color: '#303030' }}>Verification Period({month}/{day}~{month}/{day + 2})</Text>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
-                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                                <View style={{ borderWidth: 2, width: WIDTH / 7, height: WIDTH / 7, borderColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
-                                                    <Image resizeMode="contain" source={require('./icon/checkred.png')} />
-                                                </View>
-                                                <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.8 }}>1st</Text>
-                                            </View>
-                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                                <View style={{ borderWidth: 2, width: WIDTH / 7, height: WIDTH / 7, borderColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
-                                                    <Image resizeMode="contain" source={require('./icon/checkred.png')} />
-                                                </View>
-                                                <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.8 }}>2nd</Text>
-                                            </View>
-                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                                <View style={{ borderWidth: 2, width: WIDTH / 7, height: WIDTH / 7, borderColor: '#5CC27B' }} />
-                                                <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.8 }}>3rd</Text>
-                                            </View>
-                                            <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-                                                <View style={{ borderWidth: 2, width: WIDTH / 7, height: WIDTH / 7, borderColor: '#5CC27B' }} />
-                                                <Text style={{ marginTop: 4, fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.8 }}>Final</Text>
-                                            </View>
-                                        </View>
-                                        <TouchableOpacity style={{ marginTop: 8, alignSelf: 'center' }} onPress={() => { navigation.navigate('Verification') }}>
-                                            <View style={{ backgroundColor: '#5CC27B', width: 100, borderRadius: 20, height: 35, alignItems: 'center', justifyContent: 'center' }}>
-                                                <Text style={{ color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>인증하기</Text>
-                                            </View>
-                                        </TouchableOpacity>
-                                    </>
-                                }
-                            </View>
-                          
-                        
-                    </Swiper>
+                        </>
+                    }
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: "12%" }}>
                         <ImageBackground style={{ width: 25, height: 15, marginRight: 8, alignItems: "center", justifyContent: "center" }} resizeMode="stretch" source={require('./icon/tipbox.png')} >
-                            <Text style={{fontSize: 9, fontFamily: 'NunitoSans-Bold', color: "#ffffff" }}>TIP</Text>
+                            <Text style={{ fontSize: 9, fontFamily: 'NunitoSans-Bold', color: "#ffffff" }}>TIP</Text>
                         </ImageBackground>
                         <Text style={{ alignSelf: 'center', fontSize: 16, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.6 }}>물을 많이 마시면 니코틴 배출이 빨라집니다!</Text>
                     </View>
@@ -600,13 +565,13 @@ console.log(smoker,"smoker")
                             alignItems: "center",
                         }} onPress={() => navigation.navigate('Calendar')}>
                             <MaterialCommunityIcons size={60} color="#5cc27b" name="calendar-blank" />
-                            <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 8}}>금연달력</Text>
+                            <Text style={{ fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 8 }}>금연달력</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{
                             alignItems: "center",
                         }} onPress={() => navigation.navigate("ChatbotMain")}>
                             <FontAwesome5 name="robot" size={50} color="#5cc27b" />
-                            <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 18}}>금연 리포트 & 정보</Text>
+                            <Text style={{ fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 18 }}>금연 리포트 & 정보</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{
                             alignItems: "center",
