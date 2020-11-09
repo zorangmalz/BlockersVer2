@@ -12,6 +12,7 @@ import {
 
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import moment from "moment"
 
 const mode = StyleSheet.create({
     largeText: {
@@ -130,11 +131,13 @@ if(ten==true){
 
     const ref=firestore().collection("UserInfo");
     async function updateInfo(code,state,amount,mg){
+        var a = moment().toArray()
       await ref.doc(code).update({
           smokeInfo:state,
           smokingAmount:amount,
           smokingMg:mg,
-          smokeDaily:0
+          smokeDaily:0,
+          SmokingTime:a
       })
       navigation.navigate("Home")
     }

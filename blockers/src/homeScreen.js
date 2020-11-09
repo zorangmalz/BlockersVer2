@@ -189,16 +189,7 @@ export default function HomeScreen({ navigation }) {
     useEffect(() => {
    
 
-// const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
-//     requestNonPersonalizedAdsOnly: true,
-// });
-// interstitial.onAdEvent((type) => {
-//     if (type === AdEventType.LOADED) {
-//       interstitial.show();
-//     }
-//   });
-  
-//   interstitial.load();
+
 
 
         var a =moment().toArray()
@@ -318,6 +309,16 @@ console.log(smoker,"smoker")
 
     //금연 포기시
     async function changeToSmoker(){
+        const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+    requestNonPersonalizedAdsOnly: true,
+});
+interstitial.onAdEvent((type) => {
+    if (type === AdEventType.LOADED) {
+      interstitial.show();
+    }
+  });
+  
+  interstitial.load();
         var a = moment().toArray()
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker:false,
@@ -328,6 +329,16 @@ console.log(smoker,"smoker")
     }
     //금연 시작시에
     async function changeToNonSmoker(){
+        const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+    requestNonPersonalizedAdsOnly: true,
+});
+interstitial.onAdEvent((type) => {
+    if (type === AdEventType.LOADED) {
+      interstitial.show();
+    }
+  });
+  
+  interstitial.load();
         var a = moment().toArray()
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker:true,
@@ -401,22 +412,7 @@ console.log(smoker,"smoker")
                                                 marginLeft: 16
                                             }}>치킨이 날아갑니다</Text>
                                         </View>
-                                        <TouchableOpacity style={{
-                                            width: 100,
-                                            height: 35,
-                                            borderRadius: 18,
-                                            backgroundColor: '#5cc27b',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            marginTop: 12,
-                                            alignSelf: 'center'
-                                        }}>
-                                            <Text style={{
-                                                fontFamily: 'NunitoSans-Bold',
-                                                fontSize: 16,
-                                                color: '#ffffff',
-                                            }}>금연하기</Text>
-                                        </TouchableOpacity>
+                                       
                                     </>
                                     :
                                     
@@ -680,26 +676,7 @@ console.log(smoker,"smoker")
                         </TouchableOpacity>
                     }
           
-         <View
-         style={{flex:1,
-            flexDirection:"row",
-        alignItems:"center",
-    justifyContent:"center",
-}}
-         >
-
-         
-<BannerAd
-      unitId={adUnitId}  
-      size={BannerAdSize.SMART_BANNER}
-      requestOptions={{
-        requestNonPersonalizedAdsOnly: true,
-      }}
-      onAdFailedToLoad={(error) => {
-        console.error('Advert failed to load: ', error);
-      }}
-    />
-         </View> 
+      
          
                     {/* <TouchableOpacity style={{
                         width: "100%",
@@ -723,6 +700,27 @@ console.log(smoker,"smoker")
                         }}>실천형 금연 서비스 알아보기</Text>
                     </TouchableOpacity> */}
                 </ScrollView>
+                <View
+         style={{
+            flexDirection:"row",
+        alignItems:"center",
+    justifyContent:"center",
+}}
+         >
+
+         
+<BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+    
+         </View> 
             </SafeAreaView>
         </>
     )

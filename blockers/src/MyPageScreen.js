@@ -123,6 +123,12 @@ export default function MyPageScreen({ navigation }) {
     },[])
 
     useEffect(() => {
+        async function uploadImage(){
+            var profile=await storage()
+                .refFromURL("gs://blockers-8a128.appspot.com/User/" + name + "/" + "프로필사진" + name)
+                .getDownloadURL();
+                setImageSource(profile)
+                setIsImage(true)}
         if (!user) {
             setUserlogined(false)
         }else{
@@ -132,13 +138,8 @@ export default function MyPageScreen({ navigation }) {
                     setNickname(data.data().nickname)
                     setName(data.data().name)
                 }) 
-                async function uploadImage(){
-            var profile=await storage()
-                .refFromURL("gs://blockers-8a128.appspot.com/User/" + name + "/" + "프로필사진" + name)
-                .getDownloadURL();
-                setImageSource(profile)
-                setIsImage(true)}
-                    uploadImage()
+                
+                uploadImage()
             
         }
     }, [refreshing,userlogined,user]);

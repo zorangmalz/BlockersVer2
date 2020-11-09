@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useReducer, useEffect, useRef} from 'react';
 import {
     View,
     Text,
@@ -13,11 +13,19 @@ import {
     TextInput,
     KeyboardAvoidingView,
     Platform,
+    RefreshControl,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ImagePicker from 'react-native-image-picker';
 import ProgressBar from 'react-native-progress/Bar';
+import {AdEventType,InterstitialAd,BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+import moment from "moment"
+import firestore from '@react-native-firebase/firestore';
+import auth, { firebase } from '@react-native-firebase/auth';
+
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
+
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -41,6 +49,13 @@ const main = StyleSheet.create({
         color: "#303030"
     }
 })
+
+const wait = (timeout) => {
+    return new Promise(resolve => {
+        setTimeout(resolve, timeout);
+    });
+}
+export default function Challenge({ navigation }) {
 
 const MissionItem = ({item}) => {
     return (
@@ -85,6 +100,20 @@ const MissionItem = ({item}) => {
                 </View>
                 <Text style={[main.title, {color: "#ffffff", fontFamily: "NunitoSans-Regular", marginTop: 16, marginRight: 32, marginLeft: 32}]}>{item.content}</Text>
             </View>
+            {item.doing===false?
+            <TouchableOpacity style={{
+                width: 254,
+                height: 54,
+                backgroundColor: "#ffffff",
+                borderBottomLeftRadius: 10,
+                borderBottomRightRadius: 10,
+                alignItems: "center",
+                justifyContent: "center"
+            }}
+            >
+                <Text style={main.title}>참가하기</Text>
+            </TouchableOpacity>
+            :
             <TouchableOpacity style={{
                 width: 254,
                 height: 54,
@@ -94,13 +123,13 @@ const MissionItem = ({item}) => {
                 alignItems: "center",
                 justifyContent: "center"
             }}>
-                <Text style={main.title}>{item.doing === true ? "진행하기" : "참가하기"}</Text>
+                <Text style={main.title}>진행하기</Text>
             </TouchableOpacity>
+            }
+            
         </View>
     )
 }
-
-export default function Challenge({ navigation }) {
     const MissionData = [
         {
             id: 1,
@@ -121,8 +150,76 @@ export default function Challenge({ navigation }) {
             doing: false
         }
     ]
-    const [challenge, setChallenge] = useState(true);
+    const [challenge, setChallenge] = useState(false);
+    const [user,setUser]=useState();
+    const [name,setName]=useState();
+    const [long,setLong]=useState();
+    const [mistake,setMistake]=useState();
+    const [title,setTitle]=useState();
+    const [progress,setProgress]=useState();
+    const [change,setChange]=useState()
+    const [refreshing, setRefreshing] = React.useState(false);
 
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
+   
+    useEffect(()=>{
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+        
+    })
+
+    useEffect(()=>{
+        async function hello(){
+        if(user){
+            var size
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+                size=querySnapshot.size
+            })
+            hi(size)
+            console.log(size)
+        }}
+        async function hi(a){
+console.log(a)
+        if(a>0){
+            console.log("im hi")
+            var total=0
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+            total=querySnapshot.size-1
+        })
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).get().then(doc=>{
+                setChallenge(doc.data().ongoing)
+                setName(doc.data().name)
+                setMistake(doc.data().mistake)
+                setTitle(doc.data().title)
+                setLong(doc.data().long)
+                setProgress(doc.data().progress)
+            })
+            
+        }else{
+            setChallenge(false)
+        }
+    }
+        hello()
+    },[user,change,refreshing])
+    async function  makeMistake(){
+        console.log("MISTKAE")
+        setChange(true)
+        var total=0
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+            total=querySnapshot.size-1
+        })
+        console.log(total)
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).update({
+                mistake:mistake+1,
+                progress:progress-5
+            })
+            setChange(false)
+    }
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -145,7 +242,7 @@ export default function Challenge({ navigation }) {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <ScrollView>
+                <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     <View style={{
                         flexDirection: "row",
                         alignItems: "flex-end",
@@ -176,9 +273,9 @@ export default function Challenge({ navigation }) {
                                     fontSize: 14,
                                     color: "#303030",
                                     marginVertical: 16
-                                }}>김현명의 챌린지</Text>
+                                }}>{name}님의 챌린지</Text>
                                 <ProgressBar
-                                    progress={0.8}
+                                    progress={progress*0.01}
                                     width={WIDTH * 0.8}
                                     height={20}
                                     borderRadius={36}
@@ -192,7 +289,7 @@ export default function Challenge({ navigation }) {
                                     fontSize: 12,
                                     color: "#ffffff",
                                     lineHeight: 20
-                                }}>80%</Text>
+                                }}>{progress}%</Text>
                                 </ProgressBar>
                                 <View style={{
                                     marginTop: 16,
@@ -215,7 +312,7 @@ export default function Challenge({ navigation }) {
                                             fontFamily: "NunitoSans-Bold",
                                             fontSize: 14,
                                             color: "#303030"
-                                        }}>이번엔 성공하자</Text>
+                                        }}>{title}</Text>
                                     </View>
                                     <View style={{
                                         flexDirection: "row",
@@ -232,7 +329,7 @@ export default function Challenge({ navigation }) {
                                             fontFamily: "NunitoSans-Bold",
                                             fontSize: 14,
                                             color: "#303030"
-                                        }}>1개월</Text>
+                                        }}>{long}개월</Text>
                                     </View>
                                     <View style={{
                                         flexDirection: "row",
@@ -249,7 +346,7 @@ export default function Challenge({ navigation }) {
                                             fontFamily: "NunitoSans-Bold",
                                             fontSize: 14,
                                             color: "#303030"
-                                        }}>5회</Text>
+                                        }}>{mistake}회</Text>
                                     </View>
                                 </View>
                             </>
@@ -257,7 +354,8 @@ export default function Challenge({ navigation }) {
                             <Text style={[main.title, { fontSize: 21 }]}>진행중인 챌린지가 없습니다.</Text>
                         }
                     </View>
-                    <TouchableOpacity onPress={() => navigation.navigate("ChallengeRegister")} style={{
+                    {challenge ?
+                       <TouchableOpacity onPress={makeMistake} style={{
                         width: "55%",
                         alignItems: "center",
                         justifyContent: "center",
@@ -267,8 +365,23 @@ export default function Challenge({ navigation }) {
                         borderRadius: 5,
                         marginTop: HEIGHT * 0.025
                     }}>
-                        <Text style={[main.title, { color: "#ffffff" }]}>시작하기</Text>
+                        <Text style={[main.title, { color: "#ffffff" }]}>실수 한 번</Text>
                     </TouchableOpacity>
+                :
+                <TouchableOpacity onPress={() => navigation.navigate("ChallengeRegister")} style={{
+                    width: "55%",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    alignSelf: "center",
+                    height: 35,
+                    backgroundColor: "#5cc27b",
+                    borderRadius: 5,
+                    marginTop: HEIGHT * 0.025
+                }}>
+                    <Text style={[main.title, { color: "#ffffff" }]}>시작하기</Text>
+                </TouchableOpacity>    
+                }
+                 
                     <View style={{
                         flexDirection: "row",
                         alignItems: "flex-end",
@@ -292,6 +405,27 @@ export default function Challenge({ navigation }) {
                         />
                     </ScrollView>
                 </ScrollView>
+                <View
+         style={{
+            flexDirection:"row",
+        alignItems:"center",
+    justifyContent:"center",
+}}
+         >
+
+         
+<BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+    
+         </View> 
             </SafeAreaView>
         </>
     )
@@ -311,6 +445,9 @@ function MonthDispatcher(state, action) {
 export function ChallengeRegister({ navigation }) {
     const [resolution, setResolution] = useState("");
     const [month, dispatch] = useReducer(MonthDispatcher, 0);
+    const [name,setName]=useState("")
+    const[user,setUser]=useState()
+
     const OneMonth = () => {
         dispatch({
             type: "ONE"
@@ -325,6 +462,62 @@ export function ChallengeRegister({ navigation }) {
         dispatch({
             type: "SIX"
         })
+    }
+
+    useEffect(()=>{
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+        console.log(month)
+    })
+    useEffect(()=>{
+        if(user){
+            firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+                setName(doc.data().name)
+            })
+        }
+    },[user])
+
+    async function uploadChallenge(){
+        var total=0
+        var a=moment().toArray()
+        console.log(a)
+
+        if(a[1]===12){
+            a[1]=1
+        }else{
+            a[1]=a[1]+1
+        }
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+            total=querySnapshot.size
+        })
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).set(
+            {
+                title:resolution,
+                long:month,
+                ongoing:true,
+                mistake:0,
+                name:name,
+                progress:0,
+                challengePeriod:a,
+                스트레스평가:false,
+                자기효능감평가:false,
+                알콜중독평가:false,
+                금연동기설정하기:false,
+                니코틴중독평가하기:false,
+                금연서약서쓰기:false,
+                금연지지자정하기:false,
+                내흡연유형파악하기:false,
+                금연방법선택하기:false,
+                금연활동인증하기:false,
+                금단증상확인하기:false,
+                나만의금연노하우공유하기:false,
+                성공후기작성하기:false
+
+
+            }
+        )
+        navigation.navigate("ChallengeTab")
     }
     return (
         <>
@@ -345,7 +538,7 @@ export function ChallengeRegister({ navigation }) {
                             }}
                         >
                             <Text style={{ fontSize: 18 }}>
-                                <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>금연일기</Text>
+                                <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>개설하기</Text>
                             </Text>
                         </View>
                     </View>
@@ -384,7 +577,7 @@ export function ChallengeRegister({ navigation }) {
                             color: "#303030",
                             alignSelf: "center",
                             marginBottom: HEIGHT * 0.05
-                        }}>김현명의 금연 챌린지</Text>
+                        }}>{name}님의 금연 챌린지</Text>
                         <Text style={[main.bold, {marginBottom: HEIGHT * 0.025}]}>챌린지 제목</Text>
                         <TextInput 
                             value={resolution}
@@ -535,7 +728,7 @@ export function ChallengeRegister({ navigation }) {
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
                 {resolution.length > 0 && month > 0 ?
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <TouchableOpacity onPress={uploadChallenge}>
                         <View style={{
                             width: "100%",
                             height: 60,

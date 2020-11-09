@@ -15,6 +15,10 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ProgressBar from 'react-native-progress/Bar';
 import ProgressCircle from "react-native-progress/Circle";
+import {AdEventType,InterstitialAd,BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
+
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -65,76 +69,76 @@ const Header = ({ navigation }) => {
     )
 }
 
-const Advertise = ({ navigation }) => {
-    return (
-        <TouchableOpacity>
-            <ImageBackground
-                style={{
-                    width: "90%",
-                    height: 125,
-                    alignSelf: "center",
-                    elevation: 1,
-                    shadowColor: "#303030",
-                    shadowOffset: {
-                        width: 0,
-                        height: 1,
-                    },
-                    shadowOpacity: 0.18,
-                    shadowRadius: 1,
-                }}
-                imageStyle={{
-                    borderRadius: 20,
-                    width: "100%",
-                    height: 125
-                }}
-                source={require("../icon/sky.png")}
-            >
-                <View style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginTop: 12
-                }}>
-                    <View style={{
-                        alignItems: "center",
-                        justifyContent: "center",
-                        backgroundColor: "#5cc27b",
-                        width: 30,
-                        height: 18,
-                        marginLeft: 12,
-                        borderRadius: 15
-                    }}>
-                        <Text style={{
-                            fontSize: 12,
-                            fontFamily: "NunitoSans-Bold",
-                            color: "#ffffff"
-                        }}>AD</Text>
-                    </View>
-                    <Ionicons name="close-outline" size={16} style={{ marginRight: 16 }} color="#ffffff" />
-                </View>
-                <View style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    marginTop: 12,
-                    marginLeft: 12,
-                    marginRight: 16,
-                }}>
-                    <Text style={{
-                        fontFamily: "NunitoSans-Bold",
-                        fontSize: 18,
-                        color: "#ffffff"
-                    }}>항공권 {"\n"}10% 할인</Text>
-                    <Text style={{
-                        fontFamily: "NunitoSans-Regular",
-                        fontSize: 14,
-                        color: "#ffffff"
-                    }}>Sungkyun Air</Text>
-                </View>
-            </ImageBackground>
-        </TouchableOpacity>
-    )
-}
+// const Advertise = ({ navigation }) => {
+//     return (
+//         <TouchableOpacity>
+//             <ImageBackground
+//                 style={{
+//                     width: "90%",
+//                     height: 125,
+//                     alignSelf: "center",
+//                     elevation: 1,
+//                     shadowColor: "#303030",
+//                     shadowOffset: {
+//                         width: 0,
+//                         height: 1,
+//                     },
+//                     shadowOpacity: 0.18,
+//                     shadowRadius: 1,
+//                 }}
+//                 imageStyle={{
+//                     borderRadius: 20,
+//                     width: "100%",
+//                     height: 125
+//                 }}
+//                 source={require("../icon/sky.png")}
+//             >
+//                 <View style={{
+//                     flexDirection: "row",
+//                     alignItems: "center",
+//                     justifyContent: "space-between",
+//                     marginTop: 12
+//                 }}>
+//                     <View style={{
+//                         alignItems: "center",
+//                         justifyContent: "center",
+//                         backgroundColor: "#5cc27b",
+//                         width: 30,
+//                         height: 18,
+//                         marginLeft: 12,
+//                         borderRadius: 15
+//                     }}>
+//                         <Text style={{
+//                             fontSize: 12,
+//                             fontFamily: "NunitoSans-Bold",
+//                             color: "#ffffff"
+//                         }}>AD</Text>
+//                     </View>
+//                     <Ionicons name="close-outline" size={16} style={{ marginRight: 16 }} color="#ffffff" />
+//                 </View>
+//                 <View style={{
+//                     flexDirection: "row",
+//                     alignItems: "center",
+//                     justifyContent: "space-between",
+//                     marginTop: 12,
+//                     marginLeft: 12,
+//                     marginRight: 16,
+//                 }}>
+//                     <Text style={{
+//                         fontFamily: "NunitoSans-Bold",
+//                         fontSize: 18,
+//                         color: "#ffffff"
+//                     }}>항공권 {"\n"}10% 할인</Text>
+//                     <Text style={{
+//                         fontFamily: "NunitoSans-Regular",
+//                         fontSize: 14,
+//                         color: "#ffffff"
+//                     }}>Sungkyun Air</Text>
+//                 </View>
+//             </ImageBackground>
+//         </TouchableOpacity>
+//     )
+// }
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -208,13 +212,34 @@ export default function SmokeAlertOne({navigation}) {
                             color="#5cc27b"
                             unfilledColor="#ffffff"
                         >
-                            <Text style={{position: "absolute", flex: 1, fontSize: 30, color: "#5cc27b", textAlign: "center"}}>
+                            <Text style={{fontFamily:"NunitoSans-Bold", position: "absolute", flex: 1, fontSize: 30, color: "#5cc27b", textAlign: "center"}}>
                                 <Text style={{fontSize: 35}}>{second}</Text>{"\n"}SEC
                             </Text>
                         </ProgressCircle>
                     </View>
-                    <Advertise navigation={navigation} />
+                    
                 </ScrollView>
+                <View
+         style={{
+            flexDirection:"row",
+        alignItems:"center",
+    justifyContent:"center",
+}}
+         >
+
+         
+<BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+    
+         </View> 
             </SafeAreaView>
         </>
     )
@@ -273,8 +298,29 @@ export function SmokeAlertTwo({ navigation }) {
                         }}>20초</Text>
                         </ProgressBar>
                     </View>
-                    <Advertise navigation={navigation} />
+                    
                 </ScrollView>
+                <View
+         style={{
+            flexDirection:"row",
+        alignItems:"center",
+    justifyContent:"center",
+}}
+         >
+
+         
+<BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+    
+         </View> 
             </SafeAreaView>
         </>
     )
@@ -331,8 +377,29 @@ export function SmokeAlertThree({ navigation }) {
                         }}>20초</Text>
                         </ProgressBar>
                     </View>
-                    <Advertise navigation={navigation} />
+                  
                 </ScrollView>
+                <View
+         style={{
+            flexDirection:"row",
+        alignItems:"center",
+    justifyContent:"center",
+}}
+         >
+
+         
+<BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+    
+         </View> 
             </SafeAreaView>
         </>
     )
@@ -389,8 +456,25 @@ export function SmokeAlertFour({ navigation }) {
                             }}/>
                         </View>
                     </View>
-                    <Advertise navigation={navigation} />
+                    
                 </ScrollView>
+                <View
+         style={{
+            flexDirection:"row",
+        alignItems:"center",
+    justifyContent:"center",
+}}> 
+<BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+         </View> 
             </SafeAreaView>
         </>
     )
