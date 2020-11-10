@@ -101,7 +101,9 @@ const MissionItem = ({item}) => {
                 <Text style={[main.title, {color: "#ffffff", fontFamily: "NunitoSans-Regular", marginTop: 16, marginRight: 32, marginLeft: 32}]}>{item.content}</Text>
             </View>
             {item.doing===false?
-            <TouchableOpacity style={{
+            <TouchableOpacity 
+            onPress={()=>navigation.navigate(item.navigate)}
+            style={{
                 width: 254,
                 height: 54,
                 backgroundColor: "#ffffff",
@@ -202,7 +204,8 @@ console.log(a)
                         content:doc.data().content,
                         period:doc.data().period,
                         doing:doc.data().stats,
-                        id:doc.data().id
+                        id:doc.data().id,
+                        navigate:doc.data().navigate
                     })
                 })
                 setItems(list)
@@ -530,89 +533,102 @@ export function ChallengeRegister({ navigation }) {
             content:"스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
             stats:false,
             period:"monthly",
-            id:1
+            id:1,
+            navigate:"StressMain"
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
             title:"자기 효능감 평가(월1회)",
             content:"스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
             stats:false,
             period:"monthly",
-            id:2
+            id:2,
+            navigate:"SelfEsteemMain"
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").set({
             title:"알콜중독 평가(월1회)",
             content:"스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
             stats:false,
             period:"monthly",
-            id:3
+            id:3,
+            navigate:"AlcoholMain"
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("금연 동기 설정하기").set({
             title:"금연 동기 설정하기",
             content:"금연을 하는 이유가 무엇인가요? 금연 동기는 앞으로 금연을 이어가는 가장 큰 힘이 될 수 있습니다",
             stats:false,
             period:"once",
-            id:4
+            id:4,
+            navigate:"ChallengeMotivation"
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("니코틴 중독 평가하기").set({
             title:"니코틴 중독 평가하기",
             content:"나는 니코틴에 얼마나 의존할까?",
             stats:false,
             period:"once",
-            id:5
+            id:5,
+            navigate:"SolutionMain"
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("금연 서약서 쓰기").set({
             title:"금연 서약서 쓰기",
             content:"금연을 서약서로 본인의 의지를 표현해 보세요.",
             stats:false,
             period:"once",
-            id:6
+            id:6,
+            navigate:"ChallengeSwear"
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("금연 지지자 정하기").set({
             title:"금연 지지자 정하기",
             content:"앞으로 힘든 금연에 힘이될 사람들에게 금연 응원금을 요청해보세요",
             stats:false,
             period:"once",
-            id:7
+            id:7,
+            navigate:"ChallengeSupport"
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("내 흡연유형 파악하기").set({
             title:"내 흡연유형 파악하기",
             content:"나는 언제 담배를 필까? MBTI대신 흡BTI! 유형별 대처 전략을 알아봅시다.",
             stats:false,
             period:"once",
-            id:8
+            id:8,
+            navigate:""
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("금연방법 선택하기").set({
             title:"금연방법 선택하기",
             content:"금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 실천해 보세요",
             stats:false,
             period:"once",
-            id:9
+            id:9,
+            navigate:""
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
             title:"금연활동 인증하기 (주1회)",
             content:"본인이 선택한 금연방법을 인증해 주세요",
             stats:false,
             period:"once",
-            id:10
+            id:10,
+            navigate:"ChallengeVeri"
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("금단증상 확인하기").set({
             title:"금단증상 확인하기",
             content:"금연을 하면서 피할 수 없는 금단증상! 나의 금단 증상을 파악하고 해결책을 찾아보세요.",
             stats:false,
             period:"once",
-            id:11
+            id:11,
+            navigate:"ChallengeGD"
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").set({
             title:"나만의 금연 노하우 공유하기",
             content:"스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요.",
             period:"final",
-            id:12
+            id:12,
+            navigate:""
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("성공 후기 작성하기").set({
             title:"성공 후기 작성하기",
             content:"금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요",
             period:"final",
-            id:13
+            id:13,
+            navigate:""
         })
         navigation.navigate("ChallengeTab")
     }
