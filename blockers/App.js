@@ -78,6 +78,31 @@ import DiaryWrite, { DiaryList } from './src/Diary/DiaryScreen';
 import Challenge, { ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowHow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage } from './src/Challenge/ChallengeScreen';
 import ChatbotMain, { ChatbotOne, ChatbotTwo } from './src/Chatbot/ChatbotScreen';
 import SmokeAlertOne, { SmokeAlertFour, SmokeAlertThree, SmokeAlertTwo } from './src/SmokeAlert/SmokeAlert';
+import SolutionAOne from './src/solutionAOne';
+import SolutionATwo from './src/solutionATwo';
+import SolutionAThree from './src/solutionAThree';
+import SolutionBOne from './src/solutionBOne';
+import SolutionBTwo from './src/solutionBTwo';
+import SolutionBThree from './src/solutionBThree';
+import SolutionCOne from './src/solutionCOne';
+import SolutionCTwo from './src/solutionCTwo';
+import SolutionCThree from './src/solutionCThree';
+import SolutionDOne from './src/solutionDOne';
+import SolutionDTwo from './src/solutionDTwo';
+import SolutionDThree from './src/solutionDThree';
+import SolutionEOne from './src/solutionEOne';
+import SolutionETwo from './src/solutionETwo';
+import SolutionEThree from './src/solutionEThree';
+import SolutionFOne from './src/solutionFOne';
+import SolutionFTwo from './src/solutionFTwo';
+import SolutionFThree from './src/solutionFThree';
+import SolutionGOne from './src/solutionGOne';
+import SolutionGTwo from './src/solutionGTwo';
+import SolutionGThree from './src/solutionGThree';
+import SolutionSmoke from './src/solutionSmoke';
+import SolutionSmokeOne from './src/solutionSmokeOne';
+import SolutionSmokeTwo from './src/solutionSmokeTwo';
+import SolutionSmokeThree from './src/solutionSmokeThree';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -1039,6 +1064,206 @@ const App = ({ navigation }) => {
           <Stack.Screen 
             name="SelfEsteemFinal"
             component={SelfEsteemFinal}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionAOne"
+            component={SolutionAOne}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionATwo"
+            component={SolutionATwo}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionAThree"
+            component={SolutionAThree}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionBOne"
+            component={SolutionBOne}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionBTwo"
+            component={SolutionBTwo}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+           <Stack.Screen 
+            name="SolutionBThree"
+            component={SolutionBThree}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+           <Stack.Screen 
+            name="SolutionCOne"
+            component={SolutionCOne}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+           <Stack.Screen 
+            name="SolutionCTwo"
+            component={SolutionCTwo}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+           <Stack.Screen 
+            name="SolutionCThree"
+            component={SolutionCThree}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+           <Stack.Screen 
+            name="SolutionDOne"
+            component={SolutionDOne}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionDTwo"
+            component={SolutionDTwo}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionDThree"
+            component={SolutionDThree}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionEOne"
+            component={SolutionEOne}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionETwo"
+            component={SolutionETwo}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionEThree"
+            component={SolutionEThree}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionFOne"
+            component={SolutionFOne}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionFTwo"
+            component={SolutionFTwo}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionFThree"
+            component={SolutionFThree}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionGOne"
+            component={SolutionGOne}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionGTwo"
+            component={SolutionGTwo}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionGThree"
+            component={SolutionGThree}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionSmoke"
+            component={SolutionSmoke}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionSmokeOne"
+            component={SolutionSmokeOne}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionSmokeTwo"
+            component={SolutionSmokeTwo}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionSmokeThree"
+            component={SolutionSmokeThree}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false
