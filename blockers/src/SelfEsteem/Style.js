@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect ,createContext,useContext} from 'react';
 import {
     View,
     Text,
@@ -11,6 +11,15 @@ import {
     FlatList
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ProgressCircle from "react-native-progress/Circle";
+import {AdEventType,InterstitialAd,BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+import moment from "moment"
+import firestore from '@react-native-firebase/firestore';
+import auth, { firebase } from '@react-native-firebase/auth';
+import { create } from 'caver-js/packages/caver-account';
+
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
+
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -56,7 +65,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SelfEsteem({ navigation, Nextpage, Title }) {
+export default function SelfEsteem({ navigation, Nextpage, Title,total }) {
     const quesone = "전혀 아니다"
     const questwo = "아니다"
     const questhree = "보통이다"
@@ -69,12 +78,17 @@ export default function SelfEsteem({ navigation, Nextpage, Title }) {
     const [five, setFive] = useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+    const [result,setResult]=useState(0);
+    
+
+    const [user,setUser]=useState("")
+
     var count = 4;
 
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{size:1,result:result});
         }, 200)
     }
 
@@ -126,6 +140,14 @@ export default function SelfEsteem({ navigation, Nextpage, Title }) {
         setSelect(select.filter(info => info !== quesfive))
     }
 
+    useEffect(()=>{
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+        setResult(total)
+        console.log(total,"Total")
+    },[result])
+    
     useEffect(() => {
         one === true ? count = count + 1 : count = count - 1;
         two === true ? count = count + 1 : count = count - 1;
@@ -237,6 +259,18 @@ export default function SelfEsteem({ navigation, Nextpage, Title }) {
                         </TouchableOpacity>
                     }
                 </ScrollView>
+                
+         
+<BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
             </SafeAreaView>
         </>
     )
@@ -247,15 +281,15 @@ export function SelfEsteemMain({ navigation }) {
     const data = [
         {
             num: 1,
-            degree: "높음"
+            degree: "진행중"
         },
         {
             num: 2,
-            degree: "높음"
+            degree: "진행중"
         },
         {
             num: 3,
-            degree: "높음"
+            degree: "진행중"
         },
     ]
     return (
@@ -342,7 +376,7 @@ export function SelfEsteemMain({ navigation }) {
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
-                <TouchableOpacity onPress={() => navigation.navigate("SelfEsteemOne")}>
+                <TouchableOpacity onPress={() => navigation.navigate("SelfEsteemZero")}>
                     <View style={{
                         width: "100%",
                         height: 60,

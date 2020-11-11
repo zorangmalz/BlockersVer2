@@ -90,13 +90,36 @@ const MissionItem = ({item}) => {
                     marginLeft: 16,
                     marginRight: 16
                 }}>
-                    <View style={{
+                    {item.period==="monthly" ?
+                   
+                   <View style={{
                         width: 8,
                         height: 8,
                         backgroundColor: "#fb5757",
                         borderRadius: 4,
                         marginRight: 8
                     }} />
+                    :
+                    
+                    (item.period==="once" ?
+                    <View style={{
+                        width: 8,
+                        height: 8,
+                        backgroundColor: "#ffb83d",
+                        borderRadius: 4,
+                        marginRight: 8
+                    }} />
+                :
+                <View style={{
+                    width: 8,
+                    height: 8,
+                    backgroundColor: "#5cc27b",
+                    borderRadius: 4,
+                    marginRight: 8
+                }} />
+                    )
+                    }
+                    
                     <Text style={[main.title, {color: "#ffffff"}]}>{item.title}</Text>
                 </View>
                 <Text style={[main.title, {color: "#ffffff", fontFamily: "NunitoSans-Regular", marginTop: 16, marginRight: 32, marginLeft: 32}]}>{item.content}</Text>
@@ -591,15 +614,7 @@ export function ChallengeRegister({ navigation }) {
             stats:false,
             period:"once",
             id:8,
-            navigate:""
-        })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("금연방법 선택하기").set({
-            title:"금연방법 선택하기",
-            content:"금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 실천해 보세요",
-            stats:false,
-            period:"once",
-            id:9,
-            navigate:""
+            navigate:"SolutionAOne"
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
             title:"금연활동 인증하기 (주1회)",

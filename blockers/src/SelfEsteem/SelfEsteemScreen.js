@@ -1,29 +1,35 @@
 import React from 'react';
 import SelfEsteem from './Style';
 
-export default function Zero({navigation}) {
+export default function Zero({navigation, route}) {
     const title = "어렵지만, 나는 항상 어려운 문제를 해결할 수 있다.";
+    const size=route.params
+    const result=route.params
     return (
         <>
-            <SelfEsteem navigation={navigation} Nextpage="SelfEsteemOne" Title={title} />
+            <SelfEsteem navigation={navigation} Nextpage="SelfEsteemOne" Title={title} total={size+result} />
         </>
     )
 }
 
-export function One({navigation}) {
+export function One({navigation,route}) {
     const title = "누군가가 나를 반대할 지라도, 나는 내가 원하는 것을 얻기 위한 수단과 방법을 찾을 수 있다.";
+    const size=route.params
+    const result=route.params
     return (
         <>
-            <SelfEsteem navigation={navigation} Nextpage="SelfEsteemTwo" Title={title} />
+            <SelfEsteem navigation={navigation} Nextpage="SelfEsteemTwo" Title={title} total={size+result}/>
         </>
     )
 }
 
-export function Two({navigation}) {
+export function Two({navigation,route}) {
     const title = "목표를 정하고 목표를 성취하는 것이 나에게는 쉬운 일이다.";
+    const size=route.params
+    const result=route.params
     return (
         <>
-            <SelfEsteem navigation={navigation} Nextpage="SelfEsteemThree" Title={title} />
+            <SelfEsteem navigation={navigation} Nextpage="SelfEsteemThree" Title={title} total={size+result} />
         </>
     )
 }
