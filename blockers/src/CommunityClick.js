@@ -82,28 +82,29 @@ const community = StyleSheet.create({
     }
 })
 
-const wait = (timeout) => {
-    return new Promise(resolve => {
-        setTimeout(resolve, timeout);
-    });
-}
-
 export default function CommunityHome({ navigation }) {
     const [search, setSearch] = useState('');
-    const ref = firestore().collection('Community1').orderBy("fullTime");
+    const Limit = useRef(7);
+    //Render 수 더하기
+    const onEndReached = () => {
+        Limit.current += 7;
+        console.log(Limit);
+        setRefreshing(true);
+        setTimeout(() => {
+            load()
+            setRefreshing(false);
+        }, 2000)
+    }
     const [loading, setLoading] = useState(true);
     const [items, setItems] = useState([]);
-    const [replyNum, setReplyNum] = useState();
-    const [timer, settimer] = useState();
     const [filtered, setFiltered] = useState();
     const [refreshing, setRefreshing] = useState(false);
-    const [author, setAuthor] = useState();
     const [user, setUser] = useState();
 
     //로그인 모달 폼
     const [userlogin, setUserlogin] = useState(false);
     const loginview = () => {
-        setTimeout(()=>{
+        setTimeout(() => {
             setUserlogin(true)
         }, 200)
     }
@@ -125,6 +126,7 @@ export default function CommunityHome({ navigation }) {
     //글 가져오는 함수
     async function load() {
         const list = [];
+        const ref = firestore().collection('Community1').orderBy("fullTime", "desc").limit(Limit.current);
         var a = moment().toArray()
         if (a[1] === 12) {
             a[1] = 1
@@ -216,12 +218,6 @@ export default function CommunityHome({ navigation }) {
         load()
     }, [filtered]);
 
-    const onRefresh = useCallback(() => {
-        setRefreshing(true);
-        load()
-        wait(2000).then(() => setRefreshing(false));
-    }, [refreshing]);
-
     //검색어 입력
     const [searchWord, setSearchWord] = useState("");
 
@@ -229,7 +225,7 @@ export default function CommunityHome({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-            <View accessibilityRole="header" style={{
+                <View accessibilityRole="header" style={{
                     height: 100,
                     width: "100%",
                     paddingLeft: "5%",
@@ -261,17 +257,17 @@ export default function CommunityHome({ navigation }) {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <View style={{ 
-                        width: "60%", 
-                        height: 40, 
-                        backgroundColor: "#DBDBDB", 
-                        borderRadius: 18, 
-                        flexDirection: "row", 
+                    <View style={{
+                        width: "60%",
+                        height: 40,
+                        backgroundColor: "#DBDBDB",
+                        borderRadius: 18,
+                        flexDirection: "row",
                         alignItems: "center",
                         justifyContent: "space-between",
-                        paddingLeft: 12, 
-                        paddingRight: 12, 
-                        alignSelf: "flex-end" ,
+                        paddingLeft: 12,
+                        paddingRight: 12,
+                        alignSelf: "flex-end",
                         marginTop: 8
                     }}>
                         <TextInput value={searchWord} onChangeText={text => setSearchWord(text)} placeholder="검색어를 입력해주세요." />
@@ -351,38 +347,38 @@ export default function CommunityHome({ navigation }) {
                         </View>
                     </View>
                 </Modal>
-                <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-                    <FlatList
-                        data={items}
-                        inverted={true}
-                        keyExtractor={items.docname}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity onPress={userlogined===true ? () => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname, Uid: user.uid }) : loginview} >
-                                <View style={community.board}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                        <View style={community.circle} />
-                                        <Text ellipsizeMode="tail" numberOfLines={1} style={community.title}>{item.title}</Text>
-                                    </View>
-                                    <Text ellipsizeMode="tail" numberOfLines={2} style={community.content}>{item.context}</Text>
-                                    <View style={community.lowerbox}>
-                                        <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
-                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                            {item.isPicture === true ?
-                                                <Ionicons name="image-outline" size={15} />
-                                                :
-                                                <></>
-                                            }
-                                            <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} style={{ marginLeft: 16 }} />
-                                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
-                                            <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
-                                            <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
-                                        </View>
+                <FlatList
+                    data={items}
+                    onEndReached={onEndReached}
+                    onEndReachedThreshold={0.8}
+                    keyExtractor={items.docname}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity onPress={userlogined === true ? () => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname, Uid: user.uid }) : loginview} >
+                            <View style={community.board}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                    <View style={community.circle} />
+                                    <Text ellipsizeMode="tail" numberOfLines={1} style={community.title}>{item.title}</Text>
+                                </View>
+                                <Text ellipsizeMode="tail" numberOfLines={2} style={community.content}>{item.context}</Text>
+                                <View style={community.lowerbox}>
+                                    <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
+                                    <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                        {item.isPicture === true ?
+                                            <Ionicons name="image-outline" size={15} />
+                                            :
+                                            <></>
+                                        }
+                                        <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} style={{ marginLeft: 16 }} />
+                                        <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
+                                        <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
+                                        <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
                                     </View>
                                 </View>
-                            </TouchableOpacity>
-                        )}
-                    />
-                </ScrollView>
+                            </View>
+                        </TouchableOpacity>
+                    )}
+                />
+                {refreshing ? <ActivityIndicator style={{ marginVertical: 15 }} size="large" color="#5cc27b" /> : <></>}
                 <TouchableOpacity
                     onPress={() => navigation.navigate('작성하기')}
                     style={{

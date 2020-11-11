@@ -7,11 +7,15 @@ import {
     SafeAreaView,
     TouchableOpacity,
     StyleSheet,
+    Modal,
+    Dimensions
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { LoginManager } from 'react-native-fbsdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Modal from 'react-native-modal';
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
 
 const setting = StyleSheet.create({
     mainText: {
@@ -67,10 +71,10 @@ export default function SettingMain({ navigation }) {
                 <Modal
                     animationType="none"
                     transparent={true}
-                    isVisible={modalVisible}
-                    backdropOpacity={0.4}
+                    visible={modalVisible}
                     onRequestClose={() => setModalVisible(false)}
                 >
+                    <View style={{width: WIDTH, height: HEIGHT, position: "absolute", backgroundColor: "#303030", opacity: 0.4}} />
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{
                             width: 280,

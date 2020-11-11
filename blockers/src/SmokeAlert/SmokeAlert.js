@@ -168,7 +168,12 @@ export default function SmokeAlertOne({navigation}) {
             setSecond(second+1);
         }
     }, isRunning ? delay : null)
-
+    
+    useEffect(() => {
+        if (second === 100) {
+            navigation.navigate("SmokeAlertTwo");
+        }
+    }, [second])
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -180,6 +185,7 @@ export default function SmokeAlertOne({navigation}) {
                             flexDirection: "row",
                             alignItems: "center",
                             justifyContent: "center",
+                            width: "90%"
                         }}>
                             <View style={{
                                 width: 8,
@@ -246,6 +252,22 @@ export default function SmokeAlertOne({navigation}) {
 }
 
 export function SmokeAlertTwo({ navigation }) {
+    const [Delay, setDelay] = useState(1000);
+    const [Second, SetSecond] = useState(0);
+    const [IsRunning, SetIsRunning] = useState(true);
+    useInterval(() => {
+        if(Second >= 20) {
+            SetIsRunning(false);
+        } else {
+            SetSecond(Second+1);
+        }
+    }, IsRunning ? Delay : null)
+
+    useEffect(() => {
+        if (Second === 20) {
+            navigation.navigate("SmokeAlertThree");
+        }
+    }, [Second])
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -281,7 +303,7 @@ export function SmokeAlertTwo({ navigation }) {
                             style={{ marginTop: 72, marginBottom: 48 }}
                         />
                         <ProgressBar
-                            progress={0.8}
+                            progress={Second / 20}
                             width={WIDTH * 0.8}
                             height={20}
                             borderRadius={36}
@@ -295,7 +317,7 @@ export function SmokeAlertTwo({ navigation }) {
                             fontSize: 12,
                             color: "#ffffff",
                             lineHeight: 20
-                        }}>20초</Text>
+                        }}>{Second}초</Text>
                         </ProgressBar>
                     </View>
                     
@@ -327,6 +349,22 @@ export function SmokeAlertTwo({ navigation }) {
 }
 
 export function SmokeAlertThree({ navigation }) {
+    const [delay, setDelay] = useState(1000);
+    const [second, setSecond] = useState(0);
+    const [isRunning, setIsRunning] = useState(true);
+    useInterval(() => {
+        if(second >= 20) {
+            setIsRunning(false);
+        } else {
+            setSecond(second+1);
+        }
+    }, isRunning ? delay : null)
+
+    useEffect(() => {
+        if (second === 20) {
+            navigation.navigate("SmokeAlertFour");
+        }
+    }, [second])
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -360,7 +398,7 @@ export function SmokeAlertThree({ navigation }) {
                             style={{ marginTop: 42, marginBottom: 16 }}
                         />
                         <ProgressBar
-                            progress={0.8}
+                            progress={second / 20}
                             width={WIDTH * 0.8}
                             height={20}
                             borderRadius={36}
@@ -374,7 +412,7 @@ export function SmokeAlertThree({ navigation }) {
                             fontSize: 12,
                             color: "#ffffff",
                             lineHeight: 20
-                        }}>20초</Text>
+                        }}>{second}초</Text>
                         </ProgressBar>
                     </View>
                   

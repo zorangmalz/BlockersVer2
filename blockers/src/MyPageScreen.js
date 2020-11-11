@@ -9,7 +9,9 @@ import {
     StyleSheet,
     FlatList,
     RefreshControl,
-    Image
+    Image,
+    Modal,
+    Dimensions
 } from 'react-native';
 import firebase from "@react-native-firebase/app";
 import auth from '@react-native-firebase/auth';
@@ -17,8 +19,10 @@ import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import Modal from 'react-native-modal';
 import storage from '@react-native-firebase/storage';
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
 
 const style = StyleSheet.create({
     container: {
@@ -177,11 +181,10 @@ export default function MyPageScreen({ navigation }) {
                 <Modal
                     animationType="none"
                     transparent={true}
-                    isVisible={userlogin}
-                    backdropOpacity={0.4}
-                    onBackdropPress={() => setUserlogin(false)}
+                    visible={userlogin}
                     onRequestClose={() => setUserlogin(false)}
                 >
+                    <View style={{width: WIDTH, height: HEIGHT, position: "absolute", backgroundColor: "#303030", opacity: 0.4}} />
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{
                             width: 280,

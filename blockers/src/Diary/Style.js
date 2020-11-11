@@ -9,7 +9,8 @@ import {
     StyleSheet,
     ScrollView,
     Dimensions,
-    FlatList
+    FlatList,
+    Alert
 } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from "moment"
@@ -115,6 +116,15 @@ export function Create({ navigation }) {
     const No = () => {
         dispatch({ type: "No" })
         // console.log(state)
+    }
+    const NotComplete = () => {
+        Alert.alert(
+            "일기를 입력해주세요",
+            "",
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ],
+        );
     }
     return (
         <>
@@ -244,11 +254,11 @@ export function Create({ navigation }) {
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
-                <TouchableOpacity onPress={writeDiary}>
+                <TouchableOpacity onPress={when.length > 0 && how.length > 0 && advice.length > 0 && state > 0 ? writeDiary : state===2 ? writeDiary : NotComplete}>
                     <View style={{
                         width: "100%",
                         height: 60,
-                        backgroundColor: when.length > 0 && how.length > 0 && advice.length > 0 && state > 0 ? '#5cc27b' : "#c6c6c6",
+                        backgroundColor: when.length > 0 && how.length > 0 && advice.length > 0 && state > 0 ? '#5cc27b' : state===2 ? "#5cc27b" : "#c6c6c6",
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
