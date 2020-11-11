@@ -408,7 +408,7 @@ export function SelfEsteemFinal({navigation,route}) {
         console.log(result.result,"final Score")
         if(Number(result.result)>=45){
             setResults("Good")
-            setResultscontent( "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!")
+            setResultcontent( "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!")
         }else if(35<=Number( result.result)){
             setResults("Normal")
             setResultcontent("보통 수준의 자아 효능감을 가지고 있습니다. \n 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다.")
@@ -420,7 +420,7 @@ export function SelfEsteemFinal({navigation,route}) {
         if(user){
          uploadInfo()   
         }
-    },user)
+    },[user])
     async function uploadInfo(){
         var a=moment().toArray()
         console.log(a)
@@ -439,7 +439,8 @@ export function SelfEsteemFinal({navigation,route}) {
         console.log(total)
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").update({
             result:result.result+"/"+"/"+resultcontent+"/"+a,
-            stats:true
+            stats:true,
+            resultNum:result.result
         })
     }
     useEffect(()=>{

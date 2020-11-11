@@ -64,6 +64,9 @@ import AOne, { AThree, AFour, AFive, ASix, ASeven, AEight, ANine } from './src/A
 import { SelfEsteemFinal, SelfEsteemMain } from './src/SelfEsteem/Style';
 import { AlcoholFinal, AlcoholMain } from './src/Alcohol/Style';
 import { StressFinal, StressMain } from './src/Stress/Style';
+import StressResult from './src/Stress/StressResult'
+import AlcoholResult from './src/Alcohol/AlcoholResult'
+import SelfEsteemResult from './src/SelfEsteem/SelfEsteemResult'
 import DiaryWrite, { DiaryList } from './src/Diary/DiaryScreen';
 import Challenge, { ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowHow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage } from './src/Challenge/ChallengeScreen';
 import ChatbotMain, { ChatbotOne, ChatbotTwo } from './src/Chatbot/ChatbotScreen';
@@ -602,6 +605,32 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
+
+         <Stack.Screen
+          name="AlcoholResult"
+          component={AlcoholResult}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+         <Stack.Screen
+          name="StressResult"
+          component={StressResult}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+         <Stack.Screen
+          name="SelfEsteemResult"
+          component={SelfEsteemResult}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
+
         <Stack.Screen
           name="StressOne"
           component={SOne}

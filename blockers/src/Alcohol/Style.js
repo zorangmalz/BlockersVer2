@@ -518,7 +518,7 @@ export function AlcoholFinal({navigation,route}) {
         if(user){
          uploadInfo()   
         }
-    },user)
+    },[user])
     async function uploadInfo(){
         var a=moment().toArray()
         console.log(a)
@@ -537,7 +537,8 @@ export function AlcoholFinal({navigation,route}) {
         console.log(total)
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").update({
             result:result.result+"/"+resultcontent+"/"+a,
-            stats:true
+            stats:true,
+            resultNum:result.result
         })
     }
     useEffect(()=>{

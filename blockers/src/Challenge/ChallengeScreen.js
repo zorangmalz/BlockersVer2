@@ -565,7 +565,7 @@ export function ChallengeRegister({ navigation }) {
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
             title:"자기 효능감 평가(월1회)",
-            content:"스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
+            content:"자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요",
             stats:false,
             period:"monthly",
             id:2,
@@ -573,7 +573,7 @@ export function ChallengeRegister({ navigation }) {
         })
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").set({
             title:"알콜중독 평가(월1회)",
-            content:"스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
+            content:"알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요",
             stats:false,
             period:"monthly",
             id:3,
@@ -1043,7 +1043,7 @@ const mission = StyleSheet.create({
     }
 })
 
-const MissionBox = ({ color, name, data }) => {
+const MissionBox = ({ color, name, data,navigation }) => {
     const [fold, setFold] = useState(true);
     return (
         <View style={[
@@ -1076,7 +1076,7 @@ const MissionBox = ({ color, name, data }) => {
                     data={data}
                     keyExtractor={(item) => item.number}
                     renderItem={({ item }) => (
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>navigation.navigate(item.navigation)}>
                             <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
                             <Text style={mission.regular}>{item.content}</Text>
                         </TouchableOpacity>
@@ -1094,17 +1094,21 @@ export function ChallengeMission({ navigation }) {
         {
             number: 1,
             title: "1. 스트레스 평가",
-            content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요."
+            content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요.",
+            navigation:"StressResult"
         },
         {
             number: 2,
             title: "2. 자기 효능감 평가",
-            content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요."
+            content: "자기 효능감과 금연의 밀접한 관계\n나의 자기 효능감을 체크하고 금연성공하세요.",
+            navigation:"SelfEsteemResult"
+
         },
         {
             number: 3,
             title: "3. 알콜중독 평가",
-            content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요."
+            content: "알콜중독과 금연의 밀접한 관계\n나의 알콜중독을 체크하고 금연성공하세요.",
+            navigation:"AlcoholResult"
         },
     ]
     const Normal = [
@@ -1169,9 +1173,9 @@ export function ChallengeMission({ navigation }) {
                 <ScrollView>
                     <View style={{ paddingLeft: "6%", paddingRight: "6%", alignItems: "center" }}>
                         <Text style={[mission.bold, {marginTop: 16, marginBottom: 32}]}>미션을 클릭하면 응답내역을 볼 수 있습니다.</Text>
-                        <MissionBox color="#fb5757" name="월간 미션 (월 1회)" data={Month} />
-                        <MissionBox color="#ffb83d" name="일반미션" data={Normal} />
-                        <MissionBox color="#5cc27b" name="파이널미션" data={Final} />
+                        <MissionBox color="#fb5757" name="월간 미션 (월 1회)" data={Month} navigation={navigation} />
+                        <MissionBox color="#ffb83d" name="일반미션" data={Normal} navigation={navigation}/>
+                        <MissionBox color="#5cc27b" name="파이널미션" data={Final} navigation={navigation}/>
                     </View>
                 </ScrollView>
             </SafeAreaView>
