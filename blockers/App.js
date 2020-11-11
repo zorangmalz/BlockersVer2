@@ -93,6 +93,7 @@ import SolutionSmoke from './src/SolutionSmoke';
 import SolutionSmokeOne from './src/SolutionSmokeOne';
 import SolutionSmokeTwo from './src/SolutionSmokeTwo';
 import SolutionSmokeThree from './src/SolutionSmokeThree';
+import SolutionResult from './src/SolutionResult';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -1172,6 +1173,14 @@ const App = ({ navigation }) => {
           <Stack.Screen 
             name="SolutionSmokeThree"
             component={SolutionSmokeThree}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="SolutionResult"
+            component={SolutionResult}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false

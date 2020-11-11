@@ -71,7 +71,7 @@ export default function SolutionGThree({ navigation }) {
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate('Home');
+            navigation.navigate('SolutionResult');
         }, 200)
     }
 
@@ -82,7 +82,7 @@ export default function SolutionGThree({ navigation }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate('Home');
+            navigation.navigate('SolutionResult');
         }, 200)
     }
 
@@ -93,7 +93,7 @@ export default function SolutionGThree({ navigation }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate('Home');
+            navigation.navigate('SolutionResult');
         }, 200)
     }
 
@@ -104,7 +104,7 @@ export default function SolutionGThree({ navigation }) {
     const pushfour = () => {
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate('Home');
+            navigation.navigate('SolutionResult');
         }, 200)
     }
 
@@ -115,7 +115,7 @@ export default function SolutionGThree({ navigation }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate('Home');
+            navigation.navigate('SolutionResult');
         }, 200)
     }
 
