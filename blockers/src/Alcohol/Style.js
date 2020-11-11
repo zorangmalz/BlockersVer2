@@ -11,6 +11,10 @@ import {
     FlatList
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import ProgressCircle from "react-native-progress/Circle";
+import moment from "moment"
+import firestore from '@react-native-firebase/firestore';
+import auth, { firebase } from '@react-native-firebase/auth';
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -56,7 +60,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function Alcohol({ navigation, Nextpage, Title, Kind }) {
+export default function Alcohol({ navigation, Nextpage, Title, Kind,total }) {
     const quesone = Kind ? "전혀 아니다" : "전혀 없다"
     const questwo = "월 1회 미만"
     const questhree = "월 1회"
@@ -74,7 +78,7 @@ export default function Alcohol({ navigation, Nextpage, Title, Kind }) {
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+1});
         }, 200)
     }
 
@@ -85,7 +89,7 @@ export default function Alcohol({ navigation, Nextpage, Title, Kind }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+2});
         }, 200)
     }
 
@@ -96,7 +100,7 @@ export default function Alcohol({ navigation, Nextpage, Title, Kind }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+3});
         }, 200)
     }
 
@@ -107,7 +111,7 @@ export default function Alcohol({ navigation, Nextpage, Title, Kind }) {
     const pushfour = () => {
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+4});
         }, 200)
     }
 
@@ -118,7 +122,7 @@ export default function Alcohol({ navigation, Nextpage, Title, Kind }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+5});
         }, 200)
     }
 
@@ -242,7 +246,7 @@ export default function Alcohol({ navigation, Nextpage, Title, Kind }) {
     )
 }
 
-export function AlcoholThree({ navigation, Nextpage, Title }) {
+export function AlcoholThree({ navigation, Nextpage, Title,total }) {
     const quesone = "없었다"
     const questwo = "있지만 지난 1년간 없었다"
     const questhree = "지난 1년내 있었다"
@@ -256,7 +260,7 @@ export function AlcoholThree({ navigation, Nextpage, Title }) {
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+1});
         }, 200)
     }
 
@@ -267,7 +271,7 @@ export function AlcoholThree({ navigation, Nextpage, Title }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+2});
         }, 200)
     }
 
@@ -278,7 +282,7 @@ export function AlcoholThree({ navigation, Nextpage, Title }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+3});
         }, 200)
     }
 
@@ -489,9 +493,58 @@ export function AlcoholMain({ navigation }) {
     )
 }
 
-export function AlcoholFinal({navigation}) {
-    const result = "Good";
-    const resultcontent = "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!"
+export function AlcoholFinal({navigation,route}) {
+    const [user,setUser]=useState()
+    const [results,setResults]=useState("")
+    // const results="Good"
+    const [resultcontent,setResultcontent]=useState("")
+    const result=route.params;
+    const [name,setName]=useState("");
+    var total=0
+    useEffect(()=>{
+        
+        console.log(Number(result.result),"final Score")
+        if(Number(result.result)>=35){
+            setResults("Bad")
+            setResultcontent( "알코올 남용이나 의존 단계입니다. \n 음주량과 음주횟수 조절이 어려운 상태입니다. 술을 마셔야 기분도 좋고 일도 잘되고 관계도 좋아진다고 생각합니다. 술을 줄이는 단계가 아니라 끊어야 합니다.\n● 신체 질환이나 사회적 역할에 어려움이 있을 것입니다.\n예) 직장, 가정, 지역사회에서 술로 인한 사회적 혹은 법적 문제 유발(음주운전이나 가정폭력 등)\n전문 병/의원이나 알코올상담센터 혹은 정신보건센터에 연계하여 진단과 치료를 받도록 합니다.\n신체에 질병이 생기면 치료받아야 나을 수 있는 것처럼 알코올 사용 장애도 치료가 필요한 질병입니다")
+        }else if(15<= Number(result.result)){
+            setResults("Normal")
+            setResultcontent("위험 음주 단계입니다. \n음주량과 음주횟수가 너무 많습니다. 아직은 술 때문에 큰 문제가 없지만 음주문제 예방을 위해 아래 지침을 지켜주세요.● 정상 음주군에서 권고한 음주 기준을 지키세요.\n● 과음으로 인한 음주 폐해에 대한 교육이 필요합니다.\n● 전문요원에게 상담을 받으세요.\n음주를 유발하는 상황과 음주패턴의 특징을 파악하기\n과음을 피할 수 있는 방법 택하기\n예) 음주 일지 작성, 작은 잔으로 마시기, 술에 물을 타서 마시기, 음주 속도 제한, 스트레스 대처 방법 훈련, 폭탄주 혹은 독주 피하기, 안주 충분히 먹기, 술 마시지 않는 날 정하기 등\n● 주기적으로 음주행동을 점검하고 알코올의존도평가(AUDIT-K) 재수행")
+            console.log("here")
+        }else {
+            setResults("Good")      
+            setResultcontent("정상 음주입니다.\n지금까지는 비교적 건강하고 안전한 음주습관을 지니고 있습니다. 적정음주량을 유지하고 건강음주지침을 지켜주세요.\n● 음주량을 지켜주세요.\n한자리에서 남성: 2~4잔 / 여성: 1~2잔 이하\n* 일주일에 2~3일은 금주\n65세 이상의 노인도 1주당 5잔 미만")
+        }
+        if(user){
+         uploadInfo()   
+        }
+    },user)
+    async function uploadInfo(){
+        var a=moment().toArray()
+        console.log(a)
+        
+        if(a[1]===12){
+            a[1]=1
+        }else{
+            a[1]=a[1]+1
+        }
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+            total=querySnapshot.size-1
+        })
+        await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+            setName(doc.data().name)
+        })
+        console.log(total)
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").update({
+            result:result.result+"/"+resultcontent+"/"+a,
+            stats:true
+        })
+    }
+    useEffect(()=>{
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+    })
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -521,7 +574,7 @@ export function AlcoholFinal({navigation}) {
                         color: "#5cc27b",
                         alignSelf: "center",
                         marginTop: 20
-                    }}>김현명님의 알콜중독 평가 결과</Text>
+                    }}>{name}님의 알콜중독 평가 결과</Text>
                     <ProgressCircle
                         style={{
                             marginTop: 20,
@@ -531,12 +584,12 @@ export function AlcoholFinal({navigation}) {
                         size={160}
                         borderWidth={0}
                         thickness={10}
-                        progress={0.75}
-                        color={result === "Good" ? "#5cc27b" : result="Normal" ? "#ffb83d" : "#fb5757"}
+                        progress={Number(result.result)*0.025}
+                        color={results === "Good" ? "#5cc27b" : results=="Normal" ? "#ffb83d" : "#fb5757"}
                         unfilledColor="#E0E5EC"
                     >
                         <Text style={{ position: "absolute", flex: 1, color: "#303030", textAlign: "center" }}>
-                            <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{result}</Text>
+                            <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{results}</Text>
                         </Text>
                     </ProgressCircle>
                     <Text style={{

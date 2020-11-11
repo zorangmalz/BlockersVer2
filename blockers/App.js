@@ -59,8 +59,8 @@ import PersonalInformation from "./src/PersonalInformation";
 import Personal from "./src/Personal";
 import TermsOfUse from "./src/TermsOfUse";
 import Zero, { One, Two, Three, Four, Five, Six, Seven, Eight, Nine } from './src/SelfEsteem/SelfEsteemScreen';
-import SOne, { STwo, SThree, SFour, SFive, SSix, SSeven, SEight, SNine, STen, SEleven, STwelve } from './src/Stress/StressScreen';
-import AOne, { ATwo, AThree, AFour, AFive, ASix, ASeven, AEight, ANine } from './src/Alcohol/AlcoholScreen';
+import SOne, { STwo, SThree, SFour, SFive, SSix, SSeven, SEight, SNine, STen, SEleven, STwelve,SThirteen } from './src/Stress/StressScreen';
+import AOne, { AThree, AFour, AFive, ASix, ASeven, AEight, ANine } from './src/Alcohol/AlcoholScreen';
 import { SelfEsteemFinal, SelfEsteemMain } from './src/SelfEsteem/Style';
 import { AlcoholFinal, AlcoholMain } from './src/Alcohol/Style';
 import { StressFinal, StressMain } from './src/Stress/Style';
@@ -698,6 +698,14 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
+         <Stack.Screen
+          name="StressThirteen"
+          component={SThirteen}
+          options={{
+            gestureDirection: "vertical-inverted",
+            headerShown: false
+          }}
+        />
         <Stack.Screen
           name="AlcoholMain"
           component={AlcoholMain}
@@ -714,14 +722,7 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
-        <Stack.Screen
-          name="AlcoholTwo"
-          component={ATwo}
-          options={{
-            gestureDirection: "vertical-inverted",
-            headerShown: false
-          }}
-        />
+     
         <Stack.Screen
           name="AlcoholThree"
           component={AThree}

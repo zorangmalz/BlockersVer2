@@ -65,7 +65,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SelfEsteem({ navigation, Nextpage, Title,total }) {
+export default function SelfEsteem({ navigation, Nextpage, Title,total,name}) {
     const quesone = "전혀 아니다"
     const questwo = "아니다"
     const questhree = "보통이다"
@@ -79,7 +79,7 @@ export default function SelfEsteem({ navigation, Nextpage, Title,total }) {
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
     const [result,setResult]=useState(0);
-    
+
 
     const [user,setUser]=useState("")
 
@@ -88,7 +88,7 @@ export default function SelfEsteem({ navigation, Nextpage, Title,total }) {
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate(Nextpage,{size:1,result:result});
+            navigation.navigate(Nextpage,{result:total+1});
         }, 200)
     }
 
@@ -99,7 +99,7 @@ export default function SelfEsteem({ navigation, Nextpage, Title,total }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+2,});
         }, 200)
     }
 
@@ -110,7 +110,7 @@ export default function SelfEsteem({ navigation, Nextpage, Title,total }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+3,});
         }, 200)
     }
 
@@ -121,7 +121,7 @@ export default function SelfEsteem({ navigation, Nextpage, Title,total }) {
     const pushfour = () => {
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+4,});
         }, 200)
     }
 
@@ -132,7 +132,7 @@ export default function SelfEsteem({ navigation, Nextpage, Title,total }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+5,});
         }, 200)
     }
 
@@ -276,7 +276,9 @@ export default function SelfEsteem({ navigation, Nextpage, Title,total }) {
     )
 }
 
-export function SelfEsteemMain({ navigation }) {
+export function SelfEsteemMain({ navigation,route }) {
+    
+    
     const title = "자기효능감은 금연과 밀접한 관계가 있습니다. \n자기 효능감을 체크해 보세요."
     const data = [
         {
@@ -392,9 +394,59 @@ export function SelfEsteemMain({ navigation }) {
     )
 }
 
-export function SelfEsteemFinal({navigation}) {
-    const result = "Good";
-    const resultcontent = "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!"
+export function SelfEsteemFinal({navigation,route}) {
+    const [user,setUser]=useState()
+    const [results,setResults]=useState(0)
+    const [resultcontent,setResultcontent]=useState("")
+    const result=route.params;
+    const [name,setName]=useState("");
+    var total=0
+    
+    
+    useEffect(()=>{
+        
+        console.log(result.result,"final Score")
+        if(Number(result.result)>=45){
+            setResults("Good")
+            setResultscontent( "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!")
+        }else if(35<=Number( result.result)){
+            setResults("Normal")
+            setResultcontent("보통 수준의 자아 효능감을 가지고 있습니다. \n 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다.")
+            
+        }else{
+            setResults("d")      
+            setResultcontent("낮은 자아 효능감을 가지고 있습니다. \n 항상 자신감 있는 생각과 행동이 필요합니다.\n 내적인 자신감의 강화와 더불어 세심한 생활관리가 필요합니다.")
+        }
+        if(user){
+         uploadInfo()   
+        }
+    },user)
+    async function uploadInfo(){
+        var a=moment().toArray()
+        console.log(a)
+        
+        if(a[1]===12){
+            a[1]=1
+        }else{
+            a[1]=a[1]+1
+        }
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+            total=querySnapshot.size-1
+        })
+        await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+            setName(doc.data().name)
+        })
+        console.log(total)
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").update({
+            result:result.result+"/"+"/"+resultcontent+"/"+a,
+            stats:true
+        })
+    }
+    useEffect(()=>{
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+    })
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -424,7 +476,7 @@ export function SelfEsteemFinal({navigation}) {
                         color: "#5cc27b",
                         alignSelf: "center",
                         marginTop: 20
-                    }}>김현명님의 자기효능감 평가 결과</Text>
+                    }}>{name}님의 자기효능감 평가 결과</Text>
                     <ProgressCircle
                         style={{
                             marginTop: 20,
@@ -434,12 +486,12 @@ export function SelfEsteemFinal({navigation}) {
                         size={160}
                         borderWidth={0}
                         thickness={10}
-                        progress={0.75}
-                        color={result === "Good" ? "#5cc27b" : result="Normal" ? "#ffb83d" : "#fb5757"}
+                        progress={Number(result.result)*0.02}
+                        color={results === "Good" ? "#5cc27b" : results=="Normal" ? "#ffb83d" : "#fb5757"}
                         unfilledColor="#E0E5EC"
                     >
                         <Text style={{ position: "absolute", flex: 1, color: "#303030", textAlign: "center" }}>
-                            <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{result}</Text>
+                            <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{results}</Text>
                         </Text>
                     </ProgressCircle>
                     <Text style={{

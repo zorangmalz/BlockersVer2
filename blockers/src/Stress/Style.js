@@ -11,6 +11,10 @@ import {
     FlatList
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from "moment"
+import firestore from '@react-native-firebase/firestore';
+import auth, { firebase } from '@react-native-firebase/auth';
+import ProgressCircle from "react-native-progress/Circle";
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -56,7 +60,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function Stress({ navigation, Nextpage, Title }) {
+export default function Stress({ navigation, Nextpage, Title,total }) {
     const quesone = "전혀 아니다"
     const questwo = "아니다"
     const questhree = "보통이다"
@@ -74,7 +78,7 @@ export default function Stress({ navigation, Nextpage, Title }) {
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+1});
         }, 200)
     }
 
@@ -85,7 +89,7 @@ export default function Stress({ navigation, Nextpage, Title }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+2});
         }, 200)
     }
 
@@ -96,7 +100,7 @@ export default function Stress({ navigation, Nextpage, Title }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+3});
         }, 200)
     }
 
@@ -107,7 +111,7 @@ export default function Stress({ navigation, Nextpage, Title }) {
     const pushfour = () => {
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+4});
         }, 200)
     }
 
@@ -118,7 +122,7 @@ export default function Stress({ navigation, Nextpage, Title }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate(Nextpage);
+            navigation.navigate(Nextpage,{result:total+5});
         }, 200)
     }
 
@@ -358,9 +362,59 @@ export function StressMain({ navigation }) {
     )
 }
 
-export function StressFinal({navigation}) {
-    const result = "Good";
-    const resultcontent = "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!"
+export function StressFinal({navigation,route}) {
+    const [user,setUser]=useState()
+    const [results,setResults]=useState("")
+    // const results="Good"
+    const [resultcontent,setResultcontent]=useState("")
+    const result=route.params;
+    const [name,setName]=useState("");
+    var total=0
+    useEffect(()=>{
+        
+        console.log(Number(result.result),"final Score")
+        if(Number(result.result)>=50){
+            setResults("Bad")
+            setResultcontent( "사람들에 비해 스트레스 정도가 많은 편입니다.\n 스트레스는 적당한 경우에 능률을 향상시키는 역할을 하지만, \n지속적인 스트레스는 결국 인체의 저항력을 고갈시키고, \n우울증, 정신증과 같은 정신과적 증상으로도 나타날 수 있습니다.\n \n스스로의 상태를 주시하면서 주위의 도움을 청하고 \n스트레스 해소를 위한 방법을 적극적으로 찾아야 합니다. \n상당한 정도의 스트레스를 경험하고 있거나 오랫동안 과다한 스트레스로 어려움을 겪었을 것으로 보입니다. \n따라서 이를 극복하기 위해 좀 더 적극적인 노력이 필요합니다.")
+        }else if(35<= Number(result.result)){
+            setResults("Normal")
+            setResultcontent("예방적 행위가 필요합니다. \n당신의 스트레스 반응이 위험한 상태로서 도움받을 필요가 있습니다. \n포괄적인 스트레스 관리 계획이 필요합니다.")
+            console.log("here")
+        }else {
+            setResults("Good")      
+            setResultcontent("다른 사람들에 비해 스트레스 정도가 적은 편입니다. \n스트레스는 적당한 경우에 능률을 향상시키는 역할을 하지만,\n 지속적인 스트레스는 결국 인체의 저항력을 고갈시키고,\n 우울증, 정신증과 같은 정신과적 증상으로도 나타날 수 있습니다. \n스스로의 상태를 주시하면서 주위의 도움을 청하고 \n스트레스 해소를 위한 방법을 적극적으로 찾아야 합니다.\n\n당신은 이미 스트레스 상황에 특별한 방식으로 잘 대처하고 있습니다.\n 특별한 조치가 필요 없습니다.\n 지금 상태를 유지할 수 있도록 노력하세요!")
+        }
+        if(user){
+         uploadInfo()   
+        }
+    },user)
+    async function uploadInfo(){
+        var a=moment().toArray()
+        console.log(a)
+        
+        if(a[1]===12){
+            a[1]=1
+        }else{
+            a[1]=a[1]+1
+        }
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+            total=querySnapshot.size-1
+        })
+        await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+            setName(doc.data().name)
+        })
+        console.log(total)
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").update({
+            result:result.result+"/"+resultcontent+"/"+a,
+            stats:true
+        })
+    }
+    useEffect(()=>{
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+    })
+    
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -390,7 +444,7 @@ export function StressFinal({navigation}) {
                         color: "#5cc27b",
                         alignSelf: "center",
                         marginTop: 20
-                    }}>김현명님의 스트레스 평가 결과</Text>
+                    }}>{name}님의 스트레스 평가 결과</Text>
                     <ProgressCircle
                         style={{
                             marginTop: 20,
@@ -400,12 +454,12 @@ export function StressFinal({navigation}) {
                         size={160}
                         borderWidth={0}
                         thickness={10}
-                        progress={0.75}
-                        color={result === "Good" ? "#5cc27b" : result="Normal" ? "#ffb83d" : "#fb5757"}
+                        progress={Number(result.result)*0.01538}
+                        color={results === "Good" ? "#5cc27b" : results=="Normal" ? "#ffb83d" : "#fb5757"}
                         unfilledColor="#E0E5EC"
                     >
                         <Text style={{ position: "absolute", flex: 1, color: "#303030", textAlign: "center" }}>
-                            <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{result}</Text>
+                            <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{results}</Text>
                         </Text>
                     </ProgressCircle>
                     <Text style={{
@@ -428,6 +482,7 @@ export function StressFinal({navigation}) {
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
+
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
                     </View>
                 </TouchableOpacity>

@@ -126,7 +126,7 @@ const MissionItem = ({item}) => {
             </View>
             {item.doing===false?
             <TouchableOpacity 
-            onPress={()=>navigation.navigate(item.navigate)}
+            onPress={()=>navigation.navigate(item.navigate,{docID:item.challengeDoc})}
             style={{
                 width: 254,
                 height: 54,
@@ -186,6 +186,7 @@ const MissionItem = ({item}) => {
     const [change,setChange]=useState("")
     const [refreshing, setRefreshing] = React.useState(false);
     const [items,setItems]=useState([])
+    
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
 
@@ -219,6 +220,7 @@ console.log(a)
                 setTitle(doc.data().title)
                 setLong(doc.data().long)
                 setProgress(doc.data().progress)
+                
             })
             const list=[]
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").where("stats","==",false).get().then(querySnapshot=>{
@@ -229,7 +231,8 @@ console.log(a)
                         period:doc.data().period,
                         doing:doc.data().stats,
                         id:doc.data().id,
-                        navigate:doc.data().navigate
+                        navigate:doc.data().navigate,
+                        challengeDoc:"challenge"+total
                     })
                 })
                 setItems(list)
