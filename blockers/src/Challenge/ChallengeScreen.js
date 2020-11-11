@@ -23,6 +23,7 @@ import {AdEventType,InterstitialAd,BannerAd, BannerAdSize, TestIds } from '@reac
 import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
+import BarChart from 'react-native-chart-kit/dist/BarChart';
 
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
@@ -1433,8 +1434,8 @@ const MotiveButton = ({width, include, content, onPress}) => {
             paddingHorizontal: 16,
             marginRight: 8,
             borderWidth: include ? 0 : 1,
-            borderColor: "#5cc27b",
-            backgroundColor: include ? "#5cc27b" : "#ffffff"
+            borderColor: content === "없음" ? "#fb5757" : "#5cc27b",
+            backgroundColor: include ? content === "없음" ? "#fb5757" : "#5cc27b" : "#ffffff"
         }}>
             <Text style={{
                 fontFamily: "NunitoSans-Bold",
@@ -1966,7 +1967,7 @@ export function ChallengeGD({ navigation }) {
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
                         </View>
                     </TouchableOpacity>
                     :
@@ -1981,7 +1982,7 @@ export function ChallengeGD({ navigation }) {
                                         justifyContent: 'center',
                                         alignItems: 'center'
                                     }}>
-                                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
                                     </View>
                                 </TouchableOpacity>
                                 :
@@ -1994,7 +1995,7 @@ export function ChallengeGD({ navigation }) {
                                             justifyContent: 'center',
                                             alignItems: 'center'
                                         }}>
-                                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
                                         </View>
                                     </TouchableOpacity>
                                     :
@@ -2006,7 +2007,7 @@ export function ChallengeGD({ navigation }) {
                                             justifyContent: 'center',
                                             alignItems: 'center'
                                         }}>
-                                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
                                         </View>
                                     </TouchableOpacity>
                         }
@@ -2018,13 +2019,351 @@ export function ChallengeGD({ navigation }) {
 }
 
 export function ChallengeGDResult({navigation}) {
+    const [GD, setGD] = useState([]);
+    const countGD = useRef(0);
+    const [input, setInput] = useState("");
+    const [zero, setZero] = useState(false);
+    const onZero = () => {
+        if (!zero) {
+            setZero(true);
+            countGD.current = 0;
+            setGD([]);
+        } else {
+            setZero(false);
+            setGD([]);
+            countGD.current = 0;
+        }
+    }
+    const [one, setOne] = useState(false);
+    const onOne = () => {
+        if(one){
+            setGD(GD.filter(doc => {
+                return doc !== "신경과민"
+            }))
+            countGD.current -= 1;
+            setOne(false);
+        } else {
+            setGD(GD.concat("신경과민"))
+            countGD.current += 1;
+            setOne(true);
+        } 
+    }
+    const [two, setTwo] = useState(false);
+    const onTwo = () => {
+        if(two){
+            setGD(GD.filter(doc => {
+                return doc !== "소화장애"
+            }))
+            countGD.current -= 1;
+            setTwo(false);
+        } else {
+            setGD(GD.concat("소화장애"))
+            countGD.current += 1;
+            setTwo(true);
+        } 
+    }
+    const [three, setThree] = useState(false);
+    const onThree = () => {
+        if(three){
+            setGD(GD.filter(doc => {
+                return doc !== "두통"
+            }))
+            countGD.current -= 1;
+            setThree(false);
+        } else {
+            setGD(GD.concat("두통"))
+            countGD.current += 1;
+            setThree(true);
+        } 
+    }
+    const [four, setFour] = useState(false);
+    const onFour = () => {
+        if(four){
+            setGD(GD.filter(doc => {
+                return doc !== "불면"
+            }))
+            countGD.current -= 1;
+            setFour(false);
+        } else {
+            setGD(GD.concat("불면"))
+            countGD.current += 1;
+            setFour(true);
+        } 
+    }
+    const [five, setFive] = useState(false);
+    const onFive = () => {
+        if(five){
+            setGD(GD.filter(doc => {
+                return doc !== "현기증"
+            }))
+            countGD.current -= 1;
+            setFive(false);
+        } else {
+            setGD(GD.concat("현기증"))
+            countGD.current += 1;
+            setFive(true);
+        } 
+    }
+    const [six, setSix] = useState(false);
+    const onSix = () => {
+        if(six){
+            setGD(GD.filter(doc => {
+                return doc !== "우울감"
+            }))
+            countGD.current -= 1;
+            setSix(false);
+        } else {
+            setGD(GD.concat("우울감"))
+            countGD.current += 1;
+            setSix(true);
+        } 
+    }
+    const [seven, setSeven] = useState(false);
+    const onSeven = () => {
+        if(seven){
+            setGD(GD.filter(doc => {
+                return doc !== "피로감"
+            }))
+            countGD.current -= 1;
+            setSeven(false);
+        } else {
+            setGD(GD.concat("피로감"))
+            countGD.current += 1;
+            setSeven(true);
+        } 
+    }
+    const [eight, setEight] = useState(false);
+    const onEight = () => {
+        if(eight){
+            setGD(GD.filter(doc => {
+                return doc !== "기침"
+            }))
+            countGD.current -= 1;
+            setEight(false);
+        } else {
+            setGD(GD.concat("기침"))
+            countGD.current += 1;
+            setEight(true);
+        } 
+    }
+    const [nine, setNine] = useState(false);
+    const onNine = () => {
+        if(nine){
+            setGD(GD.filter(doc => {
+                return doc !== "불안감"
+            }))
+            countGD.current -= 1;
+            setNine(false);
+        } else {
+            setGD(GD.concat("불안감"))
+            countGD.current += 1;
+            setNine(true);
+        } 
+    }
+    const [ten, setTen] = useState(false);
+    const onTen = () => {
+        if(ten){
+            setGD(GD.filter(doc => {
+                return doc !== "집중력 감소"
+            }))
+            countGD.current -= 1;
+            setTen(false);
+        } else {
+            setGD(GD.concat("집중력 감소"))
+            countGD.current += 1;
+            setTen(true);
+        } 
+    }
+    const [eleven, setEleven] = useState(false);
+    const onEleven = () => {
+        if(eleven){
+            setGD(GD.filter(doc => {
+                return doc !== "배고픔"
+            }))
+            countGD.current -= 1;
+            setEleven(false);
+        } else {
+            setGD(GD.concat("배고픔"))
+            countGD.current += 1;
+            setEleven(true);
+        }
+    }
+    const [twelve, setTwelve] = useState(false);
+    const onTwelve = () => {
+        if(twelve){
+            setGD(GD.filter(doc => {
+                return doc !== "입안의 통증"
+            }))
+            countGD.current -= 1;
+            setTwelve(false);
+        } else {
+            setGD(GD.concat("입안의 통증"))
+            countGD.current += 1;
+            setTwelve(true);
+        }
+    }
+    const [thirteen, setThirteen] = useState(false);
+    const onThirteen = () => {
+        if(thirteen){
+            setGD(GD.filter(doc => {
+                return doc !== "쑤시는 느낌"
+            }))
+            countGD.current -= 1;
+            setThirteen(false);
+        } else {
+            setGD(GD.concat("쑤시는 느낌"))
+            countGD.current += 1;
+            setThirteen(true);
+        }
+    }
+    const [fourteen, setFourteen] = useState(false);
+    const onFourteen = () => {
+        if (fourteen) {
+            setGD(GD.filter(doc => {
+                return doc !== "갈증"
+            }))
+            countGD.current -= 1;
+            setFourteen(false);
+        } else {
+            setGD(GD.concat("갈증"))
+            countGD.current += 1;
+            setFourteen(true);
+        }
+    }
+
+    useEffect(() => {
+        console.log(GD);
+        console.log(countGD);
+        if (zero) {
+            setOne(false);
+            setTwo(false);
+            setThree(false);
+            setFour(false);
+            setFive(false);
+            setSix(false);
+            setSeven(false);
+            setEight(false);
+            setNine(false);
+            setTen(false);
+            setEleven(false);
+            setTwelve(false);
+            setThirteen(false);
+            setFourteen(false);
+        }
+        else if (countGD.current > 1 && zero === false) {
+            if (GD[0] === "신경과민") setOne(false);
+            if (GD[0] === "소화장애") setTwo(false);
+            if (GD[0] === "두통") setThree(false);
+            if (GD[0] === "불면") setFour(false);
+            if (GD[0] === "현기증") setFive(false);
+            if (GD[0] === "우울감") setSix(false);
+            if (GD[0] === "피로감") setSeven(false);
+            if (GD[0] === "기침") setEight(false);
+            if (GD[0] === "불안감") setNine(false);
+            if (GD[0] === "집중력 감소") setTen(false);
+            if (GD[0] === "배고픔") setEleven(false);
+            if (GD[0] === "입안의 통증") setTwelve(false);
+            if (GD[0] === "쑤시는 느낌") setThirteen(false);
+            if (GD[0] === "갈증") setFourteen(false);
+            setGD(GD.splice(1, GD.length - 1));
+            countGD.current -= 1;
+        }
+    }, [zero, GD, countGD])
     const symptomData = [
         {
             num: 1,
-            symptom: "스트레스",
-            content: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna."
+            symptom: "신경과민",
+            include: one,
+            onPress: onOne,
+        },
+        {
+            num: 2,
+            symptom: "소화장애",
+            include: two,
+            onPress: onTwo,
+        },
+        {
+            num: 3,
+            symptom: "두통",
+            include: three,
+            onPress: onThree,
+        },
+        {
+            num: 4,
+            symptom: "불면",
+            include: four,
+            onPress: onFour,
+        },
+        {
+            num: 5,
+            symptom: "현기증",
+            include: five,
+            onPress: onFive,
+        },
+        {
+            num: 6,
+            symptom: "우울감",
+            include: six,
+            onPress: onSix,
+        },
+        {
+            num: 7,
+            symptom: "피로감",
+            include: seven,
+            onPress: onSeven,
+        },
+        {
+            num: 8,
+            symptom: "기침",
+            include: eight,
+            onPress: onEight,
+        },
+        {
+            num: 9,
+            symptom: "불안감",
+            include: nine,
+            onPress: onNine,
+        },
+        {
+            num: 10,
+            symptom: "집중력 감소",
+            include: ten,
+            onPress: onTen,
+        },
+        {
+            num: 11,
+            symptom: "배고픔",
+            include: eleven,
+            onPress: onEleven,
+        },
+        {
+            num: 12,
+            symptom: "입안의 통증",
+            include: twelve,
+            onPress: onTwelve,
+        },
+        {
+            num: 13,
+            symptom: "쑤시는 느낌",
+            include: thirteen,
+            onPress: onThirteen,
+        },
+        {
+            num: 14,
+            symptom: "갈증",
+            include: fourteen,
+            onPress: onFourteen,
         },
     ]
+    const ChooseData = ["소화장애", "두통", "갈증"];
+    const data = {
+        labels: ["소화장애", "우울감", "입안의통증", "두통", "갈증", "불면"],
+        datasets: [
+            {
+                data: [20, 45, 28, 80, 99, 43]
+            }
+        ]
+    };
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -2032,32 +2371,109 @@ export function ChallengeGDResult({navigation}) {
                 <ChallengeHeader navigation={navigation} Title="나의 금단증상은?" />
                 <ScrollView>
                     <View style={{
-                        marginLeft: "8%",
-                        marginRight: "8%",
-                        marginTop: HEIGHT * 0.05
+                        marginLeft: "8.5%",
+                        marginRight: "8.5%",
+                        marginTop: HEIGHT * 0.04
                     }}>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 16,
+                            color: "#303030"
+                        }}>금단증상 진단 결과</Text>
                         <FlatList
                             data={symptomData}
                             keyExtractor={item => item.num}
-                            renderItem={({ item }) => (
-                                <>
+                            style={{marginTop: HEIGHT * 0.03}}
+                            horizontal={true}
+                            renderItem={({ item }) => ChooseData.includes(item.symptom) ? (
+                                <TouchableOpacity onPress={item.onPress} style={{
+                                    height: 38, 
+                                    borderRadius: 28,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    paddingVertical: 8,
+                                    paddingHorizontal: 16,
+                                    marginRight: 8,
+                                    borderWidth: 1,
+                                    borderColor: item.symptom === "없음" ? "#fb5757" : "#5cc27b",
+                                    backgroundColor: item.include ? item.symptom === "없음" ? "#fb5757" : "#5cc27b" : "#ffffff"
+                                }}>
                                     <Text style={{
                                         fontFamily: "NunitoSans-Bold",
-                                        fontSize: 18,
-                                        color: "#303030",
-                                        opacity: 0.8,
-                                        marginBottom: HEIGHT * 0.025
-                                    }}>금단증상{item.number} : {item.symptom}</Text>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        fontFamily: "NunitoSans-Regular",
-                                        color: "#303030",
-                                        opacity: 0.7,
-                                        lineHeight: 33,
-                                        marginBottom: HEIGHT * 0.025
-                                    }}>{item.content}</Text>
-                                </>
-                            )} />
+                                        color: item.include ? "#ffffff" : "#303030",
+                                        fontSize: 16
+                                    }}>{item.symptom}</Text>
+                                </TouchableOpacity>
+                            ) : (<></>)} />
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 16,
+                            color: "#303030",
+                            marginTop: HEIGHT * 0.05
+                        }}>대처방안</Text>
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            marginTop: HEIGHT * 0.03
+                        }}>
+                            <View style={{width: 12, height: 12, borderRadius: 6, marginRight: 8, backgroundColor: "#303030"}} />
+                            <Text style={{
+                                fontSize: 14,
+                                fontFamily: "NunitoSans-Regular"
+                            }}>Lorem ipsum</Text>
+                        </View>
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            marginTop: 4
+                        }}>
+                            <View style={{width: 12, height: 12, borderRadius: 6, marginRight: 8, backgroundColor: "#303030"}} />
+                            <Text style={{
+                                fontSize: 14,
+                                fontFamily: "NunitoSans-Regular"
+                            }}>Lorem ipsum</Text>
+                        </View>
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            marginTop: 4
+                        }}>
+                            <View style={{width: 12, height: 12, borderRadius: 6, marginRight: 8, backgroundColor: "#303030"}} />
+                            <Text style={{
+                                fontSize: 14,
+                                fontFamily: "NunitoSans-Regular"
+                            }}>Lorem ipsum</Text>
+                        </View>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 16,
+                            color: "#303030",
+                            marginTop: HEIGHT * 0.05
+                        }}>주요 금단증상</Text>
+                        <BarChart 
+                            style={{
+                                marginTop: HEIGHT * 0.03
+                            }}
+                            width={WIDTH * 0.8}
+                            height={180}
+                            data={data}
+                            chartConfig={{
+                                backgroundColor: "#ffffff",
+                                backgroundGradientFrom: "#ffffff",
+                                backgroundGradientTo: "#ffffff",
+                                fillShadowGradient: "#5cc27b",
+                                fillShadowGradientOpacity: 1,
+                                decimalPlaces: 2, // optional, defaults to 2dp
+                                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                                style: {
+                                  borderRadius: 16
+                                },
+                              }}
+                            showBarTops={false}
+                            withInnerLines={false}
+                            fromZero={true}
+                        />
                     </View>
                 </ScrollView>
             </SafeAreaView>
