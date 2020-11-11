@@ -14,12 +14,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import HomeScreen from './src/HomeScreen';
-import MissionScreen from './src/MissionScreen';
-import ChallengeMain from './src/ChallengeMain';
-import ChallengeResisterOne from './src/ChallengeResisterOne';
-import ChallengeResisterTwo from './src/ChallengeResisterTwo';
-// import ChallengeConfirm from './src/challengeConfirm';
-import ChallengeVerification from './src/ChallengeVerification';
 import SettingMain from './src/SettingMain';
 import SettingQuestion from './src/SettingQuestion';
 import SettingAlram from './src/SettingAlram';
@@ -33,12 +27,8 @@ import WalletTransaction from './src/WalletTransaction';
 import WalletCharge from './src/WalletCharge';
 import { WalletWithdrawal, WalletWithdrawlComplete } from './src/WalletWithdrawal';
 import { WalletPassword } from './src/WalletPassword';
-import CommunityHome from './src/Community';
 import CommunityClick from './src/CommunityClick';
 import CommunityOtherPost from './src/CommunityOtherPost';
-import MarketContentsList from './src/MarketContentsList';
-import ContentsInfo from './src/ContentsInfo'
-import ContentsBuy from './src/ContentsBuy';
 import Calendars from './src/Calendar';
 import MyPageScreen from './src/MyPageScreen';
 import Notification from './src/Notification';
@@ -53,7 +43,7 @@ import LoginMain from './src/LoginMain';
 import LoginFind from './src/LoginFind';
 import LoginVerification from './src/LoginVerification';
 import LoginFindId from './src/LoginFindId';
-import ContentsComplete from './src/ContentsComplete';
+
 import ProfileNickname from './src/ProfileNickname';
 import LoginVerificationProfile from './src/LoginVerificationProfile';
 import LoginPassword from "./src/LoginPassword";
@@ -107,36 +97,6 @@ import SolutionSmokeThree from './src/SolutionSmokeThree';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-function ChallengeScreen({ navigation }) {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="ChallengeMain"
-        component={ChallengeMain}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
-        name="ChallengeResisterOne"
-        component={ChallengeResisterOne}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          headerShown: false
-        }}
-      />
-      <Stack.Screen
-        name="ChallengeResisterTwo"
-        component={ChallengeResisterTwo}
-        options={{
-          gestureDirection: 'vertical-inverted',
-          headerShown: false
-        }}
-      />
-    </Stack.Navigator>
-  )
-}
 
 function HomeTab({ navigation }) {
   return (
@@ -206,29 +166,7 @@ const App = ({ navigation }) => {
             gestureDirection: 'vertical-inverted'
           }}
         />
-        <Stack.Screen
-          name="Challenge"
-          component={ChallengeScreen}
-          options={{
-            gestureEnabled: true,
-          }}
-        />
-        <Stack.Screen
-          name="Mission"
-          component={MissionScreen}
-          options={{
-            gestureDirection: 'vertical-inverted',
-            headerShown: false
-          }}
-        />
-        <Stack.Screen
-          name="Verification"
-          component={ChallengeVerification}
-          options={{
-            gestureDirection: 'vertical-inverted',
-            headerShown: false
-          }}
-        />
+       
         <Stack.Screen
           name="주소찾기"
           component={AddressFind}
@@ -333,37 +271,7 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
-        <Stack.Screen
-          name="Food"
-          component={MarketContentsList}
-          options={{
-            headerShown: false,
-            gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="ContentsInfo"
-          component={ContentsInfo}
-          options={{
-            gestureDirection: 'vertical-inverted',
-            headerShown: false
-          }}
-        />
-        <Stack.Screen
-          name="주문정보"
-          component={ContentsBuy}
-          options={{
-            gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="ContentsComplete"
-          component={ContentsComplete}
-          options={{
-            gestureDirection: 'vertical-inverted',
-            headerShown: false
-          }}
-        />
+    
         <Stack.Screen
           name="자유게시판"
           component={CommunityClick}
