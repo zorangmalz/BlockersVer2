@@ -11,6 +11,8 @@ import {
     Dimensions
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import firestore from '@react-native-firebase/firestore';
+
 const HEIGHT = Dimensions.get("screen").height;
 
 const solution = StyleSheet.create({
@@ -53,7 +55,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionDThree({ navigation }) {
+export default function SolutionDThree({ navigation,route }) {
     const quesone = "전혀 아니다"
     const questwo = "아니다"
     const questhree = "보통이다"
@@ -66,12 +68,18 @@ export default function SolutionDThree({ navigation }) {
     const [five, setFive] = useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+
+    const {UID}=route.params
+    const {sd}=route.params
     var count = 4;
 
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate('SolutionEOne');
+      firestore().collection("UserInfo").doc(UID).collection("Solution").doc("sd").set({
+                answer:sd+1
+            })
+            navigation.navigate('SolutionEOne',{UID:UID});
         }, 200)
     }
 
@@ -82,7 +90,10 @@ export default function SolutionDThree({ navigation }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate('SolutionEOne');
+      firestore().collection("UserInfo").doc(UID).collection("Solution").doc("sd").set({
+                answer:sd+2
+            })
+            navigation.navigate('SolutionEOne',{UID:UID});
         }, 200)
     }
 
@@ -93,7 +104,10 @@ export default function SolutionDThree({ navigation }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate('SolutionEOne');
+      firestore().collection("UserInfo").doc(UID).collection("Solution").doc("sd").set({
+                answer:sd+3
+            })
+            navigation.navigate('SolutionEOne',{UID:UID});
         }, 200)
     }
 
@@ -104,7 +118,10 @@ export default function SolutionDThree({ navigation }) {
     const pushfour = () => {
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate('SolutionEOne');
+      firestore().collection("UserInfo").doc(UID).collection("Solution").doc("sd").set({
+                answer:sd+4
+            })
+            navigation.navigate('SolutionEOne',{UID:UID});
         }, 200)
     }
 
@@ -115,7 +132,10 @@ export default function SolutionDThree({ navigation }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate('SolutionEOne');
+      firestore().collection("UserInfo").doc(UID).collection("Solution").doc("sd").set({
+                answer:sd+5
+            })
+            navigation.navigate('SolutionEOne',{UID:UID});
         }, 200)
     }
 

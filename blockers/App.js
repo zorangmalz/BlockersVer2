@@ -68,7 +68,7 @@ import StressResult from './src/Stress/StressResult'
 import AlcoholResult from './src/Alcohol/AlcoholResult'
 import SelfEsteemResult from './src/SelfEsteem/SelfEsteemResult'
 import DiaryWrite, { DiaryList } from './src/Diary/DiaryScreen';
-import Challenge, { ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowHow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage } from './src/Challenge/ChallengeScreen';
+import Challenge, { ChallengeMotivationResult,ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowHow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage,ChallengeSwearResult } from './src/Challenge/ChallengeScreen';
 import ChatbotMain, { ChatbotOne, ChatbotTwo } from './src/Chatbot/ChatbotScreen';
 import SmokeAlertOne, { SmokeAlertFour, SmokeAlertThree, SmokeAlertTwo } from './src/SmokeAlert/SmokeAlert';
 import SolutionAOne from './src/SolutionAOne';
@@ -841,6 +841,14 @@ const App = ({ navigation }) => {
             }}
           />
           <Stack.Screen 
+            name="ChallengeSwearResult"
+            component={ChallengeSwearResult}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
             name="ChallengeHistory"
             component={ChallengeHistory}
             options={{
@@ -867,6 +875,14 @@ const App = ({ navigation }) => {
           <Stack.Screen 
             name="ChallengeMotivation"
             component={ChallengeMotivation}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+             <Stack.Screen 
+            name="ChallengeMotivationResult"
+            component={ChallengeMotivationResult}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false

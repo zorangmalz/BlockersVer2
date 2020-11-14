@@ -53,7 +53,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionETwo({ navigation }) {
+export default function SolutionETwo({ navigation ,route}) {
     const quesone = "전혀 아니다"
     const questwo = "아니다"
     const questhree = "보통이다"
@@ -66,12 +66,15 @@ export default function SolutionETwo({ navigation }) {
     const [five, setFive] = useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+
+    const {UID}=route.params
+    const {se}=route.params
     var count = 4;
 
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate('SolutionEThree');
+            navigation.navigate('SolutionEThree',{se:Number(JSON.stringify(se))+1,UID:UID});
         }, 200)
     }
 
@@ -82,7 +85,7 @@ export default function SolutionETwo({ navigation }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate('SolutionEThree');
+            navigation.navigate('SolutionEThree',{se:Number(JSON.stringify(se))+2,UID:UID});
         }, 200)
     }
 
@@ -93,7 +96,7 @@ export default function SolutionETwo({ navigation }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate('SolutionEThree');
+            navigation.navigate('SolutionEThree',{se:Number(JSON.stringify(se))+3,UID:UID});
         }, 200)
     }
 
@@ -104,7 +107,7 @@ export default function SolutionETwo({ navigation }) {
     const pushfour = () => {
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate('SolutionEThree');
+            navigation.navigate('SolutionEThree',{se:Number(JSON.stringify(se))+4,UID:UID});
         }, 200)
     }
 
@@ -115,7 +118,7 @@ export default function SolutionETwo({ navigation }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate('SolutionEThree');
+            navigation.navigate('SolutionEThree',{se:Number(JSON.stringify(se))+5,UID:UID});
         }, 200)
     }
 

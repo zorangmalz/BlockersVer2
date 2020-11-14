@@ -53,7 +53,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionDOne({ navigation }) {
+export default function SolutionDOne({ navigation,route }) {
     const quesone = "전혀 아니다"
     const questwo = "아니다"
     const questhree = "보통이다"
@@ -66,12 +66,14 @@ export default function SolutionDOne({ navigation }) {
     const [five, setFive] = useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+    const {UID}=route.params
+    
     var count = 4;
 
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate('SolutionDTwo');
+            navigation.navigate('SolutionDTwo',{sd:1,UID:UID});
         }, 200)
     }
 
@@ -82,7 +84,7 @@ export default function SolutionDOne({ navigation }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate('SolutionDTwo');
+            navigation.navigate('SolutionDTwo',{sd:2,UID:UID});
         }, 200)
     }
 
@@ -93,7 +95,7 @@ export default function SolutionDOne({ navigation }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate('SolutionDTwo');
+            navigation.navigate('SolutionDTwo',{sd:3,UID:UID});
         }, 200)
     }
 
@@ -104,7 +106,7 @@ export default function SolutionDOne({ navigation }) {
     const pushfour = () => {
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate('SolutionDTwo');
+            navigation.navigate('SolutionDTwo',{sd:4,UID:UID});
         }, 200)
     }
 
@@ -115,7 +117,7 @@ export default function SolutionDOne({ navigation }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate('SolutionDTwo');
+            navigation.navigate('SolutionDTwo',{sd:5,UID:UID});
         }, 200)
     }
 

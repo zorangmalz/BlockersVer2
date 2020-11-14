@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import {
     Text,
     View,
@@ -8,10 +8,36 @@ import {
     Dimensions
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import firestore from "@react-native-firebase/firestore"
+import { loadOptions } from '@babel/core';
 
 const HEIGHT = Dimensions.get("screen").height;
 
-export default function SolutionResult({navigation}) {
+export default function SolutionResult({navigation,route}) {
+const {UID}=route.params
+const [item,setItem]=useState([])
+async function load(){
+    const list=[]
+    await firestore()
+  .collection('UserInfo').doc(UID).collection("Solution")
+  // Order results
+  .orderBy('answer', 'desc')
+  .get()
+  .then(querySnapshot => {  
+        querySnapshot.forEach(function (doc) {
+            
+            list.push({first:doc.id})
+      })
+      setItem(list)
+    /* ... */
+  });
+}
+useEffect(()=>{
+    
+    console.log(UID)
+   load()
+  console.log(item,"ITEm")
+})
     return (
         <>
             <StatusBar barStyle="dark-content" />

@@ -53,7 +53,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionFOne({ navigation }) {
+export default function SolutionFOne({ navigation,route }) {
     const quesone = "전혀 아니다"
     const questwo = "아니다"
     const questhree = "보통이다"
@@ -66,12 +66,15 @@ export default function SolutionFOne({ navigation }) {
     const [five, setFive] = useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+
+    const {UID}=route.params
+    
     var count = 4;
 
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate('SolutionFTwo');
+            navigation.navigate('SolutionFTwo',{sf:1,UID:UID});
         }, 200)
     }
 
@@ -82,7 +85,7 @@ export default function SolutionFOne({ navigation }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate('SolutionFTwo');
+            navigation.navigate('SolutionFTwo',{sf:2,UID:UID});
         }, 200)
     }
 
@@ -93,7 +96,7 @@ export default function SolutionFOne({ navigation }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate('SolutionFTwo');
+            navigation.navigate('SolutionFTwo',{sf:3,UID:UID});
         }, 200)
     }
 
@@ -104,7 +107,7 @@ export default function SolutionFOne({ navigation }) {
     const pushfour = () => {
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate('SolutionFTwo');
+            navigation.navigate('SolutionFTwo',{sf:4,UID:UID});
         }, 200)
     }
 
@@ -115,7 +118,7 @@ export default function SolutionFOne({ navigation }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate('SolutionFTwo');
+            navigation.navigate('SolutionFTwo',{sf:5,UID:UID});
         }, 200)
     }
 

@@ -11,6 +11,11 @@ import {
     Dimensions
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import moment from "moment"
+import firestore from '@react-native-firebase/firestore';
+import auth, { firebase } from '@react-native-firebase/auth';
+
+
 const HEIGHT = Dimensions.get("screen").height;
 
 const solution = StyleSheet.create({
@@ -53,7 +58,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionAOne({ navigation }) {
+export default function SolutionAOne({ navigation,route }) {
     const quesone = "전혀 아니다"
     const questwo = "아니다"
     const questhree = "보통이다"
@@ -66,12 +71,14 @@ export default function SolutionAOne({ navigation }) {
     const [five, setFive] = useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+    const [user,setUser]=useState("");
+    const {UID}=route.params
     var count = 4;
 
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate('SolutionATwo');
+            navigation.navigate('SolutionATwo',{sa:1,UID:UID});
         }, 200)
     }
 
@@ -82,7 +89,7 @@ export default function SolutionAOne({ navigation }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate('SolutionATwo');
+            navigation.navigate('SolutionATwo',{sa:2,UID:UID});
         }, 200)
     }
 
@@ -93,7 +100,7 @@ export default function SolutionAOne({ navigation }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate('SolutionATwo');
+            navigation.navigate('SolutionATwo',{sa:3,UID:UID});
         }, 200)
     }
 
@@ -104,7 +111,7 @@ export default function SolutionAOne({ navigation }) {
     const pushfour = () => {
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate('SolutionATwo');
+            navigation.navigate('SolutionATwo',{sa:4,UID:UID});
         }, 200)
     }
 
@@ -115,7 +122,7 @@ export default function SolutionAOne({ navigation }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate('SolutionATwo');
+            navigation.navigate('SolutionATwo',{sa:5,UID:UID});
         }, 200)
     }
 
@@ -142,8 +149,10 @@ export default function SolutionAOne({ navigation }) {
             console.log(select);
             setClear(false);
         }
+        console.log(UID)
     }, [one, two, three, four, five]);
 
+    
     return (
         <>
             <StatusBar barStyle="light-content" />

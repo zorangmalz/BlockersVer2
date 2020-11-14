@@ -53,7 +53,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionCOne({ navigation }) {
+export default function SolutionCOne({ navigation,route }) {
     const quesone = "전혀 아니다"
     const questwo = "아니다"
     const questhree = "보통이다"
@@ -66,12 +66,13 @@ export default function SolutionCOne({ navigation }) {
     const [five, setFive] = useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+    const {UID}=route.params
     var count = 4;
 
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate('SolutionCTwo');
+            navigation.navigate('SolutionCTwo',{sc:1,UID:UID});
         }, 200)
     }
 
@@ -82,7 +83,7 @@ export default function SolutionCOne({ navigation }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate('SolutionCTwo');
+            navigation.navigate('SolutionCTwo',{sc:2,UID:UID});
         }, 200)
     }
 
@@ -93,7 +94,7 @@ export default function SolutionCOne({ navigation }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate('SolutionCTwo');
+            navigation.navigate('SolutionCTwo',{sc:3,UID:UID});
         }, 200)
     }
 
@@ -104,7 +105,7 @@ export default function SolutionCOne({ navigation }) {
     const pushfour = () => {
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate('SolutionCTwo');
+            navigation.navigate('SolutionCTwo',{sc:4,UID:UID});
         }, 200)
     }
 
@@ -115,7 +116,7 @@ export default function SolutionCOne({ navigation }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate('SolutionCTwo');
+            navigation.navigate('SolutionCTwo',{sc:5,UID:UID});
         }, 200)
     }
 

@@ -11,6 +11,8 @@ import {
     Dimensions
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import firestore from '@react-native-firebase/firestore';
+import auth, { firebase } from '@react-native-firebase/auth';
 const HEIGHT = Dimensions.get("screen").height;
 
 const solution = StyleSheet.create({
@@ -53,7 +55,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionAThree({ navigation }) {
+export default function SolutionAThree({ navigation,route }) {
     const quesone = "전혀 아니다"
     const questwo = "아니다"
     const questhree = "보통이다"
@@ -66,12 +68,18 @@ export default function SolutionAThree({ navigation }) {
     const [five, setFive] = useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+    const {sa}=route.params
+    const {UID}=route.params
+    
     var count = 4;
-
+   
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate('SolutionBOne');
+            firestore().collection("UserInfo").doc(UID).collection("Solution").doc("sa").set({
+                answer:sa+1
+            })
+            navigation.navigate('SolutionBOne',{UID:UID});
         }, 200)
     }
 
@@ -82,7 +90,10 @@ export default function SolutionAThree({ navigation }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate('SolutionBOne');
+            firestore().collection("UserInfo").doc(UID).collection("Solution").doc("sa").set({
+                answer:sa+2
+            })
+            navigation.navigate('SolutionBOne',{UID:UID});
         }, 200)
     }
 
@@ -93,7 +104,10 @@ export default function SolutionAThree({ navigation }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate('SolutionBOne');
+            firestore().collection("UserInfo").doc(UID).collection("Solution").doc("sa").set({
+                answer:sa+3
+            })
+            navigation.navigate('SolutionBOne',{UID:UID});
         }, 200)
     }
 
@@ -102,9 +116,12 @@ export default function SolutionAThree({ navigation }) {
     }
 
     const pushfour = () => {
+        firestore().collection("UserInfo").doc(UID).collection("Solution").doc("sa").set({
+            answer:sa+4
+        })
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate('SolutionBOne');
+            navigation.navigate('SolutionBOne',{UID:UID});
         }, 200)
     }
 
@@ -115,7 +132,10 @@ export default function SolutionAThree({ navigation }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate('SolutionBOne');
+            firestore().collection("UserInfo").doc(UID).collection("Solution").doc("sa").set({
+                answer:sa+5
+            })
+            navigation.navigate('SolutionBOne',{UID:UID});
         }, 200)
     }
 
@@ -142,6 +162,7 @@ export default function SolutionAThree({ navigation }) {
             console.log(select);
             setClear(false);
         }
+        console.log(sa)
     }, [one, two, three, four, five]);
     return (
         <>

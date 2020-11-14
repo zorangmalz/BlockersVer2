@@ -53,7 +53,7 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionGTwo({ navigation }) {
+export default function SolutionGTwo({ navigation ,route}) {
     const quesone = "전혀 아니다"
     const questwo = "아니다"
     const questhree = "보통이다"
@@ -66,12 +66,15 @@ export default function SolutionGTwo({ navigation }) {
     const [five, setFive] = useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
+
+    const {UID}=route.params
+    const {sg}=route.params
     var count = 4;
 
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate('SolutionGThree');
+            navigation.navigate('SolutionGThree',{sg:Number(JSON.stringify(sg))+1,UID:UID});;
         }, 200)
     }
 
@@ -82,7 +85,7 @@ export default function SolutionGTwo({ navigation }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate('SolutionGThree');
+            navigation.navigate('SolutionGThree',{sg:Number(JSON.stringify(sg))+2,UID:UID});;
         }, 200)
     }
 
@@ -93,7 +96,7 @@ export default function SolutionGTwo({ navigation }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate('SolutionGThree');
+            navigation.navigate('SolutionGThree',{sg:Number(JSON.stringify(sg))+3,UID:UID});;
         }, 200)
     }
 
@@ -104,7 +107,7 @@ export default function SolutionGTwo({ navigation }) {
     const pushfour = () => {
         setSelect(select.concat(quesfour));
         setTimeout(() => {
-            navigation.navigate('SolutionGThree');
+            navigation.navigate('SolutionGThree',{sg:Number(JSON.stringify(sg))+4,UID:UID});;
         }, 200)
     }
 
@@ -115,7 +118,7 @@ export default function SolutionGTwo({ navigation }) {
     const pushfive = () => {
         setSelect(select.concat(quesfive));
         setTimeout(() => {
-            navigation.navigate('SolutionGThree');
+            navigation.navigate('SolutionGThree',{sg:Number(JSON.stringify(sg))+5,UID:UID});;
         }, 200)
     }
 
