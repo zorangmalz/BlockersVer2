@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import firestore from "@react-native-firebase/firestore"
-import { loadOptions } from '@babel/core';
+
 
 const HEIGHT = Dimensions.get("screen").height;
 
