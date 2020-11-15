@@ -275,7 +275,21 @@ export default function Challenge({ navigation }) {
 
 
     async function makeMistake() {
-        console.log("MISTKAE")
+        Alert.alert(
+            '담배를 한번 피셨습니까?',
+            '진행도가 5%감소됩니다',
+            [
+                {
+                    text: 'No', onPress: () => console.log('CANCEL Pressed')
+                },
+                {
+                    text: 'Yes', onPress: ()=> realMistake()
+                }
+            ]
+        )
+        
+    }
+    async function realMistake(){
         setChange(true)
         var total = 0
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
@@ -287,6 +301,31 @@ export default function Challenge({ navigation }) {
 
         })
         setChange(false)
+    }
+    async function giveup(){
+        Alert.alert(
+            '이번 챌린지를 포기하시겠습니까?',
+            '당신은 할 수 있습니다',
+            [
+                {
+                    text: 'No', onPress: () => console.log('CANCEL Pressed')
+                },
+                {
+                    text: 'Yes', onPress: ()=> realGiveUp()
+                }
+            ]
+        )
+    }
+    async function realGiveUp(){
+        var total
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
+            total = querySnapshot.size-1
+        })
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).update({
+            ongoing:false,
+            success:1
+        })
+        
     }
     return (
         <>
@@ -321,7 +360,7 @@ export default function Challenge({ navigation }) {
                         marginBottom: HEIGHT * 0.025
                     }}>
                         <Text style={main.title}>챌린지 정보</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate("ChallengeHistory")}><Text style={main.underline}>챌린지 히스토리</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("ChallengeHistory",{UID:user.uid})}><Text style={main.underline}>챌린지 히스토리</Text></TouchableOpacity>
                     </View>
                     <View style={{
                         width: "92%",
@@ -423,8 +462,26 @@ export default function Challenge({ navigation }) {
                         }
                     </View>
                     {challenge ?
-                        <TouchableOpacity onPress={makeMistake} style={{
-                            width: "55%",
+                    <>
+                    <View style={{
+                        flexDirection:"row",
+                        alignItems:"center",
+                        justifyContent:"space-evenly"
+                    }}>
+                        <TouchableOpacity onPress={giveup} style={{
+                            width: "30%",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            alignSelf: "center",
+                            height: 35,
+                            backgroundColor: "#fb5757",
+                            borderRadius: 5,
+                            marginTop: HEIGHT * 0.025
+                        }}>
+                            <Text style={[main.title, { color: "#ffffff" }]}>포기하기</Text>
+                        </TouchableOpacity>
+                         <TouchableOpacity onPress={makeMistake} style={{
+                            width: "30%",
                             alignItems: "center",
                             justifyContent: "center",
                             alignSelf: "center",
@@ -435,6 +492,8 @@ export default function Challenge({ navigation }) {
                         }}>
                             <Text style={[main.title, { color: "#ffffff" }]}>실수 한 번</Text>
                         </TouchableOpacity>
+                        </View>
+                        </>
                         :
                         <TouchableOpacity onPress={() => navigation.navigate("ChallengeRegister")} style={{
                             width: "55%",
@@ -460,7 +519,7 @@ export default function Challenge({ navigation }) {
                         marginBottom: HEIGHT * 0.025
                     }}>
                         <Text style={main.title}>진행해야할 미션</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate("ChallengeMission")}><Text style={main.underline}>전체미션</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("ChallengeMission",{UID:user.uid})}><Text style={main.underline}>전체미션</Text></TouchableOpacity>
                     </View>
                     <ScrollView horizontal={true}>
                         {challenge ?
@@ -580,6 +639,8 @@ export function ChallengeRegister({ navigation }) {
                 name: name,
                 progress: 0,
                 challengePeriod: a,
+                success:null,
+                number:total
             }
         )
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").set({
@@ -947,7 +1008,9 @@ const history = StyleSheet.create({
     }
 })
 
-export function ChallengeHistory({ navigation }) {
+export function ChallengeHistory({ navigation,route }) {
+    const [items,setItems]=useState([])
+    const {UID}=route.params
     const title = "Challenge History";
     const PreviousData = [
         {
@@ -972,6 +1035,26 @@ export function ChallengeHistory({ navigation }) {
             rate: '100%'
         },
     ];
+    useEffect(()=>{
+        
+        getData()
+    },[])
+    async function getData(){
+        const list=[]
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").onSnapshot(querySnapshot => {
+            querySnapshot.forEach(function (doc) {
+                list.push({
+                    ChallengeStep:doc.data().name+"님의 챌린지("+doc.data().long+")",
+                    participationDate:doc.data().challengePeriod[0]+"/"+doc.data().challengePeriod[1]+"/"+doc.data().challengePeriod[2],
+                    rate:doc.data().progress+"%",
+                    success:doc.data().success,
+                    challengeNumber:doc.data().number
+                })
+
+        })
+        setItems(list)
+        })
+    }
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -979,7 +1062,7 @@ export function ChallengeHistory({ navigation }) {
                 <ChallengeHeader navigation={navigation} Title={title} />
                 <ScrollView>
                     <FlatList
-                        data={PreviousData}
+                        data={items}
                         keyExtractor={item => item.challengeNumber}
                         renderItem={({ item }) => (
                             <View style={{
@@ -1015,14 +1098,24 @@ export function ChallengeHistory({ navigation }) {
                                         </View>
                                     </View>
                                 </View>
-                                {item.success === true ?
+                                {item.success === 0 ?
                                     <View style={{ width: 80, height: 30, backgroundColor: '#5cc27b', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
-                                        <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>성공</Text>
+                                        <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>진행중</Text>
                                     </View>
-                                    :
-                                    <View style={{ width: 80, height: 30, backgroundColor: '#ff0000', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
+                                    :(item.success===1?
+                                        <>
+                                        <View style={{ width: 80, height: 30, backgroundColor: '#ff0000', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
                                         <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>실패</Text>
                                     </View>
+                                        </>
+                                        :
+                                        <>
+                                        <View style={{ width: 80, height: 30, backgroundColor: '#5cc27b', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
+                                        <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>성공</Text>
+                                    </View>
+                                        </>
+                                        )
+                                    
                                 }
                             </View>
                         )}
@@ -1103,7 +1196,7 @@ const MissionBox = ({ color, name, data, navigation }) => {
                     data={data}
                     keyExtractor={(item) => item.number}
                     renderItem={({ item }) => (
-                        <TouchableOpacity onPress={() => navigation.navigate(item.navigation)}>
+                        <TouchableOpacity onPress={() => navigation.navigate(item.navigation,{UID:item.uid})}>
                             <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
                             <Text style={mission.regular}>{item.content}</Text>
                         </TouchableOpacity>
@@ -1116,26 +1209,33 @@ const MissionBox = ({ color, name, data, navigation }) => {
     )
 }
 
-export function ChallengeMission({ navigation }) {
+export function ChallengeMission({ navigation,route }) {
+    const {UID}=route.params
+    useEffect(()=>{
+        console.log(UID)
+    })
     const Month = [
         {
             number: 1,
             title: "1. 스트레스 평가",
             content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요.",
-            navigation: "StressResult"
+            navigation: "StressResult",
+            uid:UID
         },
         {
             number: 2,
             title: "2. 자기 효능감 평가",
             content: "자기 효능감과 금연의 밀접한 관계\n나의 자기 효능감을 체크하고 금연성공하세요.",
-            navigation: "SelfEsteemResult"
+            navigation: "SelfEsteemResult",
+            uid:UID
 
         },
         {
             number: 3,
             title: "3. 알콜중독 평가",
             content: "알콜중독과 금연의 밀접한 관계\n나의 알콜중독을 체크하고 금연성공하세요.",
-            navigation: "AlcoholResult"
+            navigation: "AlcoholResult",
+            uid:UID
         },
     ]
     const Normal = [
@@ -1143,52 +1243,67 @@ export function ChallengeMission({ navigation }) {
             number: 1,
             title: "1. 금연 동기 설정하기",
             content: "금연을 하는 이유가 무엇인가요? \n금연 동기는 앞으로 금연을 이어가는 가장 큰 힘이 될 수 있습니다.",
-            navigation:"ChallengeMotivationResult"
+            navigation:"ChallengeMotivationResult",
+            uid:UID
         },
         {
             number: 2,
             title: "2. 니코틴 중독 평가하기",
-            content: "나는 니코틴에 얼마나 의존할까?"
+            content: "나는 니코틴에 얼마나 의존할까?",
+            navigation:"",
+            uid:UID
         },
         {
             number: 3,
             title: "3. 금연 서약서 쓰기",
             content: "금연을 서약서로 본인의 의지를 표현해 보세요.",
-            navigation:"ChallengeSwearResult"
+            navigation:"ChallengeSwearResult",
+            uid:UID
         },
         {
             number: 4,
             title: "4. 금연 지지자 정하기",
             content: "앞으로 힘든 금연에 힘이될 사람들에게\n금연 응원을 요청해보세요",
-            navigation:"ChallengeSupport"
+            navigation:"ChallengeSupport",
+            uid:UID
         },
         {
             number: 5,
             title: "5. 내 흡연유형 파악하기",
-            content: "나는 언제 담배를 필까? MBTI대신 흡BTI!\n유형별 대처 전략을 알아봅시다."
+            content: "나는 언제 담배를 필까? MBTI대신 흡BTI!\n유형별 대처 전략을 알아봅시다.",
+            navigation:"SolutionResult",
+            uid:UID
+            
         },
         {
             number: 6,
             title: "6. 금연활동 인증하기 (주 1회)",
-            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요"
+            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
+            navigation:"",
+            uid:UID
         },
         {
             number: 7,
             title: "7. 금단증상 확인하기",
             content: "금연을 하면서 피할 수 없는 금단증상!\n나의 금단 증상을 파악하고 해결책을 찾아보세요.",
-            navigation:"ChallengeGDResult"
+            navigation:"ChallengeGDResult",
+            uid:UID
         },
     ]
     const Final = [
         {
             number: 1,
             title: "1. 나만의 금연 노하우 공유하기",
-            content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요."
+            content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요.",
+            navigation:"",
+            uid:UID
         },
         {
             number: 2,
             title: "2. 성공 후기 작성하기",
-            content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요"
+            content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요",
+            navigation:"",
+            uid:UID
         },
     ]
     return (
