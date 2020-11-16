@@ -33,7 +33,7 @@ export function SThree ({navigation,route}) {
 }
 
 export function SFour ({navigation,route}) {
-    const title = "당신의 생활에 일어난 중요한 변화에 효과적으로 대처했다고 느꼈나요?";
+    const title = "당신의 생활에 일어난 중요한 변화에 효과적으로 대처하지 못했다고 느꼈나요??";
     const result=route.params
     return (
         <>
@@ -43,7 +43,7 @@ export function SFour ({navigation,route}) {
 }
 
 export function SFive ({navigation,route}) {
-    const title = "당신이 원하는 대로 일들이 진행되었나요?";
+    const title = "당신이 원하는 대로 일들이 진행되지 않았나요?";
     const result=route.params
     return (
         <>
@@ -63,7 +63,7 @@ export function SSix ({navigation,route}) {
 }
 
 export function SSeven ({navigation,route}) {
-    const title = "당신의 신경질을 참을 수 있었나요?";
+    const title = "당신의 신경질을 참을 수 없었나요?";
     const result=route.params
     return (
         <>
@@ -73,7 +73,7 @@ export function SSeven ({navigation,route}) {
 }
 
 export function SEight ({navigation,route}) {
-    const title = "당신의 상황을 이끈다고 느꼈나요?";
+    const title = "당신이 상황에 이끌린다고 생각하셨나요?";
     const result=route.params
     return (
         <>

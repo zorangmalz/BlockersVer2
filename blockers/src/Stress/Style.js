@@ -404,10 +404,19 @@ export function StressFinal({navigation,route}) {
             setName(doc.data().name)
         })
         console.log(total)
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").update({
-            result:result.result+"/"+resultcontent+"/"+a,
+        var thisMonth
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").get().then(doc=>{
+            thisMonth=doc.data().month
+        })
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc(String(thisMonth)).update({
             stats:true,
-            resultNum:result.result
+            result:result.result+"/"+"/"+resultcontent+"/"+a,
+            resultNum:result.result,
+        })
+
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").update({
+            visible:false,
+            month:thisMonth+1
         })
     }
     useEffect(()=>{

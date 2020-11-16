@@ -531,14 +531,24 @@ export function AlcoholFinal({navigation,route}) {
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
             total=querySnapshot.size-1
         })
+       
         await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
             setName(doc.data().name)
         })
         console.log(total)
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").update({
-            result:result.result+"/"+resultcontent+"/"+a,
+        var thisMonth
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").get().then(doc=>{
+            thisMonth=doc.data().month
+        })
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc(String(thisMonth)).update({
             stats:true,
-            resultNum:result.result
+            result:result.result+"/"+"/"+resultcontent+"/"+a,
+            resultNum:result.result,
+        })
+
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").update({
+            visible:false,
+            month:thisMonth+1
         })
     }
     useEffect(()=>{
