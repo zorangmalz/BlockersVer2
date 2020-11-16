@@ -9,8 +9,16 @@ import {
     FlatList,
     Image,
     StyleSheet,
+    Dimensions
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import LinearGradient from "react-native-linear-gradient";
+import { ProgressCircle } from "react-native-progress/Circle";
+import BarChart from 'react-native-chart-kit/dist/BarChart';
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
 
 const style = StyleSheet.create({
     box: {
@@ -72,6 +80,7 @@ const Header = ({ navigation, title }) => {
 export default function ChatbotMain({ navigation }) {
     const [one, setOne] = useState(false);
     const [two, setTwo] = useState(false);
+    const [three, setThree] = useState(false);
     const onOne = () => {
         setOne(true);
         setTimeout(() => {
@@ -84,6 +93,13 @@ export default function ChatbotMain({ navigation }) {
         setTimeout(() => {
             navigation.navigate("ChatbotTwo")
             setTwo(false);
+        }, 200)
+    }
+    const onThree = () => {
+        setThree(true);
+        setTimeout(() => {
+            navigation.navigate("ChatbotThree")
+            setThree(false);
         }, 200)
     }
     return (
@@ -115,6 +131,18 @@ export default function ChatbotMain({ navigation }) {
                                 color: two ? "#ffffff" : "#303030"
                             }
                         ]}>금연 정보</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={onThree} style={[
+                        style.box, {
+                            backgroundColor: three ? "#5cc27b" : "#ffffff",
+                            borderWidth: three ? 0 : 1,
+                        }
+                    ]}>
+                        <Text style={[
+                            style.bold, {
+                                color: three ? "#ffffff" : "#303030"
+                            }
+                        ]}>금연 리포트</Text>
                     </TouchableOpacity>
                 </ScrollView>
             </SafeAreaView>
@@ -278,6 +306,555 @@ export function ChatbotTwo({ navigation }) {
                     </View>
                 </ScrollView>
             </SafeAreaView>
+        </>
+    )
+}
+
+const Tab = createMaterialTopTabNavigator();
+
+export function ChatbotThree({ navigation }) {
+    return (
+        <>
+            <SafeAreaView style={{backgroundColor: "#ffffff"}}>
+                <StatusBar barStyle="dark-content" />
+            </SafeAreaView>
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                <Header navigation={navigation} title="금연 리포트" />
+                <Tab.Navigator
+                    initialRouteName="status"
+                    style={{
+                        justifyContent: "center",
+                    }}
+                    sceneContainerStyle={{
+                        borderTopColor: "#cccccc",
+                        borderTopWidth: 1
+                    }}
+                    tabBarOptions={{
+                        activeTintColor: "#303030",
+                        labelStyle: { fontSize: 16, fontFamily: "NunitoSans-Bold" },
+                        indicatorStyle: {height: 1.5, backgroundColor: "#5cc27b"},
+                    }}
+                >
+                    <Tab.Screen
+                        name="status"
+                        component={TabOne}
+                        options={{ tabBarLabel: "건강상태" }}
+                    />
+                    <Tab.Screen
+                        name="failure"
+                        component={TabTwo}
+                        options={{ tabBarLabel: "실패요인 분석" }}
+                    />
+                </Tab.Navigator>
+            </SafeAreaView>
+        </>
+    )
+}
+
+function TabOne({ navigation }) {
+    const challenge = true;
+    const nicotine = 0;
+    const data = {
+        labels: ["스트레스성", "즐거움", "습관성"],
+        datasets: [
+            {
+                data: [85, 60, 32]
+            }
+        ]
+    };
+    return (
+        <>
+            <ScrollView style={{backgroundColor: "#ffffff"}}>
+                <View style={{ marginLeft: 32, marginRight: 32}}>
+                    <Image style={{ alignSelf: "center", marginTop: 32 }} source={require("../icon/lung.png")} />
+                    <View style={{
+                        marginTop: 28,
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "flex-start",
+                        marginBottom: 16
+                    }}>
+                        <View style={{width: 8, height: 8, backgroundColor: "#303030", borderRadius: 4, marginRight: 8}} />
+                        <Text style={{fontFamily: "NunitoSans-Bold", fontSize: 14, color: "#303030"}}>금연한지 20분 경과</Text>
+                    </View>
+                    <View style={{
+                        marginTop: 16,
+                        marginBottom: 16
+                    }}>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Regular",
+                            fontSize: 16,
+                            color: "#303030",
+                            opacity: 0.7,
+                            lineHeight: 26
+                        }}>- 혈액순환이 정상적으로 돌아왔습니다.{"\n"}- 손발의 체온이 정상적으로 증가합니다.</Text>
+                    </View>
+                </View>
+                <View style={{ height: 1, backgroundColor: "#cccccc", width: WIDTH }} />
+                {challenge ?
+                    <>
+                        <View style={{ marginTop: 16, marginLeft: 32, marginRight: 32 }}>
+                            <Text style={{
+                                fontFamily: "NunitoSans-Bold",
+                                fontSize: 18
+                            }}>
+                                <Text style={{ color: "#303030" }}>니코틴 중독 정도: </Text>
+                                <Text style={{ color: "#5cc27b" }}>Low</Text>
+                            </Text>
+                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#5CC27B', '#F6F600', '#FF0400']} style={{ width: "100%", height: 19, borderRadius: 28, marginTop: 16 }} />
+                            <View style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                paddingLeft: 4,
+                                paddingRight: 4,
+                                marginTop: 8
+                            }}>
+                                <Text style={{
+                                    fontSize: 14,
+                                    width: 60,
+                                    fontFamily: nicotine === 0 ? "NunitoSans-Bold" : "NunitoSans-Regular",
+                                    color: nicotine === 0 ? "#5cc27b" : "#303030"
+                                }}>Low</Text>
+                                <Text style={{
+                                    fontSize: 14,
+                                    width: 60,
+                                    fontFamily: nicotine === 1 ? "NunitoSans-Bold" : "NunitoSans-Regular",
+                                    color: nicotine === 1 ? "#f6f600" : "#303030"
+                                }}>Danger</Text>
+                                <Text style={{
+                                    fontSize: 14,
+                                    width: 60,
+                                    fontFamily: nicotine === 2 ? "NunitoSans-Bold" : "NunitoSans-Regular",
+                                    color: nicotine === 2 ? "#ff0400" : "#303030"
+                                }}>Addicted</Text>
+                            </View>
+                            <View style={{
+                                marginTop: 16,
+                                marginBottom: 16
+                            }}>
+                                <Text style={{
+                                    fontFamily: "NunitoSans-Regular",
+                                    fontSize: 16,
+                                    color: "#303030",
+                                    opacity: 0.7,
+                                    lineHeight: 26
+                                }}>낮은 수준의 니코틴 중독을 보입니다.{"\n"}본인의 의지로 금연을 충분히 할 수 있습니다.</Text>
+                            </View>
+                        </View>
+                        <View style={{ height: 1, backgroundColor: "#cccccc", width: WIDTH }} />
+                        <BarChart
+                            style={{
+                                marginTop: HEIGHT * 0.03,
+                                alignSelf: "center",
+                                borderWidth: 1,
+                                borderColor: "#5cc27b",
+                                padding: 12
+                            }}
+                            width={WIDTH * 0.8}
+                            height={180}
+                            data={data}
+                            chartConfig={{
+                                backgroundColor: "#ffffff",
+                                backgroundGradientFrom: "#ffffff",
+                                backgroundGradientTo: "#ffffff",
+                                fillShadowGradient: "#5cc27b",
+                                fillShadowGradientOpacity: 1,
+                                decimalPlaces: 2, // optional, defaults to 2dp
+                                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                                style: {
+                                    borderRadius: 16
+                                },
+                            }}
+                            showBarTops={false}
+                            withInnerLines={false}
+                            fromZero={true}
+                        />
+                        <View style={{ marginRight: 32, marginLeft: 32, marginTop: 16 }}>
+                            <Text style={{
+                                fontFamily: "NunitoSans-Bold",
+                                fontSize: 18
+                            }}>
+                                <Text style={{ color: "#303030" }}>주요 흡연 요인: </Text>
+                                <Text style={{ color: "#5cc27b" }}>스트레스</Text>
+                            </Text>
+                            <View style={{
+                                marginTop: 16,
+                                marginBottom: 16
+                            }}>
+                                <Text style={{
+                                    fontFamily: "NunitoSans-Regular",
+                                    fontSize: 16,
+                                    color: "#303030",
+                                    opacity: 0.7,
+                                    lineHeight: 26
+                                }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.</Text>
+                            </View>
+                            <Text style={{
+                                fontFamily: "NunitoSans-Bold",
+                                fontSize: 18
+                            }}>
+                                <Text style={{ color: "#303030" }}>보조 흡연 요인: </Text>
+                                <Text style={{ color: "#FFB83D" }}>습관성, 즐거움 추구</Text>
+                            </Text>
+                            <View style={{
+                                marginTop: 16,
+                                marginBottom: 16
+                            }}>
+                                <Text style={{
+                                    fontFamily: "NunitoSans-Regular",
+                                    fontSize: 16,
+                                    color: "#303030",
+                                    opacity: 0.7,
+                                    lineHeight: 26
+                                }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.</Text>
+                            </View>
+                        </View>
+                    </>
+                    :
+                    <View style={{ width: WIDTH, height: HEIGHT - 436, backgroundColor: "#303030", opacity: 0.7, alignItems: "center" }}>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            color: "#ffffff",
+                            marginTop: 100
+                        }}>챌린지를 참여해야 확인할 수 있습니다.</Text>
+                    </View>
+                }
+            </ScrollView>
+        </>
+    )
+}
+
+function TabTwo({ navigation }) {
+    const selfesteem = [
+        {
+            num: 1,
+            degree: "높음"
+        },
+        {
+            num: 2,
+            degree: "높음"
+        },
+        {
+            num: 3,
+            degree: "높음"
+        },
+    ]
+    const stress = [
+        {
+            num: 1,
+            degree: "높음"
+        },
+        {
+            num: 2,
+            degree: "높음"
+        },
+        {
+            num: 3,
+            degree: "높음"
+        },
+    ]
+    const alcohol = [
+        {
+            num: 1,
+            degree: "높음"
+        },
+        {
+            num: 2,
+            degree: "높음"
+        },
+        {
+            num: 3,
+            degree: "높음"
+        },
+    ]
+    return (
+        <>
+            <ScrollView style={{backgroundColor: "#ffffff", flex: 1}}>
+                <View style={{ marginLeft: 32, marginRight: 32 }}>
+                    <Text style={{
+                        marginTop: 32,
+                        fontSize: 18,
+                        fontFamily: "NunitoSans-Bold",
+                        color: "#303030"
+                    }}>이번달 평가결과 요약</Text>
+                    <View style={{
+                        marginTop: 16,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        paddingLeft: 16,
+                        paddingRight: 16,
+                        marginBottom: 32
+                    }}>
+                        <ProgressCircle size={72} color="#5cc27b" borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={0.7}>
+                            <Text style={{
+                                flex: 0,
+                                position: "absolute",
+                                alignSelf: "center",
+                                top: 24,
+                                fontFamily: "NunitoSans-Bold",
+                                fontSize: 16
+                            }}>Good</Text>
+                            <Text style={{
+                                fontSize: 14,
+                                fontFamily: "NunitoSans-Regular",
+                                color: "#303030",
+                                alignSelf: "center",
+                                marginTop: 8
+                            }}>자기효능감</Text>
+                        </ProgressCircle>
+                        <ProgressCircle size={72} color="#5cc27b" borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={0.7}>
+                            <Text style={{
+                                flex: 0,
+                                position: "absolute",
+                                alignSelf: "center",
+                                top: 24,
+                                fontFamily: "NunitoSans-Bold",
+                                fontSize: 16
+                            }}>Good</Text>
+                            <Text style={{
+                                fontSize: 14,
+                                fontFamily: "NunitoSans-Regular",
+                                color: "#303030",
+                                alignSelf: "center",
+                                marginTop: 8
+                            }}>스트레스</Text>
+                        </ProgressCircle>
+                        <ProgressCircle size={72} color="#5cc27b" borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={0.7}>
+                            <Text style={{
+                                flex: 0,
+                                position: "absolute",
+                                alignSelf: "center",
+                                top: 24,
+                                fontFamily: "NunitoSans-Bold",
+                                fontSize: 16
+                            }}>Good</Text>
+                            <Text style={{
+                                fontSize: 14,
+                                fontFamily: "NunitoSans-Regular",
+                                color: "#303030",
+                                alignSelf: "center",
+                                marginTop: 8
+                            }}>알콜중독</Text>
+                        </ProgressCircle>
+                    </View>
+                </View>
+                <Text style={{
+                    marginBottom: 16,
+                    marginLeft: 32,
+                    fontSize: 18,
+                    fontFamily: "NunitoSans-Bold",
+                    color: "#303030"
+                }}>자기효능감 평가</Text>
+                <FlatList
+                    style={{
+                        marginLeft: 32,
+                    }}
+                    data={selfesteem}
+                    renderItem={({ item }) => (
+                        <>
+                            <View style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "flex-start"
+                            }}>
+                                <View style={{
+                                    width: "22%",
+                                    height: 30,
+                                    borderColor: "#77bf81",
+                                    borderLeftWidth: 2,
+                                    borderRightWidth: 2,
+                                    borderTopWidth: 2,
+                                    backgroundColor: "#ffffff",
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}>
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#303030"
+                                    }}>{item.num}회</Text>
+                                </View>
+                                <View style={{
+                                    width: "55%",
+                                    height: 30,
+                                    borderColor: "#77bf81",
+                                    borderRightWidth: 2,
+                                    borderTopWidth: 2,
+                                    backgroundColor: "#ffffff",
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}>
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#5cc27b"
+                                    }}>{item.degree}</Text>
+                                </View>
+                            </View>
+                        </>
+                    )}
+                />
+                <View style={{ width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: 32 }} />
+                <View style={{
+                    marginTop: 32,
+                    marginBottom: 32,
+                    marginLeft: 32,
+                    marginRight: 32
+                }}>
+                    <Text style={{
+                        fontFamily: "NunitoSans-Regular",
+                        fontSize: 16,
+                        color: "#303030",
+                        opacity: 0.7,
+                        lineHeight: 26
+                    }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.</Text>
+                </View>
+                <Text style={{
+                    marginBottom: 16,
+                    marginLeft: 32,
+                    fontSize: 18,
+                    fontFamily: "NunitoSans-Bold",
+                    color: "#303030"
+                }}>스트레스 평가</Text>
+                <FlatList
+                    style={{
+                        marginLeft: 32,
+                    }}
+                    data={stress}
+                    renderItem={({ item }) => (
+                        <>
+                            <View style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "flex-start"
+                            }}>
+                                <View style={{
+                                    width: "22%",
+                                    height: 30,
+                                    borderColor: "#77bf81",
+                                    borderLeftWidth: 2,
+                                    borderRightWidth: 2,
+                                    borderTopWidth: 2,
+                                    backgroundColor: "#ffffff",
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}>
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#303030"
+                                    }}>{item.num}회</Text>
+                                </View>
+                                <View style={{
+                                    width: "55%",
+                                    height: 30,
+                                    borderColor: "#77bf81",
+                                    borderRightWidth: 2,
+                                    borderTopWidth: 2,
+                                    backgroundColor: "#ffffff",
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}>
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#5cc27b"
+                                    }}>{item.degree}</Text>
+                                </View>
+                            </View>
+                        </>
+                    )}
+                />
+                <View style={{ width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: 32 }} />
+                <View style={{
+                    marginTop: 32,
+                    marginBottom: 32,
+                    marginLeft: 32,
+                    marginRight: 32
+                }}>
+                    <Text style={{
+                        fontFamily: "NunitoSans-Regular",
+                        fontSize: 16,
+                        color: "#303030",
+                        opacity: 0.7,
+                        lineHeight: 26
+                    }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.</Text>
+                </View>
+                <Text style={{
+                    marginBottom: 16,
+                    marginLeft: 32,
+                    fontSize: 18,
+                    fontFamily: "NunitoSans-Bold",
+                    color: "#303030"
+                }}>알콜중독 평가</Text>
+                <FlatList
+                    style={{
+                        marginLeft: 32,
+                    }}
+                    data={alcohol}
+                    renderItem={({ item }) => (
+                        <>
+                            <View style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "flex-start"
+                            }}>
+                                <View style={{
+                                    width: "22%",
+                                    height: 30,
+                                    borderColor: "#77bf81",
+                                    borderLeftWidth: 2,
+                                    borderRightWidth: 2,
+                                    borderTopWidth: 2,
+                                    backgroundColor: "#ffffff",
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}>
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#303030"
+                                    }}>{item.num}회</Text>
+                                </View>
+                                <View style={{
+                                    width: "55%",
+                                    height: 30,
+                                    borderColor: "#77bf81",
+                                    borderRightWidth: 2,
+                                    borderTopWidth: 2,
+                                    backgroundColor: "#ffffff",
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}>
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#5cc27b"
+                                    }}>{item.degree}</Text>
+                                </View>
+                            </View>
+                        </>
+                    )}
+                />
+                <View style={{ width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: 32 }} />
+                <View style={{
+                    marginTop: 32,
+                    marginBottom: 32,
+                    marginLeft: 32,
+                    marginRight: 32
+                }}>
+                    <Text style={{
+                        fontFamily: "NunitoSans-Regular",
+                        fontSize: 16,
+                        color: "#303030",
+                        opacity: 0.7,
+                        lineHeight: 26
+                    }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.</Text>
+                </View>
+            </ScrollView>
         </>
     )
 }
