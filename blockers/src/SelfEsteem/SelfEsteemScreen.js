@@ -6,7 +6,7 @@ export default function Zero({navigation, route}) {
     
     return (
         <>
-            <SelfEsteem navigation={navigation} Nextpage="SelfEsteemOne" Title={title} total={0} name={docID} /> 
+            <SelfEsteem navigation={navigation} Nextpage="SelfEsteemOne" Title={title} total={0} /> 
         </>
     )
 }

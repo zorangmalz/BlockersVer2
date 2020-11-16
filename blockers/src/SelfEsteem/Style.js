@@ -414,7 +414,7 @@ export function SelfEsteemFinal({navigation,route}) {
             setResultcontent("보통 수준의 자아 효능감을 가지고 있습니다. \n 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다.")
             
         }else{
-            setResults("d")      
+            setResults("Bad")      
             setResultcontent("낮은 자아 효능감을 가지고 있습니다. \n 항상 자신감 있는 생각과 행동이 필요합니다.\n 내적인 자신감의 강화와 더불어 세심한 생활관리가 필요합니다.")
         }
         if(user){
@@ -436,11 +436,21 @@ export function SelfEsteemFinal({navigation,route}) {
         await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
             setName(doc.data().name)
         })
+        var thisMonth
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").get().then(doc=>{
+            thisMonth=doc.data().month
+        })
         console.log(total)
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").update({
-            result:result.result+"/"+"/"+resultcontent+"/"+a,
+
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(thisMonth)).update({
             stats:true,
-            resultNum:result.result
+            result:result.result+"/"+"/"+resultcontent+"/"+a,
+            resultNum:result.result,
+        })
+
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").update({
+            visible:false,
+            month:thisMonth+1
         })
     }
     useEffect(()=>{
