@@ -68,8 +68,7 @@ import StressResult from './src/Stress/StressResult'
 import AlcoholResult from './src/Alcohol/AlcoholResult'
 import SelfEsteemResult from './src/SelfEsteem/SelfEsteemResult'
 import DiaryWrite, { DiaryList } from './src/Diary/DiaryScreen';
-import Challenge, { ChallengeVeriResult,ChallengeMotivationResult,ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowHow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage,ChallengeSwearResult } from './src/Challenge/ChallengeScreen';
-import ChatbotMain, { ChatbotOne, ChatbotTwo } from './src/Chatbot/ChatbotScreen';
+
 import SmokeAlertOne, { SmokeAlertFour, SmokeAlertThree, SmokeAlertTwo } from './src/SmokeAlert/SmokeAlert';
 import SolutionAOne from './src/SolutionAOne';
 import SolutionATwo from './src/SolutionATwo';
@@ -971,6 +970,14 @@ const App = ({ navigation }) => {
           <Stack.Screen 
             name="ChatbotTwo"
             component={ChatbotTwo}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="ChatbotThree"
+            component={ChatbotThree}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false
