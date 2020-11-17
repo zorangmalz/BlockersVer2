@@ -15,22 +15,21 @@ import ProgressCircle from "react-native-progress/Circle";
 import {AdEventType,InterstitialAd,BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
 import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
-import auth, { firebase } from '@react-native-firebase/auth';
-import { create } from 'caver-js/packages/caver-account';
 
 export default function SelfEsteemResult({navigation,route}) {
-    const [user,setUser]=useState()
+    const {UID}=route.params
+    
     const [results,setResults]=useState(0)
     const [resultcontent,setResultcontent]=useState("")
-    const [result,setResult]=useState("")
+    const [result,setResult]=useState(0)
     const [name,setName]=useState("");
-    var total=0
+    
     
     
     useEffect(()=>{
-        if(user){
+        
             uploadInfo()   
-           }
+        
         if(result>1){
         if(result>=45){
             setResults("Good")
@@ -45,7 +44,7 @@ export default function SelfEsteemResult({navigation,route}) {
         }
     }
         
-    },[user,result])
+    },[result])
     async function uploadInfo(){
         var a=moment().toArray()
         console.log(a)
@@ -55,22 +54,22 @@ export default function SelfEsteemResult({navigation,route}) {
         }else{
             a[1]=a[1]+1
         }
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+        var total
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").get().then(querySnapshot=>{
             total=querySnapshot.size-1
         })
-        await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+        await firestore().collection("UserInfo").doc(UID).get().then(doc=>{
             setName(doc.data().name)
         })
         console.log(total)
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").get().then(doc=>{
+        var month
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").get().then(doc=>{
+            month=doc.data().month-1
+        })
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(month)).get().then(doc=>{
             setResult(doc.data().resultNum)
         })
     }
-    useEffect(()=>{
-        auth().onAuthStateChanged(userAuth => {
-            setUser(userAuth)
-        })
-    })
     return (
         <>
             <StatusBar barStyle="light-content" />

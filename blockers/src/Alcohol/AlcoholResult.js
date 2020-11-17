@@ -17,6 +17,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 
 export default function AlcoholResult({navigation,route}) {
+    const {UID}=route.parmas
     const [user,setUser]=useState()
     const [results,setResults]=useState("")
     const [result,setResult]=useState(0)
@@ -25,9 +26,9 @@ export default function AlcoholResult({navigation,route}) {
     const [name,setName]=useState("");
     var total=0
     useEffect(()=>{
-        if(user){
+        
             uploadInfo()   
-           }
+           
         if(result>1){
         if(result>=35){
             setResults("Bad")
@@ -41,7 +42,7 @@ export default function AlcoholResult({navigation,route}) {
             setResultcontent("정상 음주입니다.\n지금까지는 비교적 건강하고 안전한 음주습관을 지니고 있습니다. 적정음주량을 유지하고 건강음주지침을 지켜주세요.\n● 음주량을 지켜주세요.\n한자리에서 남성: 2~4잔 / 여성: 1~2잔 이하\n* 일주일에 2~3일은 금주\n65세 이상의 노인도 1주당 5잔 미만")
         }}
         
-    },[user,result])
+    },[result])
     async function uploadInfo(){
         var a=moment().toArray()
         console.log(a)
@@ -51,23 +52,22 @@ export default function AlcoholResult({navigation,route}) {
         }else{
             a[1]=a[1]+1
         }
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").get().then(querySnapshot=>{
             total=querySnapshot.size-1
         })
-        await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+        await firestore().collection("UserInfo").doc(UID).get().then(doc=>{
             setName(doc.data().name)
         }) 
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").get().then(doc=>{
+        var month
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").get().then(doc=>{
+            month=doc.data().month-1
+        })
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("esteem").doc(String(month)).get().then(doc=>{
             setResult(doc.data().resultNum)
         })
         console.log(total)
         
     }
-    useEffect(()=>{
-        auth().onAuthStateChanged(userAuth => {
-            setUser(userAuth)
-        })
-    })
     return (
         <>
             <StatusBar barStyle="light-content" />
