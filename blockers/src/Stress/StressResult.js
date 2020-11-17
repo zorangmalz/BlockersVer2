@@ -16,17 +16,18 @@ import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 import ProgressCircle from "react-native-progress/Circle";
 
-export default function StressResult({navigation}) {
-    const [user,setUser]=useState("")
+export default function StressResult({navigation,route}) {
+    const {UID}=route.params
+    
     const [results,setResults]=useState("")
     const [result,setResult]=useState(0)
     const [resultcontent,setResultcontent]=useState("")
     const [name,setName]=useState("");
-    var total=0
+    
     useEffect(()=>{
-        if(user){
+        
             uploadInfo()   
-           }
+        
         if(result>1){
         if(result>=50){
             setResults("Bad")
@@ -40,10 +41,9 @@ export default function StressResult({navigation}) {
             setResultcontent("다른 사람들에 비해 스트레스 정도가 적은 편입니다. \n스트레스는 적당한 경우에 능률을 향상시키는 역할을 하지만,\n 지속적인 스트레스는 결국 인체의 저항력을 고갈시키고,\n 우울증, 정신증과 같은 정신과적 증상으로도 나타날 수 있습니다. \n스스로의 상태를 주시하면서 주위의 도움을 청하고 \n스트레스 해소를 위한 방법을 적극적으로 찾아야 합니다.\n\n당신은 이미 스트레스 상황에 특별한 방식으로 잘 대처하고 있습니다.\n 특별한 조치가 필요 없습니다.\n 지금 상태를 유지할 수 있도록 노력하세요!")
         }
     }
-    },[user,result])
+    },[result])
     async function uploadInfo(){
         var a=moment().toArray()
-        console.log(a)
         
         if(a[1]===12){
             a[1]=1
@@ -56,18 +56,16 @@ export default function StressResult({navigation}) {
         await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
             setName(doc.data().name)
         })
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").get().then(doc=>{
+        var month
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").get().then(doc=>{
+            month=doc.data().month-1
+        })
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("esteem").doc(String(month)).get().then(doc=>{
             setResult(doc.data().resultNum)
         })
         console.log(total)
         
     }
-    useEffect(()=>{
-        auth().onAuthStateChanged(userAuth => {
-            setUser(userAuth)
-        })
-    })
-    
     return (
         <>
             <StatusBar barStyle="light-content" />

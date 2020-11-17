@@ -273,7 +273,7 @@ export default function HomeScreen({ navigation }) {
                     {
                         text: '시작하기', onPress: () => {
                             changeToSmoker(), Alert.alert(
-                                '금연모드 활성화',
+                                '금연모드 활성화, 챌린지를 진행해 보세요',
                                 '앱 새로고침 후 사용',
                                 [
                                     {
