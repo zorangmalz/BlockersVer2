@@ -89,12 +89,11 @@ export default function Challenge({ navigation }) {
                     <View style={{
                         flexDirection: "row",
                         alignItems: "center",
-                        marginTop: 32,
+                        marginTop: 24,
                         marginLeft: 16,
                         marginRight: 16
                     }}>
                         {item.period === "monthly" ?
-
                             <View style={{
                                 width: 8,
                                 height: 8,
@@ -122,10 +121,9 @@ export default function Challenge({ navigation }) {
                                 }} />
                             )
                         }
-
                         <Text style={[main.title, { color: "#ffffff", fontSize: 14 }]}>{item.title}</Text>
                     </View>
-                    <Text style={[main.title, { color: "#ffffff", fontFamily: "NunitoSans-Regular", marginTop: 16, marginRight: 32, marginLeft: 32 }]}>{item.content}</Text>
+                    <Text style={[main.title, { color: "#ffffff", fontFamily: "NunitoSans-Regular", marginTop: 8, marginRight: 32, marginLeft: 32, fontSize: 14 }]}>{item.content}</Text>
                 </View>
                 {item.doing === false ?
                     <TouchableOpacity
@@ -385,10 +383,10 @@ export default function Challenge({ navigation }) {
             '실수할 수 있습니다\n포기하지말고 끝까지 진행해보세요.',
             [
                 {
-                    text: 'No', onPress: () => console.log('CANCEL Pressed')
+                    text: '취소', onPress: () => console.log('CANCEL Pressed')
                 },
                 {
-                    text: 'Yes', onPress: () => realMistake()
+                    text: '확인', onPress: () => realMistake()
                 }
             ]
         )
@@ -403,7 +401,6 @@ export default function Challenge({ navigation }) {
         console.log(total)
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
             mistake: mistake + 1,
-
         })
         setChange(false)
     }
@@ -611,7 +608,6 @@ export default function Challenge({ navigation }) {
                                 showsHorizontalScrollIndicator={false}
                             />
                         }
-
                     </ScrollView>
                 </ScrollView>
                 <View
@@ -621,8 +617,6 @@ export default function Challenge({ navigation }) {
                         justifyContent: "center",
                     }}
                 >
-
-
                     <BannerAd
                         unitId={adUnitId}
                         size={BannerAdSize.SMART_BANNER}
@@ -718,7 +712,7 @@ export function ChallengeRegister({ navigation }) {
         if(month===1){
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
             title: "금연활동 인증하기 (주1회)",
-            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
+            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는 것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
             stats: false,
             period: "once",
             id: 10,
@@ -989,7 +983,7 @@ export function ChallengeRegister({ navigation }) {
         })
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
             title: "자기 효능감 평가(월1회)",
-            content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요",
+            content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을 체크하고 금연 성공하세요",
             stats: false,
             period: "monthly",
             id: 2,
@@ -1110,7 +1104,7 @@ export function ChallengeRegister({ navigation }) {
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").set({
             title: "나만의 금연 노하우 공유하기",
-            content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요.",
+            content: "스트레스와 금연의 밀접한 관계 나의 스트레스를 체크하고 금연성공하세요.",
             period: "final",
             id: 12,
             navigate: "ChallengeKnowhow",
@@ -1180,7 +1174,8 @@ export function ChallengeRegister({ navigation }) {
                         shadowRadius: 2.22,
                         marginTop: 16,
                         paddingTop: HEIGHT * 0.025,
-                        paddingBottom: HEIGHT * 0.02
+                        paddingBottom: HEIGHT * 0.02,
+                        marginBottom: 16
                     }}>
                         <Text style={{
                             fontSize: 16,
@@ -1194,7 +1189,6 @@ export function ChallengeRegister({ navigation }) {
                             value={resolution}
                             onChangeText={(text) => setResolution(text)}
                             placeholder="금연에 임하는 각오를 적어주세요" style={{
-                                width: WIDTH * 0.5,
                                 borderBottomColor: "#E5E5E5",
                                 borderBottomWidth: 1,
                                 paddingBottom: 8,
@@ -1268,7 +1262,8 @@ export function ChallengeRegister({ navigation }) {
                         <View style={{
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: "space-between"
+                            justifyContent: "space-between",
+                            marginBottom: 16
                         }}>
                             <View style={{
                                 alignItems: "center",
@@ -1320,20 +1315,6 @@ export function ChallengeRegister({ navigation }) {
                                 <Text style={[main.bold, { marginTop: 8 }]}>3. 금연 성공!</Text>
                             </View>
                         </View>
-                        <Text style={{
-                            fontSize: 12,
-                            fontFamily: "NunitoSans-Regular",
-                            color: "#303030",
-                            opacity: 0.4,
-                            alignSelf: "center",
-                            textAlign: "center",
-                            marginTop: HEIGHT * 0.05
-                        }}>Blockers
-                            <Text style={{ textDecorationLine: "underline" }}>개인정보 처리약관</Text>
-                            과{"\n"}
-                            <Text style={{ textDecorationLine: "underline" }}>이용약관</Text>
-                            에 동의하게 됩니다.(마케팅 정보 수신동의 포함)
-                        </Text>
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -1589,13 +1570,12 @@ const MissionBox = ({ color, name, data, navigation }) => {
     )
 }
 
-export function ChallengeMission({ navigation,route }) {
-    const {UID}=route.params
-    const [monthItem,setMonthItem]=useState([])
-    const [normalItem,setNormalItem]=useState([])
-    const [finalItem,setFinalItem]=useState([])
-
-    async function giveup(){
+export function ChallengeMission({ navigation, route }) {
+    const { UID } = route.params
+    const [monthItem, setMonthItem] = useState([])
+    const [normalItem, setNormalItem] = useState([])
+    const [finalItem, setFinalItem] = useState([])
+    async function giveup() {
         Alert.alert(
             '이번 챌린지를 포기하시겠습니까?',
             '',
@@ -1604,194 +1584,172 @@ export function ChallengeMission({ navigation,route }) {
                     text: 'No', onPress: () => console.log('CANCEL Pressed')
                 },
                 {
-                    text: 'Yes', onPress: ()=> realGiveUp()
+                    text: 'Yes', onPress: () => realGiveUp()
                 }
             ]
         )
     }
-    async function realGiveUp(){
+    async function realGiveUp() {
         var total
         await firestore().collection("UserInfo").doc(UID).collection("Challenge").get().then(querySnapshot => {
-            total = querySnapshot.size-1
+            total = querySnapshot.size - 1
         })
-        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).update({
-            ongoing:false,
-            success:1
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge" + total).update({
+            ongoing: false,
+            success: 1
         })
         navigation.navigate("Home")
     }
-    async function getInfo(){
+    async function getInfo() {
         var total
         await firestore().collection("UserInfo").doc(UID).collection("Challenge").get().then(querySnapshot => {
-            total = querySnapshot.size-1
+            total = querySnapshot.size - 1
         })
-        const list=[]
-        const list2=[]
-        const list3=[]
-        firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").orderBy("id","asc").get().then(querySnapshot=>{
-            querySnapshot.forEach(doc=>{
-              
+        const list = []
+        firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").orderBy("id", "asc").get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
                 list.push({
-                    number:doc.data().id,
-                    title:doc.data().id+". "+doc.data().title,
-                    content:doc.data().content,
-                    navigation:doc.data().resNavi,
-                    uid:UID,
-                    stats:doc.data().stats,
-                    visible:doc.data().visible
+                    number: doc.data().id,
+                    title: doc.data().id + ". " + doc.data().title,
+                    content: doc.data().content,
+                    navigation: doc.data().resNavi,
+                    uid: UID,
+                    stats: doc.data().stats,
+                    visible: doc.data().visible
                 })
-        
             })
-           console.log(list)
-            const arr1=list.slice(0,3)
-            const arr2=list.slice(3,10)
-            const arr3=list.slice(10)
+            console.log(list)
+            const arr1 = list.slice(0, 3)
+            const arr2 = list.slice(3, 10)
+            const arr3 = list.slice(10)
             setMonthItem(arr1)
             setNormalItem(arr2)
             setFinalItem(arr3)
         })
-      
     }
-    useEffect(()=>{
+    useEffect(() => {
         getInfo()
+    }, [])
 
-    },[])
-    // const Month = [
-    //     {
-    //         number: 1,
-    //         title: "1. 스트레스 평가",
-    //         content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요.",
-    //         navigation: "StressResult",
-    //         uid:UID
-    //     },
-    //     {
-    //         number: 2,
-    //         title: "2. 자기 효능감 평가",
-    //         content: "자기 효능감과 금연의 밀접한 관계\n나의 자기 효능감을 체크하고 금연성공하세요.",
-    //         navigation: "SelfEsteemResult",
-    //         uid:UID
+    //챌린지가 존재하지 않을 경우
+    const Month = [
+        {
+            number: 1,
+            title: "1. 스트레스 평가",
+            content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요.",
+        },
+        {
+            number: 2,
+            title: "2. 자기 효능감 평가",
+            content: "자기 효능감과 금연의 밀접한 관계\n나의 자기 효능감을 체크하고 금연성공하세요.",
 
-    //     },
-    //     {
-    //         number: 3,
-    //         title: "3. 알콜중독 평가",
-    //         content: "알콜중독과 금연의 밀접한 관계\n나의 알콜중독을 체크하고 금연성공하세요.",
-    //         navigation: "AlcoholResult",
-    //         uid:UID
-    //     },
-    // ]
-    // const Normal = [
-    //     {
-    //         number: 1,
-    //         title: "1. 금연 동기 설정하기",
-    //         content: "금연을 하는 이유가 무엇인가요? \n금연 동기는 앞으로 금연을 이어가는 가장 큰 힘이 될 수 있습니다.",
-    //         navigation:"ChallengeMotivationResult",
-    //         uid:UID
-    //     },
-    //     {
-    //         number: 2,
-    //         title: "2. 니코틴 중독 평가하기",
-    //         content: "나는 니코틴에 얼마나 의존할까?",
-    //         navigation:"",
-    //         uid:UID
-    //     },
-    //     {
-    //         number: 3,
-    //         title: "3. 금연 서약서 쓰기",
-    //         content: "금연을 서약서로 본인의 의지를 표현해 보세요.",
-    //         navigation:"ChallengeSwearResult",
-    //         uid:UID
-    //     },
-    //     {
-    //         number: 4,
-    //         title: "4. 금연 지지자 정하기",
-    //         content: "앞으로 힘든 금연에 힘이될 사람들에게\n금연 응원을 요청해보세요",
-    //         navigation:"ChallengeSupport",
-    //         uid:UID
-    //     },
-    //     {
-    //         number: 5,
-    //         title: "5. 내 흡연유형 파악하기",
-    //         content: "나는 언제 담배를 필까? MBTI대신 흡BTI!\n유형별 대처 전략을 알아봅시다.",
-    //         navigation:"SolutionResult",
-    //         uid:UID
-            
-    //     },
-    //     {
-    //         number: 6,
-    //         title: "6. 금연활동 인증하기 (주 1회)",
-    //         content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
-    //         navigation:"ChallengeVeriResult",
-    //         uid:UID
-    //     },
-    //     {
-    //         number: 7,
-    //         title: "7. 금단증상 확인하기",
-    //         content: "금연을 하면서 피할 수 없는 금단증상!\n나의 금단 증상을 파악하고 해결책을 찾아보세요.",
-    //         navigation:"ChallengeGDResult",
-    //         uid:UID
-    //     },
-    // ]
-    // const Final = [
-    //     {
-    //         number: 1,
-    //         title: "1. 나만의 금연 노하우 공유하기",
-    //         content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요.",
-    //         navigation:"",
-    //         uid:UID
-    //     },
-    //     {
-    //         number: 2,
-    //         title: "2. 성공 후기 작성하기",
-    //         content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요",
-    //         navigation:"",
-    //         uid:UID
-    //     },
-    // ]
+        },
+        {
+            number: 3,
+            title: "3. 알콜중독 평가",
+            content: "알콜중독과 금연의 밀접한 관계\n나의 알콜중독을 체크하고 금연성공하세요.",
+        },
+    ]
+    const Normal = [
+        {
+            number: 1,
+            title: "1. 금연 동기 설정하기",
+            content: "금연을 하는 이유가 무엇인가요? \n금연 동기는 앞으로 금연을 이어가는 가장 큰 힘이 될 수 있습니다.",
+        },
+        {
+            number: 2,
+            title: "2. 니코틴 중독 평가하기",
+            content: "나는 니코틴에 얼마나 의존할까?",
+        },
+        {
+            number: 3,
+            title: "3. 금연 서약서 쓰기",
+            content: "금연을 서약서로 본인의 의지를 표현해 보세요.",
+        },
+        {
+            number: 4,
+            title: "4. 금연 지지자 정하기",
+            content: "앞으로 힘든 금연에 힘이될 사람들에게\n금연 응원을 요청해보세요",
+        },
+        {
+            number: 5,
+            title: "5. 내 흡연유형 파악하기",
+            content: "나는 언제 담배를 필까? MBTI대신 흡BTI!\n유형별 대처 전략을 알아봅시다.",
+
+        },
+        {
+            number: 6,
+            title: "6. 금연활동 인증하기 (주 1회)",
+            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
+        },
+        {
+            number: 7,
+            title: "7. 금단증상 확인하기",
+            content: "금연을 하면서 피할 수 없는 금단증상!\n나의 금단 증상을 파악하고 해결책을 찾아보세요.",
+        }
+    ]
+    const Final = [
+        {
+            number: 1,
+            title: "1. 나만의 금연 노하우 공유하기",
+            content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요.",
+        },
+        {
+            number: 2,
+            title: "2. 성공 후기 작성하기",
+            content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요",
+        },
+    ]
     return (
         <>
             <StatusBar barStyle="dark-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-           
-        <View accessibilityRole="header" style={{ justifyContent:"space-between",flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
-            
-            <View
-                style={{
-                    height: 44,
-                    flexDirection: 'row',
-                    justifyContent: "flex-start",
-                    alignItems: 'center',
-                    
-                }}
-            >
-                <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Ionicons name="chevron-back" size={25} />
-            </TouchableOpacity>
-                <Text style={{ fontSize: 18, marginLeft:20 }}>
-                    <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>전체미션</Text>
-                </Text>
-            </View>
-            <View>
-                <TouchableOpacity onPress={giveup}>
-                <Text style={{fontSize: 12,
-        fontFamily: "NunitoSans-Regular",
-        color: "#303030",
-        opacity: 0.6,
-        textDecorationLine: "underline",
-        marginRight:10}}>
-                    포기하기
-                </Text>
-                </TouchableOpacity>
-            </View>
-            
-        </View>
+                <View accessibilityRole="header" style={{ justifyContent: "space-between", flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
 
+                        }}
+                    >
+                        <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <Ionicons name="chevron-back" size={25} />
+                        </TouchableOpacity>
+                        <Text style={{ fontSize: 18, marginLeft: 20 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>전체미션</Text>
+                        </Text>
+                    </View>
+                    <View>
+                        <TouchableOpacity onPress={giveup}>
+                            <Text style={{
+                                fontSize: 12,
+                                fontFamily: "NunitoSans-Regular",
+                                color: "#303030",
+                                opacity: 0.6,
+                                textDecorationLine: "underline",
+                                marginRight: 10
+                            }}>포기하기</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
                 <ScrollView>
                     <View style={{ paddingLeft: "6%", paddingRight: "6%", alignItems: "center" }}>
-                        <Text style={[mission.bold, { marginTop: 16, marginBottom: 32 }]}>미션을 클릭하면 응답내역을 볼 수 있습니다.</Text>
-                        <MissionBox color="#fb5757" name="월간 미션 (월 1회)" data={monthItem} navigation={navigation} />
-                        <MissionBox color="#ffb83d" name="일반미션" data={normalItem} navigation={navigation} />
-                        <MissionBox color="#5cc27b" name="파이널미션" data={finalItem} navigation={navigation} />
+                        <Text style={[mission.bold, { marginTop: 16, marginBottom: 16 }]}>미션을 클릭하면 응답내역을 볼 수 있습니다.</Text>
+                        {monthItem.length > 0 ?
+                            <>
+                                <MissionBox color="#fb5757" name="월간 미션 (월 1회)" data={monthItem} navigation={navigation} />
+                                <MissionBox color="#ffb83d" name="일반미션" data={normalItem} navigation={navigation} />
+                                <MissionBox color="#5cc27b" name="파이널미션" data={finalItem} navigation={navigation} />
+                            </>
+                            :
+                            <>
+                                <MissionBox color="#fb5757" name="월간 미션 (월 1회)" data={Month} navigation={navigation} />
+                                <MissionBox color="#ffb83d" name="일반미션" data={Normal} navigation={navigation} />
+                                <MissionBox color="#5cc27b" name="파이널미션" data={Final} navigation={navigation} />
+                            </>
+                        }
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -1846,17 +1804,17 @@ export function ChallengeSupport({ navigation }) {
             Alert.alert("링크를 공유해보세요")
         }
     }
-    async function kakao(){
-        const LinkObject={
-            webURL:"https://developers.kakao.com"
+    async function kakao() {
+        const LinkObject = {
+            webURL: "https://developers.kakao.com"
         }
-        const contentObject={
+        const contentObject = {
             title: "나의 금연 지지자가 되어줘!", //required
             link: LinkObject, //required
-            desc : nick+"님이"+name+"님께 보낸 메세지입니다\n"+help,
+            desc: nick + "님이" + name + "님께 보낸 메세지입니다\n" + help,
             imageURL: 'https://drive.google.com/file/d/1C3XJ2i_zOLA_vpfgfePdoSgvTNNpa-ML/view?usp=sharing',
         }
-        
+
         try {
             const options = {
                 objectType: "feed", //required
@@ -1864,10 +1822,10 @@ export function ChallengeSupport({ navigation }) {
             };
             const response = await RNKakaoLink.link(options);
             console.log(response);
-          } catch (e) {
+        } catch (e) {
             console.warn(e);
-          }
-setLink(true)
+        }
+        setLink(true)
     }
     return (
         <>
@@ -2533,7 +2491,8 @@ export function ChallengeMotivation({ navigation }) {
         })
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 동기 설정하기").update({
             motivation:Motivation,
-            stats:true
+            stats:true,
+            visible:false
         })
         navigation.navigate("Home")
     }
@@ -2550,19 +2509,19 @@ export function ChallengeMotivation({ navigation }) {
                         marginBottom: HEIGHT * 0.05
                     }}>금연을 결심한 이유가 무엇인가요?(최대 3개)</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onHealth} width={120} include={health} content="건강을 위해서" />
-                        <MotiveButton onPress={onConfidence} width={106} include={confidence} content="자신감 확보" />
+                        <MotiveButton onPress={onHealth} include={health} content="건강을 위해서" />
+                        <MotiveButton onPress={onConfidence} include={confidence} content="자신감 확보" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onMoney} width={106} include={money} content="담배값 절약" />
-                        <MotiveButton onPress={onSocial} width={106} include={social} content="사회적 시선" />
+                        <MotiveButton onPress={onMoney} include={money} content="담배값 절약" />
+                        <MotiveButton onPress={onSocial} include={social} content="사회적 시선" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onHate} width={148} include={hate} content="담배냄새가 싫어서" />
-                        <MotiveButton onPress={onAround} width={106} include={around} content="주변의 시선" />
+                        <MotiveButton onPress={onHate} include={hate} content="담배냄새가 싫어서" />
+                        <MotiveButton onPress={onAround} include={around} content="주변의 시선" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onAdvice} width={106} include={advice} content="주변의 권유" />
+                        <MotiveButton onPress={onAdvice} include={advice} content="주변의 권유" />
                         <TextInput value={input} onChangeText={(text) => setInput(text)}
                             onSubmitEditing={() => setMotivation(Motivation.concat(input))}
                             placeholder="기타" style={{
@@ -2791,19 +2750,19 @@ export function ChallengeMotivationResult({ navigation,route }) {
                         marginBottom: HEIGHT * 0.05
                     }}>금연을 결심한 이유가 무엇인가요?(최대 3개)</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onHealth} width={120} include={health} content="건강을 위해서" />
-                        <MotiveButton onPress={onConfidence} width={106} include={confidence} content="자신감 확보" />
+                        <MotiveButton onPress={onHealth} include={health} content="건강을 위해서" />
+                        <MotiveButton onPress={onConfidence} include={confidence} content="자신감 확보" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onMoney} width={106} include={money} content="담배값 절약" />
-                        <MotiveButton onPress={onSocial} width={106} include={social} content="사회적 시선" />
+                        <MotiveButton onPress={onMoney} include={money} content="담배값 절약" />
+                        <MotiveButton onPress={onSocial} include={social} content="사회적 시선" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onHate} width={148} include={hate} content="담배냄새가 싫어서" />
-                        <MotiveButton onPress={onAround} width={106} include={around} content="주변의 시선" />
+                        <MotiveButton onPress={onHate} include={hate} content="담배냄새가 싫어서" />
+                        <MotiveButton onPress={onAround} include={around} content="주변의 시선" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onAdvice} width={106} include={advice} content="주변의 권유" />
+                        <MotiveButton onPress={onAdvice} include={advice} content="주변의 권유" />
                         <TextInput value={input} onChangeText={(text) => setInput(text)}
                             onSubmitEditing={() => setMotivation(Motivation.concat(input))}
                             placeholder="기타" style={{
@@ -3108,26 +3067,26 @@ export function ChallengeGD({ navigation }) {
                     }}>어떤 금단증상을 겪고 있나요? (최대 3개)</Text>
                     <View style={{ paddingLeft: "5%", paddingRight: "5%", marginTop: HEIGHT * 0.08 }}>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton width={88} content="신경과민" include={one} onPress={onOne} />
-                            <MotiveButton width={88} content="소화장애" include={two} onPress={onTwo} />
-                            <MotiveButton width={60} content="두통" include={three} onPress={onThree} />
+                            <MotiveButton content="신경과민" include={one} onPress={onOne} />
+                            <MotiveButton content="소화장애" include={two} onPress={onTwo} />
+                            <MotiveButton content="두통" include={three} onPress={onThree} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton width={60} content="불면" include={four} onPress={onFour} />
-                            <MotiveButton width={74} content="현기증" include={five} onPress={onFive} />
-                            <MotiveButton width={74} content="우울감" include={six} onPress={onSix} />
-                            <MotiveButton width={74} content="피로감" include={seven} onPress={onSeven} />
+                            <MotiveButton content="불면" include={four} onPress={onFour} />
+                            <MotiveButton content="현기증" include={five} onPress={onFive} />
+                            <MotiveButton content="우울감" include={six} onPress={onSix} />
+                            <MotiveButton content="피로감" include={seven} onPress={onSeven} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton width={60} content="기침" include={eight} onPress={onEight} />
-                            <MotiveButton width={74} content="불안감" include={nine} onPress={onNine} />
-                            <MotiveButton width={106} content="집중력 감소" include={ten} onPress={onTen} />
-                            <MotiveButton width={74} content="배고픔" include={eleven} onPress={onEleven} />
+                            <MotiveButton content="기침" include={eight} onPress={onEight} />
+                            <MotiveButton content="불안감" include={nine} onPress={onNine} />
+                            <MotiveButton content="집중력 감소" include={ten} onPress={onTen} />
+                            <MotiveButton content="배고픔" include={eleven} onPress={onEleven} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton width={106} content="입안의 통증" include={twelve} onPress={onTwelve} />
-                            <MotiveButton width={106} content="쑤시는 느낌" include={thirteen} onPress={onThirteen} />
-                            <MotiveButton width={60} content="갈증" include={fourteen} onPress={onFourteen} />
+                            <MotiveButton content="입안의 통증" include={twelve} onPress={onTwelve} />
+                            <MotiveButton content="쑤시는 느낌" include={thirteen} onPress={onThirteen} />
+                            <MotiveButton content="갈증" include={fourteen} onPress={onFourteen} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
                             <MotiveButton width={60} content="없음" include={zero} onPress={onZero} />

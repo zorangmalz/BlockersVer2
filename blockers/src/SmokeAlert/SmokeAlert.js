@@ -15,7 +15,7 @@ import {
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ProgressBar from 'react-native-progress/Bar';
 import ProgressCircle from "react-native-progress/Circle";
-import {AdEventType,InterstitialAd,BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
 
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
@@ -157,18 +157,18 @@ function useInterval(callback, delay) {
     }, [delay]);
 }
 
-export default function SmokeAlertOne({navigation}) {
+export default function SmokeAlertOne({ navigation }) {
     const [delay, setDelay] = useState(1000);
     const [second, setSecond] = useState(0);
     const [isRunning, setIsRunning] = useState(true);
     useInterval(() => {
-        if(second >= 100) {
+        if (second >= 100) {
             setIsRunning(false);
         } else {
-            setSecond(second+1);
+            setSecond(second + 1);
         }
     }, isRunning ? delay : null)
-    
+
     useEffect(() => {
         if (second === 100) {
             navigation.navigate("SmokeAlertTwo");
@@ -177,13 +177,13 @@ export default function SmokeAlertOne({navigation}) {
     return (
         <>
             <StatusBar barStyle="dark-content" />
-            <SafeAreaView style={{flex: 1, backgroundColor: "#ffffff"}}>
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
                 <Header navigation={navigation} />
                 <ScrollView>
                     <View style={style.box}>
                         <View style={{
                             flexDirection: "row",
-                            alignItems: "center",
+                            alignItems: "flex-start",
                             justifyContent: "center",
                             width: "90%"
                         }}>
@@ -192,14 +192,15 @@ export default function SmokeAlertOne({navigation}) {
                                 height: 8,
                                 borderRadius: 4,
                                 backgroundColor: "#ffb83d",
-                                marginRight: 8
-                            }}/>
+                                marginRight: 8,
+                                marginTop: 12
+                            }} />
                             <Text style={{
                                 fontFamily: "NunitoSans-Regular",
                                 fontSize: 18,
                                 color: "#303030"
                             }}>
-                                <Text style={{fontFamily: "NunitoSans-Bold"}}>100초 </Text>
+                                <Text style={{ fontFamily: "NunitoSans-Bold" }}>100초 </Text>
                                 동안 자리에 앉아
                                 <Text style={{ fontFamily: "NunitoSans-Bold" }}> 심호흡</Text>
                                 을 시작합니다.
@@ -214,38 +215,35 @@ export default function SmokeAlertOne({navigation}) {
                             size={160}
                             borderWidth={0}
                             thickness={10}
-                            progress={second/100}
+                            progress={second / 100}
                             color="#5cc27b"
                             unfilledColor="#ffffff"
                         >
-                            <Text style={{fontFamily:"NunitoSans-Bold", position: "absolute", flex: 1, fontSize: 30, color: "#5cc27b", textAlign: "center"}}>
-                                <Text style={{fontSize: 35}}>{second}</Text>{"\n"}SEC
+                            <Text style={{ fontFamily: "NunitoSans-Bold", position: "absolute", flex: 1, fontSize: 30, color: "#5cc27b", textAlign: "center" }}>
+                                <Text style={{ fontSize: 35 }}>{second}</Text>{"\n"}SEC
                             </Text>
                         </ProgressCircle>
                     </View>
-                    
                 </ScrollView>
                 <View
-         style={{
-            flexDirection:"row",
-        alignItems:"center",
-    justifyContent:"center",
-}}
-         >
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
+                    <BannerAd
+                        unitId={adUnitId}
+                        size={BannerAdSize.SMART_BANNER}
+                        requestOptions={{
+                            requestNonPersonalizedAdsOnly: true,
+                        }}
+                        onAdFailedToLoad={(error) => {
+                            console.error('Advert failed to load: ', error);
+                        }}
+                    />
 
-         
-<BannerAd
-      unitId={adUnitId}  
-      size={BannerAdSize.SMART_BANNER}
-      requestOptions={{
-        requestNonPersonalizedAdsOnly: true,
-      }}
-      onAdFailedToLoad={(error) => {
-        console.error('Advert failed to load: ', error);
-      }}
-    />
-    
-         </View> 
+                </View>
             </SafeAreaView>
         </>
     )

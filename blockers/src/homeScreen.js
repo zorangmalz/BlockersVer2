@@ -545,11 +545,11 @@ interstitial.onAdEvent((type) => {
                             </View>
                         </>
                     }
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: "12%" }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', paddingLeft: "12%", paddingRight: "12%" }}>
                         <ImageBackground style={{ width: 25, height: 15, marginRight: 8, alignItems: "center", justifyContent: "center" }} resizeMode="stretch" source={require('./icon/tipbox.png')} >
                             <Text style={{ fontSize: 9, fontFamily: 'NunitoSans-Bold', color: "#ffffff" }}>TIP</Text>
                         </ImageBackground>
-                        <Text style={{ alignSelf: 'center', fontSize: 16, fontFamily: 'NunitoSans-Regular', color: '#303030', opacity: 0.6 }}>물을 많이 마시면 니코틴 배출이 빨라집니다!</Text>
+                        <Text style={{ alignSelf: 'center', fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>물을 많이 마시면 니코틴 배출이 빨라집니다!</Text>
                     </View>
                     <View style={{
                         flexDirection: 'row',
