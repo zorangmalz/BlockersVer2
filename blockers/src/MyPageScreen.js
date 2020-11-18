@@ -120,11 +120,16 @@ export default function MyPageScreen({ navigation }) {
             async function getImage() {
                 const url = await storage()
                     .refFromURL("gs://blockers-8a128.appspot.com/" + "User/" + nickname + "/프로필사진" + nickname)
-                    .getDownloadURL();
-                setIsImage(true)
-                setImageSource(url)
-                console.log("get")
-                setIsLoading(true);
+                    .getDownloadURL()
+                    .then(() => {
+                        setIsImage(true)
+                        setImageSource(url)
+                        console.log("get")
+                        setIsLoading(true);
+                    }).catch(() => {
+                        console.log("사진이 존재하지 않습니다.")
+                        setIsLoading(true);
+                    })
             }
             getImage()
         }
@@ -375,10 +380,9 @@ export default function MyPageScreen({ navigation }) {
                                 <FlatList
                                     data={[
                                         { key: '개인정보', name: '개인정보' },
+                                        { key: '공지사항', name: '공지사항' },
                                         { key: '내가 쓴 글', name: '내가 쓴글' },
-                                        { key: '이용약관', name: '이용약관' },
-                                        { key: "자주묻는 질문", name: "자주묻는 질문" },
-                                        { key: "공지사항", name: "공지사항" }
+                                        { key: '정보', name: "정보" },
                                     ]}
                                     renderItem={({ item }) => (
                                         <>

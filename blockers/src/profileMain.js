@@ -71,23 +71,24 @@ export default function ProfileMain({ navigation }) {
                 setHaveProfile(documentSnapshot.data().gotProfile)
                 setSex(documentSnapshot.data().sex)
             })
-
             console.log(user)
             console.log(haveProfile, "profile")
-
             //프로필 사진 가져오기
             async function getImage() {
                 const url = await storage()
                     .refFromURL("gs://blockers-8a128.appspot.com/" + "User/" + userNick + "/프로필사진" + userNick)
-                    .getDownloadURL();
-                setIsImage(true)
-                setImageSource(url)
-                console.log("get")
-                setIsLoading(true);
+                    .getDownloadURL().then(() => {
+                        setIsImage(true)
+                        setImageSource(url)
+                        console.log("get")
+                        setIsLoading(true);
+                    }).catch(() => {
+                        console.log("사진이 존재하지 않습니다.")
+                        setIsLoading(true)
+                    })
             }
             getImage()
         }
-        
     }, [userNick, user, imageOne, refreshing, name]);
 
     //이미지 업로드 시 firebase와 소통
