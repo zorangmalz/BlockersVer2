@@ -81,8 +81,8 @@ const wait = (timeout) => {
 
 export default function MyPageScreen({ navigation }) {
     const [userlogined, setUserlogined] = useState(false);
+    const [name, setName] = useState();
     const [user, setUser] = useState("");
-    const [name, setName] = useState()
     const [nickname, setNickname] = useState("");
     const [refreshing, setRefreshing] = useState(false);
     const [imageSource, setImageSource] = useState(undefined);
@@ -103,13 +103,14 @@ export default function MyPageScreen({ navigation }) {
     }
 
     useEffect(() => {
-        auth().onAuthStateChanged(userAuth => {
+        auth().onAuthStateChanged((userAuth) => {
             setUser(userAuth)
         })
-        if (!user) {
-            setUserlogined(false)
-        } else {
-            setUserlogined(true)
+    }, [])
+
+    useEffect(() => {
+        if (user) {
+            setUserlogined(true);
             firestore().collection("UserInfo").doc(user.uid).get()
                 .then(data => {
                     setNickname(data.data().nickname)
@@ -126,6 +127,10 @@ export default function MyPageScreen({ navigation }) {
                 setIsLoading(true);
             }
             getImage()
+        }
+        else {
+            setUserlogined(false);
+            setIsLoading(true);
         }
     }, [refreshing, userlogined, user])
 
