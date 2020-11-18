@@ -23,7 +23,7 @@ BlockersVer2
         
    4. react-native-material-textfield : https://github.com/n4kz/react-native-material-textfield/issues/249
    
-      - react-native-material-dropdown 사용할 때 react-native-material-textfield를 사용하는데 이때 오류가 
+      - react-native-material-dropdown 사용할 때 react-native-material-textfield를 사용하는데 이때 오류가 발생함
 
 ## android build 에러
    1. app:stripDebugDebugSymbols FAILED : https://github.com/facebook/react-native/issues/28404
