@@ -123,7 +123,7 @@ export default function Challenge({ navigation }) {
                             )
                         }
 
-                        <Text style={[main.title, { color: "#ffffff" }]}>{item.title}</Text>
+                        <Text style={[main.title, { color: "#ffffff", fontSize: 14 }]}>{item.title}</Text>
                     </View>
                     <Text style={[main.title, { color: "#ffffff", fontFamily: "NunitoSans-Regular", marginTop: 16, marginRight: 32, marginLeft: 32 }]}>{item.content}</Text>
                 </View>
@@ -355,7 +355,6 @@ export default function Challenge({ navigation }) {
         })
         setRatio(withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt)
         if (long === 1) {
-
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
                 progress: (withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 9.1 - mistake * 5
             })
