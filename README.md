@@ -20,6 +20,10 @@ BlockersVer2
       - 오류 안드로이드에서 이미지 피커가 작동 안되는 경우
         
         https://github.com/react-native-community/react-native-image-picker/issues/1259
+        
+   4. react-native-material-textfield : https://github.com/n4kz/react-native-material-textfield/issues/249
+   
+      - react-native-material-dropdown 사용할 때 react-native-material-textfield를 사용하는데 이때 오류가 
 
 ## android build 에러
    1. app:stripDebugDebugSymbols FAILED : https://github.com/facebook/react-native/issues/28404
