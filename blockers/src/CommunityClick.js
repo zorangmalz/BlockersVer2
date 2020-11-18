@@ -82,6 +82,13 @@ const community = StyleSheet.create({
     }
 })
 
+//Refresh 하는 시간 설정
+const wait = (timeout) => {
+    return new Promise(resolve => {
+        setTimeout(resolve, timeout);
+    });
+}
+
 export default function CommunityHome({ navigation }) {
     const [search, setSearch] = useState('');
     const Limit = useRef(7);
@@ -99,7 +106,13 @@ export default function CommunityHome({ navigation }) {
     const [items, setItems] = useState([]);
     const [filtered, setFiltered] = useState();
     const [refreshing, setRefreshing] = useState(false);
+    const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState();
+    //Flatlist Refreshing Control
+    const onRefresh = useCallback(() => {
+        setRefresh(true);
+        wait(2000).then(() => setRefresh(false));
+    }, []);
 
     //로그인 모달 폼
     const [userlogin, setUserlogin] = useState(false);
@@ -216,7 +229,7 @@ export default function CommunityHome({ navigation }) {
     //실시간으로 글 가져오기
     useEffect(() => {
         load()
-    }, [filtered]);
+    }, [filtered, refresh]);
 
     //검색어 입력
     const [searchWord, setSearchWord] = useState("");
@@ -349,6 +362,7 @@ export default function CommunityHome({ navigation }) {
                 </Modal>
                 <FlatList
                     data={items}
+                    refreshControl={<RefreshControl refreshing={refresh} onRefresh={onRefresh} />}
                     onEndReached={onEndReached}
                     onEndReachedThreshold={0.8}
                     keyExtractor={items.docname}

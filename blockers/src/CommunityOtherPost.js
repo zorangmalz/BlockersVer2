@@ -413,10 +413,6 @@ export default function CommunityOtherPost({ route, navigation }) {
     //     console.log(reComment)
     //     textbox.current.focus()
     // }
-    function unfocusing() {
-        Keyboard.dismiss
-
-    }
 
     //댓글 좋아요 및 좋아요 취소, 댓글 삭제-----------------------------------------------------------
     function relikeMinus(a, b) {
@@ -515,9 +511,6 @@ export default function CommunityOtherPost({ route, navigation }) {
             whoAlert: b,
         }).then(() => {
             console.log("alert success")
-
-
-
         });
     }
 
