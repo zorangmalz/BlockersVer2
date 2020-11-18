@@ -383,10 +383,10 @@ export default function Challenge({ navigation }) {
             '실수할 수 있습니다\n포기하지말고 끝까지 진행해보세요.',
             [
                 {
-                    text: 'No', onPress: () => console.log('CANCEL Pressed')
+                    text: '취소', onPress: () => console.log('CANCEL Pressed')
                 },
                 {
-                    text: 'Yes', onPress: () => realMistake()
+                    text: '확인', onPress: () => realMistake()
                 }
             ]
         )
@@ -401,7 +401,6 @@ export default function Challenge({ navigation }) {
         console.log(total)
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
             mistake: mistake + 1,
-
         })
         setChange(false)
     }
@@ -713,7 +712,7 @@ export function ChallengeRegister({ navigation }) {
         if(month===1){
          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
             title: "금연활동 인증하기 (주1회)",
-            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
+            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는 것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
             stats: false,
             period: "once",
             id: 10,
@@ -1263,7 +1262,8 @@ export function ChallengeRegister({ navigation }) {
                         <View style={{
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: "space-between"
+                            justifyContent: "space-between",
+                            marginBottom: 16
                         }}>
                             <View style={{
                                 alignItems: "center",
@@ -1315,20 +1315,6 @@ export function ChallengeRegister({ navigation }) {
                                 <Text style={[main.bold, { marginTop: 8 }]}>3. 금연 성공!</Text>
                             </View>
                         </View>
-                        <Text style={{
-                            fontSize: 12,
-                            fontFamily: "NunitoSans-Regular",
-                            color: "#303030",
-                            opacity: 0.4,
-                            alignSelf: "center",
-                            textAlign: "center",
-                            marginTop: HEIGHT * 0.05
-                        }}>Blockers
-                            <Text style={{ textDecorationLine: "underline" }}>개인정보 처리약관</Text>
-                            과{"\n"}
-                            <Text style={{ textDecorationLine: "underline" }}>이용약관</Text>
-                            에 동의하게 됩니다.(마케팅 정보 수신동의 포함)
-                        </Text>
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -2505,7 +2491,8 @@ export function ChallengeMotivation({ navigation }) {
         })
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 동기 설정하기").update({
             motivation:Motivation,
-            stats:true
+            stats:true,
+            visible:false
         })
         navigation.navigate("Home")
     }
@@ -2522,19 +2509,19 @@ export function ChallengeMotivation({ navigation }) {
                         marginBottom: HEIGHT * 0.05
                     }}>금연을 결심한 이유가 무엇인가요?(최대 3개)</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onHealth} width={120} include={health} content="건강을 위해서" />
-                        <MotiveButton onPress={onConfidence} width={106} include={confidence} content="자신감 확보" />
+                        <MotiveButton onPress={onHealth} include={health} content="건강을 위해서" />
+                        <MotiveButton onPress={onConfidence} include={confidence} content="자신감 확보" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onMoney} width={106} include={money} content="담배값 절약" />
-                        <MotiveButton onPress={onSocial} width={106} include={social} content="사회적 시선" />
+                        <MotiveButton onPress={onMoney} include={money} content="담배값 절약" />
+                        <MotiveButton onPress={onSocial} include={social} content="사회적 시선" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onHate} width={148} include={hate} content="담배냄새가 싫어서" />
-                        <MotiveButton onPress={onAround} width={106} include={around} content="주변의 시선" />
+                        <MotiveButton onPress={onHate} include={hate} content="담배냄새가 싫어서" />
+                        <MotiveButton onPress={onAround} include={around} content="주변의 시선" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onAdvice} width={106} include={advice} content="주변의 권유" />
+                        <MotiveButton onPress={onAdvice} include={advice} content="주변의 권유" />
                         <TextInput value={input} onChangeText={(text) => setInput(text)}
                             onSubmitEditing={() => setMotivation(Motivation.concat(input))}
                             placeholder="기타" style={{
@@ -2763,19 +2750,19 @@ export function ChallengeMotivationResult({ navigation,route }) {
                         marginBottom: HEIGHT * 0.05
                     }}>금연을 결심한 이유가 무엇인가요?(최대 3개)</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onHealth} width={120} include={health} content="건강을 위해서" />
-                        <MotiveButton onPress={onConfidence} width={106} include={confidence} content="자신감 확보" />
+                        <MotiveButton onPress={onHealth} include={health} content="건강을 위해서" />
+                        <MotiveButton onPress={onConfidence} include={confidence} content="자신감 확보" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onMoney} width={106} include={money} content="담배값 절약" />
-                        <MotiveButton onPress={onSocial} width={106} include={social} content="사회적 시선" />
+                        <MotiveButton onPress={onMoney} include={money} content="담배값 절약" />
+                        <MotiveButton onPress={onSocial} include={social} content="사회적 시선" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onHate} width={148} include={hate} content="담배냄새가 싫어서" />
-                        <MotiveButton onPress={onAround} width={106} include={around} content="주변의 시선" />
+                        <MotiveButton onPress={onHate} include={hate} content="담배냄새가 싫어서" />
+                        <MotiveButton onPress={onAround} include={around} content="주변의 시선" />
                     </View>
                     <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                        <MotiveButton onPress={onAdvice} width={106} include={advice} content="주변의 권유" />
+                        <MotiveButton onPress={onAdvice} include={advice} content="주변의 권유" />
                         <TextInput value={input} onChangeText={(text) => setInput(text)}
                             onSubmitEditing={() => setMotivation(Motivation.concat(input))}
                             placeholder="기타" style={{
@@ -3080,26 +3067,26 @@ export function ChallengeGD({ navigation }) {
                     }}>어떤 금단증상을 겪고 있나요? (최대 3개)</Text>
                     <View style={{ paddingLeft: "5%", paddingRight: "5%", marginTop: HEIGHT * 0.08 }}>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton width={88} content="신경과민" include={one} onPress={onOne} />
-                            <MotiveButton width={88} content="소화장애" include={two} onPress={onTwo} />
-                            <MotiveButton width={60} content="두통" include={three} onPress={onThree} />
+                            <MotiveButton content="신경과민" include={one} onPress={onOne} />
+                            <MotiveButton content="소화장애" include={two} onPress={onTwo} />
+                            <MotiveButton content="두통" include={three} onPress={onThree} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton width={60} content="불면" include={four} onPress={onFour} />
-                            <MotiveButton width={74} content="현기증" include={five} onPress={onFive} />
-                            <MotiveButton width={74} content="우울감" include={six} onPress={onSix} />
-                            <MotiveButton width={74} content="피로감" include={seven} onPress={onSeven} />
+                            <MotiveButton content="불면" include={four} onPress={onFour} />
+                            <MotiveButton content="현기증" include={five} onPress={onFive} />
+                            <MotiveButton content="우울감" include={six} onPress={onSix} />
+                            <MotiveButton content="피로감" include={seven} onPress={onSeven} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton width={60} content="기침" include={eight} onPress={onEight} />
-                            <MotiveButton width={74} content="불안감" include={nine} onPress={onNine} />
-                            <MotiveButton width={106} content="집중력 감소" include={ten} onPress={onTen} />
-                            <MotiveButton width={74} content="배고픔" include={eleven} onPress={onEleven} />
+                            <MotiveButton content="기침" include={eight} onPress={onEight} />
+                            <MotiveButton content="불안감" include={nine} onPress={onNine} />
+                            <MotiveButton content="집중력 감소" include={ten} onPress={onTen} />
+                            <MotiveButton content="배고픔" include={eleven} onPress={onEleven} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton width={106} content="입안의 통증" include={twelve} onPress={onTwelve} />
-                            <MotiveButton width={106} content="쑤시는 느낌" include={thirteen} onPress={onThirteen} />
-                            <MotiveButton width={60} content="갈증" include={fourteen} onPress={onFourteen} />
+                            <MotiveButton content="입안의 통증" include={twelve} onPress={onTwelve} />
+                            <MotiveButton content="쑤시는 느낌" include={thirteen} onPress={onThirteen} />
+                            <MotiveButton content="갈증" include={fourteen} onPress={onFourteen} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
                             <MotiveButton width={60} content="없음" include={zero} onPress={onZero} />
