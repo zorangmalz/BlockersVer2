@@ -129,7 +129,7 @@ export default function Challenge({ navigation }) {
                 </View>
                 {item.doing === false ?
                     <TouchableOpacity
-                        onPress={() => navigation.navigate(item.navigate, { docID: item.challengeDoc,UID:user.uid })}
+                        onPress={() => navigation.navigate(item.navigate, { docID: item.challengeDoc, UID: user.uid })}
                         style={{
                             width: 254,
                             height: 54,
@@ -190,7 +190,7 @@ export default function Challenge({ navigation }) {
     const [refreshing, setRefreshing] = React.useState(false);
     const [items, setItems] = useState([])
     const [ratio, setRatio] = useState(0)
-    const [timeStamp,setTimeStamp]=useState([])
+    const [timeStamp, setTimeStamp] = useState([])
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
 
@@ -203,12 +203,12 @@ export default function Challenge({ navigation }) {
         })
 
     })
- 
+
     async function hi() {
         var size
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
-                size = querySnapshot.size
-            })
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
+            size = querySnapshot.size
+        })
         if (size > 0) {
             console.log("im hi")
             var total = size - 1
@@ -224,89 +224,90 @@ export default function Challenge({ navigation }) {
                 setTitle(doc.data().title)
                 setLong(doc.data().long)
                 setProgress(doc.data().progress)
-                time=doc.data().challengePeriod
-                weekFire=doc.data().week
-                monthFire=doc.data().month
-                long=doc.data().long
-                progressFor=doc.data().progress
+                time = doc.data().challengePeriod
+                weekFire = doc.data().week
+                monthFire = doc.data().month
+                long = doc.data().long
+                progressFor = doc.data().progress
             })
             var a = moment().toArray()
-            
-    
+
+
             if (a[1] === 12) {
                 a[1] = 1
             } else {
                 a[1] = a[1] + 1
             }
-            var x=moment(a)
-            var y=moment(time)
+            var x = moment(a)
+            var y = moment(time)
             var durationWeek = moment.duration(x.diff(y)).asWeeks()
             var durationMonth = moment.duration(x.diff(y)).asMonths()
 
             // console.log(x)
-            console.log(weekFire,monthFire)
-            console.log(durationWeek,durationMonth)
-            if(weekFire<durationWeek){
+            console.log(weekFire, monthFire)
+            console.log(durationWeek, durationMonth)
+            if (weekFire < durationWeek) {
                 // console.log(parseInt(durationWeek,10))
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).update({
-                    week : parseInt(durationWeek,10)+1
+                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
+                    week: parseInt(durationWeek, 10) + 1
                 })
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").update({
-                    visible:true,
-                    week : parseInt(durationWeek,10)+1
+                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").update({
+                    visible: true,
+                    week: parseInt(durationWeek, 10) + 1
                 })
-                
+
             }
-            if(monthFire<durationMonth){
-                console.log(parseInt(durationMonth,10))
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).update({
-                    month: parseInt(durationMonth,10)+1
+            if (monthFire < durationMonth) {
+                console.log(parseInt(durationMonth, 10))
+                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
+                    month: parseInt(durationMonth, 10) + 1
                 })
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").update({
-                    visible:true,
-                    month : parseInt(durationMonth,10)+1
+                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").update({
+                    visible: true,
+                    month: parseInt(durationMonth, 10) + 1
                 })
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").update({
-                    visible:true,
-                    month : parseInt(durationMonth,10)+1
+                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").update({
+                    visible: true,
+                    month: parseInt(durationMonth, 10) + 1
                 })
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알코올 평가(월1회)").update({
-                    visible:true,
-                    month : parseInt(durationMonth,10)+1
+                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알코올 평가(월1회)").update({
+                    visible: true,
+                    month: parseInt(durationMonth, 10) + 1
                 })
-                
+
             }
-            if(durationMonth>long){
-                if(progressFor>80){
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
-                    visible:true
-                })
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").update({
-                    visible:true
-                })
-            }else{
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
-                    visible:false
-                })
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").update({
-                    visible:false
-                })
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).update({
-                    ongoing:false,
-                    success:1
-                })
+            if (durationMonth > long) {
+                if (progressFor > 80) {
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
+                        visible: true
+                    })
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").update({
+                        visible: true
+                    })
+                } else {
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
+                        visible: false
+                    })
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").update({
+                        visible: false
+                    })
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
+                        ongoing: false,
+                        success: 1
+                    })
+                }
+            } else {
+                if (progressFor < 80) {
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
+                        visible: false
+                    })
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").update({
+                        visible: false
+                    })
+                }
             }
-            }else{
-                if(progressFor<80){
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
-                    visible:false
-                })
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").update({
-                    visible:false
-                })
-            }}
             const list = []
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").where("stats", "==", false).where("visible","==",true).get().then(querySnapshot => {
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").where("stats", "==", false).where("visible", "==", true).get().then(querySnapshot => {
                 querySnapshot.forEach(function (doc) {
                     list.push({
                         title: doc.data().title,
@@ -320,81 +321,81 @@ export default function Challenge({ navigation }) {
                 })
                 setItems(list)
             })
-          
+
         } else {
             setChallenge(false)
         }
     }
-    async function checkRate(){
+    async function checkRate() {
         var total
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
-            total = querySnapshot.size-1
+            total = querySnapshot.size - 1
         })
         var withoutVeri
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").where("stats", "==", true).get().then(querySnapshot => {
-            withoutVeri=querySnapshot.size
-            
+            withoutVeri = querySnapshot.size
+
         })
-        
+
         var esteemcnt
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").where("stats", "==", true).get().then(querySnapshot => {
-            esteemcnt=querySnapshot.size
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").where("stats", "==", true).get().then(querySnapshot => {
+            esteemcnt = querySnapshot.size
         })
         var alcoholcnt
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").where("stats", "==", true).get().then(querySnapshot => {
-            alcoholcnt=querySnapshot.size
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").where("stats", "==", true).get().then(querySnapshot => {
+            alcoholcnt = querySnapshot.size
         })
         var stresscnt
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").where("stats", "==", true).get().then(querySnapshot => {
-            stresscnt=querySnapshot.size
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").where("stats", "==", true).get().then(querySnapshot => {
+            stresscnt = querySnapshot.size
         })
         var vericnt
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").where("stats", "==", true).get().then(querySnapshot => {
-            vericnt=querySnapshot.size
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").where("stats", "==", true).get().then(querySnapshot => {
+            vericnt = querySnapshot.size
         })
-        setRatio(withoutVeri+esteemcnt+alcoholcnt+stresscnt+vericnt)
+        setRatio(withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt)
         if (long === 1) {
-            
+
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
-                progress: (withoutVeri+esteemcnt+alcoholcnt+stresscnt+vericnt) * 9.1 - mistake * 5
+                progress: (withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 9.1 - mistake * 5
             })
-            setProgress((withoutVeri+esteemcnt+alcoholcnt+stresscnt+vericnt) * 9.1 - mistake * 5)
+            setProgress((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 9.1 - mistake * 5)
         } else if (long === 3) {
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
-                progress: (withoutVeri+esteemcnt+alcoholcnt+stresscnt+vericnt) * 4.76 - mistake * 5
+                progress: (withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 4.76 - mistake * 5
             })
-            setProgress((withoutVeri+esteemcnt+alcoholcnt+stresscnt+vericnt) * 4.76 - mistake * 5)
+            setProgress((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 4.76 - mistake * 5)
         } else {
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
-                progress: (withoutVeri+esteemcnt+alcoholcnt+stresscnt+vericnt) * 2.7 - mistake * 5
+                progress: (withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 2.7 - mistake * 5
             })
-            setProgress((withoutVeri+esteemcnt+alcoholcnt+stresscnt+vericnt) * 2.7 - mistake * 5)
+            setProgress((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 2.7 - mistake * 5)
         }
     }
     useEffect(() => {
         hi()
-        if(challenge){
+        if (challenge) {
             checkRate()
         }
-    }, [user, change, refreshing, mistake,challenge])
+    }, [user, change, refreshing, mistake, challenge])
 
 
     async function makeMistake() {
         Alert.alert(
             '흡연하셨나요?',
-            '실수할 수 있습니다\n 포기하지말고 끝까지 진행해보세요.',
+            '실수할 수 있습니다\n포기하지말고 끝까지 진행해보세요.',
             [
                 {
                     text: 'No', onPress: () => console.log('CANCEL Pressed')
                 },
                 {
-                    text: 'Yes', onPress: ()=> realMistake()
+                    text: 'Yes', onPress: () => realMistake()
                 }
             ]
         )
-        
+
     }
-    async function realMistake(){
+    async function realMistake() {
         setChange(true)
         var total = 0
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
@@ -407,7 +408,7 @@ export default function Challenge({ navigation }) {
         })
         setChange(false)
     }
-  
+
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -441,7 +442,7 @@ export default function Challenge({ navigation }) {
                         marginBottom: HEIGHT * 0.025
                     }}>
                         <Text style={main.title}>챌린지 정보</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate("ChallengeHistory",{UID:user.uid})}><Text style={main.underline}>챌린지 히스토리</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("ChallengeHistory", { UID: user.uid })}><Text style={main.underline}>챌린지 히스토리</Text></TouchableOpacity>
                     </View>
                     <View style={{
                         width: "92%",
@@ -543,26 +544,26 @@ export default function Challenge({ navigation }) {
                         }
                     </View>
                     {challenge ?
-                    <>
-                    <View style={{
-                        flexDirection:"row",
-                        alignItems:"center",
-                        justifyContent:"space-evenly"
-                    }}>
-                       
-                         <TouchableOpacity onPress={makeMistake} style={{
-                            width: "55%",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            alignSelf: "center",
-                            height: 35,
-                            backgroundColor: "#5cc27b",
-                            borderRadius: 5,
-                            marginTop: HEIGHT * 0.025
-                        }}>
-                            <Text style={[main.title, { color: "#ffffff" }]}>실수 한 번</Text>
-                        </TouchableOpacity>
-                        </View>
+                        <>
+                            <View style={{
+                                flexDirection: "row",
+                                alignItems: "center",
+                                justifyContent: "space-evenly"
+                            }}>
+
+                                <TouchableOpacity onPress={makeMistake} style={{
+                                    width: "55%",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    alignSelf: "center",
+                                    height: 35,
+                                    backgroundColor: "#5cc27b",
+                                    borderRadius: 5,
+                                    marginTop: HEIGHT * 0.025
+                                }}>
+                                    <Text style={[main.title, { color: "#ffffff" }]}>실수 한 번</Text>
+                                </TouchableOpacity>
+                            </View>
                         </>
                         :
                         <TouchableOpacity onPress={() => navigation.navigate("ChallengeRegister")} style={{
@@ -589,7 +590,7 @@ export default function Challenge({ navigation }) {
                         marginBottom: HEIGHT * 0.025
                     }}>
                         <Text style={main.title}>진행해야할 미션</Text>
-                        <TouchableOpacity onPress={() => navigation.navigate("ChallengeMission",{UID:user.uid})}><Text style={main.underline}>전체미션</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate("ChallengeMission", { UID: user.uid })}><Text style={main.underline}>전체미션</Text></TouchableOpacity>
                     </View>
                     <ScrollView horizontal={true}>
                         {challenge ?
