@@ -47,7 +47,9 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionSmokeThree({ navigation }) {
+export default function SolutionSmokeThree({ navigation,route }) {
+    const {UID}=route.params
+    const {total}=route.params
     const [one, setOne] = useState(false);
     const [two, setTwo] = useState(false);
     const [three, setThree] = useState(false);
@@ -92,6 +94,7 @@ export default function SolutionSmokeThree({ navigation }) {
     }
 
     useEffect(() => {
+        
         one === true ? countone = countone + 1 : countone = countone - 1;
         two === true ? countone = countone + 1 : countone = countone - 1;
         three === true ? counttwo = counttwo + 1 : counttwo = counttwo - 1;
@@ -115,8 +118,17 @@ export default function SolutionSmokeThree({ navigation }) {
             console.log(selecttwo);
         }
         if((counttwo===2)&&(countone===2)) {
+            var size
+            if(selectone[0]==="오전"&&selecttwo[0]==="아침 첫담배"){
+                size=2
+            }else if(selectone[0]==="오후 & 저녁"&&selecttwo[0]==="그 외"){
+                size=0
+            }else{
+                size=1
+            }
+            size=size+total
             setTimeout(() => {
-                navigation.navigate('SolutionAOne')
+                navigation.navigate('SolutionSmokeResult',{UID:UID,total:size})
             }, 300)
         }
     }, [one, two, three, four]);

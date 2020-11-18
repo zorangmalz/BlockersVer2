@@ -277,7 +277,30 @@ export default function SelfEsteem({ navigation, Nextpage, Title,total,name}) {
 }
 
 export function SelfEsteemMain({ navigation,route }) {
+    const {UID}=route.params
     
+    const [items,setItems]=useState([])
+    async function getInfo(){
+        var total
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").get().then(querySnapshot=>{
+            total=querySnapshot.size-1
+        })
+        const list=[]
+        firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").onSnapshot(querySnapshot=>{
+            querySnapshot.forEach(doc=>{
+                list.push({
+                    degree:doc.data().stats,
+                    num:doc.id
+                })
+            })
+            setItems(list)
+        })
+        console.log(items)
+    }
+
+    useEffect(()=>{
+        getInfo()
+    },[])
     
     const title = "자기효능감은 금연과 밀접한 관계가 있습니다. \n자기 효능감을 체크해 보세요."
     const data = [
@@ -329,7 +352,7 @@ export function SelfEsteemMain({ navigation,route }) {
                         style={{
                             marginLeft: "8%"
                         }}
-                        data={data}
+                        data={items}
                         renderItem={({item}) => (
                             <>
                             <View style={{
@@ -364,11 +387,19 @@ export function SelfEsteemMain({ navigation,route }) {
                                     alignItems: "center",
                                     justifyContent: "center"
                                 }}>
+                                    {item.degree===false ?
                                     <Text style={{
                                         fontFamily: "NunitoSans-Bold",
                                         fontSize: 14,
                                         color: "#5cc27b"
-                                    }}>{item.degree}</Text>
+                                    }}>-</Text>
+                                    :
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#5cc27b"
+                                    }}>성공</Text>
+                                    }
                                 </View>
                             </View>
                             </>

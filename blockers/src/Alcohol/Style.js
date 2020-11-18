@@ -378,30 +378,30 @@ export function AlcoholThree({ navigation, Nextpage, Title,total }) {
 
 export function AlcoholMain({ navigation,route }) {
     const {UID}=route.params
-    const [long,setLong]=useState("")
+    
+    const [items,setItems]=useState([])
     async function getInfo(){
         var total
         await firestore().collection("UserInfo").doc(UID).collection("Challenge").get().then(querySnapshot=>{
             total=querySnapshot.size-1
         })
-        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).get().then(doc=>{
-            setLong(doc.data().long)
-        })
         const list=[]
-        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회").collection("alcohol").onSnapshot(querySnapshot=>{
-            querySnapshot.forEach(function(doc){
+        firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").onSnapshot(querySnapshot=>{
+            querySnapshot.forEach(doc=>{
                 list.push({
-                    stat:doc.data().stats
+                    degree:doc.data().stats,
+                    num:doc.id
                 })
             })
-          
+            setItems(list)
         })
-        console.log(total)
-        console.log(list)
+        console.log(items)
     }
+
     useEffect(()=>{
         getInfo()
-    })
+    },[])
+
     const title = "알콜 중독은 흡연 실패에 큰 영향을 미칩니다. \n검사를 통해 본인의 알콜 중독정도를 파악해보세요";
 
     const data = [
@@ -453,7 +453,7 @@ export function AlcoholMain({ navigation,route }) {
                         style={{
                             marginLeft: "8%"
                         }}
-                        data={data}
+                        data={items}
                         renderItem={({item}) => (
                             <>
                             <View style={{
@@ -488,11 +488,19 @@ export function AlcoholMain({ navigation,route }) {
                                     alignItems: "center",
                                     justifyContent: "center"
                                 }}>
+                                    {item.degree===false ?
                                     <Text style={{
                                         fontFamily: "NunitoSans-Bold",
                                         fontSize: 14,
                                         color: "#5cc27b"
-                                    }}>{item.degree}</Text>
+                                    }}>-</Text>
+                                    :
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#5cc27b"
+                                    }}>성공</Text>
+                                    }
                                 </View>
                             </View>
                             </>

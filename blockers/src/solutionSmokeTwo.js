@@ -49,7 +49,9 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionSmokeTwo({ navigation }) {
+export default function SolutionSmokeTwo({ navigation,route }) {
+    const {UID}=route.params
+    const {total}=route.params
     const [one, setOne] = useState(false);
     const [two, setTwo] = useState(false);
     const [three, setThree] = useState(false);
@@ -61,7 +63,7 @@ export default function SolutionSmokeTwo({ navigation }) {
     const pushone = () => {
         setSelect(select.concat('5분 이내'));
         setTimeout(() => {
-            navigation.navigate('SolutionSmokeThree');
+            navigation.navigate('SolutionSmokeThree',{UID:UID,total:total+3});
         }, 200)
     }
 
@@ -72,7 +74,7 @@ export default function SolutionSmokeTwo({ navigation }) {
     const pushtwo = () => {
         setSelect(select.concat('30분 이내'));
         setTimeout(() => {
-            navigation.navigate('SolutionSmokeThree');
+            navigation.navigate('SolutionSmokeThree',{UID:UID,total:total+2});
         }, 200)
     }
 
@@ -83,7 +85,7 @@ export default function SolutionSmokeTwo({ navigation }) {
     const pushthree = () => {
         setSelect(select.concat('1시간 이내'));
         setTimeout(() => {
-            navigation.navigate('SolutionSmokeThree');
+            navigation.navigate('SolutionSmokeThree',{UID:UID,total:total+1});
         }, 200)
     }
 
@@ -94,7 +96,7 @@ export default function SolutionSmokeTwo({ navigation }) {
     const pushfour = () => {
         setSelect(select.concat('1시간 이후'));
         setTimeout(() => {
-            navigation.navigate('SolutionSmokeThree');
+            navigation.navigate('SolutionSmokeThree',{UID:UID,total:total+0});
         }, 200)
     }
 

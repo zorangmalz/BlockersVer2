@@ -49,10 +49,12 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionSmoke({ navigation }) {
+export default function SolutionSmoke({ navigation,route }) {
+    const {UID}=route.params
     const [ten, setTen] = useState(false);
     const [twenty, setTwenty] = useState(false);
     const [thirty, setThirty] = useState(false);
+    const [forty,setForty]=useState(false);
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
     var count = 3;
@@ -60,7 +62,7 @@ export default function SolutionSmoke({ navigation }) {
     const pushten = () => {
         setSelect(select.concat('0~10 개피'));
         setTimeout(() => {
-            navigation.navigate('SolutionSmokeOne');
+            navigation.navigate('SolutionSmokeOne',{UID:UID,total:0});
         }, 200)
     }
 
@@ -71,7 +73,7 @@ export default function SolutionSmoke({ navigation }) {
     const pushtwenty = () => {
         setSelect(select.concat('11~20 개피'));
         setTimeout(() => {
-            navigation.navigate('SolutionSmokeOne');
+            navigation.navigate('SolutionSmokeOne',{UID:UID,total:1});;
         }, 200)
     }
 
@@ -80,32 +82,45 @@ export default function SolutionSmoke({ navigation }) {
     }
 
     const pushthirty = () => {
-        setSelect(select.concat('20개피 이상'));
+        setSelect(select.concat('20~30 개피'));
         setTimeout(() => {
-            navigation.navigate('SolutionSmokeOne');
+            navigation.navigate('SolutionSmokeOne',{UID:UID,total:2});
         }, 200)
     }
 
     const filterthirty = () => {
-        setSelect(select.filter(info => info !== '20개피 이상'))
+        setSelect(select.filter(info => info !== '20~30 개피'))
+    }
+
+    const pushforty = () => {
+        setSelect(select.concat('30개피 이상'));
+        setTimeout(() => {
+            navigation.navigate('SolutionSmokeOne',{UID:UID,total:3});
+        }, 200)
+    }
+
+    const filterforty = () => {
+        setSelect(select.filter(info => info !== '30개피 이상'))
     }
 
     useEffect(() => {
         ten === true ? count = count + 1 : count = count - 1;
         twenty === true ? count = count + 1 : count = count - 1;
         thirty === true ? count = count + 1 : count = count - 1;
+        forty === true ? count = count + 1 : count = count - 1;
         if ((count <= 2) && (count >= 0)) {
             setClear(true);
             console.log(select)
         } else {
             if(select[0]==="0~10 개피") setTen(false);
             if(select[0]==="11~20 개피") setTwenty(false);
-            if(select[0]==="20개피 이상") setThirty(false);
+            if(select[0]==="20~30 개피") setThirty(false);
+            if(select[0]==="30개피 이상") setForty(false);
             setSelect(select.slice(1, select.length));
             console.log(select);
             setClear(false);
         }
-    }, [ten, twenty, thirty]);
+    }, [ten, twenty, thirty,forty]);
 
     return (
         <>
@@ -155,17 +170,30 @@ export default function SolutionSmoke({ navigation }) {
                     {thirty === false ?
                         <TouchableOpacity onPressIn={pushthirty} onPress={()=>setThirty(!thirty)}>
                             <View style={solution.buttonBox}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>20개피 이상</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>20~30 개피</Text>
                             </View>
                         </TouchableOpacity>
                         :
                         <TouchableOpacity onPressIn={filterthirty} onPress={()=>setThirty(!thirty)}>
                             <View style={solution.activeButton}>
-                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#FFFFFF' }]}>20개피 이상</Text>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#FFFFFF' }]}>20~30 개피</Text>
                             </View>
                         </TouchableOpacity>
                     }
-                    <TextInput placeholder="Ex) 30" placeholderTextColor="#707070" style={{width: '50%', height: 50, paddingBottom: 8, borderBottomColor: '#303030', borderBottomWidth: 1, fontSize: 21, fontFamily: 'NunitoSans-Bold', color: '#707070', alignSelf: 'center'}} />
+                    {forty === false ?
+                        <TouchableOpacity onPressIn={pushforty} onPress={()=>setForty(!forty)}>
+                            <View style={solution.buttonBox}>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>30개피 이상</Text>
+                            </View>
+                        </TouchableOpacity>
+                        :
+                        <TouchableOpacity onPressIn={filterforty} onPress={()=>setForty(!forty)}>
+                            <View style={solution.activeButton}>
+                                <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#FFFFFF' }]}>30개피 이상</Text>
+                            </View>
+                        </TouchableOpacity>
+                    }
+                    
                 </ScrollView>
             </SafeAreaView>
         </>

@@ -246,7 +246,32 @@ export default function Stress({ navigation, Nextpage, Title,total }) {
     )
 }
 
-export function StressMain({ navigation }) {
+export function StressMain({ navigation ,route}) {
+    const {UID}=route.params
+    
+    const [items,setItems]=useState([])
+    async function getInfo(){
+        var total
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").get().then(querySnapshot=>{
+            total=querySnapshot.size-1
+        })
+        const list=[]
+        firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").onSnapshot(querySnapshot=>{
+            querySnapshot.forEach(doc=>{
+                list.push({
+                    degree:doc.data().stats,
+                    num:doc.id
+                })
+            })
+            setItems(list)
+        })
+        console.log(items)
+    }
+
+    useEffect(()=>{
+        getInfo()
+    },[])
+    
     const title = "스트레스는 금연의 적! 스트레스를 체크하고 \n금연 실패를 예방해보세요.";
     const data = [
         {
@@ -297,7 +322,7 @@ export function StressMain({ navigation }) {
                         style={{
                             marginLeft: "8%"
                         }}
-                        data={data}
+                        data={items}
                         renderItem={({item}) => (
                             <>
                             <View style={{
@@ -332,11 +357,19 @@ export function StressMain({ navigation }) {
                                     alignItems: "center",
                                     justifyContent: "center"
                                 }}>
+                                    {item.degree===false ?
                                     <Text style={{
                                         fontFamily: "NunitoSans-Bold",
                                         fontSize: 14,
                                         color: "#5cc27b"
-                                    }}>{item.degree}</Text>
+                                    }}>-</Text>
+                                    :
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#5cc27b"
+                                    }}>성공</Text>
+                                    }
                                 </View>
                             </View>
                             </>

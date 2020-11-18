@@ -73,8 +73,8 @@ const wait = (timeout) => {
     });
 }
 
-export default function HomeScreen({ navigation }) {
-  
+export default function HomeScreen({ navigation}) {
+    
     const ref = firestore().collection("UserInfo");
     const DATA = [];
     const num = 1;

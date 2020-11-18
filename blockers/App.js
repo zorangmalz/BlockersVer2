@@ -43,7 +43,7 @@ import LoginMain from './src/LoginMain';
 import LoginFind from './src/LoginFind';
 import LoginVerification from './src/LoginVerification';
 import LoginFindId from './src/LoginFindId';
-
+import Challenge, { ChallengeVeriResult,ChallengeMotivationResult,ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowHow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage,ChallengeSwearResult } from './src/Challenge/ChallengeScreen';
 import ProfileNickname from './src/ProfileNickname';
 import LoginVerificationProfile from './src/LoginVerificationProfile';
 import LoginPassword from "./src/LoginPassword";
@@ -68,7 +68,7 @@ import StressResult from './src/Stress/StressResult'
 import AlcoholResult from './src/Alcohol/AlcoholResult'
 import SelfEsteemResult from './src/SelfEsteem/SelfEsteemResult'
 import DiaryWrite, { DiaryList } from './src/Diary/DiaryScreen';
-
+import ChatbotMain, { ChatbotOne, ChatbotThree, ChatbotTwo } from './src/Chatbot/ChatbotScreen';
 import SmokeAlertOne, { SmokeAlertFour, SmokeAlertThree, SmokeAlertTwo } from './src/SmokeAlert/SmokeAlert';
 import SolutionAOne from './src/SolutionAOne';
 import SolutionATwo from './src/SolutionATwo';
@@ -95,7 +95,9 @@ import SolutionSmoke from './src/SolutionSmoke';
 import SolutionSmokeOne from './src/SolutionSmokeOne';
 import SolutionSmokeTwo from './src/SolutionSmokeTwo';
 import SolutionSmokeThree from './src/SolutionSmokeThree';
+import SolutionSmokeResult from './src/SolutionSmokeResult';
 import SolutionResult from './src/SolutionResult';
+import NicotineResult from "./src/NicotineResult";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -1240,8 +1242,24 @@ const App = ({ navigation }) => {
             }}
           />
           <Stack.Screen 
+            name="SolutionSmokeResult"
+            component={SolutionSmokeResult}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
             name="SolutionResult"
             component={SolutionResult}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+           <Stack.Screen 
+            name="NicotineResult"
+            component={NicotineResult}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false

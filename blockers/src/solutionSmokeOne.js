@@ -49,7 +49,9 @@ const solution = StyleSheet.create({
     }
 })
 
-export default function SolutionSmokeOne({ navigation }) {
+export default function SolutionSmokeOne({ navigation,route }) {
+    const {UID}=route.params
+    const {total}=route.params
     const [yesone, setyesone] = useState(false);
     const [noone, setnoone] = useState(false);
     const [yestwo, setyestwo] = useState(false);
@@ -91,10 +93,12 @@ export default function SolutionSmokeOne({ navigation }) {
     }
 
     useEffect(() => {
+        
         yesone === true ? countone = countone + 1 : countone = countone - 1;
         noone === true ? countone = countone + 1 : countone = countone - 1;
         yestwo === true ? counttwo = counttwo + 1 : counttwo = counttwo - 1;
         notwo === true ? counttwo = counttwo + 1 : counttwo = counttwo - 1;
+        
         if ((countone <= 2) && (countone >= 0)) {
             console.log(selectone);
         } 
@@ -114,8 +118,19 @@ export default function SolutionSmokeOne({ navigation }) {
             console.log(selecttwo);
         }
         if((counttwo===2)&&(countone===2)) {
+            console.log(selectone,selecttwo)
+            var size
+            if(selectone[0]==="네원"&&selecttwo[0]==="네투"){
+                size=2
+            }else if(selectone[0]==="아니오원"&&selecttwo[0]==="아니오투"){
+                size=0
+            }else{
+                size=1
+            }
+            size=size+total
+            console.log(size)
             setTimeout(() => {
-                navigation.navigate('SolutionSmokeTwo')
+                navigation.navigate('SolutionSmokeTwo',{UID:UID,total:size})
             }, 300)
         }
     }, [yesone, noone, yestwo, notwo]);

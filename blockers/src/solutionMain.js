@@ -2,181 +2,104 @@ import React, { useState } from 'react';
 import {
     View,
     Text,
-    TouchableOpacity,
-    Image,
-    SafeAreaView,
-    StatusBar,
     StyleSheet,
+    TouchableOpacity,
     Dimensions,
-    Modal
+    StatusBar,
+    SafeAreaView,
+    ScrollView,
+    FlatList
 } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const welcome = StyleSheet.create({
-    box: {
-        backgroundColor: '#333953',
-        opacity: 0.95,
-        width: "100%",
-        height: 180,
-        justifyContent: 'space-evenly',
-        alignItems: 'flex-start',
-        marginTop: 16,
-        flexDirection: 'row',
-        paddingTop: 16
-    },
-    largeText: {
-        fontSize: 24,
-        fontFamily: 'NunitoSans-Bold',
-        color: '#5CC27B',
-        textAlign: 'center'
-    },
-    mediumText: {
-        fontSize: 18,
-        color: '#303030',
-        textAlign: 'center',
-        marginTop: 20,
-        fontFamily: 'NunitoSans-Regular'
-    },
-    smallText: {
-        fontSize: 15,
-        color: '#FFFFFF',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        fontFamily: 'NunitoSans-Regular'
-    }
-})
+const HEIGHT = Dimensions.get("window").height;
 
-export default function SolutionMain({navigation}) {
-    const [skipmodal, setSkipmodal] = useState(false);
-    const skipView = () => {
-        setTimeout(() => {
-            setSkipmodal(true)
-        }, 200)
-    }
+export default function SolutionMain({navigation,route}) {
+    const {UID}=route.params
+
+    const solution = StyleSheet.create({
+        largeText: {
+            fontSize: 16,
+            fontFamily: 'NunitoSans-Bold',
+            color: '#303030',
+            marginLeft: "8%",
+            marginBottom: 50,
+            marginTop: 28,
+            marginRight: 24
+        },
+        mediumText: {
+            fontSize: 18,
+            fontFamily: 'NunitoSans-Regular',
+            color: '#303030',
+            opacity: 0.8
+        },
+        buttonBox: {
+            width: "80%",
+            height: 50,
+            borderRadius: 28,
+            borderWidth: 1,
+            borderColor: '#5CC27B',
+            marginLeft: 38,
+            marginRight: 38,
+            marginBottom: HEIGHT * 0.024,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        activeButton: {
+            width: "80%",
+            height: 50,
+            borderRadius: 28,
+            backgroundColor: '#5CC27B',
+            marginLeft: 38,
+            marginRight: 38,
+            marginBottom: HEIGHT * 0.024,
+            justifyContent: 'center',
+            alignItems: 'center',
+        }
+    })
+
+    const title = "니코틴 중독 정도를 파악하고 \n 맞춤 금연전략을 세워보세요";
+
     return (
         <>
-            <SafeAreaView style={{flex: 0}} />
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{ flex: 1, backgroundColor: '#F8F8F8', justifyContent: 'center' }}>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={skipmodal}
-                    onRequestClose={() => setSkipmodal(false)}
-                >
-                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
-                </Modal>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={skipmodal}
-                    onRequestClose={() => setSkipmodal(false)}
-                >
-                    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                        <View style={{
-                            width: 280,
-                            height: 180,
-                            borderRadius: 20,
-                            backgroundColor: '#ffffff',
+            <SafeAreaView style={{flex: 1, backgroundColor: "#ffffff"}}>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={25} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
                             alignItems: 'center',
-                            justifyContent: 'space-between',
-                            borderWidth: 1,
-                            borderColor: '#cccccc'
-                        }}>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Bold',
-                                fontSize: 16,
-                                color: '#303030',
-                                opacity: 0.8,
-                                marginTop: 20
-                            }}>건너뛰시겠습니까?</Text>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Regular',
-                                fontSize: 14,
-                                color: '#303030',
-                                opacity: 0.6,
-                                textAlign: 'center'
-                            }}>홈화면의 챗봇과 미션 클릭을 통해 다시 진행할 수 있습니다.</Text>
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                marginTop: 15
-                            }}>
-                                <TouchableOpacity onPress={() => setSkipmodal(false)} style={{
-                                    width: 140,
-                                    height: 55,
-                                    borderBottomLeftRadius: 20,
-                                    backgroundColor: '#999999',
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>취소</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => navigation.navigate('Home')}
-                                    style={{
-                                        width: 140,
-                                        height: 55,
-                                        borderBottomRightRadius: 20,
-                                        backgroundColor: '#5cc27b',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>건너뛰기</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
-                <View style={{
-                    width: "90%",
-                    height: "90%",
-                    backgroundColor: '#FFFFFF',
-                    margin: 20,
-                    borderRadius: 30
-                }}>
-                    <TouchableOpacity onPress={skipView} style={{ alignSelf: 'flex-end', paddingRight: 17, paddingTop: 17 }}>
-                        <Text style={{ textDecorationLine: 'underline', fontSize: 12, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>건너뛰기</Text>
-                    </TouchableOpacity>
-                    <Text style={[welcome.largeText, { alignSelf: 'center', paddingTop: 8 }]}>Welcome Blockers</Text>
-                    <View style={welcome.box}>
-                        <View style={{ justifyContent: 'center', alignItems: 'center', width: 120 }}>
-                            <Text style={welcome.smallText}>Blockers</Text>
-                            <Text style={welcome.smallText}>평균 성공률</Text>
-                            {/* <Image style={{ marginTop: 16, marginBottom: 5 }} source={require('./icon/percent.png')} /> */}
-                        </View>
-                        <View style={{ justifyContent: 'center', alignItems: 'center', width: 120 }}>
-                            <Text style={welcome.smallText}>Blockers</Text>
-                            <Text style={welcome.smallText}>평균 상금</Text>
-                            <Image style={{ marginTop: 16, marginBottom: 5 }} source={require('./icon/money.png')} />
-                            <Text style={[welcome.largeText, { color: '#FFFFFF' }]}>10,000 원</Text>
-                        </View>
-                    </View>
-                    <View style={{ marginTop: 12 }}>
-                        <Text style={welcome.mediumText}>Blockers에 오신 것을 환영합니다!</Text>
-                        <Text style={welcome.mediumText}>설문조사를 통해 흡연 습관 분석과</Text>
-                        <Text style={welcome.mediumText}>맞춤 솔루션을 제공받으세요!</Text>
-                    </View>
-                    <TouchableOpacity style={{ 
-                        position: 'relative', 
-                        top: "10%", 
-                        alignSelf: 'center', 
-                        marginTop: 45 
-                    }}
-                        onPress={()=>navigation.navigate('SolutionSmoke')}
+                            marginLeft: 20
+                        }}
                     >
-                        <View style={{ width: 150, height: 50, borderRadius: 28, backgroundColor: '#5CC27B', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ color: '#FFFFFF', fontSize: 16, fontFamily: 'NunitoSans-Bold', textAlign: 'center' }}>시작하기</Text>
-                        </View>
-                    </TouchableOpacity>
+                        <Text style={{ fontSize: 18 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>니코틴 중독 평가</Text>
+                        </Text>
+                    </View>
                 </View>
+                <ScrollView>
+                    <Text style={[solution.largeText, {marginBottom: HEIGHT * 0.07, lineHeight: 30}]}>{title}</Text>
+                  
+                    
+                </ScrollView>
+            </SafeAreaView>
+            <SafeAreaView style={{ flex: 0 }}>
+                <TouchableOpacity onPress={() => navigation.navigate("SolutionSmoke",{UID:UID})}>
+                    <View style={{
+                        width: "100%",
+                        height: 60,
+                        backgroundColor: '#5cc27b',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}>
+                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>시작하기</Text>
+                    </View>
+                </TouchableOpacity>
             </SafeAreaView>
         </>
     )

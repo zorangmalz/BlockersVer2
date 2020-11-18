@@ -3555,7 +3555,8 @@ export function ChallengeVeriImage({ navigation,route}) {
         storageOptions: {
             skipBackup: true,
             path: 'images',
-        }
+        },
+        quality:0.1
     };
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
