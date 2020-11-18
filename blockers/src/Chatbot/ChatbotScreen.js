@@ -352,7 +352,8 @@ export function ChatbotThree({ navigation }) {
 }
 
 function TabOne({ navigation }) {
-    const challenge = true;
+    const challengenicotine = false;
+    const challengesmoke = false;
     const nicotine = 0;
     const data = {
         labels: ["스트레스성", "즐거움", "습관성"],
@@ -374,8 +375,8 @@ function TabOne({ navigation }) {
                         justifyContent: "flex-start",
                         marginBottom: 16
                     }}>
-                        <View style={{width: 8, height: 8, backgroundColor: "#303030", borderRadius: 4, marginRight: 8}} />
-                        <Text style={{fontFamily: "NunitoSans-Bold", fontSize: 14, color: "#303030"}}>금연한지 20분 경과</Text>
+                        <View style={{ width: 8, height: 8, backgroundColor: "#303030", borderRadius: 4, marginRight: 8 }} />
+                        <Text style={{ fontFamily: "NunitoSans-Bold", fontSize: 14, color: "#303030" }}>금연한지 20분 경과</Text>
                     </View>
                     <View style={{
                         marginTop: 16,
@@ -391,136 +392,146 @@ function TabOne({ navigation }) {
                     </View>
                 </View>
                 <View style={{ height: 1, backgroundColor: "#cccccc", width: WIDTH }} />
-                {challenge ?
-                    <>
-                        <View style={{ marginTop: 16, marginLeft: 32, marginRight: 32 }}>
+                <>
+                    {challengenicotine ?
+                        <></>
+                        :
+                        <View style={{ width: WIDTH, height: 220, position: "absolute", left: 0, top: 328, backgroundColor: "#000000", opacity: 0.7, alignItems: "center", zIndex: 1, justifyContent: "center" }}>
                             <Text style={{
                                 fontFamily: "NunitoSans-Bold",
-                                fontSize: 18
-                            }}>
-                                <Text style={{ color: "#303030" }}>니코틴 중독 정도: </Text>
-                                <Text style={{ color: "#5cc27b" }}>Low</Text>
-                            </Text>
-                            <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#5CC27B', '#F6F600', '#FF0400']} style={{ width: "100%", height: 19, borderRadius: 28, marginTop: 16 }} />
-                            <View style={{
-                                flexDirection: "row",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                paddingLeft: 4,
-                                paddingRight: 4,
-                                marginTop: 8
-                            }}>
-                                <Text style={{
-                                    fontSize: 14,
-                                    width: 60,
-                                    fontFamily: nicotine === 0 ? "NunitoSans-Bold" : "NunitoSans-Regular",
-                                    color: nicotine === 0 ? "#5cc27b" : "#303030"
-                                }}>Low</Text>
-                                <Text style={{
-                                    fontSize: 14,
-                                    width: 60,
-                                    fontFamily: nicotine === 1 ? "NunitoSans-Bold" : "NunitoSans-Regular",
-                                    color: nicotine === 1 ? "#f6f600" : "#303030"
-                                }}>Danger</Text>
-                                <Text style={{
-                                    fontSize: 14,
-                                    width: 60,
-                                    fontFamily: nicotine === 2 ? "NunitoSans-Bold" : "NunitoSans-Regular",
-                                    color: nicotine === 2 ? "#ff0400" : "#303030"
-                                }}>Addicted</Text>
-                            </View>
-                            <View style={{
-                                marginTop: 16,
-                                marginBottom: 16
-                            }}>
-                                <Text style={{
-                                    fontFamily: "NunitoSans-Regular",
-                                    fontSize: 16,
-                                    color: "#303030",
-                                    opacity: 0.7,
-                                    lineHeight: 26
-                                }}>낮은 수준의 니코틴 중독을 보입니다.{"\n"}본인의 의지로 금연을 충분히 할 수 있습니다.</Text>
-                            </View>
+                                color: "#ffffff"
+                            }}>챌린지를 참여해야 확인할 수 있습니다.</Text>
                         </View>
-                        <View style={{ height: 1, backgroundColor: "#cccccc", width: WIDTH }} />
-                        <BarChart
-                            style={{
-                                marginTop: HEIGHT * 0.03,
-                                alignSelf: "center",
-                                borderWidth: 1,
-                                borderColor: "#5cc27b",
-                                padding: 12
-                            }}
-                            width={WIDTH * 0.8}
-                            height={180}
-                            data={data}
-                            chartConfig={{
-                                backgroundColor: "#ffffff",
-                                backgroundGradientFrom: "#ffffff",
-                                backgroundGradientTo: "#ffffff",
-                                fillShadowGradient: "#5cc27b",
-                                fillShadowGradientOpacity: 1,
-                                decimalPlaces: 2, // optional, defaults to 2dp
-                                color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                                labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-                                style: {
-                                    borderRadius: 16
-                                },
-                            }}
-                            showBarTops={false}
-                            withInnerLines={false}
-                            fromZero={true}
-                        />
-                        <View style={{ marginRight: 32, marginLeft: 32, marginTop: 16 }}>
-                            <Text style={{
-                                fontFamily: "NunitoSans-Bold",
-                                fontSize: 18
-                            }}>
-                                <Text style={{ color: "#303030" }}>주요 흡연 요인: </Text>
-                                <Text style={{ color: "#5cc27b" }}>스트레스</Text>
-                            </Text>
-                            <View style={{
-                                marginTop: 16,
-                                marginBottom: 16
-                            }}>
-                                <Text style={{
-                                    fontFamily: "NunitoSans-Regular",
-                                    fontSize: 16,
-                                    color: "#303030",
-                                    opacity: 0.7,
-                                    lineHeight: 26
-                                }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.</Text>
-                            </View>
-                            <Text style={{
-                                fontFamily: "NunitoSans-Bold",
-                                fontSize: 18
-                            }}>
-                                <Text style={{ color: "#303030" }}>보조 흡연 요인: </Text>
-                                <Text style={{ color: "#FFB83D" }}>습관성, 즐거움 추구</Text>
-                            </Text>
-                            <View style={{
-                                marginTop: 16,
-                                marginBottom: 16
-                            }}>
-                                <Text style={{
-                                    fontFamily: "NunitoSans-Regular",
-                                    fontSize: 16,
-                                    color: "#303030",
-                                    opacity: 0.7,
-                                    lineHeight: 26
-                                }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.</Text>
-                            </View>
-                        </View>
-                    </>
-                    :
-                    <View style={{ width: WIDTH, height: HEIGHT - 436, backgroundColor: "#303030", opacity: 0.7, alignItems: "center" }}>
+                    }
+                    <View style={{ marginTop: 16, marginLeft: 32, marginRight: 32, zIndex: 0 }}>
                         <Text style={{
                             fontFamily: "NunitoSans-Bold",
-                            color: "#ffffff",
-                            marginTop: 100
-                        }}>챌린지를 참여해야 확인할 수 있습니다.</Text>
+                            fontSize: 18
+                        }}>
+                            <Text style={{ color: "#303030" }}>니코틴 중독 정도: </Text>
+                            <Text style={{ color: "#5cc27b" }}>Low</Text>
+                        </Text>
+                        <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#5CC27B', '#F6F600', '#FF0400']} style={{ width: "100%", height: 19, borderRadius: 28, marginTop: 16 }} />
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            paddingLeft: 4,
+                            paddingRight: 4,
+                            marginTop: 8
+                        }}>
+                            <Text style={{
+                                fontSize: 14,
+                                width: 60,
+                                fontFamily: nicotine === 0 ? "NunitoSans-Bold" : "NunitoSans-Regular",
+                                color: nicotine === 0 ? "#5cc27b" : "#303030"
+                            }}>Low</Text>
+                            <Text style={{
+                                fontSize: 14,
+                                width: 60,
+                                fontFamily: nicotine === 1 ? "NunitoSans-Bold" : "NunitoSans-Regular",
+                                color: nicotine === 1 ? "#f6f600" : "#303030"
+                            }}>Danger</Text>
+                            <Text style={{
+                                fontSize: 14,
+                                width: 60,
+                                fontFamily: nicotine === 2 ? "NunitoSans-Bold" : "NunitoSans-Regular",
+                                color: nicotine === 2 ? "#ff0400" : "#303030"
+                            }}>Addicted</Text>
+                        </View>
+                        <View style={{
+                            marginTop: 16,
+                            marginBottom: 16
+                        }}>
+                            <Text style={{
+                                fontFamily: "NunitoSans-Regular",
+                                fontSize: 16,
+                                color: "#303030",
+                                opacity: 0.7,
+                                lineHeight: 26
+                            }}>낮은 수준의 니코틴 중독을 보입니다.{"\n"}본인의 의지로 금연을 충분히 할 수 있습니다.</Text>
+                        </View>
                     </View>
-                }
+                    <View style={{ height: 1, backgroundColor: "#cccccc", width: WIDTH }} />
+                    {challengesmoke ?
+                        <></>
+                        :
+                        <View style={{ width: WIDTH, height: 536, position: "absolute", left: 0, top: 548, backgroundColor: "#000000", opacity: 0.7, alignItems: "center", zIndex: 1, justifyContent: "center" }}>
+                            <Text style={{
+                                fontFamily: "NunitoSans-Bold",
+                                color: "#ffffff"
+                            }}>챌린지를 참여해야 확인할 수 있습니다.</Text>
+                        </View>
+                    }
+                    <BarChart
+                        style={{
+                            marginTop: HEIGHT * 0.03,
+                            alignSelf: "center",
+                            borderWidth: 1,
+                            borderColor: "#5cc27b",
+                            padding: 12
+                        }}
+                        width={WIDTH * 0.8}
+                        height={180}
+                        data={data}
+                        chartConfig={{
+                            backgroundColor: "#ffffff",
+                            backgroundGradientFrom: "#ffffff",
+                            backgroundGradientTo: "#ffffff",
+                            fillShadowGradient: "#5cc27b",
+                            fillShadowGradientOpacity: 1,
+                            decimalPlaces: 2, // optional, defaults to 2dp
+                            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+                            style: {
+                                borderRadius: 16
+                            },
+                        }}
+                        showBarTops={false}
+                        withInnerLines={false}
+                        fromZero={true}
+                    />
+                    <View style={{ marginRight: 32, marginLeft: 32, marginTop: 16 }}>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 18
+                        }}>
+                            <Text style={{ color: "#303030" }}>주요 흡연 요인: </Text>
+                            <Text style={{ color: "#5cc27b" }}>스트레스</Text>
+                        </Text>
+                        <View style={{
+                            marginTop: 16,
+                            marginBottom: 16
+                        }}>
+                            <Text style={{
+                                fontFamily: "NunitoSans-Regular",
+                                fontSize: 16,
+                                color: "#303030",
+                                opacity: 0.7,
+                                lineHeight: 26
+                            }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.</Text>
+                        </View>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 18
+                        }}>
+                            <Text style={{ color: "#303030" }}>보조 흡연 요인: </Text>
+                            <Text style={{ color: "#FFB83D" }}>습관성, 즐거움 추구</Text>
+                        </Text>
+                        <View style={{
+                            marginTop: 16,
+                            marginBottom: 16
+                        }}>
+                            <Text style={{
+                                fontFamily: "NunitoSans-Regular",
+                                fontSize: 16,
+                                color: "#303030",
+                                opacity: 0.7,
+                                lineHeight: 26
+                            }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.</Text>
+                        </View>
+                    </View>
+                </>
             </ScrollView>
         </>
     )
