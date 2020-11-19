@@ -107,6 +107,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [revmtk, setRevmtk] = useState();
     const textbox = useRef()
     const [loading, setLoading] = useState(false);
+    const [del, setDel] = useState(false);
     //for Reply
     const [relikeState, setReLikeState] = useState()
     const [reMelike, setReMeLike] = useState()
@@ -150,52 +151,55 @@ export default function CommunityOtherPost({ route, navigation }) {
 
     //사용자 정보를 불러오는 함수. 불러온후에 사용자 닉네임을 설정한다(화면에 띄워줌)
     useEffect(() => {
-        var a = [1, 2, 3, 4]
-        console.log(a.splice(0, 0, 0), "alsekjfpwojfopwije")
+        if (del === false) {
+            var a = [1, 2, 3, 4]
+            console.log(a.splice(0, 0, 0), "alsekjfpwojfopwije")
 
-        firestore().collection("UserInfo").doc(Uid).get().then(documentSnapshot => {
-            console.log(documentSnapshot.data().nickname, "hihi")
-            setNick(documentSnapshot.data().nickname)
-            setRevmtk(documentSnapshot.data().profilePicture)
-        }).then(() => {
-            setUserLoading(true)
-        })
-        console.log("flvmtk", revmtk)
-
-    }, [replynum])
+            firestore().collection("UserInfo").doc(Uid).get().then(documentSnapshot => {
+                console.log(documentSnapshot.data().nickname, "hihi")
+                setNick(documentSnapshot.data().nickname)
+                setRevmtk(documentSnapshot.data().profilePicture)
+            }).then(() => {
+                setUserLoading(true)
+            })
+            console.log("flvmtk", revmtk)
+        }
+    }, [replynum, del])
 
     //화면에 텍스트 및 좋아요를 띄워주는 함수.
-    useEffect(() => {
-        console.log(Uid, "uiduidudiuidu")
-        console.log(docID, "HIHI")
-        async function load() {
-            firestore().collection("Community1").doc(docID).onSnapshot(doc => {
-                setTitle(doc.data().title)
-                setContent(doc.data().context)
-                setAuthor(doc.data().nickname)
-                setCreateDate(doc.data().day + " " + doc.data().time)
-                setLike(doc.data().whoLike.length)
-                setLikeList(doc.data().whoLike)
-                setTime(doc.data().fullTime)
-                setRealWriterUid(doc.data().writerUid)
-                setAlertList(doc.data().whoAlert)
-                setVmtk(doc.data().profilePicture)
-                setDocName(doc.data().docName)
-
-            })
-        }
-        console.log(alertList, likeList, time, author, "alertList")
-        load().then(() => {
-            setTextLoading(true)
-        }).catch(() => {
-            console.log("텍스트 및 좋아요가 안나옴")
-            setTextLoading(true)
+    async function load() {
+        firestore().collection("Community1").doc(docID).onSnapshot(doc => {
+            setTitle(doc.data().title)
+            setContent(doc.data().context)
+            setAuthor(doc.data().nickname)
+            setCreateDate(doc.data().day + " " + doc.data().time)
+            setLike(doc.data().whoLike.length)
+            setLikeList(doc.data().whoLike)
+            setTime(doc.data().fullTime)
+            setRealWriterUid(doc.data().writerUid)
+            setAlertList(doc.data().whoAlert)
+            setVmtk(doc.data().profilePicture)
+            setDocName(doc.data().docName)
         })
+    }
 
-        if (likeList.includes(Uid)) {
-            setMeLike(true)
+    useEffect(() => {
+        if (del === false) {
+            console.log(Uid, "uiduidudiuidu")
+            console.log(docID, "HIHI")
+            console.log(alertList, likeList, time, author, "alertList")
+            load().then(() => {
+                setTextLoading(true)
+            }).catch(() => {
+                console.log("텍스트 및 좋아요가 안나옴")
+                setTextLoading(true)
+            })
+
+            if (likeList.includes(Uid)) {
+                setMeLike(true)
+            }
         }
-    }, [likeState, nick, title])
+    }, [likeState, nick, title, del])
 
     //사진 불러오는 함수
     const [exist, setExist] = useState(true)
@@ -234,53 +238,55 @@ export default function CommunityOtherPost({ route, navigation }) {
 
     //댓글을 보여주는 함수. 
     useEffect(() => {
-        setItems(items.splice(0, items.length))
-        console.log(items, "??????")
-        const { ID } = route.params
-        setParam(ID)
-        async function reply() {
-            firestore().collection('Community1').doc(ID).collection("Reply").onSnapshot(querySnapshot => {
-                let list = [];
-                console.log("comd")
-                setReplyNum(querySnapshot.size);
-                querySnapshot.forEach(docs => {
-                    console.log("check how many times")
-                    if (docs.data().whoLike.includes(Uid)) {
-                        setReMeLike(true)
-                    } else {
-                        setReMeLike(false)
-                    }
-                    if (Uid === docs.data().writerUid) {
-                        setReIsLogined(true)
-                    } else {
-                        setReIsLogined(false)
-                    }
-                    list.push({
-                        reName: docs.data().fullTime + docs.data().content,
-                        reNick: docs.data().nick,
-                        reContent: docs.data().content,
-                        reLike: docs.data().like,
-                        reTime: docs.data().day + " " + docs.data().time,
-                        reProfile: docs.data().profilePicture,
-                        reUserUid: reIsLogined,
-                        reWhoLike: docs.data().whoLike.length,
-                        reWhoLikeList: docs.data().whoLike,
-                        reWhoAlert: docs.data().whoAlert,
-                        reMeLike: reMelike
-                    });
+        if (del === false) {
+            setItems(items.splice(0, items.length))
+            console.log(items, "??????")
+            const { ID } = route.params
+            setParam(ID)
+            async function reply() {
+                firestore().collection('Community1').doc(ID).collection("Reply").onSnapshot(querySnapshot => {
+                    let list = [];
+                    console.log("comd")
+                    setReplyNum(querySnapshot.size);
+                    querySnapshot.forEach(docs => {
+                        console.log("check how many times")
+                        if (docs.data().whoLike.includes(Uid)) {
+                            setReMeLike(true)
+                        } else {
+                            setReMeLike(false)
+                        }
+                        if (Uid === docs.data().writerUid) {
+                            setReIsLogined(true)
+                        } else {
+                            setReIsLogined(false)
+                        }
+                        list.push({
+                            reName: docs.data().fullTime + docs.data().content,
+                            reNick: docs.data().nick,
+                            reContent: docs.data().content,
+                            reLike: docs.data().like,
+                            reTime: docs.data().day + " " + docs.data().time,
+                            reProfile: docs.data().profilePicture,
+                            reUserUid: reIsLogined,
+                            reWhoLike: docs.data().whoLike.length,
+                            reWhoLikeList: docs.data().whoLike,
+                            reWhoAlert: docs.data().whoAlert,
+                            reMeLike: reMelike
+                        });
 
-                });
-                setItems(list);
-                console.log(list);
+                    });
+                    setItems(list);
+                    console.log(list);
+                })
+            }
+            reply().then(() => {
+                setReplyLoading(true)
+            }).catch(() => {
+                console.log("댓글이 안불러옴")
+                setReplyLoading(true)
             })
         }
-        reply().then(() => {
-            setReplyLoading(true)
-        }).catch(() => {
-            console.log("댓글이 안불러옴")
-            setReplyLoading(true)
-        })
-    }, [state, vmtk, loading, commentState])
+    }, [state, vmtk, loading, commentState, del])
 
     //게시글 좋아요 및 좋아요 취소
     function likeMinus(a) {
@@ -312,7 +318,6 @@ export default function CommunityOtherPost({ route, navigation }) {
             setMeLike(false)
             likeMinus(likeList)
         } else {
-
             setLikeList(likeList.push(userUID));
             console.log(likeList, "likelist updated");
             setMeLike(true);
@@ -323,14 +328,13 @@ export default function CommunityOtherPost({ route, navigation }) {
         return ref.doc(param).delete().then(() => {
             const filename = title + nick + time
             var desertRef = storage().ref("community1/" + filename);
-
+            setDel(true)
+            navigation.goBack()
             // Delete the file
-            desertRef.delete().then(function () {
-                navigation.goBack()
-            }).catch(function (error) {
+            desertRef.delete().catch(function (error) {
                 // Uh-oh, an error occurred!
+                console.log("오류")
             });
-
         })
     }
     function alertPost() {
@@ -348,7 +352,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                     {
                         text: '신고하기', onPress: () => Alert.alert(
                             '이미 신고하셨습니다',
-                            "ㅅㅂ"
+                            ""
                             [
                             {
                                 text: 'OK', onPress: () => console.log('OK Pressed')
@@ -448,7 +452,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                     {
                         text: '신고하기', onPress: () => Alert.alert(
                             '이미 신고하셨습니다',
-                            "ㅅㅂ"
+                            ""
                             [
                             {
                                 text: 'OK', onPress: () => console.log('OK Pressed')

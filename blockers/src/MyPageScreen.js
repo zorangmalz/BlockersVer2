@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -20,6 +20,7 @@ import firestore from '@react-native-firebase/firestore';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import storage from '@react-native-firebase/storage';
+import { useFocusEffect } from "@react-navigation/native";
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -142,6 +143,35 @@ export default function MyPageScreen({ navigation }) {
             setIsLoading(true);
         }
     }, [refreshing, userlogined, user, isImage])
+
+    useFocusEffect(
+        useCallback(() => {
+            //포커싱 되었을 떄
+            auth().onAuthStateChanged(userAuth => {
+                setUser(userAuth)
+            })
+            if (user) {
+                const ref = firestore().collection("UserInfo").doc(user.uid)
+                setUserlogined(true);
+                ref.get()
+                    .then(data => {
+                        setNickname(data.data().nickname)
+                        setName(data.data().name)
+                        setIsImage(data.data().gotProfile)
+                    })
+                if (isImage) {
+                    getImage()
+                }
+            }
+            else {
+                setUserlogined(false);
+                setIsLoading(true);
+            }
+            return () => {
+                //포커싱 안 되었을 떄
+            };
+        }, [])
+    );
 
     const Success = [
         {
