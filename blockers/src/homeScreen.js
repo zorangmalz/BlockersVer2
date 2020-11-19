@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -16,7 +16,6 @@ import {
     Animated,
     Easing,
     Modal,
-    TouchableHighlight
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import moment from "moment"
@@ -26,6 +25,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+import { useFocusEffect } from "@react-navigation/native";
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -102,6 +102,34 @@ export default function HomeScreen({ navigation }) {
     const [today, setToday] = useState()
     const [refreshing, setRefreshing] = React.useState(false);
     const [login, setLogin] = useState(false);
+    const [focus, setFocus] = useState(false);
+
+    useFocusEffect(
+        useCallback(() => {
+            //포커싱 되었을 떄
+            setFocus(true)
+            auth().onAuthStateChanged(userAuth => {
+                setUser(userAuth)
+            })
+            if (user) {
+                setLogin(true)
+                firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+                    if (doc.data().SmokingTime) {
+                        setViewOpacity(false)
+                    } else {
+                        setViewOpacity(true)
+                    }
+                })
+            } else {
+                setViewOpacity(true)
+                setLogin(false)
+            }
+            return () => {
+                //포커싱 안 되었을 떄
+                setFocus(false)
+            };
+        }, [])
+    );
 
     var total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     const onRefresh = React.useCallback(() => {
@@ -206,7 +234,7 @@ export default function HomeScreen({ navigation }) {
             setViewOpacity(true)
             setLogin(false)
         }
-    }, [login, userlogin, refreshing, Rotate])
+    }, [login, userlogin, refreshing, Rotate, focus])
 
     useEffect(() => {
         if (user) {
@@ -230,7 +258,7 @@ export default function HomeScreen({ navigation }) {
                 }
             })
         }
-    }, [user, viewopacity, check, refreshing, today, Rotate])
+    }, [user, viewopacity, focus, check, refreshing, today, Rotate])
 
     useEffect(() => {
         timeCheck().then(() => {
@@ -249,7 +277,7 @@ export default function HomeScreen({ navigation }) {
             return () => clearInterval(interval)
         }
         console.log(smoker, "smoker")
-    }, [fullTime, refreshing])
+    }, [fullTime, refreshing, focus])
 
 
     //새로고침
