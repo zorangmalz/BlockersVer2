@@ -119,18 +119,16 @@ export default function MyPageScreen({ navigation }) {
             //프로필 사진 가져오기
             async function getImage() {
                 const url = await storage()
-                    .refFromURL("gs://blockers-8a128.appspot.com/" + "User/" + nickname + "/프로필사진" + nickname)
+                    .refFromURL("gs://blockers-8a128.appspot.com/User/" + user.uid + "/프로필사진")
                     .getDownloadURL()
-                    .then(() => {
-                        setIsImage(true)
-                        setImageSource(url)
-                        console.log("get")
-                        setIsLoading(true);
-                    }).catch(() => {
+                    .catch(() => {
                         console.log("사진이 존재하지 않습니다.")
-                        setIsLoading(true);
-                        setIsImage(false)
+                        setIsLoading(true)
                     })
+                setIsImage(true)
+                console.log("사진이 존재")
+                setImageSource(url)
+                setIsLoading(true);
             }
             getImage()
         }

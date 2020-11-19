@@ -75,19 +75,17 @@ export default function ProfileMain({ navigation }) {
             console.log(haveProfile, "profile")
             //프로필 사진 가져오기
             async function getImage() {
-                const filename = "프로필사진" + firebase.auth().currentUser.uid;
-                console.log(filename)
                 const url = await storage()
-                    .refFromURL("gs://blockers-8a128.appspot.com/User/" + firebase.auth().currentUser.uid + "/" + filename)
-                    .getDownloadURL().then(() => {
-                        setIsImage(true)
-                        setImageSource(url)
-                        console.log("get")
-                        setIsLoading(true);
-                    }).catch(() => {
+                    .refFromURL("gs://blockers-8a128.appspot.com/User/" + user.uid + "/프로필사진")
+                    .getDownloadURL()
+                    .catch(() => {
                         console.log("사진이 존재하지 않습니다.")
                         setIsLoading(true)
                     })
+                setIsImage(true)
+                console.log("사진이 존재")
+                setImageSource(url)
+                setIsLoading(true);
             }
             getImage()
         }
@@ -96,9 +94,8 @@ export default function ProfileMain({ navigation }) {
     //이미지 업로드 시 firebase와 소통
     async function uploadImage(a) {
         const uri = a;
-        const filename = "프로필사진" + user.uid
-        const reference = storage().ref("User/" + user.uid + "/" + filename);
-        console.log(uri, imageOne, filename, reference)
+        const reference = storage().ref("User/" + user.uid + "/프로필사진");
+        console.log(uri, imageOne, reference)
         const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
         await reference.putFile(uploadUri);

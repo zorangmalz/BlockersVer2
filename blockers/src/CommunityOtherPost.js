@@ -667,18 +667,10 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                             <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.reWhoLike}</Text>
                                                         </View>
                                                     }
-
                                                 </View>
                                                 <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
                                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                        {/* 대댓글 다는 버튼 */}
-                                                        {/* <TouchableOpacity onPress={()=>{focusing(item.reName)}}> 
-                                            <View style={{borderWidth:0.5,width:30,height:20}}>
-
-                                            </View>
-                                            </TouchableOpacity> */}
-                                                        {/* 좋아요 누르는 버튼 */}
-
+                                                        {/* 댓글 좋아요 */}
                                                         <TouchableOpacity onPress={() => pressReLike(item.reWhoLikeList, item.reName)} >
                                                             <View style={{ color: "#DDDDDD", borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
                                                                 <MaterialCommunityIcons name="thumb-up-outline" color="#8A8A8A" size={15} />
@@ -731,8 +723,12 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                     </View>
                                                 </View>
                                             </View>
-                                            <View style={{ marginTop: 8 }}>
-                                                <Text>{item.reContent}</Text>
+                                            <View style={{ marginTop: 8, marginLeft: "5%", marginRight: "5%" }}>
+                                                <Text style={{
+                                                    fontFamily: "NunitoSans-Regular",
+                                                    fontSize: 14,
+                                                    color: "#303030",
+                                                }}>{item.reContent}</Text>
                                             </View>
                                         </View>
                                     )}
