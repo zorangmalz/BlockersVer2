@@ -19,6 +19,17 @@ export default function SettingExitComplete({ navigation }) {
     const [del, setDel] = useState(false);
 
     useEffect(() => {
+        const image = storage().ref("/User/" + firebase.auth().currentUser.uid + "/프로필사진")
+        //이미지 삭제
+        image.delete()
+    }, [])
+
+    useEffect(() => {
+        const ref = firestore().collection("UserInfo").doc(firebase.auth().currentUser.uid)
+        ref.delete()
+    }, [])
+
+    useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
@@ -36,14 +47,10 @@ export default function SettingExitComplete({ navigation }) {
 
     //User 탈퇴함수
     async function DeleteAccount() {
-        const ref = await firestore().collection("UserInfo").doc(firebase.auth().currentUser.uid)
-        //firestore에 있는 UserInfo 정보 삭제
-        ref.delete()
-            .then(() => {
-                //User 삭제
-                User.delete()
-                setDel(true)
-            })
+        const user = firebase.auth().currentUser
+        //User 삭제
+        user.delete()
+        setDel(true)
     };
 
     return (

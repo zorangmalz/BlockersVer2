@@ -11,7 +11,7 @@ import {
     ScrollView,
     Alert
 } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
@@ -67,37 +67,36 @@ export default function LoginVerificationProfile({ navigation }) {
     const [imageSource, setImageSource] = useState(undefined);
     const [isImage, setIsImage] = useState(false);
     const [haveProfile, setHaveProfile] = useState(false);
-    
-    const [totalUser,setTotalUser]=useState()
+
+    const [totalUser, setTotalUser] = useState()
     const ref = firestore().collection("UserInfo");
 
     async function updateInfo(code, bir, se, nick, pic) {
-        console.log(code,bir,se,nick,pic)
-        if (pic.length>0){
-        // await ProfilePicture(nickname)
-        
-        await ref.doc(code).set({
-            birth: bir,
-            sex: se,
-            nickname:"Blockers"+totalUser,
-            gotProfile:true,
-            profilePicture: pic,
-            name:nick
-        })
-    }else{
-        await ref.doc(code).set({
-            birth: bir,
-            sex: se,
-            nickname: "Blockers"+totalUser,
-            gotProfile: false,
-            name:nick
-        })
-    }
-    firestore().collection("TotalUser").doc("userNum").set(
-     {
-         numCount:totalUser+1
-     }
-    )
+        console.log(code, bir, se, nick, pic)
+        if (pic.length > 0) {
+            // await ProfilePicture(nickname)
+            await ref.doc(code).set({
+                birth: bir,
+                sex: se,
+                nickname: "Blockers" + totalUser,
+                gotProfile: true,
+                profilePicture: pic,
+                name: nick
+            })
+        } else {
+            await ref.doc(code).set({
+                birth: bir,
+                sex: se,
+                nickname: "Blockers" + totalUser,
+                gotProfile: false,
+                name: nick
+            })
+        }
+        firestore().collection("TotalUser").doc("userNum").set(
+            {
+                numCount: totalUser + 1
+            }
+        )
     }
 
     useEffect(() => {
@@ -114,13 +113,14 @@ export default function LoginVerificationProfile({ navigation }) {
     },[user])
 
     async function move() {
+        const uid = firebase.auth().currentUser.uid;
         if(isImage){
             await uploadImage()
             var url2 = await storage()
-            .refFromURL("gs://blockers-8a128.appspot.com/User/" + nickname + "/" + "프로필사진" + nickname)
+            .refFromURL("gs://blockers-8a128.appspot.com/User/" + uid + "/" + "프로필사진")
             .getDownloadURL();
         
-        }else{
+        } else{
             var url2=""
         }
         console.log(url2,"url2~~~")
@@ -139,7 +139,7 @@ export default function LoginVerificationProfile({ navigation }) {
             skipBackup: true,
             path: 'images',
         },
-        quality: 0.3
+        quality: 0.1
     };
 
 
@@ -157,9 +157,9 @@ export default function LoginVerificationProfile({ navigation }) {
         });
     };
     async function uploadImage() {
+        const uid = firebase.auth().currentUser.uid;
         const uri = imageOne;
-        const filename = "프로필사진" + nickname
-        const reference = storage().ref("User/" + nickname + "/" + filename);
+        const reference = storage().ref("User/" + uid + "/프로필사진");
         const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
         console.log(uploadUri,"uploadUri")
         await reference.putFile(uploadUri);
@@ -191,7 +191,7 @@ export default function LoginVerificationProfile({ navigation }) {
                 <ScrollView>
                     <TouchableOpacity onPress={showCameraRoll1} style={{ alignSelf: 'center', marginTop: 16 }}>
                         {isImage === true ?
-                            imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 92, height: 92 }} />
+                            imageOne && <Image resizeMode="cover" source={{ uri: imageOne }} style={{ width: 100, height: 100, borderRadius: 50 }} />
                             :
                             <Image source={require('./icon/userprofile.png')} style={{ width: 132, height: 132 }} resizeMode="contain" />
                         }
@@ -204,19 +204,19 @@ export default function LoginVerificationProfile({ navigation }) {
                             :
                             <Text style={{ marginBottom: 28 }}></Text>
                         }
-                        <View style={{ marginLeft: "10%", flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+                        <View style={{ marginLeft: "10%", flexDirection: 'row', justifyContent: 'flex-start', alignItems: "flex-end" }}>
                             <Dropdown
                                 baseColor="#5cc27b"
-                                itemTextStyle={{fontSize: 21, fontFamily: 'NunitoSans-Bold', color: "#303030"}}
+                                itemTextStyle={{fontSize: 30, fontFamily: 'NunitoSans-Bold', color: "#303030"}}
                                 dropdownOffset={{ top: 0, left: 0 }}
                                 dropdownPosition={0}
                                 pickerStyle={{width: "25%"}}
-                                containerStyle={{ width: "25%" }}
+                                containerStyle={{ width: "25%", height: 30 }}
                                 label="성별"
                                 data={GenderData}
                                 onChangeText={(value) => setGender(value)}
                             />
-                            <TextInput keyboardType="number-pad" onChangeText={text => setBirthday(text)} style={[login.textinput, { width: "40%", marginLeft: "12%" }]} placeholder="생년월일" />
+                            <TextInput keyboardType="number-pad" onChangeText={text => setBirthday(text)} style={[login.textinput, { width: "45%", marginLeft: "12%", alignSelf:"flex-start" }]} placeholder="생일(201119)" />
                         </View>
                     </View>
                     <View style={{ marginTop: "70%" }}>

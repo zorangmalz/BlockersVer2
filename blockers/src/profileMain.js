@@ -65,18 +65,18 @@ export default function ProfileMain({ navigation }) {
         console.log(uri, imageOne, reference)
         const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
-        await reference.putFile(uploadUri).then(async () => {
-            const uid = firebase.auth().currentUser.uid
-            const url = await storage().refFromURL("gs://blockers-8a128.appspot.com/User/" + uid + "/프로필사진").getDownloadURL()
-            console.log(url)
-            firestore()
-                .collection('UserInfo')
-                .doc(uid)
-                .update({
-                    profilePicture: url,
-                    gotProfile: true
-                })
-        })
+        await reference.putFile(uploadUri)
+        const uid = firebase.auth().currentUser.uid
+        const url = await storage().refFromURL("gs://blockers-8a128.appspot.com/User/" + uid + "/프로필사진").getDownloadURL()
+        console.log(url)
+        firestore()
+            .collection('UserInfo')
+            .doc(uid)
+            .update({
+                profilePicture: url,
+                gotProfile: true
+            })
+
         setImageLoading(true)
         setTimeout(() => {
             setImageLoading(false)
@@ -110,7 +110,7 @@ export default function ProfileMain({ navigation }) {
             skipBackup: true,
             path: 'images',
         },
-        quality: 0.3
+        quality: 0.1
     };
 
     //프로필 사진 가져오기
