@@ -326,59 +326,75 @@ export default function Challenge({ navigation }) {
         }
     }
     async function checkRate() {
-        if (progress < 0) {
-            var total
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
-                total = querySnapshot.size - 1
-            })
+        var total
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
+            total = querySnapshot.size - 1
+        })
+        var withoutVeri
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").where("stats", "==", true).get().then(querySnapshot => {
+            withoutVeri = querySnapshot.size
+        })
+        var esteemcnt
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").where("stats", "==", true).get().then(querySnapshot => {
+            esteemcnt = querySnapshot.size
+        })
+        var alcoholcnt
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").where("stats", "==", true).get().then(querySnapshot => {
+            alcoholcnt = querySnapshot.size
+        })
+        var stresscnt
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").where("stats", "==", true).get().then(querySnapshot => {
+            stresscnt = querySnapshot.size
+        })
+        var vericnt
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").where("stats", "==", true).get().then(querySnapshot => {
+            vericnt = querySnapshot.size
+        })
+        setRatio(withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt)
+        if (long === 1) {
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
-                progress: 0
+                progress: (withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 9.1 - mistake * 5
             })
-            setProgress(0)
-        } else if (progress >= 0) {
-            var total
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
-                total = querySnapshot.size - 1
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).get().then(doc => {
+                if (doc.data().progress < 0) {
+                    setProgress(0)
+                    firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
+                        progress: 0
+                    })
+                } else if (doc.data().progress >= 0) {
+                    setProgress((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 9.1 - mistake * 5)
+                }
             })
-            var withoutVeri
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").where("stats", "==", true).get().then(querySnapshot => {
-                withoutVeri = querySnapshot.size
-
+        } else if (long === 3) {
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
+                progress: (withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 4.76 - mistake * 5
             })
-            var esteemcnt
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").where("stats", "==", true).get().then(querySnapshot => {
-                esteemcnt = querySnapshot.size
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).get().then(doc => {
+                if (doc.data().progress < 0) {
+                    setProgress(0)
+                    firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
+                        progress: 0
+                    })
+                } else if (doc.data().progress >= 0) {
+                    setProgress((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 4.76 - mistake * 5)
+                }
             })
-            var alcoholcnt
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").where("stats", "==", true).get().then(querySnapshot => {
-                alcoholcnt = querySnapshot.size
+        } else {
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
+                progress: (withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 2.7 - mistake * 5
             })
-            var stresscnt
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").where("stats", "==", true).get().then(querySnapshot => {
-                stresscnt = querySnapshot.size
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).get().then(doc => {
+                if (doc.data().progress < 0) {
+                    setProgress(0)
+                    firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
+                        progress: 0
+                    })
+                } else if (doc.data().progress >= 0) {
+                    setProgress((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 2.7 - mistake * 5)
+                }
             })
-            var vericnt
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").where("stats", "==", true).get().then(querySnapshot => {
-                vericnt = querySnapshot.size
-            })
-            setRatio(withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt)
-            if (long === 1) {
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
-                    progress: (withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 9.1 - mistake * 5
-                })
-                setProgress((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 9.1 - mistake * 5)
-            } else if (long === 3) {
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
-                    progress: (withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 4.76 - mistake * 5
-                })
-                setProgress((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 4.76 - mistake * 5)
-            } else {
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
-                    progress: (withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 2.7 - mistake * 5
-                })
-                setProgress((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 2.7 - mistake * 5)
-            }
         }
+
     }
     useEffect(() => {
         hi()
