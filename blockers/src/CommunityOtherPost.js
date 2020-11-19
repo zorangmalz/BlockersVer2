@@ -199,7 +199,7 @@ export default function CommunityOtherPost({ route, navigation }) {
 
     //사진 불러오는 함수
     const [exist, setExist] = useState(true)
-    async function hi() {
+    async function existPic() {
         console.log("comeins")
         console.log(title, author, time)
         const url = await storage()
@@ -215,7 +215,7 @@ export default function CommunityOtherPost({ route, navigation }) {
 
     useEffect(() => {
         if (exist) {
-            hi().then(() => {
+            existPic().then(() => {
                 setPicLoading(true)
             }).catch(() => {
                 setExist(false)
