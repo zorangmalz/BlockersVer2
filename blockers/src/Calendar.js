@@ -14,18 +14,19 @@ import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 
 
-const diary = { key: 'diary', color: "red" };
-const drug = { key: 'drug', color: "yellow" };
-const challenge = { key: 'challenge', color: "green" };
-const smoke = { key: 'smoke', color: "black" };
+// const diary = { key: 'diary', color: "red" };
+// const drug = { key: 'drug', color: "yellow" };
+// const challenge = { key: 'challenge', color: "green" };
+// const smoke = { key: 'smoke', color: "black" };
 const styles = {
   item: {
     backgroundColor: 'white',
-    flex: 1,
-    borderRadius: 5,
-    padding: 10,
+    flex: 2,
+    
+    paddingLeft:10,
+    
     marginRight: 10,
-    marginTop: 17
+    marginTop: 10
   },
   emptyDate: {
     height: 15,
@@ -48,23 +49,37 @@ const [user,setUser]=useState("")
       "hi":[{d:"a"}]
     }
     a["hi"]=a["hi"].push({c:"d"})
-    console.log(a)
+    console.log(a,"a")
 },[user])
-const item={
-  
-  '2020-07-16': [{ diary: ['1주 1회차 복용일 입니다. 2정을 섭취해 주세요', "hh"] }],
-  // "2020-07-17": [{ name: "hi" }],
-  // "2020-07-19": [{ name: "hi" }],
-  // "2020-07-20": [{ name: "hi" }],
-  // "2020-07-25": [{ name: "hi" }],
-  // "2020-07-30": [{ name: "hi" }],
-}
+const item={}
 async function getDiary(){
   console.log(user.uid)
+  
   await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").onSnapshot(querySnapshot=>{
     querySnapshot.forEach(function(doc){
-      console.log(doc.data().date)
-      item[doc.id]=[{diary:doc.data().diary},{challenge:doc.data().challenge},{smoke:doc.data().smoke},{drug1:doc.data().drug1},{drug2:doc.data().drug2}]
+      var a=doc.id
+      
+      item[a]=new Array()
+      if(doc.data().diary){
+        item[a].push({diary:doc.data().diary})
+      }
+      if(doc.data().challenge){
+        item[a].push({challenge:doc.data().challenge})
+      }
+      if(doc.data().smoke){
+        item[a].push({smoke:doc.data().smoke})
+      }
+      if(doc.data().drugA){
+        item[a].push({drugA:doc.data().drugA})
+      }
+      if(doc.data().drugB){
+        item[a].push({drugB:doc.data().drugB})
+      }
+      
+      
+      
+      
+      // item[doc.id]=[{diary:doc.data().diary},{challenge:doc.data().challenge},{smoke:doc.data().smoke},{drugA:doc.data().drugA},{drugB:doc.data().drugB}]
       
       console.log(item)
     })
@@ -99,10 +114,11 @@ async function getDiary(){
             
               {item.diary ? 
               <>
-              <View style={[styles.item, { height: 1 }]}>
+              <View style={[styles.item, ]}>
 <View style={{ flexDirection: 'row',
                                 alignItems: "center",
-                                justifyContent: 'flex-start',}}>
+                                justifyContent: 'flex-start',
+                                marginBottom:10}}>
                   <View style={{
                                 width: 8,
                                 height: 8,
@@ -111,8 +127,9 @@ async function getDiary(){
                                 marginRight: 8
                             }} />
                             
-                            <Text>{item.diary}</Text>
+                            <Text style={{fontFamily:"NunitoSans-Bold"}}>일기</Text>
                             </View>    
+                            <Text>{item.diary}</Text>
                             </View>
                 </>
                 :
@@ -122,10 +139,11 @@ async function getDiary(){
                 }
                 {item.challenge ? 
                 <>
-                <View style={[styles.item, { height: 10 }]}>
+                <View style={[styles.item, ]}>
                 <View style={{ flexDirection: 'row',
                                 alignItems: "center",
-                                justifyContent: 'flex-start',}}>
+                                justifyContent: 'flex-start',
+                                marginBottom:10}}>
                   <View style={{
                                 width: 8,
                                 height: 8,
@@ -133,9 +151,10 @@ async function getDiary(){
                                 borderRadius: 4,
                                 marginRight: 8
                             }} />
+                            <Text style={{fontFamily:"NunitoSans-Bold"}}>챌린지</Text>
                             
-                            <Text>{item.challenge}</Text>
                             </View>
+                            <Text>{item.challenge}</Text>
                             </View>
                 </>
                 :
@@ -143,10 +162,11 @@ async function getDiary(){
                 }
           
                 {item.smoke ? <>
-                  <View style={[styles.item, { height: 10 }]}>
+                  <View style={[styles.item, ]}>
                   <View style={{ flexDirection: 'row',
                                 alignItems: "center",
-                                justifyContent: 'flex-start',}}>
+                                justifyContent: 'flex-start',
+                                marginBottom:10}}>
                   <View style={{
                                 width: 8,
                                 height: 8,
@@ -154,16 +174,18 @@ async function getDiary(){
                                 borderRadius: 4,
                                 marginRight: 8
                             }} />
-                            
+                            <Text style={{fontFamily:"NunitoSans-Bold"}}>흡연</Text>
+                           
+                            </View>
                             <Text>{item.smoke}</Text>
                             </View>
-                            </View>
                             </>:<></>}
-                            {item.drug1 ? <>
-                              <View style={[styles.item, { height: 10 }]}>
+                            {item.drugA ? <>
+                              <View style={[styles.item, ]}>
                   <View style={{ flexDirection: 'row',
                                 alignItems: "center",
-                                justifyContent: 'flex-start',}}>
+                                justifyContent: 'flex-start',
+                                marginBottom:10}}>
                   <View style={{
                                 width: 8,
                                 height: 8,
@@ -171,16 +193,18 @@ async function getDiary(){
                                 borderRadius: 4,
                                 marginRight: 8
                             }} />
+                            <Text style={{fontFamily:"NunitoSans-Bold"}}>복약(부프로피온)</Text>
                             
+                            </View>
                             <Text>{item.drug1}</Text>
                             </View>
-                            </View>
                             </>:<></>}
-                            {item.drug2 ? <>
-                              <View style={[styles.item, { height: 10 }]}>
+                            {item.drugB ? <>
+                              <View style={[styles.item, ]}>
                   <View style={{ flexDirection: 'row',
                                 alignItems: "center",
-                                justifyContent: 'flex-start',}}>
+                                justifyContent: 'flex-start',
+                                marginBottom:10}}>
                   <View style={{
                                 width: 8,
                                 height: 8,
@@ -188,12 +212,16 @@ async function getDiary(){
                                 borderRadius: 4,
                                 marginRight: 8
                             }} />
+                            <Text style={{fontFamily:"NunitoSans-Bold"}}>복약(챔픽스 정)</Text>
                             
+                            </View>
                             <Text>{item.drug2}</Text>
                             </View>
-                            </View>
+                   
                             </>:<></>}
+                            
                 </>
+                
              ) }}
           // renderEmptyDate={() => {    return (
           //   <View style={styles.emptyDate}>
@@ -205,7 +233,7 @@ async function getDiary(){
           <Text>일정이 없습니다 </Text>
            
         </View>);}}
-        
+   
           // markedDates={{
 
           //   '2020-07-10': { dots: [diary, drug, challenge] },
@@ -217,6 +245,7 @@ async function getDiary(){
           //   '2020-07-25': { dots: [diary, drug, challenge] },
           //   '2020-07-26': { dots: [drug, challenge], }
           // }}
+         
           onRefresh={() => console.log('refreshing...')}
           // Set this true while waiting for new data from a refresh
           refreshing={false}
@@ -226,7 +255,7 @@ async function getDiary(){
           theme={{
             
             agendaDayTextColor: 'black',
-            agendaDayNumColor: 'green',
+            agendaDayNumColor: 'black',
             agendaTodayColor: 'red',
             agendaKnobColor: 'blue'
           }}
