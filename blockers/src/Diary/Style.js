@@ -99,6 +99,12 @@ export function Create({ navigation }) {
         await firestore().collection("UserInfo").doc(user.uid).collection("Daily").doc(a[0]+"-"+a[1]+"-"+a[2]+"diary").set({
             date:a[0] + "-" + a[1] + "-" + a[2]
         })
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            diary:"일기 작성"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+            diary:"일기 작성"
+        }))
         await firestore().collection("UserInfo").doc(user.uid).collection("Diary").doc(a + "diary").set({
             impulse: check,
             when: when,

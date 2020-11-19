@@ -64,7 +64,7 @@ async function getDiary(){
   await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").onSnapshot(querySnapshot=>{
     querySnapshot.forEach(function(doc){
       console.log(doc.data().date)
-      item[doc.id]=[{diary:doc.data().diary},{challenge:doc.data().challenge},{smoke:doc.data().smoke},{drug:doc.data().drug1},{drug:doc.data().drug2}]
+      item[doc.id]=[{diary:doc.data().diary},{challenge:doc.data().challenge},{smoke:doc.data().smoke},{drug1:doc.data().drug1},{drug2:doc.data().drug2}]
       
       console.log(item)
     })
@@ -95,9 +95,11 @@ async function getDiary(){
         <Agenda
           items={item}
           renderItem={(item, firstItemInDay) => {
-            return (<View style={[styles.item, { height: 50 }]}>
+            return (<>
+            
               {item.diary ? 
               <>
+              <View style={[styles.item, { height: 1 }]}>
 <View style={{ flexDirection: 'row',
                                 alignItems: "center",
                                 justifyContent: 'flex-start',}}>
@@ -110,8 +112,8 @@ async function getDiary(){
                             }} />
                             
                             <Text>{item.diary}</Text>
+                            </View>    
                             </View>
-                            
                 </>
                 :
                 <>
@@ -120,92 +122,85 @@ async function getDiary(){
                 }
                 {item.challenge ? 
                 <>
+                <View style={[styles.item, { height: 10 }]}>
                 <View style={{ flexDirection: 'row',
                                 alignItems: "center",
                                 justifyContent: 'flex-start',}}>
                   <View style={{
                                 width: 8,
                                 height: 8,
-                                backgroundColor: "#fb5757",
+                                backgroundColor: "#5cc27b",
                                 borderRadius: 4,
                                 marginRight: 8
                             }} />
                             
                             <Text>{item.challenge}</Text>
                             </View>
-                            
+                            </View>
                 </>
                 :
                 <></>
                 }
-                {item.drug ? <>
-                  <View style={{ flexDirection: 'row',
-                                alignItems: "center",
-                                justifyContent: 'flex-start',}}>
-                  <View style={{
-                                width: 8,
-                                height: 8,
-                                backgroundColor: "#fb5757",
-                                borderRadius: 4,
-                                marginRight: 8
-                            }} />
-                            
-                            <Text>{item.drug}</Text>
-                            </View>
-                            <Text>{item.drug}</Text></> :<></>}
+          
                 {item.smoke ? <>
+                  <View style={[styles.item, { height: 10 }]}>
                   <View style={{ flexDirection: 'row',
                                 alignItems: "center",
                                 justifyContent: 'flex-start',}}>
                   <View style={{
                                 width: 8,
                                 height: 8,
-                                backgroundColor: "#fb5757",
+                                backgroundColor: "#303030",
                                 borderRadius: 4,
                                 marginRight: 8
                             }} />
                             
                             <Text>{item.smoke}</Text>
                             </View>
+                            </View>
                             </>:<></>}
                             {item.drug1 ? <>
+                              <View style={[styles.item, { height: 10 }]}>
                   <View style={{ flexDirection: 'row',
                                 alignItems: "center",
                                 justifyContent: 'flex-start',}}>
                   <View style={{
                                 width: 8,
                                 height: 8,
-                                backgroundColor: "#fb5757",
+                                backgroundColor: "#ffb83d",
                                 borderRadius: 4,
                                 marginRight: 8
                             }} />
                             
                             <Text>{item.drug1}</Text>
                             </View>
+                            </View>
                             </>:<></>}
                             {item.drug2 ? <>
+                              <View style={[styles.item, { height: 10 }]}>
                   <View style={{ flexDirection: 'row',
                                 alignItems: "center",
                                 justifyContent: 'flex-start',}}>
                   <View style={{
                                 width: 8,
                                 height: 8,
-                                backgroundColor: "#fb5757",
+                                backgroundColor: "#ffb83d",
                                 borderRadius: 4,
                                 marginRight: 8
                             }} />
                             
                             <Text>{item.drug2}</Text>
                             </View>
+                            </View>
                             </>:<></>}
-                </View>
+                </>
              ) }}
-          renderEmptyDate={() => {    return (
-            <View style={styles.emptyDate}>
-              <Text>This is empty date!</Text>
-            </View>
-          );}}
-          renderEmptyData = {() => {return (<View style={[styles.item, { height: 50 }]}>
+          // renderEmptyDate={() => {    return (
+          //   <View style={styles.emptyDate}>
+          //     <Text>This is empty date!</Text>
+          //   </View>
+          // );}}
+          renderEmptyData = {() => {return (<View style={[styles.item, { height: 10 }]}>
             
           <Text>일정이 없습니다 </Text>
            
