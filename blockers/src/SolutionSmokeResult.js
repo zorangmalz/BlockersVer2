@@ -84,6 +84,12 @@ export default function SolutionSmokeResult({navigation,route}) {
             resContent:data[nico].content,
             resNum:total
         })
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+            challenge:"미션 진행"
+        }))
     }
     return (
         <>

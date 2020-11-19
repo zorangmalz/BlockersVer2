@@ -67,6 +67,12 @@ async function uploadInfo(){
         day:day,
         stats:true
     })
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+        challenge:"미션 진행"
+    }).catch(()=>
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+        challenge:"미션 진행"
+    }))
     navigation.navigate("Home")}
    
 

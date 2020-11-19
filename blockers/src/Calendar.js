@@ -196,7 +196,7 @@ async function getDiary(){
                             <Text style={{fontFamily:"NunitoSans-Bold"}}>복약(부프로피온)</Text>
                             
                             </View>
-                            <Text>{item.drug1}</Text>
+                            <Text>{item.drugA}</Text>
                             </View>
                             </>:<></>}
                             {item.drugB ? <>
@@ -215,7 +215,7 @@ async function getDiary(){
                             <Text style={{fontFamily:"NunitoSans-Bold"}}>복약(챔픽스 정)</Text>
                             
                             </View>
-                            <Text>{item.drug2}</Text>
+                            <Text>{item.drugB}</Text>
                             </View>
                    
                             </>:<></>}

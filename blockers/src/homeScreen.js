@@ -202,7 +202,11 @@ export default function HomeScreen({ navigation }) {
     async function timeCheck() {
         var a = moment().toArray()
         console.log(a)
-        
+        if (a[1] === 12) {
+            a[1] = 1
+        } else {
+            a[1] = a[1] + 1
+        }
         await ref.doc(user.uid).get().then(documentSnapshot => {
             if (a[2] === documentSnapshot.data().smokeToday) {
                 console.log("same")
@@ -213,6 +217,12 @@ export default function HomeScreen({ navigation }) {
                     smokeToday: a[2],
                     smokeStats: firebase.firestore.FieldValue.arrayUnion(a + "/흡연량:" + smokingDaily)
                 })
+                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+                    smoke:smokingDaily
+                }).catch(()=>
+                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                    smoke:smokingDaily
+                }))
                 setToday(false)
             }
         })
@@ -236,7 +246,7 @@ export default function HomeScreen({ navigation }) {
             setViewOpacity(true)
             setLogin(false)
         }
-    }, [login, userlogin, refreshing, Rotate, focus])
+    }, [user,login, userlogin, refreshing, Rotate, focus])
 
     useEffect(() => {
         if (user) {

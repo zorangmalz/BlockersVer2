@@ -477,12 +477,24 @@ export function SelfEsteemFinal({navigation,route}) {
             stats:true,
             result:result.result+"/"+"/"+resultcontent+"/"+a,
             resultNum:result.result,
+        }).catch(()=>{
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(thisMonth)).set({
+                stats:true,
+                result:result.result+"/"+"/"+resultcontent+"/"+a,
+                resultNum:result.result,
+            })
         })
 
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").update({
             visible:false,
             month:thisMonth+1
         })
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+            challenge:"미션 진행"
+        }))
     }
     useEffect(()=>{
         auth().onAuthStateChanged(userAuth => {

@@ -96,9 +96,6 @@ export function Create({ navigation }) {
         } else {
             var check = "없었다"
         }
-        await firestore().collection("UserInfo").doc(user.uid).collection("Daily").doc(a[0]+"-"+a[1]+"-"+a[2]+"diary").set({
-            date:a[0] + "-" + a[1] + "-" + a[2]
-        })
         firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
             diary:"일기 작성"
         }).catch(()=>

@@ -1961,6 +1961,12 @@ export function ChallengeSupport({ navigation }) {
             day:day,
             stats:true
         })
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+            challenge:"미션 진행"
+        }))
         navigation.navigate("Home")}
         else{
             Alert.alert("링크를 공유해보세요")
@@ -2162,6 +2168,12 @@ export function ChallengeSwear({ navigation }) {
             day:day,
             stats:true
         })
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+            challenge:"미션 진행"
+        }))
         navigation.navigate("Home")
     }
     
@@ -2656,6 +2668,12 @@ export function ChallengeMotivation({ navigation }) {
             stats:true,
             visible:false
         })
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+            challenge:"미션 진행"
+        }))
         navigation.navigate("Home")
     }
     return (
@@ -2897,6 +2915,7 @@ export function ChallengeMotivationResult({ navigation,route }) {
         await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 동기 설정하기").get().then(doc=>{
             setMotivation(doc.data().motivation)
         })
+        
         
     }
     return (
@@ -3210,6 +3229,12 @@ export function ChallengeGD({ navigation }) {
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금단증상 확인하기").update({
             detail: GD
         })
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+            challenge:"미션 진행"
+        }))
         navigation.navigate("ChallengeGDResult")
     }
 
@@ -3725,7 +3750,13 @@ export function ChallengeVeriImage({ navigation,route}) {
                 pic:url1,
                 stats:true,
                 how:selects
-            })
+            }).catch(()=>[
+                firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+size).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc(String(week)).set({
+                    pic:url1,
+                    stats:true,
+                    how:selects
+                })
+            ])
             navigation.navigate("Home")
     }
     const showCamera1 = () => {
