@@ -297,14 +297,23 @@ export default function ProfileMain({ navigation }) {
                                                 </View>
                                             </View>
                                         </View>
-                                        {item.success === true ?
+                                        {item.success === 0 ?
                                             <View style={{ width: 80, height: 30, backgroundColor: '#5cc27b', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
-                                                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>성공</Text>
+                                                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>진행중</Text>
                                             </View>
-                                            :
-                                            <View style={{ width: 80, height: 30, backgroundColor: '#ff0000', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
-                                                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>실패</Text>
-                                            </View>
+                                            : (item.success === 1 ?
+                                                <>
+                                                    <View style={{ width: 80, height: 30, backgroundColor: '#ff0000', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
+                                                        <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>실패</Text>
+                                                    </View>
+                                                </>
+                                                :
+                                                <>
+                                                    <View style={{ width: 80, height: 30, backgroundColor: '#5cc27b', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
+                                                        <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>성공</Text>
+                                                    </View>
+                                                </>
+                                            )
                                         }
                                     </View>
                                 )}
