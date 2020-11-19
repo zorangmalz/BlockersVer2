@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -8,10 +8,7 @@ import {
     TouchableOpacity,
     StyleSheet,
 } from 'react-native';
-import auth from '@react-native-firebase/auth';
-import { LoginManager } from 'react-native-fbsdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Modal from 'react-native-modal';
 
 const setting = StyleSheet.create({
     mainText : {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {
     View,
     Text,
@@ -6,24 +6,8 @@ import {
     ScrollView,
     SafeAreaView,
     TouchableOpacity,
-    StyleSheet,
 } from 'react-native';
-import auth from '@react-native-firebase/auth';
-import { LoginManager } from 'react-native-fbsdk';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-const setting = StyleSheet.create({
-    mainText : {
-        fontSize: 16,
-        fontFamily: 'NunitoSans-Regular',
-        alignSelf: 'flex-start',
-        color: '#303030'
-    },
-    mainBox: {
-        marginBottom: 8,
-        marginLeft: 32,
-    }
-})
 
 export default function TermsOfUse({ navigation }) {
     return (

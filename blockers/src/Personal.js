@@ -6,22 +6,8 @@ import {
     ScrollView,
     SafeAreaView,
     TouchableOpacity,
-    StyleSheet,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
-const setting = StyleSheet.create({
-    mainText: {
-        fontSize: 16,
-        fontFamily: 'NunitoSans-Regular',
-        alignSelf: 'flex-start',
-        color: '#303030'
-    },
-    mainBox: {
-        marginBottom: 8,
-        marginLeft: 32,
-    }
-})
 
 export default function Personal({ navigation }) {
     return (
