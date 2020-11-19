@@ -20,6 +20,7 @@ import auth from '@react-native-firebase/auth';
 import moment from "moment";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useFocusEffect } from "@react-navigation/native";
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -230,10 +231,16 @@ export default function CommunityHome({ navigation }) {
         }
     }
 
-    //실시간으로 글 가져오기
-    useEffect(() => {
-        load()
-    }, [filtered, refresh]);
+    useFocusEffect(
+        useCallback(() => {
+            //포커싱 되었을 떄
+            load()
+            return () => {
+                //포커싱 안 되었을 떄
+                
+            };
+        }, [filtered, refresh])
+    );
 
     //검색어 입력
     const [searchWord, setSearchWord] = useState("");
