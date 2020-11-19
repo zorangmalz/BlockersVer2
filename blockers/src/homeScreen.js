@@ -113,6 +113,7 @@ export default function HomeScreen({ navigation }) {
             })
             if (user) {
                 setLogin(true)
+                setViewOpacity(false)
                 firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
                     if (doc.data().SmokingTime) {
                         setViewOpacity(false)
@@ -223,6 +224,7 @@ export default function HomeScreen({ navigation }) {
         })
         if (user) {
             setLogin(true)
+            setViewOpacity(false)
             firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
                 if (doc.data().SmokingTime) {
                     setViewOpacity(false)
