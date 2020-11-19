@@ -37,13 +37,6 @@ export default function SettingExitComplete({ navigation }) {
     //User 탈퇴함수
     async function DeleteAccount() {
         const ref = await firestore().collection("UserInfo").doc(firebase.auth().currentUser.uid)
-        const image = await storage().ref("gs://blockers-8a128.appspot.com/User/" + firebase.auth().currentUser.uid + "/프로필사진")
-        ref.collection("Challenge").doc().delete()
-        ref.collection("Diary").doc().delete()
-        ref.collection("Daily").doc().delete()
-        ref.collection("Solution").doc().delete()
-        //이미지 삭제
-        image.delete()
         //firestore에 있는 UserInfo 정보 삭제
         ref.delete()
             .then(() => {

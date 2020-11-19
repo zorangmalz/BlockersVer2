@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     View,
     Text,
@@ -11,6 +11,8 @@ import {
     Dimensions
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import firebase from "@react-native-firebase/app";
+import storage from "@react-native-firebase/storage";
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -49,6 +51,12 @@ export default function SettingExit({ navigation }) {
     const noOneAgree = agreeOne === false ? <Ionicons size={12} color="#303030" name="checkmark" /> : <View />;
     const TwoAgree = agreeTwo === true ? <Ionicons size={12} color="#303030" name="checkmark" /> : <View />;
     const noTwoAgree = agreeTwo === false ? <Ionicons size={12} color="#303030" name="checkmark" /> : <View />;
+
+    useEffect(() => {
+        const image = storage().ref("/User/" + firebase.auth().currentUser.uid + "/프로필사진")
+        //이미지 삭제
+        image.delete()
+    }, [])
 
     return (
         <>
