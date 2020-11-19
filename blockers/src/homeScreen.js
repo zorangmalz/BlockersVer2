@@ -83,12 +83,10 @@ export default function HomeScreen({ navigation }) {
     const [smokeProofTwo, setSmokeProofTwo] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
     const [smokeProofThree, setSmokeProofThree] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
     const [smokeProofFour, setSmokeProofFour] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
-    const [month, setMonth] = useState('00');
     const [day, setDay] = useState(0);
     const [hour, setHour] = useState(0);
     const [minu, setMinu] = useState(0);
     const [sec, setSec] = useState(0);
-    const [timestart, setTimestart] = useState(false);
     const [viewopacity, setViewOpacity] = useState(true);
 
     const [user, setUser] = useState()
@@ -116,7 +114,6 @@ export default function HomeScreen({ navigation }) {
         await ref.doc(code).update({
             SmokingTime: a
         })
-        setTimestart(true)
     }
 
     function timeCounter(seconds) {
@@ -166,6 +163,7 @@ export default function HomeScreen({ navigation }) {
             smokeDaily: smoke + 1
         })
     }
+
     //보완...
     async function timeCheck() {
         var a = moment().toArray()
@@ -192,25 +190,19 @@ export default function HomeScreen({ navigation }) {
         })
         if (user) {
             setLogin(true)
+            firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+                if (doc.data().SmokingTime) {
+                    setViewOpacity(false)
+                } else {
+                    setViewOpacity(true)
+                }
+            })
         } else {
-            console.log("nouser")
-       setLogin(false)
+            setViewOpacity(true)
+            setLogin(false)
         }
+    }, [login, userlogin, refreshing, Rotate])
 
-    }, [login, userlogin, refreshing])
-    useEffect(() => {
-        var a = moment().toArray()
-        console.log(a)
-        // console.log(total)
-        // const caver = new Caver('https://api.baobab.klaytn.net:8651/')
-        // async function testFunction() {
-        //     const keyring = caver.wallet.keyring.generate()
-        //     console.log(keyring)
-        //     console.log(keyring._key._privateKey)
-        // }
-        // testFunction()
-
-    }, [])
     useEffect(() => {
         if (user) {
             console.log("stsat")
@@ -236,24 +228,26 @@ export default function HomeScreen({ navigation }) {
     }, [user, viewopacity, check, refreshing, today, Rotate])
 
     useEffect(() => {
-        timeCheck()
-        console.log("s")
+        timeCheck().then(() => {
+            console.log("타임체크시작")
+        }).catch(err => console.log(err))
+        // console.log("s")
         var b = moment(fullTime)
         if (fullTime) {
             const interval = setInterval(() => {
                 var a = moment().toArray()
                 var c = (b.diff(a, "seconds")) * -1
                 timeCounter(c)
-
                 setSmokingShow(parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24))
                 setSmokingMoney(((parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24)) * 225).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
-
             }, 1000)
             return () => clearInterval(interval)
         }
         console.log(smoker, "smoker")
     }, [fullTime, refreshing])
 
+
+    //새로고침
     const AnimatedIonicons = Animated.createAnimatedComponent(Ionicons)
     const Rotate = useRef(new Animated.Value(0)).current;
     async function Rotation() {
@@ -314,6 +308,12 @@ export default function HomeScreen({ navigation }) {
         }
     }
 
+    //새로고침 버튼
+    const Sync = Rotate.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '360deg']
+    })
+
     //금연 포기시
     async function changeToSmoker() {
         const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
@@ -334,6 +334,7 @@ export default function HomeScreen({ navigation }) {
             smokedAmount: firebase.firestore.FieldValue.arrayUnion(smokingShow + "/" + a)
         })
     }
+
     //금연 시작시에
     async function changeToNonSmoker() {
         const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
@@ -357,12 +358,7 @@ export default function HomeScreen({ navigation }) {
         })
     }
 
-    const Sync = Rotate.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['0deg', '360deg']
-    })
-
-    //Modal 띄울때 사용
+    //로그인 Modal 띄울때 사용
     const [userlogin, setUserlogin] = useState(false);
     const loginview = () => {
         setTimeout(() => {
@@ -372,11 +368,9 @@ export default function HomeScreen({ navigation }) {
 
     const VIEWOPACITY = () => {
         const USER = firebase.auth().currentUser;
-        setTimestart(true)
         if (login) {
             setViewOpacity(false)
             updateInfo(USER.uid)
-            console.log(timestart)
         } else {
             loginview()
         }
