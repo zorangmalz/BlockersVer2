@@ -111,6 +111,11 @@ export default function HomeScreen({ navigation }) {
 
     async function updateInfo(code) {
         var a = moment().toArray()
+        if (a[1] === 12) {
+            a[1] = 1
+        } else {
+            a[1] = a[1] + 1
+        }
         await ref.doc(code).update({
             SmokingTime: a
         })
