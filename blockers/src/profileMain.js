@@ -58,15 +58,17 @@ export default function ProfileMain({ navigation }) {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
-    //이미지 업로드 시 firebase와 소통
+    //이미지 업로드 시 firebase와 소통 
     async function uploadImage(a) {
+        console.log("upload image aeijgpoqvjwoepij")
         const uri = a;
         const reference = storage().ref("User/" + user.uid + "/프로필사진");
-        console.log(uri, imageOne, reference)
+        console.log(uri, imageOne, reference,"here")
         const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
-        await reference.putFile(uploadUri).then(async () => {
-            const uid = firebase.auth().currentUser.uid
+        await reference.putFile(uploadUri)
+            const uid =  firebase.auth().currentUser.uid
+            console.log(uid,"there")
             const url = await storage().refFromURL("gs://blockers-8a128.appspot.com/User/" + uid + "/프로필사진").getDownloadURL()
             console.log(url)
             firestore()
@@ -76,7 +78,7 @@ export default function ProfileMain({ navigation }) {
                     profilePicture: url,
                     gotProfile: true
                 })
-        })
+        
         setImageLoading(true)
         setTimeout(() => {
             setImageLoading(false)
@@ -91,7 +93,7 @@ export default function ProfileMain({ navigation }) {
             }
             else {
                 setImageOne(response.uri);
-                console.log(response.uri, "thisisresponsoe")
+                console.log(response.uri, "thisisresponsoasefklaewhflkajwfhkwe")
                 setPicone(false);
                 uploadImage(response.uri)
                 setIsImage(true)
@@ -147,6 +149,7 @@ export default function ProfileMain({ navigation }) {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
+        console.log("tlqkfjwoeaijpfio")
         if (user) {
             getUser()
             console.log(user)

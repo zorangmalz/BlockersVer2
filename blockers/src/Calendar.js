@@ -14,9 +14,10 @@ import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 
 
-const diary = { key: 'diary', color: "green" };
+const diary = { key: 'diary', color: "red" };
 const drug = { key: 'drug', color: "yellow" };
-const challenge = { key: 'challenge', color: "red" };
+const challenge = { key: 'challenge', color: "green" };
+const smoke = { key: 'smoke', color: "black" };
 const styles = {
   item: {
     backgroundColor: 'white',
@@ -43,13 +44,15 @@ const [user,setUser]=useState("")
     // item["2020-11-16"]=[{dic:"hi"}]
     if(user){
     getDiary()}
-    item["2020-11-19"]=[{name:"hi"},{dic:"hellp"}]
-    console.log(item["2020-11-19"].name)
-    console.log(item["2020-11-19"].dic)
+    const a={
+      "hi":[{d:"a"}]
+    }
+    a["hi"]=a["hi"].push({c:"d"})
+    console.log(a)
 },[user])
 const item={
   
-  // '2020-07-16': [{ name: ['1주 1회차 복용일 입니다. 2정을 섭취해 주세요', "hh"] }],
+  '2020-07-16': [{ diary: ['1주 1회차 복용일 입니다. 2정을 섭취해 주세요', "hh"] }],
   // "2020-07-17": [{ name: "hi" }],
   // "2020-07-19": [{ name: "hi" }],
   // "2020-07-20": [{ name: "hi" }],
@@ -58,16 +61,16 @@ const item={
 }
 async function getDiary(){
   console.log(user.uid)
-  await firestore().collection("UserInfo").doc(user.uid).collection("Diary").onSnapshot(querySnapshot=>{
+  await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").onSnapshot(querySnapshot=>{
     querySnapshot.forEach(function(doc){
       console.log(doc.data().date)
-      item[doc.data().date]=[{name:["일기","일기 작성"]}]
+      item[doc.id]=[{diary:doc.data().diary},{challenge:doc.data().challenge},{smoke:doc.data().smoke},{drug:doc.data().drug1},{drug:doc.data().drug2}]
       
       console.log(item)
     })
 
   })
-}
+} 
   return (
     <>
       <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
@@ -93,12 +96,11 @@ async function getDiary(){
           items={item}
           renderItem={(item, firstItemInDay) => {
             return (<View style={[styles.item, { height: 50 }]}>
-              <View style={{ flexDirection: 'row',
+              {item.diary ? 
+              <>
+<View style={{ flexDirection: 'row',
                                 alignItems: "center",
                                 justifyContent: 'flex-start',}}>
-                
-                {item.name[0]==="일기" ? 
-                <>
                   <View style={{
                                 width: 8,
                                 height: 8,
@@ -106,39 +108,98 @@ async function getDiary(){
                                 borderRadius: 4,
                                 marginRight: 8
                             }} />
-                            <Text>{item.name[0]}</Text>
+                            
+                            <Text>{item.diary}</Text>
+                            </View>
+                            
                 </>
                 :
-                (item.name[0]==="흡연" ? 
                 <>
-                   <View style={{
+
+                </>
+                }
+                {item.challenge ? 
+                <>
+                <View style={{ flexDirection: 'row',
+                                alignItems: "center",
+                                justifyContent: 'flex-start',}}>
+                  <View style={{
                                 width: 8,
                                 height: 8,
-                                backgroundColor: "#303030",
+                                backgroundColor: "#fb5757",
                                 borderRadius: 4,
                                 marginRight: 8
                             }} />
+                            
+                            <Text>{item.challenge}</Text>
+                            </View>
+                            
                 </>
                 :
-                (item.name[0]==="챌린지" ? 
                 <></>
-                :
-                <></>
-                )
-                )
                 }
-              </View>
-              <Text>{item.name[1]}</Text>
-              {item.dic[0] ? 
-              <>
-              <Text>{item.dic[0]}</Text>
-              </>
-              
-              :
-              <></>}
-              
-            </View>);
-          }}
+                {item.drug ? <>
+                  <View style={{ flexDirection: 'row',
+                                alignItems: "center",
+                                justifyContent: 'flex-start',}}>
+                  <View style={{
+                                width: 8,
+                                height: 8,
+                                backgroundColor: "#fb5757",
+                                borderRadius: 4,
+                                marginRight: 8
+                            }} />
+                            
+                            <Text>{item.drug}</Text>
+                            </View>
+                            <Text>{item.drug}</Text></> :<></>}
+                {item.smoke ? <>
+                  <View style={{ flexDirection: 'row',
+                                alignItems: "center",
+                                justifyContent: 'flex-start',}}>
+                  <View style={{
+                                width: 8,
+                                height: 8,
+                                backgroundColor: "#fb5757",
+                                borderRadius: 4,
+                                marginRight: 8
+                            }} />
+                            
+                            <Text>{item.smoke}</Text>
+                            </View>
+                            </>:<></>}
+                            {item.drug1 ? <>
+                  <View style={{ flexDirection: 'row',
+                                alignItems: "center",
+                                justifyContent: 'flex-start',}}>
+                  <View style={{
+                                width: 8,
+                                height: 8,
+                                backgroundColor: "#fb5757",
+                                borderRadius: 4,
+                                marginRight: 8
+                            }} />
+                            
+                            <Text>{item.drug1}</Text>
+                            </View>
+                            </>:<></>}
+                            {item.drug2 ? <>
+                  <View style={{ flexDirection: 'row',
+                                alignItems: "center",
+                                justifyContent: 'flex-start',}}>
+                  <View style={{
+                                width: 8,
+                                height: 8,
+                                backgroundColor: "#fb5757",
+                                borderRadius: 4,
+                                marginRight: 8
+                            }} />
+                            
+                            <Text>{item.drug2}</Text>
+                            </View>
+                            </>:<></>}
+                </View>
+             ) }}
           renderEmptyDate={() => {    return (
             <View style={styles.emptyDate}>
               <Text>This is empty date!</Text>
@@ -146,21 +207,26 @@ async function getDiary(){
           );}}
           renderEmptyData = {() => {return (<View style={[styles.item, { height: 50 }]}>
             
-            <Image source={require("./icon/lightbulb.png")} />
+          <Text>일정이 없습니다 </Text>
            
         </View>);}}
         
-          markedDates={{
+          // markedDates={{
 
-            '2020-07-10': { dots: [diary, drug, challenge] },
-            '2020-07-16': { dots: [drug, challenge], },
-            '2020-07-20': { dots: [diary, drug, challenge] },
-            '2020-07-12': { dots: [drug, challenge], },
-            '2020-07-22': { dots: [diary, drug, challenge] },
-            '2020-07-28': { dots: [drug, challenge], },
-            '2020-07-25': { dots: [diary, drug, challenge] },
-            '2020-07-26': { dots: [drug, challenge], }
-          }}
+          //   '2020-07-10': { dots: [diary, drug, challenge] },
+          //   '2020-07-16': { dots: [drug, challenge], },
+          //   '2020-07-20': { dots: [diary, drug, challenge] },
+          //   '2020-07-12': { dots: [drug, challenge], },
+          //   '2020-07-22': { dots: [diary, drug, challenge] },
+          //   '2020-07-28': { dots: [drug, challenge], },
+          //   '2020-07-25': { dots: [diary, drug, challenge] },
+          //   '2020-07-26': { dots: [drug, challenge], }
+          // }}
+          onRefresh={() => console.log('refreshing...')}
+          // Set this true while waiting for new data from a refresh
+          refreshing={false}
+          // Add a custom RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView.
+          refreshControl={null}
           markingType={"multi-dot"}
           theme={{
             

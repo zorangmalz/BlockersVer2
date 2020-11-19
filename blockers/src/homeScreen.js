@@ -170,13 +170,13 @@ export default function HomeScreen({ navigation }) {
     async function timeCheck() {
         var a = moment().toArray()
         console.log(a)
-        const USER = firebase.auth().currentUser
-        await ref.doc(USER.uid).get().then(documentSnapshot => {
+        
+        await ref.doc(user.uid).get().then(documentSnapshot => {
             if (a[2] === documentSnapshot.data().smokeToday) {
                 console.log("same")
             } else {
                 console.log("different")
-                ref.doc(USER.uid).update({
+                ref.doc(user.uid).update({
                     smokeDaily: 0,
                     smokeToday: a[2],
                     smokeStats: firebase.firestore.FieldValue.arrayUnion(a + "/흡연량:" + smokingDaily)
@@ -187,12 +187,16 @@ export default function HomeScreen({ navigation }) {
 
     }
     useEffect(() => {
-        const USER = firebase.auth().currentUser
-        if (!USER) {
-            setLogin(false)
-        } else {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+        if (user) {
             setLogin(true)
+        } else {
+            console.log("nouser")
+       setLogin(false)
         }
+
     }, [login, userlogin, refreshing])
     useEffect(() => {
         var a = moment().toArray()
@@ -209,6 +213,10 @@ export default function HomeScreen({ navigation }) {
     }, [])
     useEffect(() => {
         if (user) {
+            console.log("stsat")
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc("2020-11-18").set({
+                hi:"hi"
+            })
             ref.doc(user.uid).get().then(documentSnapshot => {
                 setSmoker(documentSnapshot.data().smoker)
                 setSmokeInfo(documentSnapshot.data().smokeInfo)
