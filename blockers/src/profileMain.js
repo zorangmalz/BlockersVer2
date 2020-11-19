@@ -47,8 +47,9 @@ export default function ProfileMain({ navigation }) {
     const [imageOne, setImageOne] = useState(undefined);
     const [picone, setPicone] = useState(true);
     const [imageSource, setImageSource] = useState(undefined);
-    const [isImage, setIsImage] = useState(false);
+    const [isImage, setIsImage] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+    const [imageLoading, setImageLoading] = useState(false);
 
     //리프레시 컨트롤
     const [refreshing, setRefreshing] = useState(false);
@@ -57,40 +58,6 @@ export default function ProfileMain({ navigation }) {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
-    useEffect(() => {
-        //개인정보 가져오기
-        auth().onAuthStateChanged(userAuth => {
-            setUser(userAuth)
-        })
-        if (user) {
-            firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot => {
-                console.log(documentSnapshot.data().nickname, "hihi")
-                setUserNick(documentSnapshot.data().nickname)
-                setUserName(documentSnapshot.data().name)
-                setuserBirth(documentSnapshot.data().birth)
-                setHaveProfile(documentSnapshot.data().gotProfile)
-                setSex(documentSnapshot.data().sex)
-            })
-            console.log(user)
-            console.log(haveProfile, "profile")
-            //프로필 사진 가져오기
-            async function getImage() {
-                const url = await storage()
-                    .refFromURL("gs://blockers-8a128.appspot.com/User/" + user.uid + "/프로필사진")
-                    .getDownloadURL()
-                    .catch(() => {
-                        console.log("사진이 존재하지 않습니다.")
-                        setIsLoading(true)
-                    })
-                setIsImage(true)
-                console.log("사진이 존재")
-                setImageSource(url)
-                setIsLoading(true);
-            }
-            getImage()
-        }
-    }, [userNick, user, imageOne, refreshing, name]);
-
     //이미지 업로드 시 firebase와 소통
     async function uploadImage(a) {
         const uri = a;
@@ -98,7 +65,22 @@ export default function ProfileMain({ navigation }) {
         console.log(uri, imageOne, reference)
         const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
-        await reference.putFile(uploadUri);
+        await reference.putFile(uploadUri).then(async () => {
+            const uid = firebase.auth().currentUser.uid
+            const url = await storage().refFromURL("gs://blockers-8a128.appspot.com/User/" + uid + "/프로필사진").getDownloadURL()
+            console.log(url)
+            firestore()
+                .collection('UserInfo')
+                .doc(uid)
+                .update({
+                    profilePicture: url,
+                    gotProfile: true
+                })
+        })
+        setImageLoading(true)
+        setTimeout(() => {
+            setImageLoading(false)
+        }, 1000)
     }
 
     //이미지 골라서 업로드
@@ -111,8 +93,8 @@ export default function ProfileMain({ navigation }) {
                 setImageOne(response.uri);
                 console.log(response.uri, "thisisresponsoe")
                 setPicone(false);
-
                 uploadImage(response.uri)
+                setIsImage(true)
             }
         });
     };
@@ -130,6 +112,50 @@ export default function ProfileMain({ navigation }) {
         },
         quality: 0.3
     };
+
+    //프로필 사진 가져오기
+    async function getImage() {
+        const ref = await firestore().collection("UserInfo").doc(user.uid)
+        const url = await storage()
+            .refFromURL("gs://blockers-8a128.appspot.com/User/" + user.uid + "/프로필사진")
+            .getDownloadURL()
+            .catch(() => {
+                setIsImage(false)
+                ref.update({
+                    gotProfile: false
+                })
+            })
+        setImageSource(url)
+        setIsLoading(true);
+    }
+
+    //이게 좀 느림
+    async function getUser() {
+        const USER = firebase.auth().currentUser
+        await firestore().collection("UserInfo").doc(USER.uid).get().then(documentSnapshot => {
+            console.log(documentSnapshot.data().nickname, "hihi")
+            setUserNick(documentSnapshot.data().nickname)
+            setUserName(documentSnapshot.data().name)
+            setuserBirth(documentSnapshot.data().birth)
+            setHaveProfile(documentSnapshot.data().gotProfile)
+            setSex(documentSnapshot.data().sex)
+        })
+    }
+
+    useEffect(() => {
+        //개인정보 가져오기
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+        if (user) {
+            getUser()
+            console.log(user)
+            console.log(haveProfile, "profile")
+            if (isImage) {
+                getImage()
+            }
+        }
+    }, [imageLoading, userNick, user, imageOne, refreshing, name]);
 
     //챌린지 기록 가져오기
     const [items, setItems] = useState([])
@@ -181,9 +207,15 @@ export default function ProfileMain({ navigation }) {
                             <View style={{ alignSelf: "center", marginTop: 16 }}>
                                 <TouchableOpacity onPress={showCameraRoll1}>
                                     {isImage === true ?
-                                        <Image resizeMode="cover" source={{ uri: imageSource }} style={{ width: 100, height: 100, borderRadius: 50 }} />
+                                        imageLoading ?
+                                            <ActivityIndicator size="large" color="#5cc27b" style={{ width: 100, height: 100, borderRadius: 50 }} />
+                                            :
+                                            <Image resizeMode="cover" source={{ uri: imageSource }} style={{ width: 100, height: 100, borderRadius: 50 }} />
                                         :
-                                        <Ionicons name="person-circle" size={100} color="#dbdbdb" />
+                                        imageLoading ?
+                                            <ActivityIndicator size="large" color="#5cc27b" style={{ width: 100, height: 100, borderRadius: 50 }} />
+                                            :
+                                            <Ionicons name="person-circle" size={100} color="#dbdbdb" />
                                     }
                                 </TouchableOpacity>
                             </View>

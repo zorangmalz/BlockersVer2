@@ -108,35 +108,41 @@ export default function MyPageScreen({ navigation }) {
         })
     }, [])
 
+    //프로필 사진 가져오기
+    async function getImage() {
+        const ref = firestore().collection("UserInfo").doc(user.uid)
+        const url = await storage()
+            .refFromURL("gs://blockers-8a128.appspot.com/User/" + user.uid + "/프로필사진")
+            .getDownloadURL()
+            .catch(() => {
+                setIsImage(false)
+                ref.update({
+                    gotProfile: false
+                })
+            })
+        setImageSource(url)
+        setIsLoading(true);
+    }
+
     useEffect(() => {
         if (user) {
+            const ref = firestore().collection("UserInfo").doc(user.uid)
             setUserlogined(true);
-            firestore().collection("UserInfo").doc(user.uid).get()
+            ref.get()
                 .then(data => {
                     setNickname(data.data().nickname)
                     setName(data.data().name)
+                    setIsImage(data.data().gotProfile)
                 })
-            //프로필 사진 가져오기
-            async function getImage() {
-                const url = await storage()
-                    .refFromURL("gs://blockers-8a128.appspot.com/User/" + user.uid + "/프로필사진")
-                    .getDownloadURL()
-                    .catch(() => {
-                        console.log("사진이 존재하지 않습니다.")
-                        setIsLoading(true)
-                    })
-                setIsImage(true)
-                console.log("사진이 존재")
-                setImageSource(url)
-                setIsLoading(true);
+            if (isImage) {
+                getImage()
             }
-            getImage()
         }
         else {
             setUserlogined(false);
             setIsLoading(true);
         }
-    }, [refreshing, userlogined, user])
+    }, [refreshing, userlogined, user, isImage])
 
     const Success = [
         {

@@ -118,15 +118,6 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [picLoading, setPicLoading] = useState(false);
     const [replyLoading, setReplyLoading] = useState(false);
 
-    // async function reProfilePicture(a) {
-    //     console.log(a)
-    //     const url2 = await storage()
-    //         .refFromURL("gs://blockers-8a128.appspot.com/User/" + a + "/" + "프로필사진" + a)
-    //         .getDownloadURL();
-    //     console.log("revmtkdlqslek", url2)
-    //     setRevmtk(url2)
-
-    // }
     //댓글 작성하는 함수. 댓글 작성후에 reply collection에 추가를 하고 커멘트 숫자도 업로드한다
     async function writepost(b) {
         var a = moment().toArray()
@@ -149,7 +140,6 @@ export default function CommunityOtherPost({ route, navigation }) {
             rereply: false,
             whoLike: [],
             whoAlert: []
-            
         })
         await ref.doc(docID).update({
             commentNum: replynum + 1
@@ -398,30 +388,7 @@ export default function CommunityOtherPost({ route, navigation }) {
         });
     }
 
-    // function focusing(){
-    //     // console.log(a)
-    //     Alert.alert(
-    //         '대댓글을 작성하시겠습니까?',
-    //         "대댓글",
-    //         [
-    //             {
-    //                 text: '네', onPress: () => realfocusing()
-    //             },
-    //             {
-    //                 text: '아니오', onPress: () => unfocusing()
-
-    //             }
-    //         ]
-    //     )
-
-    // }
-    // function focusing(a){
-    //     setReComment(a)
-    //     console.log(reComment)
-    //     textbox.current.focus()
-    // }
-
-    //댓글 좋아요 및 좋아요 취소, 댓글 삭제-----------------------------------------------------------
+    //댓글 좋아요 및 좋아요 취소, 댓글 삭제
     function relikeMinus(a, b) {
 
         return ref.doc(param).collection("Reply").doc(b).update({
@@ -723,11 +690,11 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                     </View>
                                                 </View>
                                             </View>
-                                            <View style={{ marginTop: 8, marginLeft: "5%", marginRight: "5%" }}>
+                                            <View style={{ marginTop: 8, marginLeft: 16, marginRight: 16 }}>
                                                 <Text style={{
                                                     fontFamily: "NunitoSans-Regular",
                                                     fontSize: 14,
-                                                    color: "#303030",
+                                                    color: "#707070",
                                                 }}>{item.reContent}</Text>
                                             </View>
                                         </View>
@@ -768,7 +735,6 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 <TouchableOpacity onPress={() => {
                                     comment.length > 0 ?
                                         writepost(comment)
-
                                         :
                                         Alert.alert(
                                             '작성 오류',
@@ -786,7 +752,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                         </View>
                     </>
                     :
-                    <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT - 20, left: WIDTH - 20 }} />
+                    <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT - 20, left: WIDTH - 20, backgroundColor: "#ffffff" }} />
                 }
             </SafeAreaView>
         </>

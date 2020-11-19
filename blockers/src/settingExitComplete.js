@@ -12,54 +12,45 @@ import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
 import { LoginManager } from 'react-native-fbsdk';
+import storage from '@react-native-firebase/storage';
 
 export default function SettingExitComplete({ navigation }) {
     const [User, setUser] = useState();
+    const [del, setDel] = useState(false);
+
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
-    }, [])
+        if (del) {
+            //로그아웃
+            auth().signOut().then(() => {
+                //화면 전환
+                navigation.navigate("Home");
+            }).catch(() => {
+                LoginManager.logOut()
+                navigation.navigate("Home");
+            })
+        }
+    }, [del])
 
     //User 탈퇴함수
     async function DeleteAccount() {
+        const ref = await firestore().collection("UserInfo").doc(firebase.auth().currentUser.uid)
+        const image = await storage().ref("gs://blockers-8a128.appspot.com/User/" + firebase.auth().currentUser.uid + "/프로필사진")
+        ref.collection("Challenge").doc().delete()
+        ref.collection("Diary").doc().delete()
+        ref.collection("Daily").doc().delete()
+        ref.collection("Solution").doc().delete()
+        //이미지 삭제
+        image.delete()
         //firestore에 있는 UserInfo 정보 삭제
-        await firestore().collection("UserInfo")
-            .doc(User.uid)
-            .delete();
-        if (User.isAnonymous === false) {
-            //User 삭제
-            User.delete().then(() => {
-                auth().signOut().then(() => {
-                    console.log("1")
-                    //화면 전환
-                    navigation.navigate("Home");
-                }).catch(() => {
-                    console.log("2")
-                    //화면 전환
-                    LoginManager.logOut()
-                    navigation.navigate("Home");
-                })
+        ref.delete()
+            .then(() => {
+                //User 삭제
+                User.delete()
+                setDel(true)
             })
-        } else if (User.isAnonymous === true) {
-            //User 삭제
-            User.delete().then(() => {
-                auth().signOut().then(() => {
-                    console.log("3")
-                    LoginManager.logOut()
-                    //화면 전환
-                    navigation.navigate("Home");
-                }).catch(() => {
-                    console.log("4")
-                    //화면 전환
-                    LoginManager.logOut()
-                    navigation.navigate("Home");
-                })
-            })
-        } else {
-            console.log("user needs to reauth");
-            return false;
-        }
     };
 
     return (
