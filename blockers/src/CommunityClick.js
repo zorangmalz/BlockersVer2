@@ -10,14 +10,19 @@ import {
     Image,
     TouchableOpacity,
     Dimensions,
-    ActivityIndicator, FlatList, RefreshControl
+    ActivityIndicator, 
+    FlatList, 
+    RefreshControl,
+    Modal
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import moment from "moment";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Modal from 'react-native-modal';
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
 
 const topposition = Dimensions.get('window').width;
 
@@ -221,7 +226,6 @@ export default function CommunityHome({ navigation }) {
                 if (loading) {
                     setLoading(false);
                 }
-
             });
         }
     }
@@ -290,11 +294,10 @@ export default function CommunityHome({ navigation }) {
                 <Modal
                     animationType="none"
                     transparent={true}
-                    isVisible={userlogin}
-                    backdropOpacity={0.4}
-                    onBackdropPress={() => setUserlogin(false)}
+                    visible={userlogin}
                     onRequestClose={() => setUserlogin(false)}
                 >
+                    <View style={{position: "absolute", top: 0, width: WIDTH, height: HEIGHT, backgroundColor: "#303030", opacity: 0.4}} />
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{
                             width: 280,

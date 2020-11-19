@@ -37,7 +37,7 @@ export default function SettingResetComplete({navigation}) {
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
-                <TouchableOpacity onPress={() => DeleteAccount(User)}>
+                <TouchableOpacity onPress={() => navigation.navigate("Home")}>
                     <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>종료</Text>
                     </View>

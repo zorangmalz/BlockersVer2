@@ -3089,7 +3089,7 @@ export function ChallengeGD({ navigation }) {
                             <MotiveButton content="갈증" include={fourteen} onPress={onFourteen} />
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton width={60} content="없음" include={zero} onPress={onZero} />
+                            <MotiveButton content="없음" include={zero} onPress={onZero} />
                             <TextInput value={input} onChangeText={(text) => setInput(text)}
                                 onSubmitEditing={() => setGD(GD.concat(input))}
                                 placeholder="기타" style={{

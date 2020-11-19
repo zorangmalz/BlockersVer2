@@ -7,9 +7,13 @@ import {
     SafeAreaView,
     TouchableOpacity,
     StyleSheet,
+    Modal,
+    Dimensions
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Modal from 'react-native-modal';
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
 
 const setting = StyleSheet.create({
     agree : {
@@ -71,10 +75,10 @@ export default function SettingExit({ navigation }) {
                 <Modal
                     animationType="none"
                     transparent={true}
-                    isVisible={modalVisible}
-                    backdropOpacity={0.4}
+                    visible={modalVisible}
                     onRequestClose={() => setModalVisible(false)}
                 >
+                    <View style={{position: "absolute", width: WIDTH, height: HEIGHT, backgroundColor: "#303030", opacity: 0.4}} />
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{
                             width: 280,
@@ -121,8 +125,8 @@ export default function SettingExit({ navigation }) {
                                     }}>취소</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => {
-                                    navigation.navigate('ExitComplete');
-                                    setModalVisible(false);
+                                    navigation.navigate("SettingResetComplete")
+                                    setModalVisible(false)
                                 }}
                                     style={{
                                         width: 140,
@@ -136,7 +140,7 @@ export default function SettingExit({ navigation }) {
                                         fontSize: 16,
                                         color: '#ffffff',
                                         fontFamily: 'NunitoSans-Regular'
-                                    }}>출금하기</Text>
+                                    }}>확인</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -294,14 +298,16 @@ export default function SettingExit({ navigation }) {
                         </Text>
                     </View>
                 </ScrollView>
+            </SafeAreaView>
+            <SafeAreaView style={{flex: 0}}>
                 {(agreeOne === true) && (agreeTwo === true) ?
-                    <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={modalbutton}>
+                    <TouchableOpacity onPress={modalbutton}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>탈퇴하기</Text>
                         </View>
                     </TouchableOpacity>
                     :
-                    <View style={{ position: 'absolute', bottom: 0, width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>탈퇴하기</Text>
                     </View>
                 }

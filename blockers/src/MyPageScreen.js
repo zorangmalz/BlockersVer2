@@ -129,6 +129,7 @@ export default function MyPageScreen({ navigation }) {
                     }).catch(() => {
                         console.log("사진이 존재하지 않습니다.")
                         setIsLoading(true);
+                        setIsImage(false)
                     })
             }
             getImage()

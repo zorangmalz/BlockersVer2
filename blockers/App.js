@@ -423,7 +423,7 @@ const App = ({ navigation }) => {
           }}
         />
         <Stack.Screen
-          name="ExitComplete"
+          name="SettingResetComplete"
           component={SettingExitComplete}
           options={{
             headerShown: false,

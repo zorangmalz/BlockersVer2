@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -10,39 +10,62 @@ import {
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import firebase from '@react-native-firebase/app';
+import auth from '@react-native-firebase/auth';
+import { LoginManager } from 'react-native-fbsdk';
 
-export default function SettingExitComplete({navigation}) {
-    //User 탈퇴
-    const User = firebase.auth().currentUser;
-    async function DeleteAccount (user) {
-        await firebase.auth().onAuthStateChanged(async (user) => {
-            if (user.isAnonymous === false) {
-                //firestore에 있는 UserInfo 정보 삭제
-                firestore().collection("UserInfo")
-                    .doc(user.uid)
-                    .delete();
-                //User 삭제
-                user.delete();
-                //화면 전환
-                navigation.navigate("Home");
-            } else if (user.isAnonymous === true) {
-                firestore().collection("UserInfo")
-                    .doc(user.uid)
-                    .delete();
-                //User 삭제
-                user.delete();
-                //화면 전환
-                navigation.navigate("Home");
-            } else {
-                console.log("user needs to reauth");
-                return false;
-            }
-        });
+export default function SettingExitComplete({ navigation }) {
+    const [User, setUser] = useState();
+    useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+    }, [])
+
+    //User 탈퇴함수
+    async function DeleteAccount() {
+        //firestore에 있는 UserInfo 정보 삭제
+        await firestore().collection("UserInfo")
+            .doc(User.uid)
+            .delete();
+        if (User.isAnonymous === false) {
+            //User 삭제
+            User.delete().then(() => {
+                auth().signOut().then(() => {
+                    console.log("1")
+                    //화면 전환
+                    navigation.navigate("Home");
+                }).catch(() => {
+                    console.log("2")
+                    //화면 전환
+                    LoginManager.logOut()
+                    navigation.navigate("Home");
+                })
+            })
+        } else if (User.isAnonymous === true) {
+            //User 삭제
+            User.delete().then(() => {
+                auth().signOut().then(() => {
+                    console.log("3")
+                    LoginManager.logOut()
+                    //화면 전환
+                    navigation.navigate("Home");
+                }).catch(() => {
+                    console.log("4")
+                    //화면 전환
+                    LoginManager.logOut()
+                    navigation.navigate("Home");
+                })
+            })
+        } else {
+            console.log("user needs to reauth");
+            return false;
+        }
     };
+
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{backgroundColor: '#FFFFFF', flex: 1}}>
+            <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
                 <ScrollView>
                     <Image 
                         style={{width: 150, height: 150, alignSelf: 'center', marginTop: "50%", marginBottom: 32}}
@@ -64,7 +87,7 @@ export default function SettingExitComplete({navigation}) {
                         marginTop: 16
                     }}>이용해주셔서 감사합니다.</Text>
                 </ScrollView>
-                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={DeleteAccount}>
+                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={() => DeleteAccount()}>
                     <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>종료</Text>
                     </View>

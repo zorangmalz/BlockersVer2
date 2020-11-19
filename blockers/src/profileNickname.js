@@ -55,7 +55,7 @@ export default function ProfileNickname({ navigation }) {
             .then(documentSnapshot => {
                 documentSnapshot.forEach(doc => {
                     const data = doc.data().nickname
-                    if(data === nickname) {
+                    if (data === nickname) {
                         setSame(true)
                     }
                 })

@@ -7,12 +7,16 @@ import {
     ScrollView,
     StyleSheet,
     TouchableOpacity,
+    Modal,
+    Dimensions
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Modal from 'react-native-modal';
-import moment from "moment"
+import moment from "moment";
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
 
 const setting = StyleSheet.create({
     largeText: {
@@ -183,10 +187,10 @@ export default function SettingReset({ navigation }) {
                 <Modal
                     animationType="none"
                     transparent={true}
-                    isVisible={modalVisible}
-                    backdropOpacity={0.4}
+                    visible={modalVisible}
                     onRequestClose={() => setModalVisible(false)}
                 >
+                    <View style={{position: "absolute", width: WIDTH, height: HEIGHT, backgroundColor: "#303030", opacity: 0.4}} />
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{
                             width: 280,
@@ -209,7 +213,7 @@ export default function SettingReset({ navigation }) {
                                 color: '#303030',
                                 opacity: 0.6,
                                 textAlign: 'center'
-                            }}>챌린지를 진행중인 경우 동으로 포기하게 됩니다.</Text>
+                            }}>챌린지를 진행중인 경우 으로 포기하게 됩니다.</Text>
                             <View style={{
                                 flexDirection: 'row',
                                 alignItems: 'center',

@@ -11,7 +11,9 @@ import {
     Keyboard,
     Dimensions,
     TouchableOpacity,
-    Alert, FlatList,
+    Alert, 
+    FlatList,
+    ActivityIndicator
 } from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
@@ -23,6 +25,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
+
 const community = StyleSheet.create({
     title: {
         fontSize: 18,
@@ -81,14 +84,11 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [reIsLogined, setReIsLogined] = useState()
     const [title, setTitle] = useState();
     const [author, setAuthor] = useState();
-    const [user, setUser] = useState();
     const [createdate, setCreateDate] = useState();
     const [content, setContent] = useState();
     const [docName,setDocName]=useState();
     const [like, setLike] = useState();
     const [items, setItems] = useState([]);
-    const [itemss, setItemss] = useState([]);
-    const [likeButton, setLikeButton] = useState(false);
     const ref = firestore().collection('Community1');
     const [nick, setNick] = useState();
     const [state, setState] = useState();
@@ -105,15 +105,18 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [alertList, setAlertList] = useState([]);
     const [vmtk, setVmtk] = useState();
     const [revmtk, setRevmtk] = useState();
-
-    const [reHave, setReHave] = useState();
     const textbox = useRef()
     const [loading, setLoading] = useState(false);
     //for Reply
     const [relikeState, setReLikeState] = useState()
     const [reMelike, setReMeLike] = useState()
-    const [reLike, setReLike] = useState()
     const [commentState,setCommentState]=useState()
+
+    //로딩 화면
+    const [userLoading, setUserLoading] = useState(false);
+    const [textLoading, setTextLoading] = useState(false);
+    const [picLoading, setPicLoading] = useState(false);
+    const [replyLoading, setReplyLoading] = useState(false);
 
     // async function reProfilePicture(a) {
     //     console.log(a)
@@ -126,7 +129,6 @@ export default function CommunityOtherPost({ route, navigation }) {
     // }
     //댓글 작성하는 함수. 댓글 작성후에 reply collection에 추가를 하고 커멘트 숫자도 업로드한다
     async function writepost(b) {
-        
         var a = moment().toArray()
         console.log(b)
         if (a[1] === 12) {
@@ -156,7 +158,6 @@ export default function CommunityOtherPost({ route, navigation }) {
         setComment("")
     }
 
-
     //사용자 정보를 불러오는 함수. 불러온후에 사용자 닉네임을 설정한다(화면에 띄워줌)
     useEffect(() => {
         var a = [1, 2, 3, 4]
@@ -166,6 +167,8 @@ export default function CommunityOtherPost({ route, navigation }) {
             console.log(documentSnapshot.data().nickname, "hihi")
             setNick(documentSnapshot.data().nickname)
             setRevmtk(documentSnapshot.data().profilePicture)
+        }).then(() => {
+            setUserLoading(true)
         })
         console.log("flvmtk", revmtk)
 
@@ -192,16 +195,39 @@ export default function CommunityOtherPost({ route, navigation }) {
             })
         }
         console.log(alertList, likeList, time, author, "alertList")
-        load()
-
+        load().then(() => {
+            setTextLoading(true)
+        }).catch(() => {
+            console.log("텍스트 및 좋아요가 안나옴")
+            setTextLoading(true)
+        })
 
         if (likeList.includes(Uid)) {
-
             setMeLike(true)
         }
     }, [likeState, nick, title])
+
+    //사진 불러오는 함수
+    async function hi() {
+        console.log("comeins")
+        console.log(title, author, time)
+        const url = await storage()
+            .refFromURL("gs://blockers-8a128.appspot.com/community1/" + String(title + author + time))
+            .getDownloadURL()
+            .then(() => {
+                setImageSource(url)
+            }).catch(() => {
+                console.log("사진이 없습니다.")
+            })
+    }
+
     useEffect(() => {
-        hi()
+        hi().then(() => {
+            setPicLoading(true)
+        }).catch(() => {
+            
+            console.log("사진이 없습니다.")
+        })
         if (Uid === realWriterUid) {
             setIslogined(true)
             console.log("yes ITs true")
@@ -211,28 +237,13 @@ export default function CommunityOtherPost({ route, navigation }) {
         }
     }, [time])
 
-    //사진 불러오는 함수
-    async function hi() {
-        console.log("comeins")
-        console.log(title, author, time)
-        const url = await storage()
-            .refFromURL("gs://blockers-8a128.appspot.com/community1/" + String(title + author + time))
-            .getDownloadURL();
-
-        setImageSource(url)
-
-    }
     //댓글을 보여주는 함수. 
-
     useEffect(() => {
         setItems(items.splice(0, items.length))
         console.log(items, "??????")
         const { ID } = route.params
         setParam(ID)
-
         async function reply() {
-            
-            
             firestore().collection('Community1').doc(ID).collection("Reply").onSnapshot(querySnapshot => {
                 let list = [];
                 console.log("comd")
@@ -261,24 +272,23 @@ export default function CommunityOtherPost({ route, navigation }) {
                         reWhoLikeList: docs.data().whoLike,
                         reWhoAlert: docs.data().whoAlert,
                         reMeLike: reMelike
-                        
                     });
 
                 });
-
                 setItems(list);
-                console.log(list)
+                console.log(list);
             })
-
-            // console.log("this is the final list",items)
         }
-
-        reply()
-    }, [state, vmtk, loading,commentState])
+        reply().then(() => {
+            setReplyLoading(true)
+        }).catch(() => {
+            console.log("댓글이 안불러옴")
+            setReplyLoading(true)
+        })
+    }, [state, vmtk, loading, commentState])
 
     //게시글 좋아요 및 좋아요 취소
     function likeMinus(a) {
-
         return ref.doc(param).update({
             whoLike: a,
         }).then(() => {
@@ -385,9 +395,6 @@ export default function CommunityOtherPost({ route, navigation }) {
             whoAlert: a,
         }).then(() => {
             console.log("alert success")
-
-
-
         });
     }
 
@@ -452,7 +459,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     function redeletePost(a) {
         ref.doc(param).collection("Reply").doc(a).delete()
         setCommentState(true)
-        
+
     }
     function realertPost(a) {
         console.log(alertList, "fucking here")
@@ -502,11 +509,11 @@ export default function CommunityOtherPost({ route, navigation }) {
                 ]
             )
             setAlertList(alertList.push(userID))
-            realertUpdate(a,alertList)
+            realertUpdate(a, alertList)
         }
 
     }
-    function realertUpdate(a,b) {
+    function realertUpdate(a, b) {
         return ref.doc(param).collection("Reply").doc(a).update({
             whoAlert: b,
         }).then(() => {
@@ -518,264 +525,273 @@ export default function CommunityOtherPost({ route, navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
-                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="chevron-back" size={25} />
-                    </TouchableOpacity>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            justifyContent: "flex-start",
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Text style={{ fontSize: 18 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자유게시판</Text>
-                        </Text>
-                    </View>
-                    <TouchableOpacity>
-                        <Ionicons name="notifications" color="#666666" size={25} />
-                    </TouchableOpacity>
-                </View>
-                <ScrollView style={{ marginBottom: 50 }}>
-                    <View style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: 'center',
-                        borderBottomColor: "#DDDDDD",
-                        borderBottomWidth: 1,
-                        padding: 16,
-                        paddingRight: 20
-                    }}>
-                        <View style={{
-                            flexDirection: 'row',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                        }}>
-
-                            <Image resizeMode="contain" style={community.icon} source={{ uri: vmtk }} />
-                            <Text style={community.author}>{author}</Text>
-                        </View>
-                        <Text style={community.dateandrepair}>{createdate}</Text>
-                    </View>
-                    <View style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: 'center',
-                        borderBottomColor: "#DDDDDD",
-
-                        padding: 16,
-                        paddingRight: 24
-                    }}>
-                        <Text style={community.title}>{title}</Text>
-                        {islogined === true ?
-                            <Text style={[community.dateandrepair, { alignSelf: 'center' }]}>
-                                <TouchableOpacity onPress={() => navigation.navigate('작성하기')}>
-                                    <Text style={community.dateandrepair}>수정 | </Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() =>
-                                    Alert.alert(
-                                        '삭제하시겠습니까?',
-                                        '삭제된 게시물은 되돌릴 수 없습니다.',
-                                        [
-                                            {
-                                                text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
-                                            },
-                                            {
-                                                text: '삭제하기', onPress: () => deletePost()
-
-                                            }
-                                        ]
-                                    )
-                                }>
-                                    <Text style={community.dateandrepair}>삭제</Text>
-                                </TouchableOpacity>
-                            </Text>
-                            :
-                            <TouchableOpacity onPress={alertPost
-                            }>
-                                <Ionicons name="warning-outline" color="#666666" size={25} />
+                {userLoading && textLoading && picLoading && replyLoading ?
+                    <>
+                        <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Ionicons name="chevron-back" size={25} />
                             </TouchableOpacity>
-                        }
-                    </View>
-                    {imageSource && <Image style={community.image} resizeMode="cover" source={{ uri: imageSource }} />}
-
-                    <View style={{
-                        flexDirection: 'row',
-                        justifyContent: 'space-between',
-                        padding: 16,
-                        paddingBottom: 32,
-                        borderBottomWidth: 1,
-                        borderBottomColor: '#E2E2E2'
-                    }}>
-                        <Text style={community.content}>{content}</Text>
-                        <View style={[community.lowerbox, {alignSelf: "flex-end"}]}>
-                            {meLike === true ?
-                                <TouchableOpacity onPress={pressLike}>
-                                    <MaterialCommunityIcons name="thumb-up" color="#5cc27b" size={15} />
-                                </TouchableOpacity>
-                                :
-                                <TouchableOpacity onPress={pressLike}>
-                                    <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} />
-                                </TouchableOpacity>
-                            }
-
-                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{like}</Text>
-                            <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
-                            <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{replynum}</Text>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    justifyContent: "flex-start",
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Text style={{ fontSize: 18 }}>
+                                    <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자유게시판</Text>
+                                </Text>
+                            </View>
+                            <TouchableOpacity>
+                                <Ionicons name="notifications" color="#666666" size={25} />
+                            </TouchableOpacity>
                         </View>
-                    </View>
-                    <View style={{
-                        paddingTop: 8,
-                        paddingRight: 5,
-                        paddingLeft: 5,
-                        width: "100%"
-                    }}>
-                        <FlatList
-                            data={items}
-                            refreshing={true}
-                            extraData={items}
-                            renderItem={({ item }) => (
-                                <View style={{ borderBottomWidth: 1, borderColor: '#E2E2E2', paddingTop: 5, paddingBottom: 5 }}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                                        <View style={{
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                        }}>
-                                            {item.reProfile ? <Image resizeMode="contain" style={community.icon} source={{ uri: item.reProfile }} /> : <Ionicons name="ios-person-circle" style={{marginRight: 4}} color="#E2E2E2" size={20} /> }
-                                            <Text style={community.author}>{item.reNick}</Text>
-                                            <Text style={[community.date, { fontSize: 12, marginLeft: 8 }]}>{item.reTime}</Text>
-                                            {item.reMelike === true ?
-                                                <View style={{ flexDirection: "row" }}>
-                                                    <MaterialCommunityIcons name="thumb-up" color="#5cc27b" size={15} style={{ marginLeft: 8 }} />
-                                                    <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.reWhoLike}</Text>
-                                                </View>
-                                                :
-                                                <View style={{ flexDirection: "row" }}>
-                                                    <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} style={{ marginLeft: 8 }} />
-                                                    <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.reWhoLike}</Text>
-                                                </View>
-                                            }
+                        <ScrollView style={{ marginBottom: 50 }}>
+                            <View style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: 'center',
+                                borderBottomColor: "#DDDDDD",
+                                borderBottomWidth: 1,
+                                padding: 16,
+                                paddingRight: 20
+                            }}>
+                                <View style={{
+                                    flexDirection: 'row',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}>
+                                    {vmtk ?
+                                        <Image resizeMode="cover" style={community.icon} source={{ uri: vmtk }} />
+                                        :
+                                        <Ionicons name="ios-person-circle" style={{ marginRight: 8 }} color="#E2E2E2" size={28} />
+                                    }
+                                    <Text style={community.author}>{author}</Text>
+                                </View>
+                                <Text style={community.dateandrepair}>{createdate}</Text>
+                            </View>
+                            <View style={{
+                                flexDirection: "row",
+                                justifyContent: "space-between",
+                                alignItems: 'center',
+                                borderBottomColor: "#DDDDDD",
 
-                                        </View>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
-                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                                {/* 대댓글 다는 버튼 */}
-                                                {/* <TouchableOpacity onPress={()=>{focusing(item.reName)}}> 
+                                padding: 16,
+                                paddingRight: 24
+                            }}>
+                                <Text style={community.title}>{title}</Text>
+                                {islogined === true ?
+                                    <Text style={[community.dateandrepair, { alignSelf: 'center' }]}>
+                                        <TouchableOpacity onPress={() => navigation.navigate('작성하기')}>
+                                            <Text style={community.dateandrepair}>수정 | </Text>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() =>
+                                            Alert.alert(
+                                                '삭제하시겠습니까?',
+                                                '삭제된 게시물은 되돌릴 수 없습니다.',
+                                                [
+                                                    {
+                                                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                                                    },
+                                                    {
+                                                        text: '삭제하기', onPress: () => deletePost()
+
+                                                    }
+                                                ]
+                                            )
+                                        }>
+                                            <Text style={community.dateandrepair}>삭제</Text>
+                                        </TouchableOpacity>
+                                    </Text>
+                                    :
+                                    <TouchableOpacity onPress={alertPost
+                                    }>
+                                        <Ionicons name="warning-outline" color="#666666" size={25} />
+                                    </TouchableOpacity>
+                                }
+                            </View>
+                            {imageSource && <Image style={community.image} resizeMode="cover" source={{ uri: imageSource }} />}
+                            <View style={{
+                                flexDirection: 'row',
+                                justifyContent: 'space-between',
+                                padding: 16,
+                                paddingBottom: 32,
+                                borderBottomWidth: 1,
+                                borderBottomColor: '#E2E2E2'
+                            }}>
+                                <Text style={community.content}>{content}</Text>
+                                <View style={[community.lowerbox, { alignSelf: "flex-end" }]}>
+                                    {meLike === true ?
+                                        <TouchableOpacity onPress={pressLike}>
+                                            <MaterialCommunityIcons name="thumb-up" color="#5cc27b" size={15} />
+                                        </TouchableOpacity>
+                                        :
+                                        <TouchableOpacity onPress={pressLike}>
+                                            <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} />
+                                        </TouchableOpacity>
+                                    }
+
+                                    <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{like}</Text>
+                                    <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
+                                    <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{replynum}</Text>
+                                </View>
+                            </View>
+                            <View style={{
+                                paddingTop: 8,
+                                paddingRight: 5,
+                                paddingLeft: 5,
+                                width: "100%"
+                            }}>
+                                <FlatList
+                                    data={items}
+                                    refreshing={true}
+                                    extraData={items}
+                                    renderItem={({ item }) => (
+                                        <View style={{ borderBottomWidth: 1, borderColor: '#E2E2E2', paddingTop: 5, paddingBottom: 5 }}>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                                                <View style={{
+                                                    flexDirection: 'row',
+                                                    alignItems: 'center',
+                                                }}>
+                                                    {item.reProfile ? <Image resizeMode="cover" style={community.icon} source={{ uri: item.reProfile }} /> : <Ionicons name="ios-person-circle" style={{ marginRight: 4 }} color="#E2E2E2" size={28} />}
+                                                    <Text style={community.author}>{item.reNick}</Text>
+                                                    <Text style={[community.date, { fontSize: 12, marginLeft: 8 }]}>{item.reTime}</Text>
+                                                    {item.reMelike === true ?
+                                                        <View style={{ flexDirection: "row" }}>
+                                                            <MaterialCommunityIcons name="thumb-up" color="#5cc27b" size={15} style={{ marginLeft: 8 }} />
+                                                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.reWhoLike}</Text>
+                                                        </View>
+                                                        :
+                                                        <View style={{ flexDirection: "row" }}>
+                                                            <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} style={{ marginLeft: 8 }} />
+                                                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.reWhoLike}</Text>
+                                                        </View>
+                                                    }
+
+                                                </View>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-end' }}>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                        {/* 대댓글 다는 버튼 */}
+                                                        {/* <TouchableOpacity onPress={()=>{focusing(item.reName)}}> 
                                             <View style={{borderWidth:0.5,width:30,height:20}}>
 
                                             </View>
                                             </TouchableOpacity> */}
-                                                {/* 좋아요 누르는 버튼 */}
+                                                        {/* 좋아요 누르는 버튼 */}
 
-                                                <TouchableOpacity onPress={() => pressReLike(item.reWhoLikeList, item.reName)} >
-                                                    <View style={{ color: "#DDDDDD", borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                                        <MaterialCommunityIcons name="thumb-up-outline" color="#8A8A8A" size={15} />
-                                                    </View>
-                                                </TouchableOpacity>
-                                                <TouchableOpacity>
-                                                    <View style={{ color: "#DDDDDD", borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                                        <Ionicons name="chatbubble-ellipses-outline" color="#8A8A8A" size={15} />
-                                                    </View>
-                                                </TouchableOpacity>
-                                                {/* 신고 및 삭제 누르는 버튼 */}
-                                                {item.reUserUid === true ?
-                                                    <View style={{ borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                                        <TouchableOpacity onPress={() =>
-                                                            Alert.alert(
-                                                                '삭제하시겠습니까?',
-                                                                '삭제된 게시물은 되돌릴 수 없습니다.',
-                                                                [
-                                                                    {
-                                                                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
-                                                                    },
-                                                                    {
-                                                                        text: '삭제하기', onPress: () => {redeletePost(item.reName),Alert.alert(
-                                                                            '삭제완료',
-                                                                            '',
-                                                                            [
-                                                                                {
-                                                                                    text: 'OK', onPress: () => console.log('삭제가 완료되었습니다.')
+                                                        <TouchableOpacity onPress={() => pressReLike(item.reWhoLikeList, item.reName)} >
+                                                            <View style={{ color: "#DDDDDD", borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                                                <MaterialCommunityIcons name="thumb-up-outline" color="#8A8A8A" size={15} />
+                                                            </View>
+                                                        </TouchableOpacity>
+                                                        <TouchableOpacity>
+                                                            <View style={{ color: "#DDDDDD", borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                                                <Ionicons name="chatbubble-ellipses-outline" color="#8A8A8A" size={15} />
+                                                            </View>
+                                                        </TouchableOpacity>
+                                                        {/* 신고 및 삭제 누르는 버튼 */}
+                                                        {item.reUserUid === true ?
+                                                            <View style={{ borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                                                <TouchableOpacity onPress={() =>
+                                                                    Alert.alert(
+                                                                        '삭제하시겠습니까?',
+                                                                        '삭제된 게시물은 되돌릴 수 없습니다.',
+                                                                        [
+                                                                            {
+                                                                                text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                                                                            },
+                                                                            {
+                                                                                text: '삭제하기', onPress: () => {
+                                                                                    redeletePost(item.reName), Alert.alert(
+                                                                                        '삭제완료',
+                                                                                        '',
+                                                                                        [
+                                                                                            {
+                                                                                                text: 'OK', onPress: () => console.log('삭제가 완료되었습니다.')
+                                                                                            }
+                                                                                        ]
+                                                                                    )
                                                                                 }
-                                                                            ]
-                                                                        )
-                                                                        }
-                                                                    }
-                                                                ]
-                                                            )
-                                                        }>
-                                                            <Text style={community.dateandrepair}>삭제</Text>
-                                                        </TouchableOpacity>
+                                                                            }
+                                                                        ]
+                                                                    )
+                                                                }>
+                                                                    <Text style={community.dateandrepair}>삭제</Text>
+                                                                </TouchableOpacity>
+                                                            </View>
+                                                            :
+                                                            <View style={{ borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                                                <TouchableOpacity onPress={() =>
+                                                                    realertPost(item.reName)
+                                                                }>
+                                                                    <Ionicons name="warning-outline" color="#8A8A8A" size={15} />
+                                                                </TouchableOpacity>
+                                                            </View>
+                                                        }
                                                     </View>
-                                                    :
-                                                    <View style={{ borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                                        <TouchableOpacity onPress={() =>
-                                                            realertPost(item.reName)
-                                                        }>
-                                                            <Ionicons name="warning-outline" color="#8A8A8A" size={15} />
-                                                        </TouchableOpacity>
-                                                    </View>
-                                                }
+                                                </View>
+                                            </View>
+                                            <View style={{ marginTop: 8 }}>
+                                                <Text>{item.reContent}</Text>
                                             </View>
                                         </View>
-                                    </View>
-                                    <View style={{ marginTop: 8 }}>
-                                        <Text>{item.reContent}</Text>
-                                    </View>
-                                </View>
-                            )}
-                        />
-                    </View>
-                </ScrollView>
-                <View>
-                    <View style={{
-                        position: "absolute",
-                        bottom: 0, height: 40, right: 0, left: 0, flexDirection: "row",
-                        borderRadius: 10,
-                        backgroundColor: '#E5E5E5',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                        paddingLeft: 16,
-                        paddingRight: 8,
-                        margin: 8
-                    }}>
-                        <TextInput
-                            value={comment}
-                            onChangeText={text => setComment(text)}
+                                    )}
+                                />
+                            </View>
+                        </ScrollView>
+                        <View>
+                            <View style={{
+                                position: "absolute",
+                                bottom: 0, height: 40, right: 0, left: 0, flexDirection: "row",
+                                borderRadius: 10,
+                                backgroundColor: '#E5E5E5',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                paddingLeft: 16,
+                                paddingRight: 8,
+                                margin: 8
+                            }}>
+                                <TextInput
+                                    value={comment}
+                                    onChangeText={text => setComment(text)}
 
-                            placeholder="댓글을 입력하세요."
-                            placeholderTextColor="#707070"
-                            textAlign="left"
-                            ref={textbox}
+                                    placeholder="댓글을 입력하세요."
+                                    placeholderTextColor="#707070"
+                                    textAlign="left"
+                                    ref={textbox}
 
-                            onSubmitEditing={Keyboard.dismiss}
-                            style={{
-                                width: "90%",
-                                marginRight: 5,
-                                fontSize: 15,
-                                borderRadius: 30,
-                                fontFamily: 'NunitoSans-Regular'
-                            }}
-                        />
-                        <TouchableOpacity onPress={() => {
-                            comment.length > 0 ?
-                                writepost(comment)
+                                    onSubmitEditing={Keyboard.dismiss}
+                                    style={{
+                                        width: "90%",
+                                        marginRight: 5,
+                                        fontSize: 15,
+                                        borderRadius: 30,
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}
+                                />
+                                <TouchableOpacity onPress={() => {
+                                    comment.length > 0 ?
+                                        writepost(comment)
 
-                                :
-                                Alert.alert(
-                                    '작성 오류',
-                                    '두글자 이상 작성해주세요.',
-                                    [
-                                        {
-                                            text: 'OK', onPress: () => console.log('OK Pressed')
-                                        }
-                                    ]
-                                )
-                        }}>
-                            <Ionicons name="send" size={15} color="#5cc27b" />
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                                        :
+                                        Alert.alert(
+                                            '작성 오류',
+                                            '두글자 이상 작성해주세요.',
+                                            [
+                                                {
+                                                    text: 'OK', onPress: () => console.log('OK Pressed')
+                                                }
+                                            ]
+                                        )
+                                }}>
+                                    <Ionicons name="send" size={15} color="#5cc27b" />
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </>
+                    :
+                    <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT - 20, left: WIDTH - 20 }} />
+                }
             </SafeAreaView>
         </>
     )

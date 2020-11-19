@@ -13,7 +13,7 @@ import {
     ActivityIndicator,
     Dimensions
 } from 'react-native';
-import auth from '@react-native-firebase/auth';
+import auth, { firebase } from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
@@ -75,8 +75,10 @@ export default function ProfileMain({ navigation }) {
             console.log(haveProfile, "profile")
             //프로필 사진 가져오기
             async function getImage() {
+                const filename = "프로필사진" + firebase.auth().currentUser.uid;
+                console.log(filename)
                 const url = await storage()
-                    .refFromURL("gs://blockers-8a128.appspot.com/" + "User/" + userNick + "/프로필사진" + userNick)
+                    .refFromURL("gs://blockers-8a128.appspot.com/User/" + firebase.auth().currentUser.uid + "/" + filename)
                     .getDownloadURL().then(() => {
                         setIsImage(true)
                         setImageSource(url)
@@ -94,8 +96,8 @@ export default function ProfileMain({ navigation }) {
     //이미지 업로드 시 firebase와 소통
     async function uploadImage(a) {
         const uri = a;
-        const filename = "프로필사진" + userNick
-        const reference = storage().ref("User/" + userNick + "/" + filename);
+        const filename = "프로필사진" + user.uid
+        const reference = storage().ref("User/" + user.uid + "/" + filename);
         console.log(uri, imageOne, filename, reference)
         const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
 
