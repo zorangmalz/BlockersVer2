@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -14,7 +14,8 @@ import {
     Alert,
     ImageBackground,
     Animated,
-    Easing
+    Easing,
+    Modal
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import moment from "moment"
@@ -23,12 +24,14 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import {AdEventType,InterstitialAd,BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
 
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
 const Caver = require('caver-js')
-const WIDTH = Dimensions.get('window').width;
 
 const date = StyleSheet.create({
     viewcontainer: {
@@ -73,16 +76,12 @@ const wait = (timeout) => {
     });
 }
 
-export default function HomeScreen({ navigation}) {
-    
+export default function HomeScreen({ navigation }) {
     const ref = firestore().collection("UserInfo");
-    const DATA = [];
-    const num = 1;
-    const [smokingCount,setSmokingCount]=useState(0)
-    const [smokeProof,setSmokeProof]=useState([0,0,0,0,0,0,0,0,0,0,])
-    const [smokeProofTwo,setSmokeProofTwo]=useState([0,0,0,0,0,0,0,0,0,0,])
-    const [smokeProofThree,setSmokeProofThree]=useState([0,0,0,0,0,0,0,0,0,0,])
-    const [smokeProofFour,setSmokeProofFour]=useState([0,0,0,0,0,0,0,0,0,0,])
+    const [smokeProof, setSmokeProof] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
+    const [smokeProofTwo, setSmokeProofTwo] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
+    const [smokeProofThree, setSmokeProofThree] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
+    const [smokeProofFour, setSmokeProofFour] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
     const [month, setMonth] = useState('00');
     const [day, setDay] = useState(0);
     const [hour, setHour] = useState(0);
@@ -90,22 +89,22 @@ export default function HomeScreen({ navigation}) {
     const [sec, setSec] = useState(0);
     const [timestart, setTimestart] = useState(false);
     const [viewopacity, setViewOpacity] = useState(true);
-    
+
     const [user, setUser] = useState()
-    const [initializing, setInitializing] = useState(true);
     const [fullTime, setfullTime] = useState()
     const [check, setcheck] = useState(false)
-    const [smoker,setSmoker]=useState(false)
-    const [smokeInfo,setSmokeInfo]=useState()
-    const [smokingAmount,setSmokingAmount]=useState()
-    const [smokingShow,setSmokingShow]=useState(0)
-    const [smokingMoney,setSmokingMoney]=useState()
-    const [smokingDaily,setSmokingDaily]=useState(0)
-    const [stats,setStats]=useState()
-    const [totals,setTotals]=useState()
-    const [today,setToday]=useState()
+    const [smoker, setSmoker] = useState(false)
+    const [smokeInfo, setSmokeInfo] = useState()
+    const [smokingShow, setSmokingShow] = useState(0)
+    const [smokingMoney, setSmokingMoney] = useState()
+    const [smokingDaily, setSmokingDaily] = useState(0)
+    const [stats, setStats] = useState()
+    const [totals, setTotals] = useState()
+    const [today, setToday] = useState()
     const [refreshing, setRefreshing] = React.useState(false);
-    var total=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    const [login, setLogin] = useState(false);
+
+    var total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
 
@@ -125,79 +124,81 @@ export default function HomeScreen({ navigation}) {
         setMinu(parseInt(seconds % 86400 % 3600 / 60))
         setSec(parseInt(seconds % 86400 % 3600 % 60))
     }
-    async function cutting(range){
-        var a=moment().toArray()
-        for(var i=0;i<range;i++){
-            total[i]=1
+    async function cutting(range) {
+        var a = moment().toArray()
+        for (var i = 0; i < range; i++) {
+            total[i] = 1
         }
-        for(var i=0;i<smokingDaily;i++){
-            total[i]=2
+        for (var i = 0; i < smokingDaily; i++) {
+            total[i] = 2
         }
         setTotals(total)
         // console.log(total)
-        setSmokeProof(total.slice(0,10))
-        setSmokeProofTwo(total.slice(10,20))
-        setSmokeProofThree(total.slice(20,30))
-        setSmokeProofFour(total.slice(30,40))
+        setSmokeProof(total.slice(0, 10))
+        setSmokeProofTwo(total.slice(10, 20))
+        setSmokeProofThree(total.slice(20, 30))
+        setSmokeProofFour(total.slice(30, 40))
         await ref.doc(user.uid).update({
-            smokeToday:a[2]
+            smokeToday: a[2]
         })
     }
-    async function smokeClick(){
+    async function smokeClick() {
         // console.log(totals,"init")
-        
-        var smoke=smokingDaily
-        console.log(smoke,stats,"compare")
-        if (Number(smoke)===Number(stats)){
+
+        var smoke = smokingDaily
+        console.log(smoke, stats, "compare")
+        if (Number(smoke) === Number(stats)) {
             Alert.alert("고마펴싀발")
         }
-        setSmokingDaily(smoke+1)
+        setSmokingDaily(smoke + 1)
         // console.log(smoke,smokingDaily)
-        var total=totals
-        for(var i=0;i<smoke+1;i++){
-            total[i]=2
+        var total = totals
+        for (var i = 0; i < smoke + 1; i++) {
+            total[i] = 2
         }
         // console.log(total)
-        setSmokeProof(total.slice(0,10))
-        setSmokeProofTwo(total.slice(10,20))
-        setSmokeProofThree(total.slice(20,30))
-        setSmokeProofFour(total.slice(30,40))
+        setSmokeProof(total.slice(0, 10))
+        setSmokeProofTwo(total.slice(10, 20))
+        setSmokeProofThree(total.slice(20, 30))
+        setSmokeProofFour(total.slice(30, 40))
         await ref.doc(user.uid).update({
-            smokeDaily:smoke+1
+            smokeDaily: smoke + 1
         })
     }
     //보완...
-    async function timeCheck(){
-        var a=moment().toArray()
+    async function timeCheck() {
+        var a = moment().toArray()
         console.log(a)
-        await ref.doc(user.uid).get().then(documentSnapshot=>{
-            if(a[2]===documentSnapshot.data().smokeToday){
+        await ref.doc(user.uid).get().then(documentSnapshot => {
+            if (a[2] === documentSnapshot.data().smokeToday) {
                 console.log("same")
-            }else{
+            } else {
                 console.log("different")
                 ref.doc(user.uid).update({
-                    smokeDaily:0,
-                    smokeToday:a[2],
-                    smokeStats:firebase.firestore.FieldValue.arrayUnion(a+"/흡연량:"+smokingDaily)
-                    
+                    smokeDaily: 0,
+                    smokeToday: a[2],
+                    smokeStats: firebase.firestore.FieldValue.arrayUnion(a + "/흡연량:" + smokingDaily)
+
                 })
                 setToday(false)
             }
         })
-        
+
     }
     useEffect(() => {
-   
-
-
-
-
-        var a =moment().toArray()
-        console.log(a)
-        // console.log(total)
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
+        if (user) {
+            setLogin(true)
+        } else {
+            setLogin(false)
+        }
+    }, [])
+    useEffect(() => {
+        var a = moment().toArray()
+        console.log(a)
+        // console.log(total)
         // const caver = new Caver('https://api.baobab.klaytn.net:8651/')
         // async function testFunction() {
         //     const keyring = caver.wallet.keyring.generate()
@@ -205,7 +206,7 @@ export default function HomeScreen({ navigation}) {
         //     console.log(keyring._key._privateKey)
         // }
         // testFunction()
-  
+
     }, [])
     useEffect(() => {
         if (user) {
@@ -312,17 +313,17 @@ export default function HomeScreen({ navigation}) {
     }
 
     //금연 포기시
-    async function changeToSmoker(){
+    async function changeToSmoker() {
         const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
-    requestNonPersonalizedAdsOnly: true,
-});
-interstitial.onAdEvent((type) => {
-    if (type === AdEventType.LOADED) {
-      interstitial.show();
-    }
-  });
-  
-  interstitial.load();
+            requestNonPersonalizedAdsOnly: true,
+        });
+        interstitial.onAdEvent((type) => {
+            if (type === AdEventType.LOADED) {
+                interstitial.show();
+            }
+        });
+
+        interstitial.load();
         var a = moment().toArray()
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker: false,
@@ -332,17 +333,17 @@ interstitial.onAdEvent((type) => {
         })
     }
     //금연 시작시에
-    async function changeToNonSmoker(){
+    async function changeToNonSmoker() {
         const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
-    requestNonPersonalizedAdsOnly: true,
-});
-interstitial.onAdEvent((type) => {
-    if (type === AdEventType.LOADED) {
-      interstitial.show();
-    }
-  });
-  
-  interstitial.load();
+            requestNonPersonalizedAdsOnly: true,
+        });
+        interstitial.onAdEvent((type) => {
+            if (type === AdEventType.LOADED) {
+                interstitial.show();
+            }
+        });
+
+        interstitial.load();
         var a = moment().toArray()
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker: true,
@@ -359,10 +360,90 @@ interstitial.onAdEvent((type) => {
         outputRange: ['0deg', '360deg']
     })
 
+    //Modal 띄울때 사용
+    const [userlogin, setUserlogin] = useState(false);
+    const loginview = () => {
+        setTimeout(() => {
+            setUserlogin(true)
+        }, 200)
+    }
+
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
+                <Modal
+                    animationType="none"
+                    transparent={true}
+                    visible={userlogin}
+                    onRequestClose={() => setUserlogin(false)}
+                >
+                    <View style={{ width: WIDTH, height: HEIGHT, position: "absolute", backgroundColor: "#303030", opacity: 0.4 }} />
+                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{
+                            width: 280,
+                            height: 180,
+                            borderRadius: 20,
+                            backgroundColor: '#ffffff',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                        }}>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Bold',
+                                fontSize: 16,
+                                color: '#303030',
+                                opacity: 0.8,
+                                marginTop: 20
+                            }}>로그인이 필요한서비스입니다.</Text>
+                            <Text style={{
+                                fontFamily: 'NunitoSans-Regular',
+                                fontSize: 14,
+                                color: '#303030',
+                                opacity: 0.6,
+                                textAlign: 'center'
+                            }}>로그인하고 다양한 혜택을 만나보세요</Text>
+                            <View style={{
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                marginTop: 15
+                            }}>
+                                <TouchableOpacity onPress={() => setUserlogin(false)} style={{
+                                    width: 140,
+                                    height: 55,
+                                    borderBottomLeftRadius: 20,
+                                    backgroundColor: '#999999',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>둘러보기</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {
+                                    navigation.navigate('로그인')
+                                    setUserlogin(false)
+                                }}
+                                    style={{
+                                        width: 140,
+                                        height: 55,
+                                        borderBottomRightRadius: 20,
+                                        backgroundColor: '#5cc27b',
+                                        justifyContent: 'center',
+                                        alignItems: 'center'
+                                    }}>
+                                    <Text style={{
+                                        fontSize: 16,
+                                        color: '#ffffff',
+                                        fontFamily: 'NunitoSans-Regular'
+                                    }}>로그인</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
                     <View
                         style={{
@@ -472,12 +553,16 @@ interstitial.onAdEvent((type) => {
                         :
                         <>
                             {viewopacity === true ?
-                                <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={() => {
-                                    setViewOpacity(false);
-                                    setTimestart(true);
-                                    updateInfo(user.uid)
-                                    console.log(timestart);
-                                }}>
+                                <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={
+                                    login ? () => {
+                                        setViewOpacity(false);
+                                        setTimestart(true);
+                                        updateInfo(user.uid)
+                                        console.log(timestart);
+                                    }
+                                        :
+                                        () => { setUserlogin(true) }
+                                }>
                                     <View style={{
                                         width: "100%",
                                         zIndex: 1,
@@ -559,19 +644,28 @@ interstitial.onAdEvent((type) => {
                     }}>
                         <TouchableOpacity style={{
                             alignItems: "center",
-                        }} onPress={() => navigation.navigate('Calendar')}>
+                        }} onPress={login ?
+                            () => { navigation.navigate('Calendar') }
+                            :
+                            () => { setUserlogin(true) }}>
                             <MaterialCommunityIcons size={60} color="#5cc27b" name="calendar-blank" />
                             <Text style={{ fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 8 }}>금연달력</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{
                             alignItems: "center",
-                        }} onPress={() => navigation.navigate("ChatbotMain")}>
+                        }} onPress={login ?
+                            () => { navigation.navigate('ChatbotMain') }
+                            :
+                            () => { setUserlogin(true) }}>
                             <FontAwesome5 name="robot" size={50} color="#5cc27b" />
                             <Text style={{ fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 18 }}>금연 리포트 & 정보</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{
                             alignItems: "center",
-                        }} onPress={() => navigation.navigate("SmokeAlertOne")}>
+                        }} onPress={login ?
+                            () => { navigation.navigate('SmokeAlertOne') }
+                            :
+                            () => { setUserlogin(true) }}>
                             <Ionicons name="alert-circle-outline" size={60} color="#FF0000" />
                             <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#ff0000", marginTop: 4}}>흡연 경보</Text>
                         </TouchableOpacity>
@@ -601,15 +695,18 @@ interstitial.onAdEvent((type) => {
                                     <Text style={{ fontSize: 16, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>금연을 시작해 보세요!</Text>
                                 </Text>
                             </View>
-                            <TouchableOpacity onPress={() => navigation.navigate("ChallengeRegister")} style={{
-                                width: 100,
-                                height: 35,
-                                borderRadius: 18,
-                                borderWidth: 2,
-                                borderColor: "#5cc27b",
-                                alignItems: "center",
-                                justifyContent: "center"
-                            }}>
+                            <TouchableOpacity onPress={login ?
+                                () => { navigation.navigate('ChallengeRegister') }
+                                :
+                                () => { setUserlogin(true)}} style={{
+                                    width: 100,
+                                    height: 35,
+                                    borderRadius: 18,
+                                    borderWidth: 2,
+                                    borderColor: "#5cc27b",
+                                    alignItems: "center",
+                                    justifyContent: "center"
+                                }}>
                                 <Text style={{
                                     fontFamily: "NunitoSans-Bold",
                                     fontSize: 16,
@@ -618,12 +715,15 @@ interstitial.onAdEvent((type) => {
                             </TouchableOpacity>
                         </View>
                         :
-                        <TouchableOpacity onPress={() => navigation.navigate("DiaryWrite")} style={{
-                            alignItems: "flex-start",
-                            marginTop: 40,
-                            marginLeft: "10%",
-                            marginRight: "10%"
-                        }}>
+                        <TouchableOpacity onPress={login ?
+                            () => { navigation.navigate('DiaryWrite') }
+                            :
+                            () => { setUserlogin(true) }} style={{
+                                alignItems: "flex-start",
+                                marginTop: 40,
+                                marginLeft: "10%",
+                                marginRight: "10%"
+                            }}>
                             <View style={{
                                 flexDirection: 'row',
                                 alignItems: "center",
