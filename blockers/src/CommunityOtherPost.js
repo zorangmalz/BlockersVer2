@@ -198,26 +198,31 @@ export default function CommunityOtherPost({ route, navigation }) {
     }, [likeState, nick, title])
 
     //사진 불러오는 함수
+    const [exist, setExist] = useState(true)
     async function hi() {
         console.log("comeins")
         console.log(title, author, time)
         const url = await storage()
             .refFromURL("gs://blockers-8a128.appspot.com/community1/" + String(title + author + time))
             .getDownloadURL()
-            .then(() => {
-                setImageSource(url)
-            }).catch(() => {
+            .catch(() => {
+                setExist(false)
                 console.log("사진이 없습니다.")
             })
+            setImageSource(url)
+            setExist(true)
     }
 
     useEffect(() => {
-        hi().then(() => {
-            setPicLoading(true)
-        }).catch(() => {
-            
-            console.log("사진이 없습니다.")
-        })
+        if (exist) {
+            hi().then(() => {
+                setPicLoading(true)
+            }).catch(() => {
+                setExist(false)
+                console.log("사진이 없습니다.")
+                setPicLoading(true)
+            })
+        }
         if (Uid === realWriterUid) {
             setIslogined(true)
             console.log("yes ITs true")
