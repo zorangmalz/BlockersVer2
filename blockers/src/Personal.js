@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
@@ -14,7 +14,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import Modal from 'react-native-modal';
 
 const setting = StyleSheet.create({
-    mainText : {
+    mainText: {
         fontSize: 16,
         fontFamily: 'NunitoSans-Regular',
         alignSelf: 'flex-start',
@@ -26,15 +26,32 @@ const setting = StyleSheet.create({
     }
 })
 
-export default function SettingMain({ navigation }) {
-    
+export default function Personal({ navigation }) {
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
-         <View>
-             <Text style={{fontSize:20}}>
-           {`  **블로커스 개인정보수집방침**
+            <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={25} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 24
+                        }}
+                    >
+                        <Text style={{ fontSize: 18 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>개인정보처리방침</Text>
+                        </Text>
+                    </View>
+                </View>
+                <ScrollView>
+                    <Text style={{ fontSize: 12, marginHorizontal: "10%", fontFamily: "NunitoSans-Regular", marginTop: 16 }}>
+                        {`  **블로커스 개인정보수집방침**
 
 ㈜조랑말즈(이하 “회사”)는 개인정보수집방침은 정보통신서비스제공자가 준수하여야 하는 정보통신망 이용촉진 및 정보보호 등에 관한 법률, 개인정보보호법 등 관계 법령 및 개인정보보호 규정, 가이드라인을 준수하고 있습니다. 본 개인정보수집방침은 회사에서 운영하는 Blockers 서비스(이하 “블로커스”)에 적용됩니다.
 
@@ -182,7 +199,7 @@ export default function SettingMain({ navigation }) {
 
 ※ 선택적 접근권한 항목은 허용에 동의하지 않아도 서비스 이용이 가능합니다.
 
-스마트폰 상에서 앱을 삭제하더라도 이용자의 회원계정은 유지되므로, 회원탈퇴를 원하실 경우 모바일 어플리케이션 내의 “회원탈퇴” 기능을 이용하시거나 고객지원 이메일(jinsungone@blockers.me)로 연락하여 주시기 바랍니다.
+스마트폰 상에서 앱을 삭제하더라도 이용자의 회원계정은 유지되므로, 회원탈퇴를 원하실 경우 모바일 어플리케이션 내의 “회원탈퇴” 기능을 이용하시거나 고객지원 이메일(jake@blockers.me)로 연락하여 주시기 바랍니다.
 
 10. **개인정보의 안전성 확보 조치**
 
@@ -212,13 +229,13 @@ export default function SettingMain({ navigation }) {
 
 1) 개인정보 보호책임자
 
-- 성명: 김진성
+- 성명: 박주규
 
-- 직급: CIO
+- 직급: CFO
 
-- 연락처: 010-6770-1048
+- 연락처: 010-7922-1786
 
-- 이메일: jinsungone@blockers.me
+- 이메일: jake@blockers.me
 
 기타 개인정보침해에 대한 신고나 상담이 필요하신 경우에는 아래 기관에 문의하시기 문의하시기 바랍니다.
 
@@ -230,8 +247,8 @@ export default function SettingMain({ navigation }) {
 
 `}
 
-             </Text>
-         </View>
+                    </Text>
+                </ScrollView>
             </SafeAreaView>
         </>
     );

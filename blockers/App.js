@@ -491,7 +491,7 @@ const App = ({ navigation }) => {
           component={TermsOfUse}
           options={{
             gestureDirection: 'vertical-inverted',
-
+            headerShown: false
           }}
         />
         <Stack.Screen
@@ -499,7 +499,7 @@ const App = ({ navigation }) => {
           component={Personal}
           options={{
             gestureDirection: 'vertical-inverted',
-
+            headerShown: false
           }}
         />
         <Stack.Screen

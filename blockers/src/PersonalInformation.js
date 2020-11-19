@@ -26,22 +26,7 @@ const setting = StyleSheet.create({
     }
 })
 
-export default function SettingMain({ navigation }) {
-    const [modalVisible, setModalVisible] = useState(false);
-    const modalbutton = () => {
-        setTimeout(() => {
-            setModalVisible(true)
-        }, 200)
-    }
-    function signout() {
-        auth()
-            .signOut()
-            .then(() => console.log('User signed out!'));
-        LoginManager.logOut()
-
-        navigation.goBack();
-        setModalVisible(false);
-    }
+export default function PersonalInformation({ navigation }) {
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -64,8 +49,6 @@ export default function SettingMain({ navigation }) {
                         </Text>
                     </View>
                 </View>
-               
-                
                 <ScrollView>
                     <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('개인정보처리방침')}>
                         <Text style={setting.mainText}>개인정보처리방침</Text>
