@@ -15,7 +15,8 @@ import {
     ImageBackground,
     Animated,
     Easing,
-    Modal
+    Modal,
+    TouchableHighlight
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import moment from "moment"
@@ -107,7 +108,6 @@ export default function HomeScreen({ navigation }) {
     var total = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
-
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
@@ -116,6 +116,7 @@ export default function HomeScreen({ navigation }) {
         await ref.doc(code).update({
             SmokingTime: a
         })
+        setTimestart(true)
     }
 
     function timeCounter(seconds) {
@@ -169,16 +170,16 @@ export default function HomeScreen({ navigation }) {
     async function timeCheck() {
         var a = moment().toArray()
         console.log(a)
-        await ref.doc(user.uid).get().then(documentSnapshot => {
+        const USER = firebase.auth().currentUser
+        await ref.doc(USER.uid).get().then(documentSnapshot => {
             if (a[2] === documentSnapshot.data().smokeToday) {
                 console.log("same")
             } else {
                 console.log("different")
-                ref.doc(user.uid).update({
+                ref.doc(USER.uid).update({
                     smokeDaily: 0,
                     smokeToday: a[2],
                     smokeStats: firebase.firestore.FieldValue.arrayUnion(a + "/흡연량:" + smokingDaily)
-
                 })
                 setToday(false)
             }
@@ -186,15 +187,13 @@ export default function HomeScreen({ navigation }) {
 
     }
     useEffect(() => {
-        auth().onAuthStateChanged(userAuth => {
-            setUser(userAuth)
-        })
-        if (user) {
-            setLogin(true)
-        } else {
+        const USER = firebase.auth().currentUser
+        if (!USER) {
             setLogin(false)
+        } else {
+            setLogin(true)
         }
-    }, [])
+    }, [login, userlogin, refreshing])
     useEffect(() => {
         var a = moment().toArray()
         console.log(a)
@@ -225,14 +224,9 @@ export default function HomeScreen({ navigation }) {
                     // console.log(fullTime)
                 }
             })
-
-        }
-        if (!check) {
-            setViewOpacity(true)
-        } else {
-            setViewOpacity(false)
         }
     }, [user, viewopacity, check, refreshing, today, Rotate])
+
     useEffect(() => {
         timeCheck()
         console.log("s")
@@ -366,6 +360,18 @@ export default function HomeScreen({ navigation }) {
         setTimeout(() => {
             setUserlogin(true)
         }, 200)
+    }
+
+    const VIEWOPACITY = () => {
+        const USER = firebase.auth().currentUser;
+        setTimestart(true)
+        if (login) {
+            setViewOpacity(false)
+            updateInfo(USER.uid)
+            console.log(timestart)
+        } else {
+            loginview()
+        }
     }
 
     return (
@@ -552,24 +558,15 @@ export default function HomeScreen({ navigation }) {
                         </Swiper>
                         :
                         <>
-                            {viewopacity === true ?
-                                <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={
-                                    login ? () => {
-                                        setViewOpacity(false);
-                                        setTimestart(true);
-                                        updateInfo(user.uid)
-                                        console.log(timestart);
-                                    }
-                                        :
-                                        () => { setUserlogin(true) }
-                                }>
+                            {viewopacity ?
+                                <TouchableWithoutFeedback style={{ flexDirection: 'row' }} onPress={VIEWOPACITY}>
                                     <View style={{
                                         width: "100%",
                                         zIndex: 1,
                                         position: 'absolute',
                                         height: 210,
                                         backgroundColor: '#000000',
-                                        opacity: 30,
+                                        opacity: 1,
                                         alignItems: 'center',
                                         justifyContent: 'center'
                                     }} >
@@ -585,7 +582,7 @@ export default function HomeScreen({ navigation }) {
                                 marginLeft: 33,
                                 height: 64,
                                 borderRadius: 29,
-                                marginTop: 30
+                                marginTop: 30,
                             }}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
                                     <View style={date.viewcontainer}>
@@ -647,7 +644,7 @@ export default function HomeScreen({ navigation }) {
                         }} onPress={login ?
                             () => { navigation.navigate('Calendar') }
                             :
-                            () => { setUserlogin(true) }}>
+                            () => { loginview() }}>
                             <MaterialCommunityIcons size={60} color="#5cc27b" name="calendar-blank" />
                             <Text style={{ fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 8 }}>금연달력</Text>
                         </TouchableOpacity>
@@ -656,7 +653,7 @@ export default function HomeScreen({ navigation }) {
                         }} onPress={login ?
                             () => { navigation.navigate('ChatbotMain') }
                             :
-                            () => { setUserlogin(true) }}>
+                            () => { loginview() }}>
                             <FontAwesome5 name="robot" size={50} color="#5cc27b" />
                             <Text style={{ fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 18 }}>금연 리포트 & 정보</Text>
                         </TouchableOpacity>
@@ -665,7 +662,7 @@ export default function HomeScreen({ navigation }) {
                         }} onPress={login ?
                             () => { navigation.navigate('SmokeAlertOne') }
                             :
-                            () => { setUserlogin(true) }}>
+                            () => { loginview() }}>
                             <Ionicons name="alert-circle-outline" size={60} color="#FF0000" />
                             <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#ff0000", marginTop: 4}}>흡연 경보</Text>
                         </TouchableOpacity>
@@ -718,7 +715,7 @@ export default function HomeScreen({ navigation }) {
                         <TouchableOpacity onPress={login ?
                             () => { navigation.navigate('DiaryWrite') }
                             :
-                            () => { setUserlogin(true) }} style={{
+                            () => { loginview() }} style={{
                                 alignItems: "flex-start",
                                 marginTop: 40,
                                 marginLeft: "10%",
