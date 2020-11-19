@@ -162,6 +162,7 @@ export default function MyPageScreen({ navigation }) {
                 if (isImage) {
                     getImage()
                 }
+                getInfo()
             }
             else {
                 setUserlogined(false);
@@ -172,22 +173,39 @@ export default function MyPageScreen({ navigation }) {
             };
         }, [])
     );
-
+    const [one,setOne]=useState(false)
+    const [three,setThree]=useState(false)
+    const [six,setSix]=useState(false)
+    async function getInfo(){
+        
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").where("success","==",2).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                if(doc.data().long===1){
+                    setOne(true)
+                }else if(doc.data().long===3){
+                    setThree(true)
+                }else if(doc.data().long===6){
+                    setSix(true)
+                }
+            })
+            
+        })
+    }
     const Success = [
         {
             id: 1,
             month: 1,
-            action: true,
+            action: one,
         },
         {
             id: 2,
             month: 3,
-            action: false,
+            action: three,
         },
         {
             id: 3,
             month: 6,
-            action: false,
+            action: six,
         },
     ]
     return (

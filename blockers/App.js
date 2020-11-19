@@ -43,7 +43,7 @@ import LoginMain from './src/LoginMain';
 import LoginFind from './src/LoginFind';
 import LoginVerification from './src/LoginVerification';
 import LoginFindId from './src/LoginFindId';
-import Challenge, { ChallengeVeriResult,ChallengeMotivationResult,ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowHow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage,ChallengeSwearResult } from './src/Challenge/ChallengeScreen';
+import Challenge, { ChallengeVeriResult,ChallengeMotivationResult,ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowhow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage,ChallengeSwearResult } from './src/Challenge/ChallengeScreen';
 import ProfileNickname from './src/ProfileNickname';
 import LoginVerificationProfile from './src/LoginVerificationProfile';
 import LoginPassword from "./src/LoginPassword";
@@ -922,8 +922,8 @@ const App = ({ navigation }) => {
             }}
           />
           <Stack.Screen 
-            name="ChallengeKnowHow"
-            component={ChallengeKnowHow}
+            name="ChallengeKnowhow"
+            component={ChallengeKnowhow}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false

@@ -281,6 +281,11 @@ export default function HomeScreen({ navigation }) {
         if (fullTime) {
             const interval = setInterval(() => {
                 var a = moment().toArray()
+                if(a[1]===12){
+                    a[1]=1
+                }else{
+                    a[1]=a[1]+1
+                }
                 var c = (b.diff(a, "seconds")) * -1
                 timeCounter(c)
                 setSmokingShow(parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24))
@@ -372,11 +377,23 @@ export default function HomeScreen({ navigation }) {
 
         interstitial.load();
         var a = moment().toArray()
+        if(a[1]===12){
+            a[1]=1
+        }else{
+            a[1]=a[1]+1
+        }
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker: false,
             SmokingTime: a,
             smokedLoss: firebase.firestore.FieldValue.arrayUnion(smokingMoney + "/" + a),
             smokedAmount: firebase.firestore.FieldValue.arrayUnion(smokingShow + "/" + a)
+        })
+        var totals
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+            totals=querySnapshot.size-1
+        })
+        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+totals).update({
+           ongoing:false
         })
     }
 
@@ -393,6 +410,11 @@ export default function HomeScreen({ navigation }) {
 
         interstitial.load();
         var a = moment().toArray()
+        if(a[1]===12){
+            a[1]=1
+        }else{
+            a[1]=a[1]+1
+        }
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker: true,
             SmokingTime: a,

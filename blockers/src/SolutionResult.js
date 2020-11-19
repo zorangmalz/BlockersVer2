@@ -63,14 +63,20 @@ async function uploadInfo(){
     })
     console.log(total)
     await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("내 흡연유형 파악하기").update({
-        
+        visible:false,
         day:day,
-        stats:true
+        stats:true,
+        main:main,
+        mainStr:mainstr,
+        sub:sub,
+        subStr:substr,
+        sub2:sub2,
+        sub2Str:sub2str
     })
-    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+    firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
         challenge:"미션 진행"
     }).catch(()=>
-    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+    firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
         challenge:"미션 진행"
     }))
     navigation.navigate("Home")}

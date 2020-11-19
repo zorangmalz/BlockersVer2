@@ -1711,12 +1711,13 @@ const MissionBox = ({ color, name, data, navigation }) => {
                     data={data}
                     keyExtractor={(item) => item.number}
                     renderItem={({ item }) => (
-                        (item.visible===false ? 
+                        (item.visible===false && item.period !="final" ? 
                             <TouchableOpacity onPress={() => navigation.navigate(item.navigation,{UID:item.uid})}>
                             <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
                             <Text style={mission.regular}>{item.content}</Text>
                         </TouchableOpacity>
                             :
+                            
                             <TouchableOpacity onPress={noAnswer}>
                             <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
                             <Text style={mission.regular}>{item.content}</Text>
@@ -1777,7 +1778,8 @@ export function ChallengeMission({ navigation, route }) {
                     navigation: doc.data().resNavi,
                     uid: UID,
                     stats: doc.data().stats,
-                    visible: doc.data().visible
+                    visible: doc.data().visible,
+                    period:doc.data().period
                 })
             })
             console.log(list)
@@ -3932,7 +3934,7 @@ export function ChallengeReview({ navigation }) {
     )
 }
 
-export function ChallengeKnowHow({ navigation }) {
+export function ChallengeKnowhow({ navigation }) {
     return (
         <>
             <ChallengeFinal

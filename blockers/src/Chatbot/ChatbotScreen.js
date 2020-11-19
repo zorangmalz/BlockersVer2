@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     Text,
@@ -16,6 +16,10 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import LinearGradient from "react-native-linear-gradient";
 import { ProgressCircle } from "react-native-progress/Circle";
 import BarChart from 'react-native-chart-kit/dist/BarChart';
+import moment from "moment"
+import firestore from '@react-native-firebase/firestore';
+import auth, { firebase } from '@react-native-firebase/auth';
+import { useTheme } from "@react-navigation/native";
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -227,6 +231,7 @@ export function ChatbotOne({ navigation }) {
 }
 
 export function ChatbotTwo({ navigation }) {
+
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -311,8 +316,39 @@ export function ChatbotTwo({ navigation }) {
 }
 
 const Tab = createMaterialTopTabNavigator();
+const states=[
+    {
+        id:"금연 직후",
+        stats:"-입냄새가 나지 않습니다\n-음식 맛이 좋아집니다\n-치아가 하얗고 건강해집니다\n -후각이 돌아옵니다\n -옷과 머리에 나쁜 냄새가 사라집니다\n -계단을 오를 때 숨이 덜 차게 됩니다\n -손가락의 착색이 사라집니다"
+    },
+    {
+        id:"금연한지 20분 경과",
+        stats:"-혈압과 맥박이 정상으로 떨어집니다\n -손발의 체온이 정상으로 증가합니다"
+    },
+    {
+        id:"금연한지 8시간 경과",
+        stats:"-혈액 속 일산화탄소 양이 정상으로 떨어집니다\n -혈액 속 산소량이 정상치로 올라갑니다"
+    },
+    {
+        id:"금연한지 한달 경과",
+        stats:"-혈액순환이 좋아지고 폐기능이 증가합니다"
+    },
+    {
+        id:"금연한지 1~9개월",
+        stats:"-기침, 호흡곤란 등이 감소합니다\n -폐의 섬모가 정상기능을 회복하여 점액 배출이 증가하고, 폐가 깨끗해지며 감염위험이 감소합니다"
+    },
+    {
+        id:"금연한지 1년 경과",
+        stats:"-관상동맥질환(심장병)에 걸릴 위험이 흡연자의 절반으로 감소합니다"
+    },
+    {
+        id:"금연한지 5년 경과",
+        stats:"-구강암, 후두암, 식도암, 방광암 위험이 절반으로 감소합니다\n -자궁경부암 발병 위험은 비흡연자 수준으로 감소합니다"
+    }
 
+]
 export function ChatbotThree({ navigation }) {
+
     return (
         <>
             <SafeAreaView style={{backgroundColor: "#ffffff"}}>
@@ -338,25 +374,152 @@ export function ChatbotThree({ navigation }) {
                     <Tab.Screen
                         name="status"
                         component={TabOne}
-                        options={{ tabBarLabel: "건강상태" }}
+                        options={{ tabBarLabel: "건강 상태" }}
                     />
                     <Tab.Screen
                         name="failure"
                         component={TabTwo}
-                        options={{ tabBarLabel: "실패요인 분석" }}
+                        options={{ tabBarLabel: "평과 결과 분석" }}
                     />
                 </Tab.Navigator>
             </SafeAreaView>
         </>
     )
 }
-
+const nicoData=[
+    {
+        
+        content:"현재 니코틴 의존도가 아주 낮은 수준입니다.\n니코틴 의존도는 흡연량이 많아지거나 흡연한 시간이 길면 길수록 더 높아지게 되어 있습니다.\n‘지금은 좀 피우고 나중에 완전 끊어야지’, ‘나는 하루에 얼마 피지 않으니깐 괜찮아’라고 생각할 수 있는데,\n이렇게 지속적으로 늘리다보면 나중에 완전 금연하는 것이 지금보다 훨씬 더 힘들 것입니다.\n그래서 가장 쉽게 금연할 수 있는 때가 바로 지금입니다.\n점점 니코틴 의존도가 늘어가기 전에 지금 바로 완전 금연하세요!\n"
+    },
+    {
+        
+        content:"현재 니코틴 중독으로 인한 구체적인 증상은 나타나지 않습니다.\n아직은 큰 고통 없이 담배를 끊을 수 있으리라 생각됩니다.\n대신 쉽게 다시 담배를 피우게 되어 결국 금연에 실패하는 경우도 많겠습니다.\n장기간 담배를 피우다 보면 누구라도 심리적, 신체적 의존을 일으키게 됩니다. 일단 의존에 빠지게 되면 자신을 조절하기 힘들어지므로 담배를 끊는 것은 쉽지 않은 일이 되어 버립니다.\n잠재적인 중독의 위험성과 건강에 해가 된다는 점을 생각하면 지금이 바로 금연을 시작해야 할 시기인 것입니다\n"
+    },
+    {
+        
+        content:"정도의 차이는 있겠으나 심리적, 신체적으로 니코틴에 대한 의존이 생긴 상태입니다.\n니코틴은 뇌에 흡수되어 여러 가지 약리 작용을 일으키는 물질입니다.\n하지만, 신경에 작용하는 약물 중에는 중독을 일으키기 쉬운 것들이 있으며,\n니코틴도 예외는 아닙니다. 니코틴이 몸에서 빠져나가 혈중 농도가 떨어지면 금단증상을 경험하게 됩니다.\n‘한 대만 피웠으면…’ 하는 조바심도 금단 증상의 한 모습일 뿐입니다.\n담배를 끊기 어려운 이유는 이처럼 금단증상과 내 마음이 뒤섞여 버려 생활의 일부가 되어버리기 때문입니다.\n갑자기 담배를 중단하면, 금단증상으로 금연을 지속하기 어려워질 수 있으므로,\n니코틴 패치 등을 적절히 사용하는 것이 도움이 됩니다.\n"
+    },
+    {
+        content:""
+    }
+]
 function TabOne({ navigation }) {
-    const challengenicotine = false;
-    const challengesmoke = false;
-    const nicotine = 0;
+
+const [user,setUser]=useState("");
+const [num,setNum]=useState(0);
+const [nicotine,setNicotine]=useState(0)
+const [word,setWord]=useState("")
+const [challengenicotine,setchallengenicotine]=useState(false)
+
+const [main,setMain]=useState("")
+const [mainStr,setMainStr]=useState("")
+const [sub,setSub]=useState("")
+const [subStr,setSubStr]=useState("")
+const [sub2,setSub2]=useState("")
+const [sub2Str,setSub2Str]=useState("")
+const [challengesmoke,setchallengesmoke]=useState(false)
+useEffect(() => {
+    auth().onAuthStateChanged(userAuth => {
+        setUser(userAuth)
+    })
+    if(user){
+        getSmokeInfo()
+        getNicotineInfo()
+        getSolutionInfo()
+    }
+}, [user])
+
+async function getSmokeInfo(){
+    var smokingTime
+    await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+        smokingTime=doc.data().SmokingTime
+    })
+
+    var a = moment().toArray()
+
+    if (a[1] === 12) {
+        a[1] = 1
+    } else {
+        a[1] = a[1] + 1
+    }
+    
+    var x = moment(a)
+    var y = moment(smokingTime)
+    var durationMinute = moment.duration(x.diff(y)).asMinutes()
+        
+        
+            if(durationMinute<20){
+                setNum(0) 
+            }else if(durationMinute<480){
+                setNum(1)
+            }else if(durationMinute<43200){
+                setNum(2)
+            }else if(durationMinute<388800){
+                setNum(3)
+            }else if(durationMinute<525600){
+                setNum(4)
+            }else if(durationMinute<2628000){
+                setNum(5)
+            }else{
+                setNum(6)
+            }
+}  
+async function getNicotineInfo(){
+    var totals
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+            totals=querySnapshot.size-1
+        })
+        var total
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+totals).collection("ChallengeDetail").doc("니코틴 중독 평가하기").get().then(doc=>{
+            setchallengenicotine(true)
+            total=doc.data().resNum   
+            var nico
+            if(total>=7){
+                setNicotine(2)
+                setWord("Addicted")
+                nico=2
+            }else if (total>=4){
+                setNicotine(1)
+                setWord("Danger")
+                nico=1
+            }else{
+                setNicotine(0)
+                setWord("Low")
+                nico=0
+            }
+            console.log(nicotine)
+        }).catch(
+            setchallengenicotine(false),
+            console.log("false")
+        )
+       
+        
+}
+async function getSolutionInfo(){
+    var totals
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+            totals=querySnapshot.size-1
+        })
+        
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+totals).collection("ChallengeDetail").doc("내 흡연유형 파악하기").get().then(doc=>{
+            setchallengesmoke(true)
+            setMain(doc.data().main)
+            setMainStr(doc.data().mainStr)
+            setSub(doc.data().sub)
+            setSubStr(doc.data().subStr)
+            setSub2(doc.data().sub2)
+            setSub2Str(doc.data().sub2Str)
+
+        }).catch(
+            setchallengesmoke(false),
+            console.log("false")
+        )
+}
+    
+    
+    
     const data = {
-        labels: ["스트레스성", "즐거움", "습관성"],
+        labels: [main, sub, sub2],
         datasets: [
             {
                 data: [85, 60, 32]
@@ -376,7 +539,7 @@ function TabOne({ navigation }) {
                         marginBottom: 16
                     }}>
                         <View style={{ width: 8, height: 8, backgroundColor: "#303030", borderRadius: 4, marginRight: 8 }} />
-                        <Text style={{ fontFamily: "NunitoSans-Bold", fontSize: 14, color: "#303030" }}>금연한지 20분 경과</Text>
+                        <Text style={{ fontFamily: "NunitoSans-Bold", fontSize: 14, color: "#303030" }}>{states[num].id}</Text>
                     </View>
                     <View style={{
                         marginTop: 16,
@@ -388,7 +551,7 @@ function TabOne({ navigation }) {
                             color: "#303030",
                             opacity: 0.7,
                             lineHeight: 26
-                        }}>- 혈액순환이 정상적으로 돌아왔습니다.{"\n"}- 손발의 체온이 정상적으로 증가합니다.</Text>
+                        }}>{states[num].stats}</Text>
                     </View>
                 </View>
                 <View style={{ height: 1, backgroundColor: "#cccccc", width: WIDTH }} />
@@ -409,7 +572,7 @@ function TabOne({ navigation }) {
                             fontSize: 18
                         }}>
                             <Text style={{ color: "#303030" }}>니코틴 중독 정도: </Text>
-                            <Text style={{ color: "#5cc27b" }}>Low</Text>
+                            <Text style={{ color: nicotine === 0 ? "#5cc27b" :( nicotine===1 ? "#f6f600":"#ff0400") }}>{word}</Text>
                         </Text>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#5CC27B', '#F6F600', '#FF0400']} style={{ width: "100%", height: 19, borderRadius: 28, marginTop: 16 }} />
                         <View style={{
@@ -449,7 +612,7 @@ function TabOne({ navigation }) {
                                 color: "#303030",
                                 opacity: 0.7,
                                 lineHeight: 26
-                            }}>낮은 수준의 니코틴 중독을 보입니다.{"\n"}본인의 의지로 금연을 충분히 할 수 있습니다.</Text>
+                            }}>{nicoData[nicotine].content}</Text>
                         </View>
                     </View>
                     <View style={{ height: 1, backgroundColor: "#cccccc", width: WIDTH }} />
@@ -497,7 +660,7 @@ function TabOne({ navigation }) {
                             fontSize: 18
                         }}>
                             <Text style={{ color: "#303030" }}>주요 흡연 요인: </Text>
-                            <Text style={{ color: "#5cc27b" }}>스트레스</Text>
+                            <Text style={{ color: "#5cc27b" }}>{main}</Text>
                         </Text>
                         <View style={{
                             marginTop: 16,
@@ -509,26 +672,29 @@ function TabOne({ navigation }) {
                                 color: "#303030",
                                 opacity: 0.7,
                                 lineHeight: 26
-                            }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.</Text>
+                            }}>{mainStr}</Text>
                         </View>
                         <Text style={{
                             fontFamily: "NunitoSans-Bold",
                             fontSize: 18
                         }}>
                             <Text style={{ color: "#303030" }}>보조 흡연 요인: </Text>
-                            <Text style={{ color: "#FFB83D" }}>습관성, 즐거움 추구</Text>
+                    <Text style={{ color: "#FFB83D" }}>{sub}, {sub2}</Text>
                         </Text>
                         <View style={{
                             marginTop: 16,
                             marginBottom: 16
                         }}>
                             <Text style={{
-                                fontFamily: "NunitoSans-Regular",
-                                fontSize: 16,
-                                color: "#303030",
-                                opacity: 0.7,
-                                lineHeight: 26
-                            }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.</Text>
+                        fontFamily: "NunitoSans-Regular",
+                        marginTop: HEIGHT * 0.025,
+                        fontSize: 16
+                    }}>{subStr}</Text>
+                    <Text style={{
+                        fontFamily: "NunitoSans-Regular",
+                        marginTop: HEIGHT * 0.025,
+                        fontSize: 16
+                    }}>{sub2Str}</Text>
                         </View>
                     </View>
                 </>
@@ -580,6 +746,56 @@ function TabTwo({ navigation }) {
             degree: "높음"
         },
     ]
+    useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+        if(user){
+            uploadInfo()
+            if(resultA>1){
+                if(resultA>=35){
+                    setResultsA("Bad")
+                    setResultAcontent( "알코올 남용이나 의존 단계입니다. \n 음주량과 음주횟수 조절이 어려운 상태입니다. 술을 마셔야 기분도 좋고 일도 잘되고 관계도 좋아진다고 생각합니다. 술을 줄이는 단계가 아니라 끊어야 합니다.\n● 신체 질환이나 사회적 역할에 어려움이 있을 것입니다.\n예) 직장, 가정, 지역사회에서 술로 인한 사회적 혹은 법적 문제 유발(음주운전이나 가정폭력 등)\n전문 병/의원이나 알코올상담센터 혹은 정신보건센터에 연계하여 진단과 치료를 받도록 합니다.\n신체에 질병이 생기면 치료받아야 나을 수 있는 것처럼 알코올 사용 장애도 치료가 필요한 질병입니다")
+                }else if(15<= result){
+                    setResultsA("Normal")
+                    setResultAcontent("위험 음주 단계입니다. \n음주량과 음주횟수가 너무 많습니다. 아직은 술 때문에 큰 문제가 없지만 음주문제 예방을 위해 아래 지침을 지켜주세요.● 정상 음주군에서 권고한 음주 기준을 지키세요.\n● 과음으로 인한 음주 폐해에 대한 교육이 필요합니다.\n● 전문요원에게 상담을 받으세요.\n음주를 유발하는 상황과 음주패턴의 특징을 파악하기\n과음을 피할 수 있는 방법 택하기\n예) 음주 일지 작성, 작은 잔으로 마시기, 술에 물을 타서 마시기, 음주 속도 제한, 스트레스 대처 방법 훈련, 폭탄주 혹은 독주 피하기, 안주 충분히 먹기, 술 마시지 않는 날 정하기 등\n● 주기적으로 음주행동을 점검하고 알코올의존도평가(AUDIT-K) 재수행")
+                    console.log("here")
+                }else{
+                    setResultsA("Good")      
+                    setResultAcontent("정상 음주입니다.\n지금까지는 비교적 건강하고 안전한 음주습관을 지니고 있습니다. 적정음주량을 유지하고 건강음주지침을 지켜주세요.\n● 음주량을 지켜주세요.\n한자리에서 남성: 2~4잔 / 여성: 1~2잔 이하\n* 일주일에 2~3일은 금주\n65세 이상의 노인도 1주당 5잔 미만")
+                }}
+        }
+    }, [user,resultA])
+
+    const [user,setUser]=useState()
+    const [resultsA,setResultsA]=useState("")
+    const [resultA,setResultA]=useState(0)
+    const [resultAcontent,setResultAcontent]=useState("")
+    
+    const [name,setName]=useState("");
+    var total=0
+
+    async function uploadInfo(){
+        var a=moment().toArray()
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+            total=querySnapshot.size-1
+        })
+        await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+            setName(doc.data().name)
+        }) 
+        var month
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").get().then(doc=>{
+            month=doc.data().month-1
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("esteem").doc(String(month)).get().then(doc=>{
+                setResultA(doc.data().resultNum)
+            })
+        }).catch(
+            setResultA("-")
+        )
+        await f
+        console.log(total)
+        
+    }
     return (
         <>
             <ScrollView style={{backgroundColor: "#ffffff", flex: 1}}>
@@ -633,23 +849,23 @@ function TabTwo({ navigation }) {
                                 marginTop: 8
                             }}>스트레스</Text>
                         </ProgressCircle>
-                        <ProgressCircle size={72} color="#5cc27b" borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={0.7}>
-                            <Text style={{
-                                flex: 0,
-                                position: "absolute",
-                                alignSelf: "center",
-                                top: 24,
-                                fontFamily: "NunitoSans-Bold",
-                                fontSize: 16
-                            }}>Good</Text>
-                            <Text style={{
-                                fontSize: 14,
-                                fontFamily: "NunitoSans-Regular",
-                                color: "#303030",
-                                alignSelf: "center",
-                                marginTop: 8
-                            }}>알콜중독</Text>
-                        </ProgressCircle>
+                        <ProgressCircle
+                        style={{
+                            marginTop: 20,
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
+                        size={72}
+                        borderWidth={0}
+                        thickness={5}
+                        progress={resultA*0.025}
+                        color={resultsA === "Good" ? "#5cc27b" : resultsA=="Normal" ? "#ffb83d" : "#fb5757"}
+                        unfilledColor="#E0E5EC"
+                    >
+                        <Text style={{ position: "absolute", flex: 1, color: "#303030", textAlign: "center" }}>
+                            <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{resultsA}</Text>
+                        </Text>
+                    </ProgressCircle>
                     </View>
                 </View>
                 <Text style={{
