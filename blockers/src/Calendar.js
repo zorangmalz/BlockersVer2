@@ -26,7 +26,7 @@ const styles = {
     paddingLeft:10,
     
     marginRight: 10,
-    marginTop: 10
+    marginTop: 5
   },
   emptyDate: {
     height: 15,
@@ -233,7 +233,8 @@ async function getDiary(){
           <Text>일정이 없습니다 </Text>
            
         </View>);}}
-   
+      markedDates={{}}
+      
           // markedDates={{
 
           //   '2020-07-10': { dots: [diary, drug, challenge] },
@@ -251,13 +252,14 @@ async function getDiary(){
           refreshing={false}
           // Add a custom RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView.
           refreshControl={null}
-          markingType={"multi-dot"}
+          
           theme={{
             
             agendaDayTextColor: 'black',
             agendaDayNumColor: 'black',
             agendaTodayColor: 'red',
-            agendaKnobColor: 'blue'
+            agendaKnobColor: 'blue',
+            
           }}
         />
       </SafeAreaView>
