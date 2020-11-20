@@ -900,9 +900,7 @@ function TabTwo({ navigation }) {
                                 marginTop: 8
                             }}>스트레스</Text>
                         </ProgressCircle>
-
                         <ProgressCircle
-
                             size={72}
                             borderWidth={0}
                             thickness={5}
