@@ -165,13 +165,26 @@ export default function LoginVerificationProfile({ navigation }) {
         await reference.putFile(uploadUri);
         setHaveProfile(true)
     }
-  
+    function finishLogin(){
+        Alert.alert(
+            '회원가입을 중단하겠습니까??',
+            '',
+            [
+                {
+                    text: '확인', onPress: () => navigation.goBack()
+                },
+                {
+                    text: '취소', onPress: () =>console.log("cancel")
+                }
+            ]
+        )
+    }
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <TouchableOpacity onPress={finishLogin}>
                         <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
                     <View
@@ -216,7 +229,7 @@ export default function LoginVerificationProfile({ navigation }) {
                                 data={GenderData}
                                 onChangeText={(value) => setGender(value)}
                             />
-                            <TextInput keyboardType="number-pad" onChangeText={text => setBirthday(text)} style={[login.textinput, { width: "45%", marginLeft: "12%", alignSelf:"flex-start" }]} placeholder="생일(201119)" />
+                            <TextInput keyboardType="number-pad" onChangeText={text => setBirthday(text)} style={[login.textinput, { width: "45%", marginLeft: "12%", alignSelf:"flex-start" }]} placeholder="생일(20201119)" />
                         </View>
                     </View>
                     <View style={{ marginTop: "70%" }}>
