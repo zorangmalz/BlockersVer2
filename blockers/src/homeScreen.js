@@ -32,7 +32,7 @@ const HEIGHT = Dimensions.get("screen").height;
 
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
-const Caver = require('caver-js')
+
 
 const date = StyleSheet.create({
     viewcontainer: {
@@ -104,6 +104,8 @@ export default function HomeScreen({ navigation }) {
     const [login, setLogin] = useState(false);
     const [focus, setFocus] = useState(false);
 
+    const [smokingSmoker,setSmokingSmoker]=useState(0)
+    const [smokingSmokerMoney,setSmokingSmokerMoney]=useState(0)
     useFocusEffect(
         useCallback(() => {
             //포커싱 되었을 떄
@@ -221,15 +223,24 @@ export default function HomeScreen({ navigation }) {
                     smokeStats: firebase.firestore.FieldValue.arrayUnion(a + "/흡연량:" + smokingDaily)
                 })
                 firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-                    smoke:smokingDaily
+                    smoke:String(smokingDaily)+"개피",
+                    smoketotal:smokingDaily
                 }).catch(()=>
                 firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-                    smoke:smokingDaily
+                    smoke:String(smokingDaily)+"개피",
+                    smoketotal:smokingDaily
                 }))
                 setToday(false)
             }
         })
 
+    }
+    async function howMuch(){
+        ref.doc(user.uid).collection("Calendar").get().then(querySnapshot=>{
+            querySnapshot.forEach(documentSnapshot =>{
+                documentSnapshot.data().smoketotal
+            })
+        })
     }
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
@@ -562,12 +573,12 @@ export default function HomeScreen({ navigation }) {
                                         <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 16, marginBottom: 16 }}>
                                             <View style={resource.container}>
                                                 <Text style={resource.smallText}>얼마나 피웠지?</Text>
-                                                <Text style={resource.largeText}>{smokingShow}대</Text>
+                                                <Text style={resource.largeText}>{smokingSmoker}대</Text>
                                             </View>
                                             <View style={resource.container}>
                                                 <Text style={resource.smallText}>얼마나 썼지?</Text>
 
-                                                <Text style={resource.largeText}>{smokingMoney}원</Text>
+                                                <Text style={resource.largeText}>{smokingSmokerMoney}원</Text>
                                             </View>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
