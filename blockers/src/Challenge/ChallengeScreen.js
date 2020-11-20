@@ -1553,7 +1553,7 @@ export function ChallengeHistory({ navigation,route }) {
     },[])
     async function getData(){
         const list=[]
-        await firestore().collection("UserInfo").doc(UID).collection("Challenge").onSnapshot(querySnapshot => {
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").orderBy("number","asc").onSnapshot(querySnapshot => {
             querySnapshot.forEach(function (doc) {
                 list.push({
                     ChallengeStep:doc.data().name+"님의 챌린지 ("+doc.data().long+"개월)",
