@@ -380,10 +380,10 @@ export default function HomeScreen({ navigation }) {
 
         interstitial.load();
         var a = moment().toArray()
-        if(a[1]===12){
-            a[1]=1
-        }else{
-            a[1]=a[1]+1
+        if (a[1] === 12) {
+            a[1] = 1
+        } else {
+            a[1] = a[1] + 1
         }
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker: false,
@@ -395,11 +395,12 @@ export default function HomeScreen({ navigation }) {
             setSmoker(doc.data().smoker)
         })
         var totals
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
-            totals=querySnapshot.size-1
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
+            totals = querySnapshot.size - 1
         })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+totals).update({
-           ongoing:false
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + totals).update({
+            ongoing: false,
+            success: 1,
         })
     }
 
