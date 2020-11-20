@@ -436,23 +436,32 @@ export function SelfEsteemFinal({navigation,route}) {
     
     useEffect(()=>{
         
-        console.log(result.result,"final Score")
-        if(Number(result.result)>=45){
-            setResults("Good")
-            setResultcontent( "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!")
-        }else if(35<=Number( result.result)){
-            setResults("Normal")
-            setResultcontent("보통 수준의 자아 효능감을 가지고 있습니다. \n 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다.")
-            
-        }else{
-            setResults("Bad")      
-            setResultcontent("낮은 자아 효능감을 가지고 있습니다. \n 항상 자신감 있는 생각과 행동이 필요합니다.\n 내적인 자신감의 강화와 더불어 세심한 생활관리가 필요합니다.")
-        }
+      
         if(user){
          uploadInfo()   
         }
     },[user])
     async function uploadInfo(){
+        var resultWord
+        var content
+        console.log(result.result,"final Score")
+        if(Number(result.result)>=45){
+            resultWord="Good"
+            setResults("Good")
+            content= "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!"
+            setResultcontent( "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!")
+        }else if(35<=Number( result.result)){
+            resultWord="Normal"
+            setResults("Normal")
+            content="보통 수준의 자아 효능감을 가지고 있습니다. \n 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다."
+            setResultcontent("보통 수준의 자아 효능감을 가지고 있습니다. \n 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다.")
+            
+        }else{
+            resultWord="Bad"
+            setResults("Bad")      
+            content="낮은 자아 효능감을 가지고 있습니다. \n 항상 자신감 있는 생각과 행동이 필요합니다.\n 내적인 자신감의 강화와 더불어 세심한 생활관리가 필요합니다."
+            setResultcontent("낮은 자아 효능감을 가지고 있습니다. \n 항상 자신감 있는 생각과 행동이 필요합니다.\n 내적인 자신감의 강화와 더불어 세심한 생활관리가 필요합니다.")
+        }
         var a=moment().toArray()
         console.log(a)
         
@@ -475,13 +484,16 @@ export function SelfEsteemFinal({navigation,route}) {
 
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(thisMonth)).update({
             stats:true,
-            result:result.result+"/"+"/"+resultcontent+"/"+a,
+            result:content,
             resultNum:result.result,
+            resultWord:resultWord
         }).catch(()=>{
             firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(thisMonth)).set({
                 stats:true,
-                result:result.result+"/"+"/"+resultcontent+"/"+a,
+                result:content,
+                
                 resultNum:result.result,
+                resultWord:resultWord
             })
         })
 

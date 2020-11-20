@@ -62,7 +62,7 @@ export default function AlcoholResult({navigation,route}) {
         await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").get().then(doc=>{
             month=doc.data().month-1
         })
-        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("esteem").doc(String(month)).get().then(doc=>{
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc(String(month)).get().then(doc=>{
             setResult(doc.data().resultNum)
         })
         console.log(total)

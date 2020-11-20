@@ -404,19 +404,7 @@ export function StressFinal({navigation,route}) {
     const [name,setName]=useState("");
     var total=0
     useEffect(()=>{
-        
-        console.log(Number(result.result),"final Score")
-        if(Number(result.result)>=50){
-            setResults("Bad")
-            setResultcontent( "사람들에 비해 스트레스 정도가 많은 편입니다.\n 스트레스는 적당한 경우에 능률을 향상시키는 역할을 하지만, \n지속적인 스트레스는 결국 인체의 저항력을 고갈시키고, \n우울증, 정신증과 같은 정신과적 증상으로도 나타날 수 있습니다.\n \n스스로의 상태를 주시하면서 주위의 도움을 청하고 \n스트레스 해소를 위한 방법을 적극적으로 찾아야 합니다. \n상당한 정도의 스트레스를 경험하고 있거나 오랫동안 과다한 스트레스로 어려움을 겪었을 것으로 보입니다. \n따라서 이를 극복하기 위해 좀 더 적극적인 노력이 필요합니다.")
-        }else if(35<= Number(result.result)){
-            setResults("Normal")
-            setResultcontent("예방적 행위가 필요합니다. \n당신의 스트레스 반응이 위험한 상태로서 도움받을 필요가 있습니다. \n포괄적인 스트레스 관리 계획이 필요합니다.")
-            console.log("here")
-        }else {
-            setResults("Good")      
-            setResultcontent("다른 사람들에 비해 스트레스 정도가 적은 편입니다. \n스트레스는 적당한 경우에 능률을 향상시키는 역할을 하지만,\n 지속적인 스트레스는 결국 인체의 저항력을 고갈시키고,\n 우울증, 정신증과 같은 정신과적 증상으로도 나타날 수 있습니다. \n스스로의 상태를 주시하면서 주위의 도움을 청하고 \n스트레스 해소를 위한 방법을 적극적으로 찾아야 합니다.\n\n당신은 이미 스트레스 상황에 특별한 방식으로 잘 대처하고 있습니다.\n 특별한 조치가 필요 없습니다.\n 지금 상태를 유지할 수 있도록 노력하세요!")
-        }
+      
         if(user){
          uploadInfo()   
         }
@@ -429,6 +417,26 @@ export function StressFinal({navigation,route}) {
             a[1]=1
         }else{
             a[1]=a[1]+1
+        }
+        var resultWord
+        var content
+        console.log(Number(result.result),"final Score")
+        if(Number(result.result)>=50){
+            setResults("Bad")
+            resultWord="Bad"
+            content="사람들에 비해 스트레스 정도가 많은 편입니다.\n 스트레스는 적당한 경우에 능률을 향상시키는 역할을 하지만, \n지속적인 스트레스는 결국 인체의 저항력을 고갈시키고, \n우울증, 정신증과 같은 정신과적 증상으로도 나타날 수 있습니다.\n \n스스로의 상태를 주시하면서 주위의 도움을 청하고 \n스트레스 해소를 위한 방법을 적극적으로 찾아야 합니다. \n상당한 정도의 스트레스를 경험하고 있거나 오랫동안 과다한 스트레스로 어려움을 겪었을 것으로 보입니다. \n따라서 이를 극복하기 위해 좀 더 적극적인 노력이 필요합니다."
+            setResultcontent( "사람들에 비해 스트레스 정도가 많은 편입니다.\n 스트레스는 적당한 경우에 능률을 향상시키는 역할을 하지만, \n지속적인 스트레스는 결국 인체의 저항력을 고갈시키고, \n우울증, 정신증과 같은 정신과적 증상으로도 나타날 수 있습니다.\n \n스스로의 상태를 주시하면서 주위의 도움을 청하고 \n스트레스 해소를 위한 방법을 적극적으로 찾아야 합니다. \n상당한 정도의 스트레스를 경험하고 있거나 오랫동안 과다한 스트레스로 어려움을 겪었을 것으로 보입니다. \n따라서 이를 극복하기 위해 좀 더 적극적인 노력이 필요합니다.")
+        }else if(35<= Number(result.result)){
+            setResults("Normal")
+            resultWord="Normal"
+            content="예방적 행위가 필요합니다. \n당신의 스트레스 반응이 위험한 상태로서 도움받을 필요가 있습니다. \n포괄적인 스트레스 관리 계획이 필요합니다."
+            setResultcontent("예방적 행위가 필요합니다. \n당신의 스트레스 반응이 위험한 상태로서 도움받을 필요가 있습니다. \n포괄적인 스트레스 관리 계획이 필요합니다.")
+            console.log("here")
+        }else {
+            setResults("Good")    
+            resultWord=("Good")  
+            content="다른 사람들에 비해 스트레스 정도가 적은 편입니다. \n스트레스는 적당한 경우에 능률을 향상시키는 역할을 하지만,\n 지속적인 스트레스는 결국 인체의 저항력을 고갈시키고,\n 우울증, 정신증과 같은 정신과적 증상으로도 나타날 수 있습니다. \n스스로의 상태를 주시하면서 주위의 도움을 청하고 \n스트레스 해소를 위한 방법을 적극적으로 찾아야 합니다.\n\n당신은 이미 스트레스 상황에 특별한 방식으로 잘 대처하고 있습니다.\n 특별한 조치가 필요 없습니다.\n 지금 상태를 유지할 수 있도록 노력하세요!"
+            setResultcontent("다른 사람들에 비해 스트레스 정도가 적은 편입니다. \n스트레스는 적당한 경우에 능률을 향상시키는 역할을 하지만,\n 지속적인 스트레스는 결국 인체의 저항력을 고갈시키고,\n 우울증, 정신증과 같은 정신과적 증상으로도 나타날 수 있습니다. \n스스로의 상태를 주시하면서 주위의 도움을 청하고 \n스트레스 해소를 위한 방법을 적극적으로 찾아야 합니다.\n\n당신은 이미 스트레스 상황에 특별한 방식으로 잘 대처하고 있습니다.\n 특별한 조치가 필요 없습니다.\n 지금 상태를 유지할 수 있도록 노력하세요!")
         }
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
             total=querySnapshot.size-1
@@ -443,13 +451,15 @@ export function StressFinal({navigation,route}) {
         })
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc(String(thisMonth)).update({
             stats:true,
-            result:result.result+"/"+"/"+resultcontent+"/"+a,
+            result:content,
             resultNum:result.result,
+            resultWord:resultWord
         }).catch(()=>{
             firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc(String(thisMonth)).set({
                 stats:true,
-                result:result.result+"/"+"/"+resultcontent+"/"+a,
+                result:content,
                 resultNum:result.result,
+                resultWord:resultWord
             })
         })
 

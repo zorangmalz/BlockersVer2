@@ -19,7 +19,7 @@ import BarChart from 'react-native-chart-kit/dist/BarChart';
 import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
-import { useTheme } from "@react-navigation/native";
+
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -471,6 +471,10 @@ async function getNicotineInfo(){
         })
         var total
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+totals).collection("ChallengeDetail").doc("니코틴 중독 평가하기").get().then(doc=>{
+            if(doc.data().stats==false){
+                setchallengenicotine(false),
+                console.log("false")
+            }else{
             setchallengenicotine(true)
             total=doc.data().resNum   
             var nico
@@ -488,11 +492,8 @@ async function getNicotineInfo(){
                 nico=0
             }
             console.log(nicotine)
-        }).catch(
-            setchallengenicotine(false),
-            console.log("false")
-        )
-       
+        }
+        })
         
 }
 async function getSolutionInfo(){
@@ -502,18 +503,20 @@ async function getSolutionInfo(){
         })
         
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+totals).collection("ChallengeDetail").doc("내 흡연유형 파악하기").get().then(doc=>{
-            setchallengesmoke(true)
-            setMain(doc.data().main)
-            setMainStr(doc.data().mainStr)
-            setSub(doc.data().sub)
-            setSubStr(doc.data().subStr)
-            setSub2(doc.data().sub2)
-            setSub2Str(doc.data().sub2Str)
-
-        }).catch(
-            setchallengesmoke(false),
-            console.log("false")
-        )
+            if(doc.data().stats===false){
+                setchallengesmoke(false)
+            }else{
+                setchallengesmoke(true)
+                setMain(doc.data().main)
+                setMainStr(doc.data().mainStr)
+                setSub(doc.data().sub)
+                setSubStr(doc.data().subStr)
+                setSub2(doc.data().sub2)
+                setSub2Str(doc.data().sub2Str)
+    
+            }
+           
+        })
 }
     
     
@@ -746,55 +749,105 @@ function TabTwo({ navigation }) {
             degree: "높음"
         },
     ]
+    const [user,setUser]=useState("")
+    const [resultsA,setResultsA]=useState("-")
+    const [resultA,setResultA]=useState(0)
+    const [resultAcontent,setResultAcontent]=useState("-")
+    const [resultsS,setResultsS]=useState("-")
+    const [resultS,setResultS]=useState(0)
+    const [resultScontent,setResultScontent]=useState("-")
+    const [resultsE,setResultsE]=useState("-")
+    const [resultE,setResultE]=useState(0)
+    const [resultEcontent,setResultEcontent]=useState("-")
+    const [itemA,setItemA]=useState([])
+    const [itemE,setItemE]=useState([])
+    const [itemS,setItemS]=useState([])
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
         if(user){
-            uploadInfo()
-            if(resultA>1){
-                if(resultA>=35){
-                    setResultsA("Bad")
-                    setResultAcontent( "알코올 남용이나 의존 단계입니다. \n 음주량과 음주횟수 조절이 어려운 상태입니다. 술을 마셔야 기분도 좋고 일도 잘되고 관계도 좋아진다고 생각합니다. 술을 줄이는 단계가 아니라 끊어야 합니다.\n● 신체 질환이나 사회적 역할에 어려움이 있을 것입니다.\n예) 직장, 가정, 지역사회에서 술로 인한 사회적 혹은 법적 문제 유발(음주운전이나 가정폭력 등)\n전문 병/의원이나 알코올상담센터 혹은 정신보건센터에 연계하여 진단과 치료를 받도록 합니다.\n신체에 질병이 생기면 치료받아야 나을 수 있는 것처럼 알코올 사용 장애도 치료가 필요한 질병입니다")
-                }else if(15<= result){
-                    setResultsA("Normal")
-                    setResultAcontent("위험 음주 단계입니다. \n음주량과 음주횟수가 너무 많습니다. 아직은 술 때문에 큰 문제가 없지만 음주문제 예방을 위해 아래 지침을 지켜주세요.● 정상 음주군에서 권고한 음주 기준을 지키세요.\n● 과음으로 인한 음주 폐해에 대한 교육이 필요합니다.\n● 전문요원에게 상담을 받으세요.\n음주를 유발하는 상황과 음주패턴의 특징을 파악하기\n과음을 피할 수 있는 방법 택하기\n예) 음주 일지 작성, 작은 잔으로 마시기, 술에 물을 타서 마시기, 음주 속도 제한, 스트레스 대처 방법 훈련, 폭탄주 혹은 독주 피하기, 안주 충분히 먹기, 술 마시지 않는 날 정하기 등\n● 주기적으로 음주행동을 점검하고 알코올의존도평가(AUDIT-K) 재수행")
-                    console.log("here")
-                }else{
-                    setResultsA("Good")      
-                    setResultAcontent("정상 음주입니다.\n지금까지는 비교적 건강하고 안전한 음주습관을 지니고 있습니다. 적정음주량을 유지하고 건강음주지침을 지켜주세요.\n● 음주량을 지켜주세요.\n한자리에서 남성: 2~4잔 / 여성: 1~2잔 이하\n* 일주일에 2~3일은 금주\n65세 이상의 노인도 1주당 5잔 미만")
-                }}
+            getMonthTotal()
         }
-    }, [user,resultA])
+        console.log(resultA)
+    }, [user])
 
-    const [user,setUser]=useState()
-    const [resultsA,setResultsA]=useState("")
-    const [resultA,setResultA]=useState(0)
-    const [resultAcontent,setResultAcontent]=useState("")
-    
-    const [name,setName]=useState("");
-    var total=0
-
-    async function uploadInfo(){
-        var a=moment().toArray()
+    async function getMonthTotal(){
+        var total
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
             total=querySnapshot.size-1
         })
-        await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
-            setName(doc.data().name)
-        }) 
+        console.log(total)
         var month
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").get().then(doc=>{
             month=doc.data().month-1
-            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("esteem").doc(String(month)).get().then(doc=>{
-                setResultA(doc.data().resultNum)
             })
-        }).catch(
-            setResultA("-")
+            getInfoAlcohol(total,month)
+            getInfoEsteem(total,month)
+            getInfoStress(total,month)
+    }
+    async function getInfoAlcohol(total,month){
+       
+        console.log(month,total)
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc(String(month)).get().then(doc=>{
+            setResultA(doc.data().resultNum)    
+            setResultsA(doc.data().resultWord)
+            setResultAcontent(doc.data().result)
+        }).catch((err)=>{
+            console.err(err),
+            setResultsA("-")}
         )
-        await f
-        console.log(total)
-        
+        const list=[]
+        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").onSnapshot(querySnapshot=>{
+            querySnapshot.forEach(doc=>{
+                list.push({
+                    degree:doc.data().stats,
+                    num:doc.id
+                })
+            })
+            setItemA(list)
+        })
+        console.log("Complete")
+    }
+    async function getInfoStress(total,month){
+
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc(String(month)).get().then(doc=>{
+            setResultS(doc.data().resultNum)    
+            setResultsS(doc.data().resultWord)
+            setResultScontent(doc.data().result)
+        }).catch(
+            setResultsS("-")
+        )
+        const list=[]
+        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").onSnapshot(querySnapshot=>{
+            querySnapshot.forEach(doc=>{
+                list.push({
+                    degree:doc.data().stats,
+                    num:doc.id
+                })
+            })
+            setItemS(list)
+        })
+    }
+    async function getInfoEsteem(total,month){
+
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(month)).get().then(doc=>{
+            setResultE(doc.data().resultNum)    
+            setResultsE(doc.data().resultWord)
+            setResultEcontent(doc.data().result)
+        }).catch(
+            setResultsE("-")
+        )
+        const list=[]
+        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").onSnapshot(querySnapshot=>{
+            querySnapshot.forEach(doc=>{
+                list.push({
+                    degree:doc.data().stats,
+                    num:doc.id
+                })
+            })
+            setItemE(list)
+        })
     }
     return (
         <>
@@ -815,7 +868,7 @@ function TabTwo({ navigation }) {
                         paddingRight: 16,
                         marginBottom: 32
                     }}>
-                        <ProgressCircle size={72} color="#5cc27b" borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={0.7}>
+                        <ProgressCircle size={72} color={resultsE === "Good" ? "#5cc27b" : resultsE=="Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={resultE*0.02}>
                             <Text style={{
                                 flex: 0,
                                 position: "absolute",
@@ -823,7 +876,7 @@ function TabTwo({ navigation }) {
                                 top: 24,
                                 fontFamily: "NunitoSans-Bold",
                                 fontSize: 16
-                            }}>Good</Text>
+                            }}>{resultsE}</Text>
                             <Text style={{
                                 fontSize: 14,
                                 fontFamily: "NunitoSans-Regular",
@@ -832,7 +885,7 @@ function TabTwo({ navigation }) {
                                 marginTop: 8
                             }}>자기효능감</Text>
                         </ProgressCircle>
-                        <ProgressCircle size={72} color="#5cc27b" borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={0.7}>
+                        <ProgressCircle size={72} color={resultsS === "Good" ? "#5cc27b" : resultsS=="Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={resultS*0.01538}>
                             <Text style={{
                                 flex: 0,
                                 position: "absolute",
@@ -840,7 +893,7 @@ function TabTwo({ navigation }) {
                                 top: 24,
                                 fontFamily: "NunitoSans-Bold",
                                 fontSize: 16
-                            }}>Good</Text>
+                            }}>{resultsS}</Text>
                             <Text style={{
                                 fontSize: 14,
                                 fontFamily: "NunitoSans-Regular",
@@ -849,12 +902,9 @@ function TabTwo({ navigation }) {
                                 marginTop: 8
                             }}>스트레스</Text>
                         </ProgressCircle>
+                        
                         <ProgressCircle
-                        style={{
-                            marginTop: 20,
-                            alignItems: "center",
-                            justifyContent: "center",
-                        }}
+                        
                         size={72}
                         borderWidth={0}
                         thickness={5}
@@ -862,9 +912,20 @@ function TabTwo({ navigation }) {
                         color={resultsA === "Good" ? "#5cc27b" : resultsA=="Normal" ? "#ffb83d" : "#fb5757"}
                         unfilledColor="#E0E5EC"
                     >
-                        <Text style={{ position: "absolute", flex: 1, color: "#303030", textAlign: "center" }}>
-                            <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{resultsA}</Text>
-                        </Text>
+                        <Text style={{  flex: 0,
+                                position: "absolute",
+                                alignSelf: "center",
+                                top: 24,
+                                fontFamily: "NunitoSans-Bold",
+                                fontSize: 16}}>{resultsA}</Text>
+                        <Text style={{
+                                fontSize: 14,
+                                fontFamily: "NunitoSans-Regular",
+                                color: "#303030",
+                                alignSelf: "center",
+                                marginTop: 8
+                            }}>알콜중독</Text>
+                        
                     </ProgressCircle>
                     </View>
                 </View>
@@ -879,7 +940,7 @@ function TabTwo({ navigation }) {
                     style={{
                         marginLeft: 32,
                     }}
-                    data={selfesteem}
+                    data={itemS}
                     renderItem={({ item }) => (
                         <>
                             <View style={{
@@ -914,11 +975,19 @@ function TabTwo({ navigation }) {
                                     alignItems: "center",
                                     justifyContent: "center"
                                 }}>
+                                   {item.degree===false ?
                                     <Text style={{
                                         fontFamily: "NunitoSans-Bold",
                                         fontSize: 14,
                                         color: "#5cc27b"
-                                    }}>{item.degree}</Text>
+                                    }}>-</Text>
+                                    :
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#5cc27b"
+                                    }}>성공</Text>
+                                    }
                                 </View>
                             </View>
                         </>
@@ -937,7 +1006,7 @@ function TabTwo({ navigation }) {
                         color: "#303030",
                         opacity: 0.7,
                         lineHeight: 26
-                    }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.</Text>
+                    }}>{resultEcontent}</Text>
                 </View>
                 <Text style={{
                     marginBottom: 16,
@@ -950,7 +1019,7 @@ function TabTwo({ navigation }) {
                     style={{
                         marginLeft: 32,
                     }}
-                    data={stress}
+                    data={itemS}
                     renderItem={({ item }) => (
                         <>
                             <View style={{
@@ -985,11 +1054,19 @@ function TabTwo({ navigation }) {
                                     alignItems: "center",
                                     justifyContent: "center"
                                 }}>
+                                    {item.degree===false ?
                                     <Text style={{
                                         fontFamily: "NunitoSans-Bold",
                                         fontSize: 14,
                                         color: "#5cc27b"
-                                    }}>{item.degree}</Text>
+                                    }}>-</Text>
+                                    :
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#5cc27b"
+                                    }}>성공</Text>
+                                    }
                                 </View>
                             </View>
                         </>
@@ -1008,7 +1085,7 @@ function TabTwo({ navigation }) {
                         color: "#303030",
                         opacity: 0.7,
                         lineHeight: 26
-                    }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.</Text>
+                    }}>{resultScontent}</Text>
                 </View>
                 <Text style={{
                     marginBottom: 16,
@@ -1021,7 +1098,7 @@ function TabTwo({ navigation }) {
                     style={{
                         marginLeft: 32,
                     }}
-                    data={alcohol}
+                    data={itemA}
                     renderItem={({ item }) => (
                         <>
                             <View style={{
@@ -1056,11 +1133,19 @@ function TabTwo({ navigation }) {
                                     alignItems: "center",
                                     justifyContent: "center"
                                 }}>
+                                     {item.degree===false ?
                                     <Text style={{
                                         fontFamily: "NunitoSans-Bold",
                                         fontSize: 14,
                                         color: "#5cc27b"
-                                    }}>{item.degree}</Text>
+                                    }}>-</Text>
+                                    :
+                                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 14,
+                                        color: "#5cc27b"
+                                    }}>성공</Text>
+                                    }
                                 </View>
                             </View>
                         </>
@@ -1079,7 +1164,7 @@ function TabTwo({ navigation }) {
                         color: "#303030",
                         opacity: 0.7,
                         lineHeight: 26
-                    }}>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea.</Text>
+                    }}>{resultAcontent}</Text>
                 </View>
             </ScrollView>
         </>
