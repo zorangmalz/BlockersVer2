@@ -114,9 +114,7 @@ export default function Challenge({ navigation }) {
             }
             return () => {
                 //포커싱 안 되었을 떄
-                auth().onAuthStateChanged(userAuth => {
-                    setUser(userAuth)
-                })
+                
             };
         }, [])
     );

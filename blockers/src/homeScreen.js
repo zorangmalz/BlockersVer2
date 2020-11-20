@@ -127,12 +127,6 @@ export default function HomeScreen({ navigation }) {
             }
             return () => {
                 //포커싱 안 되었을 떄
-                setFocus(false)
-                if (USER) {
-                    ref.doc(USER.uid).get().then(documentSnapshot => {
-                        setSmoker(documentSnapshot.data().smoker)
-                    })
-                }
             };
         }, [])
     );
