@@ -254,10 +254,10 @@ export function SmokeAlertTwo({ navigation }) {
     const [Second, SetSecond] = useState(0);
     const [IsRunning, SetIsRunning] = useState(true);
     useInterval(() => {
-        if(Second >= 20) {
+        if (Second >= 20) {
             SetIsRunning(false);
         } else {
-            SetSecond(Second+1);
+            SetSecond(Second + 1);
         }
     }, IsRunning ? Delay : null)
 
@@ -318,29 +318,29 @@ export function SmokeAlertTwo({ navigation }) {
                         }}>{Second}초</Text>
                         </ProgressBar>
                     </View>
-                    
+
                 </ScrollView>
                 <View
-         style={{
-            flexDirection:"row",
-        alignItems:"center",
-    justifyContent:"center",
-}}
-         >
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
 
-         
-<BannerAd
-      unitId={adUnitId}  
-      size={BannerAdSize.SMART_BANNER}
-      requestOptions={{
-        requestNonPersonalizedAdsOnly: true,
-      }}
-      onAdFailedToLoad={(error) => {
-        console.error('Advert failed to load: ', error);
-      }}
-    />
-    
-         </View> 
+
+                    <BannerAd
+                        unitId={adUnitId}
+                        size={BannerAdSize.SMART_BANNER}
+                        requestOptions={{
+                            requestNonPersonalizedAdsOnly: true,
+                        }}
+                        onAdFailedToLoad={(error) => {
+                            console.error('Advert failed to load: ', error);
+                        }}
+                    />
+
+                </View>
             </SafeAreaView>
         </>
     )
@@ -351,10 +351,10 @@ export function SmokeAlertThree({ navigation }) {
     const [second, setSecond] = useState(0);
     const [isRunning, setIsRunning] = useState(true);
     useInterval(() => {
-        if(second >= 20) {
+        if (second >= 20) {
             setIsRunning(false);
         } else {
-            setSecond(second+1);
+            setSecond(second + 1);
         }
     }, isRunning ? delay : null)
 
@@ -413,29 +413,29 @@ export function SmokeAlertThree({ navigation }) {
                         }}>{second}초</Text>
                         </ProgressBar>
                     </View>
-                  
+
                 </ScrollView>
                 <View
-         style={{
-            flexDirection:"row",
-        alignItems:"center",
-    justifyContent:"center",
-}}
-         >
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}
+                >
 
-         
-<BannerAd
-      unitId={adUnitId}  
-      size={BannerAdSize.SMART_BANNER}
-      requestOptions={{
-        requestNonPersonalizedAdsOnly: true,
-      }}
-      onAdFailedToLoad={(error) => {
-        console.error('Advert failed to load: ', error);
-      }}
-    />
-    
-         </View> 
+
+                    <BannerAd
+                        unitId={adUnitId}
+                        size={BannerAdSize.SMART_BANNER}
+                        requestOptions={{
+                            requestNonPersonalizedAdsOnly: true,
+                        }}
+                        onAdFailedToLoad={(error) => {
+                            console.error('Advert failed to load: ', error);
+                        }}
+                    />
+
+                </View>
             </SafeAreaView>
         </>
     )
@@ -481,7 +481,8 @@ export function SmokeAlertFour({ navigation }) {
                             height: 153,
                             borderWidth: 1,
                             borderColor: "#8D8D8D",
-                            paddingVertical: 16,
+                            paddingTop: 8,
+                            paddingBottom: 8,
                             paddingHorizontal: 17.5
                         }}>
                             <TextInput multiline={true} placeholder="텍스트 입력" style={{
@@ -489,28 +490,27 @@ export function SmokeAlertFour({ navigation }) {
                                 fontFamily: "NunitoSans-Regular",
                                 fontSize: 14,
                                 color: "#303030"
-                            }}/>
+                            }} />
                         </View>
                     </View>
-                    
                 </ScrollView>
                 <View
-         style={{
-            flexDirection:"row",
-        alignItems:"center",
-    justifyContent:"center",
-}}> 
-<BannerAd
-      unitId={adUnitId}  
-      size={BannerAdSize.SMART_BANNER}
-      requestOptions={{
-        requestNonPersonalizedAdsOnly: true,
-      }}
-      onAdFailedToLoad={(error) => {
-        console.error('Advert failed to load: ', error);
-      }}
-    />
-         </View> 
+                    style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        justifyContent: "center",
+                    }}>
+                    <BannerAd
+                        unitId={adUnitId}
+                        size={BannerAdSize.SMART_BANNER}
+                        requestOptions={{
+                            requestNonPersonalizedAdsOnly: true,
+                        }}
+                        onAdFailedToLoad={(error) => {
+                            console.error('Advert failed to load: ', error);
+                        }}
+                    />
+                </View>
             </SafeAreaView>
         </>
     )
