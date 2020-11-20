@@ -120,7 +120,7 @@ export default function Challenge({ navigation }) {
             };
         }, [])
     );
-
+    
     const MissionItem = ({ item }) => {
         return (
             <View style={{
@@ -230,8 +230,62 @@ export default function Challenge({ navigation }) {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
+        if(user){
+            getUserInfo()
+        }
+        console.log(smoker)
     }, [logined])
+    
+    const [smoker,setSmoker]=useState()
 
+    async function getUserInfo(){
+    await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+        setSmoker(doc.data().smoker)
+    })
+    }
+    async function smokerOrNot(){
+        console.log("comeins")
+        if(smoker){
+            console.log("mustbehere")
+            Alert.alert(
+                '챌린지를 진행하시겠습니까?',
+                '금연모드로 전환됩니다',
+                [
+                    {
+                        text: '아니오', onPress: () => console.log('CANCEL Pressed')
+                    },
+                    {
+                        text: '예', onPress:()=>changeToNonSmoker()
+                    }
+                ]
+            )
+        }else{
+            console.log("damn")
+            navigation.navigate("ChallengeRegister")
+        }
+    }
+    async function changeToNonSmoker() {
+        console.log("nonsmoker")
+        var a = moment().toArray()
+        if(a[1]===12){
+            a[1]=1
+        }else{
+            a[1]=a[1]+1
+        }
+
+        await firestore().collection("UserInfo").doc(user.uid).update({
+            smoker: false,
+            SmokingTime: a,
+            smokeDaily: 0,
+        })
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            smoke:"금연 모드로 전환"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+            smoke:"금연 모드로 전환"
+        }))
+        navigation.navigate("ChallengeRegister")
+    }
     async function hi() {
         var size
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
@@ -694,7 +748,7 @@ export default function Challenge({ navigation }) {
                                 </View>
                             </>
                             :
-                            <TouchableOpacity onPress={logined ? () => navigation.navigate("ChallengeRegister") : loginview} style={{
+                            <TouchableOpacity onPress={logined ? () =>smokerOrNot() : loginview} style={{
                                 width: "55%",
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -707,7 +761,7 @@ export default function Challenge({ navigation }) {
                                 <Text style={[main.title, { color: "#ffffff" }]}>시작하기</Text>
                             </TouchableOpacity>
                         :
-                        <TouchableOpacity onPress={logined ? () => navigation.navigate("ChallengeRegister") : loginview} style={{
+                        <TouchableOpacity onPress={logined ? () =>smokerOrNot(): loginview} style={{
                             width: "55%",
                             alignItems: "center",
                             justifyContent: "center",
