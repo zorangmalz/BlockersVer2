@@ -187,7 +187,11 @@ export default function HomeScreen({ navigation }) {
         if (Number(smoke) === Number(stats)) {
             Alert.alert("고마펴싀발")
         }
+        var history= await howMuch()
         setSmokingDaily(smoke + 1)
+        setSmokingSmoker(history+smoke+1)
+        setSmokingSmokerMoney((history+smoke+1)*225)
+        console.log(history+smoke+1)
         // console.log(smoke,smokingDaily)
         var total = totals
         for (var i = 0; i < smoke + 1; i++) {
@@ -236,11 +240,20 @@ export default function HomeScreen({ navigation }) {
 
     }
     async function howMuch(){
-        ref.doc(user.uid).collection("Calendar").get().then(querySnapshot=>{
+        var total=0
+        await ref.doc(user.uid).collection("Calendar").get().then(querySnapshot=>{
+            var sub
             querySnapshot.forEach(documentSnapshot =>{
-                documentSnapshot.data().smoketotal
+                sub=documentSnapshot.data().smoketotal
+                console.log(sub,"sub")
+                if(sub){
+                    total=total+sub
+                }
+                
             })
         })
+        return(total)
+        console.log(total,"total")
     }
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
@@ -256,6 +269,7 @@ export default function HomeScreen({ navigation }) {
                     setViewOpacity(true)
                 }
             })
+            howMuch()
         } else {
             setViewOpacity(true)
             setLogin(false)
