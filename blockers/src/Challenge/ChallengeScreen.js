@@ -230,7 +230,7 @@ export default function Challenge({ navigation }) {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
-    }, [])
+    }, [logined])
 
     async function hi() {
         var size
