@@ -108,13 +108,11 @@ export default function HomeScreen({ navigation }) {
         useCallback(() => {
             //포커싱 되었을 떄
             setFocus(true)
-            auth().onAuthStateChanged(userAuth => {
-                setUser(userAuth)
-            })
-            if (user) {
+            const USER = firebase.auth().currentUser;
+            if (USER) {
                 setLogin(true)
                 setViewOpacity(false)
-                firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+                firestore().collection("UserInfo").doc(USER.uid).get().then(doc => {
                     if (doc.data().SmokingTime) {
                         setViewOpacity(false)
                     } else {
@@ -128,6 +126,11 @@ export default function HomeScreen({ navigation }) {
             return () => {
                 //포커싱 안 되었을 떄
                 setFocus(false)
+                if (USER) {
+                    ref.doc(USER.uid).get().then(documentSnapshot => {
+                        setSmoker(documentSnapshot.data().smoker)
+                    })
+                }
             };
         }, [])
     );
@@ -246,7 +249,7 @@ export default function HomeScreen({ navigation }) {
             setViewOpacity(true)
             setLogin(false)
         }
-    }, [user,login, userlogin, refreshing, Rotate, focus])
+    }, [user,login, userlogin, refreshing, Rotate, focus, smoker])
 
     useEffect(() => {
         if (user) {
@@ -270,7 +273,7 @@ export default function HomeScreen({ navigation }) {
                 }
             })
         }
-    }, [user, viewopacity, focus, check, refreshing, today, Rotate])
+    }, [user, viewopacity, focus, check, refreshing, today, Rotate, smoker])
 
     useEffect(() => {
         timeCheck().then(() => {
@@ -295,7 +298,6 @@ export default function HomeScreen({ navigation }) {
         }
         console.log(smoker, "smoker")
     }, [fullTime, refreshing, focus])
-
 
     //새로고침
     const AnimatedIonicons = Animated.createAnimatedComponent(Ionicons)
@@ -364,6 +366,7 @@ export default function HomeScreen({ navigation }) {
         outputRange: ['0deg', '360deg']
     })
 
+
     //금연 포기시
     async function changeToSmoker() {
         const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
@@ -387,6 +390,9 @@ export default function HomeScreen({ navigation }) {
             SmokingTime: a,
             smokedLoss: firebase.firestore.FieldValue.arrayUnion(smokingMoney + "/" + a),
             smokedAmount: firebase.firestore.FieldValue.arrayUnion(smokingShow + "/" + a)
+        })
+        await firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+            setSmoker(doc.data().smoker)
         })
         var totals
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
@@ -422,6 +428,9 @@ export default function HomeScreen({ navigation }) {
             smokedSavedAmount: firebase.firestore.FieldValue.arrayUnion(smokingShow + "/" + a),
             smokeDaily: 0,
             smokeStats: firebase.firestore.FieldValue.arrayUnion(a + "/흡연량 : " + smokingDaily)
+        })
+        await firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+            setSmoker(doc.data().smoker)
         })
     }
 
@@ -544,7 +553,7 @@ export default function HomeScreen({ navigation }) {
                     </View>
                 </View>
                 <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
-                    {smoker === true ?
+                    {smoker ?
                         <Swiper dotStyle={{ borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 250 }}>
                             <View>
                                 <View style={{ zIndex: 0 }}>

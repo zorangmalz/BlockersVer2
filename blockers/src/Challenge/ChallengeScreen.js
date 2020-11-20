@@ -117,15 +117,6 @@ export default function Challenge({ navigation }) {
                 auth().onAuthStateChanged(userAuth => {
                     setUser(userAuth)
                 })
-                if (user) {
-                    setLogined(true)
-                } else {
-                    setLogined(false)
-                    hi()
-                    if (challenge) {
-                        checkRate()
-                    }
-                }
             };
         }, [])
     );
@@ -742,35 +733,14 @@ export default function Challenge({ navigation }) {
                         <TouchableOpacity onPress={logined ? () => navigation.navigate("ChallengeMission", { UID: user.uid }) : loginview}><Text style={main.underline}>전체미션</Text></TouchableOpacity>
                     </View>
                     <ScrollView horizontal={true}>
-                        {logined ?
-                            challenge ?
-                                <FlatList
-                                    horizontal={true}
-                                    data={items}
-                                    keyExtractor={(item) => item.id}
-                                    renderItem={MissionItem}
-                                    style={{ paddingBottom: 5 }}
-                                    showsHorizontalScrollIndicator={false}
-                                />
-                                :
-                                <FlatList
-                                    horizontal={true}
-                                    data={MissionData}
-                                    keyExtractor={(item) => item.id}
-                                    renderItem={MissionItem}
-                                    style={{ paddingBottom: 5 }}
-                                    showsHorizontalScrollIndicator={false}
-                                />
-                            :
-                            <FlatList
-                                horizontal={true}
-                                data={MissionData}
-                                keyExtractor={(item) => item.id}
-                                renderItem={MissionItem}
-                                style={{ paddingBottom: 5 }}
-                                showsHorizontalScrollIndicator={false}
-                            />
-                        }
+                        <FlatList
+                            horizontal={true}
+                            data={logined ? challenge ? items : MissionData : MissionData}
+                            keyExtractor={(item) => item.id}
+                            renderItem={MissionItem}
+                            style={{ paddingBottom: 5 }}
+                            showsHorizontalScrollIndicator={false}
+                        />
                     </ScrollView>
                 </ScrollView>
                 <View
