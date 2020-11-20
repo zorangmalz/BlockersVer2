@@ -149,9 +149,26 @@ export default function CommunityOtherPost({ route, navigation }) {
         setComment("")
     }
 
+    async function deletePost() {
+        // ref.doc(param).delete()
+        const filename = title + nick + time
+        var desertRef = storage().ref("community1/" + filename);
+        setDel(true)
+        navigation.navigate("Home")
+        // // Delete the file
+        desertRef.delete().catch(function (error) {
+            // Uh-oh, an error occurred!
+            console.log("오류")
+        })
+        async function DeletePost() {
+            await firestore().collection("Community1").doc(docID).delete()
+        }
+        DeletePost()
+    }
+
     //사용자 정보를 불러오는 함수. 불러온후에 사용자 닉네임을 설정한다(화면에 띄워줌)
     useEffect(() => {
-        if (del === false) {
+        if (!del) {
             var a = [1, 2, 3, 4]
             console.log(a.splice(0, 0, 0), "alsekjfpwojfopwije")
 
@@ -168,7 +185,7 @@ export default function CommunityOtherPost({ route, navigation }) {
 
     //화면에 텍스트 및 좋아요를 띄워주는 함수.
     async function load() {
-        firestore().collection("Community1").doc(docID).onSnapshot(doc => {
+        firestore().collection("Community1").doc(docID).get().then(doc => {
             setTitle(doc.data().title)
             setContent(doc.data().context)
             setAuthor(doc.data().nickname)
@@ -184,7 +201,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     }
 
     useEffect(() => {
-        if (del === false) {
+        if (!del) {
             console.log(Uid, "uiduidudiuidu")
             console.log(docID, "HIHI")
             console.log(alertList, likeList, time, author, "alertList")
@@ -199,40 +216,44 @@ export default function CommunityOtherPost({ route, navigation }) {
                 setMeLike(true)
             }
         }
-    }, [likeState, nick, title, del])
+    }, [likeState, nick, del])
 
     //사진 불러오는 함수
     const [exist, setExist] = useState(true)
     async function existPic() {
-        console.log("comeins")
-        console.log(title, author, time)
-        const url = await storage()
-            .refFromURL("gs://blockers-8a128.appspot.com/community1/" + String(title + author + time))
-            .getDownloadURL()
-            .catch(() => {
-                setExist(false)
-                console.log("사진이 없습니다.")
-            })
+        if (!del) {
+            console.log("comeins")
+            console.log(author, time)
+            const url = await storage()
+                .refFromURL("gs://blockers-8a128.appspot.com/community1/" + String(title + author + time))
+                .getDownloadURL()
+                .catch(() => {
+                    setExist(false)
+                    console.log("사진이 없습니다.")
+                })
             setImageSource(url)
             setExist(true)
+        }
     }
 
     useEffect(() => {
-        if (exist) {
-            existPic().then(() => {
-                setPicLoading(true)
-            }).catch(() => {
-                setExist(false)
-                console.log("사진이 없습니다.")
-                setPicLoading(true)
-            })
-        }
-        if (Uid === realWriterUid) {
-            setIslogined(true)
-            console.log("yes ITs true")
-        } else {
-            setIslogined(false)
-            console.log("no its not")
+        if (!del) {
+            if (exist) {
+                existPic().then(() => {
+                    setPicLoading(true)
+                }).catch(() => {
+                    setExist(false)
+                    console.log("사진이 없습니다.")
+                    setPicLoading(true)
+                })
+            }
+            if (Uid === realWriterUid) {
+                setIslogined(true)
+                console.log("yes ITs true")
+            } else {
+                setIslogined(false)
+                console.log("no its not")
+            }
         }
     }, [time])
 
@@ -244,7 +265,7 @@ export default function CommunityOtherPost({ route, navigation }) {
             const { ID } = route.params
             setParam(ID)
             async function reply() {
-                firestore().collection('Community1').doc(ID).collection("Reply").onSnapshot(querySnapshot => {
+                firestore().collection('Community1').doc(ID).collection("Reply").get().then(querySnapshot => {
                     let list = [];
                     console.log("comd")
                     setReplyNum(querySnapshot.size);
@@ -289,7 +310,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     }, [state, vmtk, loading, commentState, del])
 
     //게시글 좋아요 및 좋아요 취소
-    function likeMinus(a) {
+    async function likeMinus(a) {
         return ref.doc(param).update({
             whoLike: a,
         }).then(() => {
@@ -297,18 +318,16 @@ export default function CommunityOtherPost({ route, navigation }) {
             setLikeState(true)
         });
     }
-    function likePlus(a) {
+    async function likePlus(a) {
         return ref.doc(param).update({
             whoLike: a,
         }).then(() => {
             console.log("plus success")
             setLikeState(true)
-
-
         });
     }
 
-    function pressLike() {
+    async function pressLike() {
         const userUID = Uid
         console.log(Uid, "Uid")
         console.log(likeList, "when pressed")
@@ -324,20 +343,8 @@ export default function CommunityOtherPost({ route, navigation }) {
             likePlus(likeList);
         }
     }
-    function deletePost() {
-        return ref.doc(param).delete().then(() => {
-            const filename = title + nick + time
-            var desertRef = storage().ref("community1/" + filename);
-            setDel(true)
-            navigation.goBack()
-            // Delete the file
-            desertRef.delete().catch(function (error) {
-                // Uh-oh, an error occurred!
-                console.log("오류")
-            });
-        })
-    }
-    function alertPost() {
+    
+    async function alertPost() {
         console.log(alertList, "fucking here")
         const userID = Uid
         if (alertList.includes(userID)) {
@@ -389,7 +396,7 @@ export default function CommunityOtherPost({ route, navigation }) {
         }
 
     }
-    function alertUpdate(a) {
+    async function alertUpdate(a) {
         return ref.doc(param).update({
             whoAlert: a,
         }).then(() => {
@@ -398,7 +405,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     }
 
     //댓글 좋아요 및 좋아요 취소, 댓글 삭제
-    function relikeMinus(a, b) {
+    async function relikeMinus(a, b) {
 
         return ref.doc(param).collection("Reply").doc(b).update({
             whoLike: a,
@@ -408,7 +415,7 @@ export default function CommunityOtherPost({ route, navigation }) {
             setState(true)
         });
     }
-    function relikePlus(a, b) {
+    async function relikePlus(a, b) {
         return ref.doc(param).collection("Reply").doc(b).update({
             whoLike: a
         }).then(() => {
@@ -418,7 +425,7 @@ export default function CommunityOtherPost({ route, navigation }) {
         });
     }
 
-    function pressReLike(relikeList, name) {
+    async function pressReLike(relikeList, name) {
         const userUID = Uid
         console.log(Uid, "Uid")
         console.log(relikeList, "when pressed")
@@ -432,12 +439,12 @@ export default function CommunityOtherPost({ route, navigation }) {
             relikePlus(relikeList, name);
         }
     }
-    function redeletePost(a) {
+    async function redeletePost(a) {
         ref.doc(param).collection("Reply").doc(a).delete()
         setCommentState(true)
 
     }
-    function realertPost(a) {
+    async function realertPost(a) {
         console.log(alertList, "fucking here")
         const userID = Uid
         if (alertList.includes(userID)) {
@@ -489,7 +496,7 @@ export default function CommunityOtherPost({ route, navigation }) {
         }
 
     }
-    function realertUpdate(a, b) {
+    async function realertUpdate(a, b) {
         return ref.doc(param).collection("Reply").doc(a).update({
             whoAlert: b,
         }).then(() => {
@@ -555,7 +562,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 padding: 16,
                                 paddingRight: 24
                             }}>
-                                <Text style={community.title}>{title}</Text>
+                                <Text style={community.title}>{!title ? "" : title}</Text>
                                 {islogined === true ?
                                     <Text style={[community.dateandrepair, { alignSelf: 'center' }]}>
                                         <TouchableOpacity onPress={() => navigation.navigate('작성하기')}>
@@ -567,10 +574,10 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                 '삭제된 게시물은 되돌릴 수 없습니다.',
                                                 [
                                                     {
-                                                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                                                        text: '취소', onPress: () => console.log('CANCEL Pressed')
                                                     },
                                                     {
-                                                        text: '삭제하기', onPress: () => deletePost()
+                                                        text: '확안', onPress: () => deletePost()
 
                                                     }
                                                 ]
