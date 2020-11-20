@@ -316,34 +316,34 @@ export function ChatbotTwo({ navigation }) {
 }
 
 const Tab = createMaterialTopTabNavigator();
-const states=[
+const states = [
     {
-        id:"금연 직후",
-        stats:"-입냄새가 나지 않습니다\n-음식 맛이 좋아집니다\n-치아가 하얗고 건강해집니다\n -후각이 돌아옵니다\n -옷과 머리에 나쁜 냄새가 사라집니다\n -계단을 오를 때 숨이 덜 차게 됩니다\n -손가락의 착색이 사라집니다"
+        id: "금연 직후",
+        stats: "-입냄새가 나지 않습니다\n-음식 맛이 좋아집니다\n-치아가 하얗고 건강해집니다\n -후각이 돌아옵니다\n -옷과 머리에 나쁜 냄새가 사라집니다\n -계단을 오를 때 숨이 덜 차게 됩니다\n -손가락의 착색이 사라집니다"
     },
     {
-        id:"금연한지 20분 경과",
-        stats:"-혈압과 맥박이 정상으로 떨어집니다\n -손발의 체온이 정상으로 증가합니다"
+        id: "금연한지 20분 경과",
+        stats: "-혈압과 맥박이 정상으로 떨어집니다\n -손발의 체온이 정상으로 증가합니다"
     },
     {
-        id:"금연한지 8시간 경과",
-        stats:"-혈액 속 일산화탄소 양이 정상으로 떨어집니다\n -혈액 속 산소량이 정상치로 올라갑니다"
+        id: "금연한지 8시간 경과",
+        stats: "-혈액 속 일산화탄소 양이 정상으로 떨어집니다\n -혈액 속 산소량이 정상치로 올라갑니다"
     },
     {
-        id:"금연한지 한달 경과",
-        stats:"-혈액순환이 좋아지고 폐기능이 증가합니다"
+        id: "금연한지 한달 경과",
+        stats: "-혈액순환이 좋아지고 폐기능이 증가합니다"
     },
     {
-        id:"금연한지 1~9개월",
-        stats:"-기침, 호흡곤란 등이 감소합니다\n -폐의 섬모가 정상기능을 회복하여 점액 배출이 증가하고, 폐가 깨끗해지며 감염위험이 감소합니다"
+        id: "금연한지 1~9개월",
+        stats: "-기침, 호흡곤란 등이 감소합니다\n -폐의 섬모가 정상기능을 회복하여 점액 배출이 증가하고, 폐가 깨끗해지며 감염위험이 감소합니다"
     },
     {
-        id:"금연한지 1년 경과",
-        stats:"-관상동맥질환(심장병)에 걸릴 위험이 흡연자의 절반으로 감소합니다"
+        id: "금연한지 1년 경과",
+        stats: "-관상동맥질환(심장병)에 걸릴 위험이 흡연자의 절반으로 감소합니다"
     },
     {
-        id:"금연한지 5년 경과",
-        stats:"-구강암, 후두암, 식도암, 방광암 위험이 절반으로 감소합니다\n -자궁경부암 발병 위험은 비흡연자 수준으로 감소합니다"
+        id: "금연한지 5년 경과",
+        stats: "-구강암, 후두암, 식도암, 방광암 위험이 절반으로 감소합니다\n -자궁경부암 발병 위험은 비흡연자 수준으로 감소합니다"
     }
 
 ]
@@ -351,7 +351,7 @@ export function ChatbotThree({ navigation }) {
 
     return (
         <>
-            <SafeAreaView style={{backgroundColor: "#ffffff"}}>
+            <SafeAreaView style={{ backgroundColor: "#ffffff" }}>
                 <StatusBar barStyle="dark-content" />
             </SafeAreaView>
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
@@ -368,7 +368,7 @@ export function ChatbotThree({ navigation }) {
                     tabBarOptions={{
                         activeTintColor: "#303030",
                         labelStyle: { fontSize: 16, fontFamily: "NunitoSans-Bold" },
-                        indicatorStyle: {height: 1.5, backgroundColor: "#5cc27b"},
+                        indicatorStyle: { height: 1.5, backgroundColor: "#5cc27b" },
                     }}
                 >
                     <Tab.Screen
@@ -386,126 +386,126 @@ export function ChatbotThree({ navigation }) {
         </>
     )
 }
-const nicoData=[
+const nicoData = [
     {
-        
-        content:"현재 니코틴 의존도가 아주 낮은 수준입니다.\n니코틴 의존도는 흡연량이 많아지거나 흡연한 시간이 길면 길수록 더 높아지게 되어 있습니다.\n‘지금은 좀 피우고 나중에 완전 끊어야지’, ‘나는 하루에 얼마 피지 않으니깐 괜찮아’라고 생각할 수 있는데,\n이렇게 지속적으로 늘리다보면 나중에 완전 금연하는 것이 지금보다 훨씬 더 힘들 것입니다.\n그래서 가장 쉽게 금연할 수 있는 때가 바로 지금입니다.\n점점 니코틴 의존도가 늘어가기 전에 지금 바로 완전 금연하세요!\n"
+
+        content: "현재 니코틴 의존도가 아주 낮은 수준입니다.\n니코틴 의존도는 흡연량이 많아지거나 흡연한 시간이 길면 길수록 더 높아지게 되어 있습니다.\n‘지금은 좀 피우고 나중에 완전 끊어야지’, ‘나는 하루에 얼마 피지 않으니깐 괜찮아’라고 생각할 수 있는데,\n이렇게 지속적으로 늘리다보면 나중에 완전 금연하는 것이 지금보다 훨씬 더 힘들 것입니다.\n그래서 가장 쉽게 금연할 수 있는 때가 바로 지금입니다.\n점점 니코틴 의존도가 늘어가기 전에 지금 바로 완전 금연하세요!\n"
     },
     {
-        
-        content:"현재 니코틴 중독으로 인한 구체적인 증상은 나타나지 않습니다.\n아직은 큰 고통 없이 담배를 끊을 수 있으리라 생각됩니다.\n대신 쉽게 다시 담배를 피우게 되어 결국 금연에 실패하는 경우도 많겠습니다.\n장기간 담배를 피우다 보면 누구라도 심리적, 신체적 의존을 일으키게 됩니다. 일단 의존에 빠지게 되면 자신을 조절하기 힘들어지므로 담배를 끊는 것은 쉽지 않은 일이 되어 버립니다.\n잠재적인 중독의 위험성과 건강에 해가 된다는 점을 생각하면 지금이 바로 금연을 시작해야 할 시기인 것입니다\n"
+
+        content: "현재 니코틴 중독으로 인한 구체적인 증상은 나타나지 않습니다.\n아직은 큰 고통 없이 담배를 끊을 수 있으리라 생각됩니다.\n대신 쉽게 다시 담배를 피우게 되어 결국 금연에 실패하는 경우도 많겠습니다.\n장기간 담배를 피우다 보면 누구라도 심리적, 신체적 의존을 일으키게 됩니다. 일단 의존에 빠지게 되면 자신을 조절하기 힘들어지므로 담배를 끊는 것은 쉽지 않은 일이 되어 버립니다.\n잠재적인 중독의 위험성과 건강에 해가 된다는 점을 생각하면 지금이 바로 금연을 시작해야 할 시기인 것입니다\n"
     },
     {
-        
-        content:"정도의 차이는 있겠으나 심리적, 신체적으로 니코틴에 대한 의존이 생긴 상태입니다.\n니코틴은 뇌에 흡수되어 여러 가지 약리 작용을 일으키는 물질입니다.\n하지만, 신경에 작용하는 약물 중에는 중독을 일으키기 쉬운 것들이 있으며,\n니코틴도 예외는 아닙니다. 니코틴이 몸에서 빠져나가 혈중 농도가 떨어지면 금단증상을 경험하게 됩니다.\n‘한 대만 피웠으면…’ 하는 조바심도 금단 증상의 한 모습일 뿐입니다.\n담배를 끊기 어려운 이유는 이처럼 금단증상과 내 마음이 뒤섞여 버려 생활의 일부가 되어버리기 때문입니다.\n갑자기 담배를 중단하면, 금단증상으로 금연을 지속하기 어려워질 수 있으므로,\n니코틴 패치 등을 적절히 사용하는 것이 도움이 됩니다.\n"
+
+        content: "정도의 차이는 있겠으나 심리적, 신체적으로 니코틴에 대한 의존이 생긴 상태입니다.\n니코틴은 뇌에 흡수되어 여러 가지 약리 작용을 일으키는 물질입니다.\n하지만, 신경에 작용하는 약물 중에는 중독을 일으키기 쉬운 것들이 있으며,\n니코틴도 예외는 아닙니다. 니코틴이 몸에서 빠져나가 혈중 농도가 떨어지면 금단증상을 경험하게 됩니다.\n‘한 대만 피웠으면…’ 하는 조바심도 금단 증상의 한 모습일 뿐입니다.\n담배를 끊기 어려운 이유는 이처럼 금단증상과 내 마음이 뒤섞여 버려 생활의 일부가 되어버리기 때문입니다.\n갑자기 담배를 중단하면, 금단증상으로 금연을 지속하기 어려워질 수 있으므로,\n니코틴 패치 등을 적절히 사용하는 것이 도움이 됩니다.\n"
     },
     {
-        content:""
+        content: ""
     }
 ]
 function TabOne({ navigation }) {
 
-const [user,setUser]=useState("");
-const [num,setNum]=useState(0);
-const [nicotine,setNicotine]=useState(0)
-const [word,setWord]=useState("")
-const [challengenicotine,setchallengenicotine]=useState(false)
+    const [user, setUser] = useState("");
+    const [num, setNum] = useState(0);
+    const [nicotine, setNicotine] = useState(0)
+    const [word, setWord] = useState("")
+    const [challengenicotine, setchallengenicotine] = useState(false)
 
-const [main,setMain]=useState("")
-const [mainStr,setMainStr]=useState("")
-const [sub,setSub]=useState("")
-const [subStr,setSubStr]=useState("")
-const [sub2,setSub2]=useState("")
-const [sub2Str,setSub2Str]=useState("")
-const [challengesmoke,setchallengesmoke]=useState(false)
-useEffect(() => {
-    auth().onAuthStateChanged(userAuth => {
-        setUser(userAuth)
-    })
-    if(user){
-        getSmokeInfo()
-        getNicotineInfo()
-        getSolutionInfo()
+    const [main, setMain] = useState("")
+    const [mainStr, setMainStr] = useState("")
+    const [sub, setSub] = useState("")
+    const [subStr, setSubStr] = useState("")
+    const [sub2, setSub2] = useState("")
+    const [sub2Str, setSub2Str] = useState("")
+    const [challengesmoke, setchallengesmoke] = useState(false)
+    useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+        if (user) {
+            getSmokeInfo()
+            getNicotineInfo()
+            getSolutionInfo()
+        }
+    }, [user])
+
+    async function getSmokeInfo() {
+        var smokingTime
+        await firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+            smokingTime = doc.data().SmokingTime
+        })
+
+        var a = moment().toArray()
+
+        if (a[1] === 12) {
+            a[1] = 1
+        } else {
+            a[1] = a[1] + 1
+        }
+
+        var x = moment(a)
+        var y = moment(smokingTime)
+        var durationMinute = moment.duration(x.diff(y)).asMinutes()
+
+
+        if (durationMinute < 20) {
+            setNum(0)
+        } else if (durationMinute < 480) {
+            setNum(1)
+        } else if (durationMinute < 43200) {
+            setNum(2)
+        } else if (durationMinute < 388800) {
+            setNum(3)
+        } else if (durationMinute < 525600) {
+            setNum(4)
+        } else if (durationMinute < 2628000) {
+            setNum(5)
+        } else {
+            setNum(6)
+        }
     }
-}, [user])
-
-async function getSmokeInfo(){
-    var smokingTime
-    await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
-        smokingTime=doc.data().SmokingTime
-    })
-
-    var a = moment().toArray()
-
-    if (a[1] === 12) {
-        a[1] = 1
-    } else {
-        a[1] = a[1] + 1
-    }
-    
-    var x = moment(a)
-    var y = moment(smokingTime)
-    var durationMinute = moment.duration(x.diff(y)).asMinutes()
-        
-        
-            if(durationMinute<20){
-                setNum(0) 
-            }else if(durationMinute<480){
-                setNum(1)
-            }else if(durationMinute<43200){
-                setNum(2)
-            }else if(durationMinute<388800){
-                setNum(3)
-            }else if(durationMinute<525600){
-                setNum(4)
-            }else if(durationMinute<2628000){
-                setNum(5)
-            }else{
-                setNum(6)
-            }
-}  
-async function getNicotineInfo(){
-    var totals
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
-            totals=querySnapshot.size-1
+    async function getNicotineInfo() {
+        var totals
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
+            totals = querySnapshot.size - 1
         })
         var total
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+totals).collection("ChallengeDetail").doc("니코틴 중독 평가하기").get().then(doc=>{
-            if(doc.data().stats==false){
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + totals).collection("ChallengeDetail").doc("니코틴 중독 평가하기").get().then(doc => {
+            if (doc.data().stats == false) {
                 setchallengenicotine(false),
-                console.log("false")
-            }else{
-            setchallengenicotine(true)
-            total=doc.data().resNum   
-            var nico
-            if(total>=7){
-                setNicotine(2)
-                setWord("Addicted")
-                nico=2
-            }else if (total>=4){
-                setNicotine(1)
-                setWord("Danger")
-                nico=1
-            }else{
-                setNicotine(0)
-                setWord("Low")
-                nico=0
+                    console.log("false")
+            } else {
+                setchallengenicotine(true)
+                total = doc.data().resNum
+                var nico
+                if (total >= 7) {
+                    setNicotine(2)
+                    setWord("Addicted")
+                    nico = 2
+                } else if (total >= 4) {
+                    setNicotine(1)
+                    setWord("Danger")
+                    nico = 1
+                } else {
+                    setNicotine(0)
+                    setWord("Low")
+                    nico = 0
+                }
+                console.log(nicotine)
             }
-            console.log(nicotine)
-        }
         })
-        
-}
-async function getSolutionInfo(){
-    var totals
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
-            totals=querySnapshot.size-1
+
+    }
+    async function getSolutionInfo() {
+        var totals
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
+            totals = querySnapshot.size - 1
         })
-        
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+totals).collection("ChallengeDetail").doc("내 흡연유형 파악하기").get().then(doc=>{
-            if(doc.data().stats===false){
+
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + totals).collection("ChallengeDetail").doc("내 흡연유형 파악하기").get().then(doc => {
+            if (doc.data().stats === false) {
                 setchallengesmoke(false)
-            }else{
+            } else {
                 setchallengesmoke(true)
                 setMain(doc.data().main)
                 setMainStr(doc.data().mainStr)
@@ -513,14 +513,9 @@ async function getSolutionInfo(){
                 setSubStr(doc.data().subStr)
                 setSub2(doc.data().sub2)
                 setSub2Str(doc.data().sub2Str)
-    
             }
-           
         })
-}
-    
-    
-    
+    }
     const data = {
         labels: [main, sub, sub2],
         datasets: [
@@ -531,8 +526,8 @@ async function getSolutionInfo(){
     };
     return (
         <>
-            <ScrollView style={{backgroundColor: "#ffffff"}}>
-                <View style={{ marginLeft: 32, marginRight: 32}}>
+            <ScrollView style={{ backgroundColor: "#ffffff" }}>
+                <View style={{ marginLeft: 32, marginRight: 32 }}>
                     <Image style={{ alignSelf: "center", marginTop: 32 }} source={require("../icon/lung.png")} />
                     <View style={{
                         marginTop: 28,
@@ -557,12 +552,12 @@ async function getSolutionInfo(){
                         }}>{states[num].stats}</Text>
                     </View>
                 </View>
-                <View style={{ height: 1, backgroundColor: "#cccccc", width: WIDTH }} />
-                <>
+                <View style={{zIndex: 0}}>
+                    <View style={{ height: 1, backgroundColor: "#cccccc", width: WIDTH }} />
                     {challengenicotine ?
                         <></>
                         :
-                        <View style={{ width: WIDTH, height: 220, position: "absolute", left: 0, top: 328, backgroundColor: "#000000", opacity: 0.7, alignItems: "center", zIndex: 1, justifyContent: "center" }}>
+                        <View style={{ width: WIDTH, height: "100%", position: "absolute", left: 0, top: 0, backgroundColor: "#000000", opacity: 0.7, alignItems: "center", zIndex: 1, justifyContent: "center" }}>
                             <Text style={{
                                 fontFamily: "NunitoSans-Bold",
                                 color: "#ffffff"
@@ -575,7 +570,7 @@ async function getSolutionInfo(){
                             fontSize: 18
                         }}>
                             <Text style={{ color: "#303030" }}>니코틴 중독 정도: </Text>
-                            <Text style={{ color: nicotine === 0 ? "#5cc27b" :( nicotine===1 ? "#f6f600":"#ff0400") }}>{word}</Text>
+                            <Text style={{ color: nicotine === 0 ? "#5cc27b" : (nicotine === 1 ? "#f6f600" : "#ff0400") }}>{word}</Text>
                         </Text>
                         <LinearGradient start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} colors={['#5CC27B', '#F6F600', '#FF0400']} style={{ width: "100%", height: 19, borderRadius: 28, marginTop: 16 }} />
                         <View style={{
@@ -619,10 +614,12 @@ async function getSolutionInfo(){
                         </View>
                     </View>
                     <View style={{ height: 1, backgroundColor: "#cccccc", width: WIDTH }} />
+                </View>
+                <View style={{ zIndex: 0 }}>
                     {challengesmoke ?
                         <></>
                         :
-                        <View style={{ width: WIDTH, height: 536, position: "absolute", left: 0, top: 548, backgroundColor: "#000000", opacity: 0.7, alignItems: "center", zIndex: 1, justifyContent: "center" }}>
+                        <View style={{ position: "absolute", width: WIDTH, height: "100%", left: 0, top: 0, backgroundColor: "#000000", opacity: 0.7, alignItems: "center", zIndex: 1, justifyContent: "center" }}>
                             <Text style={{
                                 fontFamily: "NunitoSans-Bold",
                                 color: "#ffffff"
@@ -682,25 +679,25 @@ async function getSolutionInfo(){
                             fontSize: 18
                         }}>
                             <Text style={{ color: "#303030" }}>보조 흡연 요인: </Text>
-                    <Text style={{ color: "#FFB83D" }}>{sub}, {sub2}</Text>
+                            <Text style={{ color: "#FFB83D" }}>{sub} {sub2}</Text>
                         </Text>
                         <View style={{
                             marginTop: 16,
                             marginBottom: 16
                         }}>
                             <Text style={{
-                        fontFamily: "NunitoSans-Regular",
-                        marginTop: HEIGHT * 0.025,
-                        fontSize: 16
-                    }}>{subStr}</Text>
-                    <Text style={{
-                        fontFamily: "NunitoSans-Regular",
-                        marginTop: HEIGHT * 0.025,
-                        fontSize: 16
-                    }}>{sub2Str}</Text>
+                                fontFamily: "NunitoSans-Regular",
+                                marginTop: HEIGHT * 0.025,
+                                fontSize: 16
+                            }}>{subStr}</Text>
+                            <Text style={{
+                                fontFamily: "NunitoSans-Regular",
+                                marginTop: HEIGHT * 0.025,
+                                fontSize: 16
+                            }}>{sub2Str}</Text>
                         </View>
                     </View>
-                </>
+                </View>
             </ScrollView>
         </>
     )
@@ -749,101 +746,102 @@ function TabTwo({ navigation }) {
             degree: "높음"
         },
     ]
-    const [user,setUser]=useState("")
-    const [resultsA,setResultsA]=useState("-")
-    const [resultA,setResultA]=useState(0)
-    const [resultAcontent,setResultAcontent]=useState("-")
-    const [resultsS,setResultsS]=useState("-")
-    const [resultS,setResultS]=useState(0)
-    const [resultScontent,setResultScontent]=useState("-")
-    const [resultsE,setResultsE]=useState("-")
-    const [resultE,setResultE]=useState(0)
-    const [resultEcontent,setResultEcontent]=useState("-")
-    const [itemA,setItemA]=useState([])
-    const [itemE,setItemE]=useState([])
-    const [itemS,setItemS]=useState([])
+    const [user, setUser] = useState("")
+    const [resultsA, setResultsA] = useState("-")
+    const [resultA, setResultA] = useState(0)
+    const [resultAcontent, setResultAcontent] = useState("-")
+    const [resultsS, setResultsS] = useState("-")
+    const [resultS, setResultS] = useState(0)
+    const [resultScontent, setResultScontent] = useState("-")
+    const [resultsE, setResultsE] = useState("-")
+    const [resultE, setResultE] = useState(0)
+    const [resultEcontent, setResultEcontent] = useState("-")
+    const [itemA, setItemA] = useState([])
+    const [itemE, setItemE] = useState([])
+    const [itemS, setItemS] = useState([])
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
-        if(user){
+        if (user) {
             getMonthTotal()
         }
         console.log(resultA)
     }, [user])
 
-    async function getMonthTotal(){
+    async function getMonthTotal() {
         var total
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
-            total=querySnapshot.size-1
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
+            total = querySnapshot.size - 1
         })
         console.log(total)
         var month
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").get().then(doc=>{
-            month=doc.data().month-1
-            })
-            getInfoAlcohol(total,month)
-            getInfoEsteem(total,month)
-            getInfoStress(total,month)
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").get().then(doc => {
+            month = doc.data().month - 1
+        })
+        getInfoAlcohol(total, month)
+        getInfoEsteem(total, month)
+        getInfoStress(total, month)
     }
-    async function getInfoAlcohol(total,month){
-       
-        console.log(month,total)
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc(String(month)).get().then(doc=>{
-            setResultA(doc.data().resultNum)    
+    async function getInfoAlcohol(total, month) {
+
+        console.log(month, total)
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc(String(month)).get().then(doc => {
+            setResultA(doc.data().resultNum)
             setResultsA(doc.data().resultWord)
             setResultAcontent(doc.data().result)
-        }).catch((err)=>{
+        }).catch((err) => {
             console.err(err),
-            setResultsA("-")}
+                setResultsA("-")
+        }
         )
-        const list=[]
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").onSnapshot(querySnapshot=>{
-            querySnapshot.forEach(doc=>{
+        const list = []
+        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").onSnapshot(querySnapshot => {
+            querySnapshot.forEach(doc => {
                 list.push({
-                    degree:doc.data().stats,
-                    num:doc.id
+                    degree: doc.data().stats,
+                    num: doc.id
                 })
             })
             setItemA(list)
         })
         console.log("Complete")
     }
-    async function getInfoStress(total,month){
+    async function getInfoStress(total, month) {
 
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc(String(month)).get().then(doc=>{
-            setResultS(doc.data().resultNum)    
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc(String(month)).get().then(doc => {
+            setResultS(doc.data().resultNum)
             setResultsS(doc.data().resultWord)
             setResultScontent(doc.data().result)
         }).catch(
             setResultsS("-")
         )
-        const list=[]
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").onSnapshot(querySnapshot=>{
-            querySnapshot.forEach(doc=>{
+        const list = []
+        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").onSnapshot(querySnapshot => {
+            querySnapshot.forEach(doc => {
                 list.push({
-                    degree:doc.data().stats,
-                    num:doc.id
+                    degree: doc.data().stats,
+                    num: doc.id
                 })
             })
             setItemS(list)
         })
     }
-    async function getInfoEsteem(total,month){
+    async function getInfoEsteem(total, month) {
 
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(month)).get().then(doc=>{
-            setResultE(doc.data().resultNum)    
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(month)).get().then(doc => {
+            setResultE(doc.data().resultNum)
             setResultsE(doc.data().resultWord)
             setResultEcontent(doc.data().result)
         }).catch(
             setResultsE("-")
         )
-        const list=[]
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").onSnapshot(querySnapshot=>{
-            querySnapshot.forEach(doc=>{
+        const list = []
+        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").onSnapshot(querySnapshot => {
+            querySnapshot.forEach(doc => {
                 list.push({
-                    degree:doc.data().stats,
-                    num:doc.id
+                    degree: doc.data().stats,
+                    num: doc.id
                 })
             })
             setItemE(list)
@@ -851,7 +849,7 @@ function TabTwo({ navigation }) {
     }
     return (
         <>
-            <ScrollView style={{backgroundColor: "#ffffff", flex: 1}}>
+            <ScrollView style={{ backgroundColor: "#ffffff", flex: 1 }}>
                 <View style={{ marginLeft: 32, marginRight: 32 }}>
                     <Text style={{
                         marginTop: 32,
@@ -868,7 +866,7 @@ function TabTwo({ navigation }) {
                         paddingRight: 16,
                         marginBottom: 32
                     }}>
-                        <ProgressCircle size={72} color={resultsE === "Good" ? "#5cc27b" : resultsE=="Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={resultE*0.02}>
+                        <ProgressCircle size={72} color={resultsE === "Good" ? "#5cc27b" : resultsE == "Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={resultE * 0.02}>
                             <Text style={{
                                 flex: 0,
                                 position: "absolute",
@@ -885,7 +883,7 @@ function TabTwo({ navigation }) {
                                 marginTop: 8
                             }}>자기효능감</Text>
                         </ProgressCircle>
-                        <ProgressCircle size={72} color={resultsS === "Good" ? "#5cc27b" : resultsS=="Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={resultS*0.01538}>
+                        <ProgressCircle size={72} color={resultsS === "Good" ? "#5cc27b" : resultsS == "Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={resultS * 0.01538}>
                             <Text style={{
                                 flex: 0,
                                 position: "absolute",
@@ -902,31 +900,33 @@ function TabTwo({ navigation }) {
                                 marginTop: 8
                             }}>스트레스</Text>
                         </ProgressCircle>
-                        
+
                         <ProgressCircle
-                        
-                        size={72}
-                        borderWidth={0}
-                        thickness={5}
-                        progress={resultA*0.025}
-                        color={resultsA === "Good" ? "#5cc27b" : resultsA=="Normal" ? "#ffb83d" : "#fb5757"}
-                        unfilledColor="#E0E5EC"
-                    >
-                        <Text style={{  flex: 0,
+
+                            size={72}
+                            borderWidth={0}
+                            thickness={5}
+                            progress={resultA * 0.025}
+                            color={resultsA === "Good" ? "#5cc27b" : resultsA == "Normal" ? "#ffb83d" : "#fb5757"}
+                            unfilledColor="#E0E5EC"
+                        >
+                            <Text style={{
+                                flex: 0,
                                 position: "absolute",
                                 alignSelf: "center",
                                 top: 24,
                                 fontFamily: "NunitoSans-Bold",
-                                fontSize: 16}}>{resultsA}</Text>
-                        <Text style={{
+                                fontSize: 16
+                            }}>{resultsA}</Text>
+                            <Text style={{
                                 fontSize: 14,
                                 fontFamily: "NunitoSans-Regular",
                                 color: "#303030",
                                 alignSelf: "center",
                                 marginTop: 8
                             }}>알콜중독</Text>
-                        
-                    </ProgressCircle>
+
+                        </ProgressCircle>
                     </View>
                 </View>
                 <Text style={{
@@ -940,7 +940,7 @@ function TabTwo({ navigation }) {
                     style={{
                         marginLeft: 32,
                     }}
-                    data={itemS}
+                    data={itemE}
                     renderItem={({ item }) => (
                         <>
                             <View style={{
@@ -975,25 +975,25 @@ function TabTwo({ navigation }) {
                                     alignItems: "center",
                                     justifyContent: "center"
                                 }}>
-                                   {item.degree===false ?
-                                    <Text style={{
-                                        fontFamily: "NunitoSans-Bold",
-                                        fontSize: 14,
-                                        color: "#5cc27b"
-                                    }}>-</Text>
-                                    :
-                                    <Text style={{
-                                        fontFamily: "NunitoSans-Bold",
-                                        fontSize: 14,
-                                        color: "#5cc27b"
-                                    }}>성공</Text>
+                                    {item.degree === false ?
+                                        <Text style={{
+                                            fontFamily: "NunitoSans-Bold",
+                                            fontSize: 14,
+                                            color: "#5cc27b",
+                                        }}>-</Text>
+                                        :
+                                        <Text style={{
+                                            fontFamily: "NunitoSans-Bold",
+                                            fontSize: 14,
+                                            color: "#5cc27b"
+                                        }}>성공</Text>
                                     }
                                 </View>
                             </View>
                         </>
                     )}
                 />
-                <View style={{ width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: 32 }} />
+                {itemE.length > 0 ? <View style={{ width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: 32 }} /> : <></>}
                 <View style={{
                     marginTop: 32,
                     marginBottom: 32,
@@ -1054,25 +1054,25 @@ function TabTwo({ navigation }) {
                                     alignItems: "center",
                                     justifyContent: "center"
                                 }}>
-                                    {item.degree===false ?
-                                    <Text style={{
-                                        fontFamily: "NunitoSans-Bold",
-                                        fontSize: 14,
-                                        color: "#5cc27b"
-                                    }}>-</Text>
-                                    :
-                                    <Text style={{
-                                        fontFamily: "NunitoSans-Bold",
-                                        fontSize: 14,
-                                        color: "#5cc27b"
-                                    }}>성공</Text>
+                                    {item.degree === false ?
+                                        <Text style={{
+                                            fontFamily: "NunitoSans-Bold",
+                                            fontSize: 14,
+                                            color: "#5cc27b"
+                                        }}>-</Text>
+                                        :
+                                        <Text style={{
+                                            fontFamily: "NunitoSans-Bold",
+                                            fontSize: 14,
+                                            color: "#5cc27b"
+                                        }}>성공</Text>
                                     }
                                 </View>
                             </View>
                         </>
                     )}
                 />
-                <View style={{ width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: 32 }} />
+                {itemS.length > 0 ? <View style={{ width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: 32 }} /> : <></>}
                 <View style={{
                     marginTop: 32,
                     marginBottom: 32,
@@ -1133,25 +1133,25 @@ function TabTwo({ navigation }) {
                                     alignItems: "center",
                                     justifyContent: "center"
                                 }}>
-                                     {item.degree===false ?
-                                    <Text style={{
-                                        fontFamily: "NunitoSans-Bold",
-                                        fontSize: 14,
-                                        color: "#5cc27b"
-                                    }}>-</Text>
-                                    :
-                                    <Text style={{
-                                        fontFamily: "NunitoSans-Bold",
-                                        fontSize: 14,
-                                        color: "#5cc27b"
-                                    }}>성공</Text>
+                                    {item.degree === false ?
+                                        <Text style={{
+                                            fontFamily: "NunitoSans-Bold",
+                                            fontSize: 14,
+                                            color: "#5cc27b"
+                                        }}>-</Text>
+                                        :
+                                        <Text style={{
+                                            fontFamily: "NunitoSans-Bold",
+                                            fontSize: 14,
+                                            color: "#5cc27b"
+                                        }}>성공</Text>
                                     }
                                 </View>
                             </View>
                         </>
                     )}
                 />
-                <View style={{ width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: 32 }} />
+                {itemA.length > 0 ? <View style={{ width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: 32 }} /> : <></>}
                 <View style={{
                     marginTop: 32,
                     marginBottom: 32,
