@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useCallback } from "react";
 import {
     View,
     Text,
@@ -9,7 +9,8 @@ import {
     FlatList,
     Image,
     StyleSheet,
-    Dimensions
+    Dimensions,
+    Button
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -19,6 +20,8 @@ import BarChart from 'react-native-chart-kit/dist/BarChart';
 import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
+import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
 
 const WIDTH = Dimensions.get("screen").width;
@@ -106,6 +109,7 @@ export default function ChatbotMain({ navigation }) {
             setThree(false);
         }, 200)
     }
+ 
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -149,6 +153,17 @@ export default function ChatbotMain({ navigation }) {
                         ]}>금연 리포트</Text>
                     </TouchableOpacity>
                 </ScrollView>
+                <BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+    
             </SafeAreaView>
         </>
     )
@@ -182,6 +197,24 @@ export function ChatbotOne({ navigation }) {
             content: " 문의 번호는 1577 - 1000이며 금연치료를 희망하는 모든 국민들이 사용 가능하며, 1년에 3회만 이용할 수 있다. 금연 진료 및 상담을 진행하며 이용금액은 3회 방문부터 본인 부담금을 면제해주며 최종 치료 완료 시 전액 환불 받는다. "
         },
     ]
+    const supportedURL = "https://nosmk.khealth.or.kr/nsk/user/extra/ntcc/service/service/jsp/Page.do?siteMenuIdx=65";
+
+    const OpenURLButton = ({ url, children }) => {
+      const handlePress = useCallback(async () => {
+        // Checking if the link is supported for links with custom URL scheme.
+        const supported = await Linking.canOpenURL(url);
+    
+        if (supported) {
+          // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+          // by some browser in the mobile
+          await Linking.openURL(url);
+        } else {
+          Alert.alert(`Don't know how to open this URL: ${url}`);
+        }
+      }, [url]);
+      return <Button title={children} onPress={handlePress} />;
+    };
+    
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -216,6 +249,7 @@ export function ChatbotOne({ navigation }) {
                             marginTop: 32,
                             marginBottom: 16
                         }}>더 자세한 정보는 아래 링크에서 확인하세요.</Text>
+                        <OpenURLButton url={supportedURL}>
                         <Text style={{
                             fontFamily: "NunitoSans-Regular",
                             fontSize: 14,
@@ -223,8 +257,21 @@ export function ChatbotOne({ navigation }) {
                             textDecorationLine: "underline",
                             marginBottom: 32
                         }}>바로가기</Text>
+                        </OpenURLButton>
+                        
                     </View>
                 </ScrollView>
+                <BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+    
             </SafeAreaView>
         </>
     )
@@ -310,6 +357,17 @@ export function ChatbotTwo({ navigation }) {
                         </Text>
                     </View>
                 </ScrollView>
+                <BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+    
             </SafeAreaView>
         </>
     )

@@ -11,6 +11,8 @@ import {
     FlatList
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
 const HEIGHT = Dimensions.get("window").height;
 
@@ -63,6 +65,7 @@ export default function SolutionMain({navigation,route}) {
     return (
         <>
             <StatusBar barStyle="light-content" />
+            
             <SafeAreaView style={{flex: 1, backgroundColor: "#ffffff"}}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -87,8 +90,11 @@ export default function SolutionMain({navigation,route}) {
                   
                     
                 </ScrollView>
+
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
+  
+    
                 <TouchableOpacity onPress={() => navigation.navigate("SolutionSmoke",{UID:UID})}>
                     <View style={{
                         width: "100%",
@@ -100,7 +106,9 @@ export default function SolutionMain({navigation,route}) {
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>시작하기</Text>
                     </View>
                 </TouchableOpacity>
+                
             </SafeAreaView>
+            
         </>
     )
 }
