@@ -9,6 +9,8 @@ import {
     TouchableOpacity,
     Image,
 } from 'react-native';
+import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
 const solution = StyleSheet.create({
     largeText: {
@@ -230,6 +232,16 @@ export default function SolutionSmokeThree({ navigation,route }) {
                         }
                     </View>
                 </ScrollView>
+                <BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
             </SafeAreaView>
         </>
     )
