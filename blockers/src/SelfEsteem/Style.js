@@ -405,7 +405,7 @@ export function SelfEsteemMain({ navigation,route }) {
                             </>
                         )}
                     />
-                    <View style={{width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: "8%"}} />
+                    {items.length >0 ? <View style={{width: "70.9%", height: 2, backgroundColor: "#5cc27b", marginLeft: "8%"}} /> : <></>}
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
