@@ -73,6 +73,15 @@ const login = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center'
   },
+  notbuttonbox: {
+    width: "90%",
+    height: 40,
+    borderRadius: 5,
+    backgroundColor: '#c6c6c6',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center'
+  },
   signtext: {
     fontSize: 12,
     fontFamily: 'NunitoSans-Bold',
@@ -94,13 +103,14 @@ export default function LoginSignup({ navigation }) {
   const [code, setCode] = useState('')
   const [passState, setpassState] = useState(false)
   const [texts, setTexts] = useState("")
-
-
+  const [passLong,setPassLong]=useState("6자리 이상 입력해주세요.")
   const [loginLoading, setLoginLoading] = useState(false);
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
   const [unlinkLoading, setUnlinkLoading] = useState(false);
   const [user,setUser]=useState();
+  const [emailLong,setEmailLong]=useState("유효한 이메일을 입력해 주세요")
+  const [signUpState,setSignUpState]=useState(false)
   // const [token, setToken] = useState(TOKEN_EMPTY);
   const [profile, setProfile] = useState(PROFILE_EMPTY);
 
@@ -277,10 +287,25 @@ await firestore()
     }
     if (passState === true) {
       setTexts("비밀번호가 일치합니다")
-      console.log("wow!!same!")
     } else {
       setTexts("비밀번호가 일치하지 않습니다!!")
       
+    }
+    if(String(newpassword).length>=6){
+      setPassLong("확인")
+    }else{
+      setPassLong("6자리 이상 입력해주세요.")
+    }
+    if(email.includes("@")&&email.includes(".")){
+      setEmailLong("확인")
+    }else{
+      setEmailLong("유효한 이메일을 입력해 주세요.")
+      
+    }
+    if(emailLong=="확인"&&passState==true&&passLong=="확인"){
+      setSignUpState(true)
+    }else{
+      setSignUpState(false)
     }
   })
   return (
@@ -307,16 +332,22 @@ await firestore()
         </View>
         <ScrollView style={{ paddingTop: 20 }}>
           <TextInput value={email} onChangeText={text => setEmail(text)} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="이메일 주소" placeholderTextColor="#999999" />
-          <Text style={login.text}>유효한 이메일을 입력해 주세요.</Text>
+          <Text style={login.text}>{emailLong}</Text>
           <TextInput value={newpassword} onChangeText={text => setNewpassword(text)} textContentType="newPassword" secureTextEntry={true} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="비밀번호(영문, 숫자 포함 6자리)" placeholderTextColor="#999999" />
-          <Text style={login.text}>6자리 이상 입력해주세요.</Text>
+          <Text style={login.text}>{passLong}</Text>
           <TextInput value={password} onChangeText={text => setPassword(text)} textContentType="password" secureTextEntry={true} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="비밀번호 확인" placeholderTextColor="#999999" />
           <Text style={login.text}>{texts}</Text>
-          <TextInput value={code} onChangeText={text => setCode(text)} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="추천인코드(선택)" placeholderTextColor="#999999" />
-          <Text style={login.text}>유효하지 않은 코드입니다.</Text>
+            
+            {signUpState ? 
           <TouchableOpacity onPress={signup} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16 }]}>
+          <Text style={login.buttontext}>회원가입</Text>
+        </TouchableOpacity>  
+            :
+            <TouchableOpacity activeOpacity={0.3} style={[login.notbuttonbox, { marginTop: 16 }]}>
             <Text style={login.buttontext}>회원가입</Text>
           </TouchableOpacity>
+            }
+          
           <TouchableOpacity onPress={() => navigation.navigate('로그인')}>
             <Text style={login.signtext}>이미 회원이신가요?</Text>
           </TouchableOpacity>

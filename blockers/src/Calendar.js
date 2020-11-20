@@ -45,11 +45,7 @@ const [user,setUser]=useState("")
     // item["2020-11-16"]=[{dic:"hi"}]
     if(user){
     getDiary()}
-    const a={
-      "hi":[{d:"a"}]
-    }
-    a["hi"]=a["hi"].push({c:"d"})
-    console.log(a,"a")
+    
 },[user])
 const item={}
 async function getDiary(){
@@ -58,7 +54,8 @@ async function getDiary(){
   await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").onSnapshot(querySnapshot=>{
     querySnapshot.forEach(function(doc){
       var a=doc.id
-      
+      console.log(a)
+      console.log(doc.data().smoke,"smoke")
       item[a]=new Array()
       if(doc.data().diary){
         item[a].push({diary:doc.data().diary})
