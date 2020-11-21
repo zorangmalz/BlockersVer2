@@ -102,22 +102,49 @@ export default function Challenge({ navigation }) {
     useFocusEffect(
         useCallback(() => {
             //포커싱 되었을 떄
-            const USER = firebase.auth().currentUser;
-            if (!USER) {
-                setLogined(false)
-            } else {
+            auth().onAuthStateChanged(userAuth => {
+                setUser(userAuth)
+            })
+            if (user) {
                 setLogined(true)
                 hi()
+                firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+                    setSmoker(doc.data().smoker)
+                })
                 if (challenge) {
                     checkRate()
                 }
+            } else {
+                setLogined(false)
             }
             return () => {
                 //포커싱 안 되었을 떄
                 
             };
-        }, [])
+        }, [refreshing, logined])
     );
+
+    useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+        if(user){
+            setLogined(true)
+            firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+                setSmoker(doc.data().smoker)
+            })
+        } else {
+            setLogined(false)
+        }
+    }, [refreshing, logined])
+
+    const AlertPart = () => Alert.alert(
+        "미션",
+        "챌린지에 먼저 참가해주세요",
+        [
+          { text: "확인", onPress: () => console.log("OK Pressed") }
+        ]
+      );
     
     const MissionItem = ({ item }) => {
         return (
@@ -185,7 +212,7 @@ export default function Challenge({ navigation }) {
                 </View>
                 {item.doing === false ?
                     <TouchableOpacity
-                        onPress={logined ? () => navigation.navigate(item.navigate, { docID: item.challengeDoc, UID: user.uid }) : loginview}
+                        onPress={logined ? challenge ? () => navigation.navigate(item.navigate, { docID: item.challengeDoc, UID: user.uid }) : AlertPart : loginview}
                         style={{
                             width: 254,
                             height: 54,
@@ -223,27 +250,12 @@ export default function Challenge({ navigation }) {
             setUserlogin(true)
         }, 200)
     }
-
-    useEffect(() => {
-        auth().onAuthStateChanged(userAuth => {
-            setUser(userAuth)
-        })
-        if(user){
-            getUserInfo()
-        }
-        console.log(smoker)
-    }, [logined])
     
     const [smoker,setSmoker]=useState()
 
-    async function getUserInfo(){
-    await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
-        setSmoker(doc.data().smoker)
-    })
-    }
-    async function smokerOrNot(){
+    async function smokerOrNot() {
         console.log("comeins")
-        if(smoker){
+        if (smoker) {
             console.log("mustbehere")
             Alert.alert(
                 '챌린지를 진행하시겠습니까?',
@@ -253,11 +265,11 @@ export default function Challenge({ navigation }) {
                         text: '아니오', onPress: () => console.log('CANCEL Pressed')
                     },
                     {
-                        text: '예', onPress:()=>changeToNonSmoker()
+                        text: '예', onPress: () => changeToNonSmoker()
                     }
                 ]
             )
-        }else{
+        } else {
             console.log("damn")
             navigation.navigate("ChallengeRegister")
         }
@@ -476,12 +488,12 @@ export default function Challenge({ navigation }) {
         }
 
     }
-    useEffect(() => {
-        hi()
-        if (challenge) {
-            checkRate()
-        }
-    }, [user, change, refreshing, mistake, challenge])
+    // useEffect(() => {
+    //     hi()
+    //     if (challenge) {
+    //         checkRate()
+    //     }
+    // }, [user, change, refreshing, mistake, challenge])
 
     //실수 한번 눌렀을 때 나타남
     async function makeMistake() {
@@ -629,124 +641,110 @@ export default function Challenge({ navigation }) {
                         height: 212,
                         alignSelf: "center",
                         alignItems: "center",
-                        justifyContent: logined ? challenge ? "flex-start" : "center" : "center",
+                        justifyContent: logined ? smoker ? "center" : challenge ? "flex-start" : "center" : "center",
                         backgroundColor: "#ffffff"
                     }}>
                         {logined ?
-                            challenge ?
-                                <>
-                                    <Text style={{
-                                        fontFamily: "NunitoSans-Bold",
-                                        fontSize: 14,
-                                        color: "#303030",
-                                        marginVertical: 16
-                                    }}>{name}님의 챌린지</Text>
-                                    <ProgressBar
-                                        progress={progress * 0.01}
-                                        width={WIDTH * 0.8}
-                                        height={20}
-                                        borderRadius={36}
-                                        color="#5cc27b"
-                                        unfilledColor="#dbdbdb"
-                                        borderWidth={0}
-                                    ><Text style={{
-                                        position: "absolute",
-                                        flex: 0,
-                                        alignSelf: "center",
-                                        fontSize: 12,
-                                        color: "#ffffff",
-                                        lineHeight: 20
-                                    }}>{progress}%</Text>
-                                    </ProgressBar>
-                                    <View style={{
-                                        marginTop: 16,
-                                        marginBottom: 16,
-                                        paddingHorizontal: "7%",
-                                        width: "100%"
-                                    }}>
-                                        <View style={{
-                                            flexDirection: "row",
-                                            alignItems: "center",
-                                            justifyContent: "space-between",
-                                            marginBottom: 16
-                                        }}>
-                                            <Text style={{
-                                                fontSize: 14,
-                                                fontFamily: "NunitoSans-Regular",
-                                                color: "#303030"
-                                            }}>챌린지 각오</Text>
-                                            <Text style={{
-                                                fontFamily: "NunitoSans-Bold",
-                                                fontSize: 14,
-                                                color: "#303030"
-                                            }}>{title}</Text>
-                                        </View>
-                                        <View style={{
-                                            flexDirection: "row",
-                                            alignItems: "center",
-                                            justifyContent: "space-between",
-                                            marginBottom: 16
-                                        }}>
-                                            <Text style={{
-                                                fontSize: 14,
-                                                fontFamily: "NunitoSans-Regular",
-                                                color: "#303030"
-                                            }}>챌린지 기간</Text>
-                                            <Text style={{
-                                                fontFamily: "NunitoSans-Bold",
-                                                fontSize: 14,
-                                                color: "#303030"
-                                            }}>{long}개월</Text>
-                                        </View>
-                                        <View style={{
-                                            flexDirection: "row",
-                                            alignItems: "center",
-                                            justifyContent: "space-between",
-                                            marginBottom: 16
-                                        }}>
-                                            <Text style={{
-                                                fontSize: 14,
-                                                fontFamily: "NunitoSans-Regular",
-                                                color: "#303030"
-                                            }}>실수 횟수(진행도 - 5%)</Text>
-                                            <Text style={{
-                                                fontFamily: "NunitoSans-Bold",
-                                                fontSize: 14,
-                                                color: "#303030"
-                                            }}>{mistake}회</Text>
-                                        </View>
-                                    </View>
-                                </>
-                                :
+                            smoker ?
                                 <Text style={[main.title, { fontSize: 21 }]}>진행중인 챌린지가 없습니다.</Text>
+                                :
+                                challenge ?
+                                    <>
+                                        <Text style={{
+                                            fontFamily: "NunitoSans-Bold",
+                                            fontSize: 14,
+                                            color: "#303030",
+                                            marginVertical: 16
+                                        }}>{name}님의 챌린지</Text>
+                                        <ProgressBar
+                                            progress={progress * 0.01}
+                                            width={WIDTH * 0.8}
+                                            height={20}
+                                            borderRadius={36}
+                                            color="#5cc27b"
+                                            unfilledColor="#dbdbdb"
+                                            borderWidth={0}
+                                        ><Text style={{
+                                            position: "absolute",
+                                            flex: 0,
+                                            alignSelf: "center",
+                                            fontSize: 12,
+                                            color: "#ffffff",
+                                            lineHeight: 20
+                                        }}>{progress}%</Text>
+                                        </ProgressBar>
+                                        <View style={{
+                                            marginTop: 16,
+                                            marginBottom: 16,
+                                            paddingHorizontal: "7%",
+                                            width: "100%"
+                                        }}>
+                                            <View style={{
+                                                flexDirection: "row",
+                                                alignItems: "center",
+                                                justifyContent: "space-between",
+                                                marginBottom: 16
+                                            }}>
+                                                <Text style={{
+                                                    fontSize: 14,
+                                                    fontFamily: "NunitoSans-Regular",
+                                                    color: "#303030"
+                                                }}>챌린지 각오</Text>
+                                                <Text style={{
+                                                    fontFamily: "NunitoSans-Bold",
+                                                    fontSize: 14,
+                                                    color: "#303030"
+                                                }}>{title}</Text>
+                                            </View>
+                                            <View style={{
+                                                flexDirection: "row",
+                                                alignItems: "center",
+                                                justifyContent: "space-between",
+                                                marginBottom: 16
+                                            }}>
+                                                <Text style={{
+                                                    fontSize: 14,
+                                                    fontFamily: "NunitoSans-Regular",
+                                                    color: "#303030"
+                                                }}>챌린지 기간</Text>
+                                                <Text style={{
+                                                    fontFamily: "NunitoSans-Bold",
+                                                    fontSize: 14,
+                                                    color: "#303030"
+                                                }}>{long}개월</Text>
+                                            </View>
+                                            <View style={{
+                                                flexDirection: "row",
+                                                alignItems: "center",
+                                                justifyContent: "space-between",
+                                                marginBottom: 16
+                                            }}>
+                                                <Text style={{
+                                                    fontSize: 14,
+                                                    fontFamily: "NunitoSans-Regular",
+                                                    color: "#303030"
+                                                }}>실수 횟수(진행도 - 5%)</Text>
+                                                <Text style={{
+                                                    fontFamily: "NunitoSans-Bold",
+                                                    fontSize: 14,
+                                                    color: "#303030"
+                                                }}>{mistake}회</Text>
+                                            </View>
+                                        </View>
+                                    </>
+                                    :
+                                    <Text style={[main.title, { fontSize: 21 }]}>진행중인 챌린지가 없습니다.</Text>
                             :
                             <Text style={[main.title, { fontSize: 21 }]}>진행중인 챌린지가 없습니다.</Text>
                         }
                     </View>
-                    {logined ?
-                        challenge ?
-                            <>
-                                <View style={{
-                                    flexDirection: "row",
-                                    alignItems: "center",
-                                    justifyContent: "space-evenly"
-                                }}>
-                                    <TouchableOpacity onPress={logined ? makeMistake : loginview} style={{
-                                        width: "55%",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        alignSelf: "center",
-                                        height: 35,
-                                        backgroundColor: "#5cc27b",
-                                        borderRadius: 5,
-                                        marginTop: HEIGHT * 0.025
-                                    }}>
-                                        <Text style={[main.title, { color: "#ffffff" }]}>실수 한 번</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </>
-                            :
-                            <TouchableOpacity onPress={logined ? () =>smokerOrNot() : loginview} style={{
+                    <>
+                        <View style={{
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "space-evenly"
+                        }}>
+                            <TouchableOpacity onPress={logined ? smoker ? () => smokerOrNot() : challenge ? () => makeMistake() : () => smokerOrNot() : () => smokerOrNot()} style={{
                                 width: "55%",
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -756,22 +754,10 @@ export default function Challenge({ navigation }) {
                                 borderRadius: 5,
                                 marginTop: HEIGHT * 0.025
                             }}>
-                                <Text style={[main.title, { color: "#ffffff" }]}>시작하기</Text>
+                                <Text style={[main.title, { color: "#ffffff" }]}>{logined ? smoker ? "시작하기" : challenge ? "실수 한 번" : "시작하기" : "시작하기"}</Text>
                             </TouchableOpacity>
-                        :
-                        <TouchableOpacity onPress={logined ? () =>smokerOrNot(): loginview} style={{
-                            width: "55%",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            alignSelf: "center",
-                            height: 35,
-                            backgroundColor: "#5cc27b",
-                            borderRadius: 5,
-                            marginTop: HEIGHT * 0.025
-                        }}>
-                            <Text style={[main.title, { color: "#ffffff" }]}>시작하기</Text>
-                        </TouchableOpacity>
-                    }
+                        </View>
+                    </>
                     <View style={{
                         flexDirection: "row",
                         alignItems: "flex-end",
@@ -787,7 +773,7 @@ export default function Challenge({ navigation }) {
                     <ScrollView horizontal={true}>
                         <FlatList
                             horizontal={true}
-                            data={logined ? challenge ? items : MissionData : MissionData}
+                            data={logined ? smoker ? MissionData : challenge ? items : MissionData : MissionData}
                             keyExtractor={(item) => item.id}
                             renderItem={MissionItem}
                             style={{ paddingBottom: 5 }}

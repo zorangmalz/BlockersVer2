@@ -106,11 +106,12 @@ export default function HomeScreen({ navigation }) {
 
     const [smokingSmoker,setSmokingSmoker]=useState(0)
     const [smokingSmokerMoney,setSmokingSmokerMoney]=useState(0)
+
     useFocusEffect(
         useCallback(() => {
             //포커싱 되었을 떄
             setFocus(true)
-            const USER = firebase.auth().currentUser;
+            const USER = auth().currentUser
             if (USER) {
                 setLogin(true)
                 setViewOpacity(false)
@@ -121,6 +122,10 @@ export default function HomeScreen({ navigation }) {
                         setViewOpacity(true)
                     }
                 })
+                firestore().collection("UserInfo").doc(USER.uid).get().then(doc => {
+                    setSmoker(doc.data().smoker)
+                })
+                howMuch()
             } else {
                 setViewOpacity(true)
                 setLogin(false)
@@ -249,30 +254,35 @@ export default function HomeScreen({ navigation }) {
         return(total)
         console.log(total,"total")
     }
+
+    // useEffect(() => {
+    //     auth().onAuthStateChanged(userAuth => {
+    //         setUser(userAuth)
+    //     })
+    //     if (user) {
+    //         setLogin(true)
+    //         setViewOpacity(false)
+    //         firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+    //             if (doc.data().SmokingTime) {
+    //                 setViewOpacity(false)
+    //             } else {
+    //                 setViewOpacity(true)
+    //             }
+    //         })
+    //         howMuch()
+    //     } else {
+    //         setViewOpacity(true)
+    //         setLogin(false)
+    //     }
+    // }, [user,login, userlogin, refreshing, Rotate, focus, smoker])
+
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
         if (user) {
-            setLogin(true)
-            setViewOpacity(false)
-            firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
-                if (doc.data().SmokingTime) {
-                    setViewOpacity(false)
-                } else {
-                    setViewOpacity(true)
-                }
-            })
-            howMuch()
-        } else {
-            setViewOpacity(true)
-            setLogin(false)
-        }
-    }, [user,login, userlogin, refreshing, Rotate, focus, smoker])
-
-    useEffect(() => {
-        if (user) {
             console.log("stsat")
+            setLogin(true)
             firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc("2020-11-18").set({
                 hi:"hi"
             })
@@ -291,6 +301,8 @@ export default function HomeScreen({ navigation }) {
                     // console.log(fullTime)
                 }
             })
+        } else {
+            setLogin(false)
         }
     }, [user, viewopacity, focus, check, refreshing, today, Rotate, smoker])
 
@@ -388,6 +400,9 @@ export default function HomeScreen({ navigation }) {
 
     //금연 포기시
     async function changeToSmoker() {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
         const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
             requestNonPersonalizedAdsOnly: true,
         });
@@ -453,6 +468,22 @@ export default function HomeScreen({ navigation }) {
             setSmoker(doc.data().smoker)
         })
     }
+
+    const ChallengeParticipate = () => Alert.alert(
+        "챌린지를 진행하시겠습니까?",
+        "금연모드로 전환됩니다",
+        [
+            {
+                text: '아니오', onPress: () => console.log('CANCEL Pressed')
+            },
+            {
+                text: '예', onPress: () => {
+                    changeToSmoker()
+                    navigation.navigate("ChallengeRegister")
+                }
+            }
+        ]
+    )
 
     //로그인 Modal 띄울때 사용
     const [userlogin, setUserlogin] = useState(false);
@@ -790,10 +821,7 @@ export default function HomeScreen({ navigation }) {
                                     <Text style={{ fontSize: 16, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>금연을 시작해 보세요!</Text>
                                 </Text>
                             </View>
-                            <TouchableOpacity onPress={login ?
-                                () => { navigation.navigate('ChallengeRegister') }
-                                :
-                                () => { setUserlogin(true)}} style={{
+                            <TouchableOpacity onPress={login ? smoker ? () => ChallengeParticipate() : () => { navigation.navigate('ChallengeRegister') } : () => { setUserlogin(true) }} style={{
                                     width: 100,
                                     height: 35,
                                     borderRadius: 18,
