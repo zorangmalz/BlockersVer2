@@ -50,8 +50,6 @@ import LoginPassword from "./src/LoginPassword";
 import SolutionMain from './src/SolutionMain';
 import SplashScreen from './src/Splashscreen';
 import SettingCompanyInfo from  "./src/CompanyInfo";
-import InformationMain from './src/InformationMain';
-import InformationNonReport from './src/InformationNonReport';
 import ModeSelect from './src/ModeSelect';
 import ModeSelectSmoker from './src/ModeSelectSmoker';
 import ModeSelectNonSmoker from './src/ModeSelectNonSmoker';
@@ -276,15 +274,6 @@ const App = ({ navigation }) => {
             headerShown: false
           }}
         />
-    
-        <Stack.Screen
-          name="자유게시판"
-          component={CommunityClick}
-          options={{
-            gestureDirection: 'vertical-inverted',
-            headerShown: false
-          }}
-        />
         <Stack.Screen
           name="CommunityOtherPost"
           component={CommunityOtherPost}
@@ -444,22 +433,6 @@ const App = ({ navigation }) => {
           options={{
             headerShown: false,
             gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="InformationMain"
-          component={InformationMain}
-          options={{
-            gestureDirection: 'vertical-inverted',
-            headerShown: false
-          }}
-        />
-        <Stack.Screen
-          name="InformationNonReport"
-          component={InformationNonReport}
-          options={{
-            gestureDirection: 'vertical-inverted',
-            headerShown: false
           }}
         />
         <Stack.Screen

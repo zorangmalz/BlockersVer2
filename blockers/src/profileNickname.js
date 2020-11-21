@@ -9,11 +9,15 @@ import {
     SafeAreaView,
     ScrollView,
     StyleSheet,
+    Modal,
+    Dimensions
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Modal from 'react-native-modal';
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from '@react-native-firebase/auth';
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
 
 const login = StyleSheet.create({
     rule: {
@@ -55,44 +59,32 @@ export default function ProfileNickname({ navigation }) {
             .then(documentSnapshot => {
                 documentSnapshot.forEach(doc => {
                     const data = doc.data().nickname
-                    if (data === nickname) {
+                    if (nickname === data) {
                         setSame(true)
                     }
                 })
             }).catch(error => {
                 console.log(error)
             })
-        if (nickname.length === 0) {
-            Alert.alert(
-                "닉네임을 입력해주세요",
-                "",
-                [
-                    {
-                        text: "OK",
-                        onPress: () => console.log("OK")
-                    }
-                ]
-            )
-        } else if (nickname.length > 0 && same === false) {
-            console.log("변경")
-            await firestore().collection("UserInfo").doc(user.uid)
-                .update({
-                    nickname: nickname
-                });
-            setTimeout(() => {
-                setModalVisible(true)
-            }, 200)
-        } else if (same === true) {
+        if (same) {
             Alert.alert(
                 "중복된 닉네임입니다.",
                 "",
                 [
                     {
                         text: "OK",
-                        onPress: () => setSame(false)
+                        onPress: () => console.log("중복")
                     }
                 ]
             )
+        } 
+        if (nickname.length > 0 && !same) {
+            console.log("변경")
+            await firestore().collection("UserInfo").doc(user.uid)
+                .update({
+                    nickname: nickname
+                });
+            setModalVisible(true)
         }
     }
 
@@ -121,10 +113,10 @@ export default function ProfileNickname({ navigation }) {
                 <Modal
                     animationType="none"
                     transparent={true}
-                    isVisible={modalVisible}
-                    backdropOpacity={0.4}
+                    visible={modalVisible}
                     onRequestClose={() => setModalVisible(false)}
                 >
+                    <View style={{position: "absolute", width: WIDTH, height: HEIGHT, top: 0, backgroundColor: "#303030", opacity: 0.4}} />
                     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{
                             width: 280,
@@ -178,7 +170,7 @@ export default function ProfileNickname({ navigation }) {
             <SafeAreaView style={{ flex: 0 }}>
                 {nickname.length > 0 ?
                     <TouchableOpacity
-                        onPress={NicknameUpdate}>
+                        onPress={() => NicknameUpdate()}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>변경하기</Text>
                         </View>

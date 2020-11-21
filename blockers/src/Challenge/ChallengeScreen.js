@@ -102,15 +102,16 @@ export default function Challenge({ navigation }) {
     useFocusEffect(
         useCallback(() => {
             //포커싱 되었을 떄
+            const USER = firebase.auth().currentUser
             auth().onAuthStateChanged(userAuth => {
                 setUser(userAuth)
             })
-            if (user) {
+            if (USER) {
                 setLogined(true)
-                hi()
-                firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+                firestore().collection("UserInfo").doc(USER.uid).get().then(doc => {
                     setSmoker(doc.data().smoker)
                 })
+                hi()
                 if (challenge) {
                     checkRate()
                 }
@@ -121,7 +122,7 @@ export default function Challenge({ navigation }) {
                 //포커싱 안 되었을 떄
                 
             };
-        }, [refreshing, logined])
+        }, [refreshing, logined, change])
     );
 
     useEffect(() => {
@@ -136,7 +137,7 @@ export default function Challenge({ navigation }) {
         } else {
             setLogined(false)
         }
-    }, [refreshing, logined])
+    }, [refreshing, logined, change])
 
     const AlertPart = () => Alert.alert(
         "미션",
