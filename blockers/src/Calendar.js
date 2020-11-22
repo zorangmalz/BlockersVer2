@@ -54,8 +54,8 @@ async function getDiary(){
   await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").onSnapshot(querySnapshot=>{
     querySnapshot.forEach(function(doc){
       var a=doc.id
-      console.log(a)
-      console.log(doc.data().smoke,"smoke")
+      // console.log(a)
+      // console.log(doc.data().smoke,"smoke")
       item[a]=new Array()
       if(doc.data().diary){
         item[a].push({diary:doc.data().diary})
@@ -78,7 +78,7 @@ async function getDiary(){
       
       // item[doc.id]=[{diary:doc.data().diary},{challenge:doc.data().challenge},{smoke:doc.data().smoke},{drugA:doc.data().drugA},{drugB:doc.data().drugB}]
       
-      console.log(item)
+      // console.log(item)
     })
 
   })

@@ -352,7 +352,7 @@ export default function HomeScreen({ navigation }) {
                     },
                     {
                         text: '시작하기', onPress: () => {
-                            changeToSmoker(), Alert.alert(
+                            changeToNonSmoker(), Alert.alert(
                                 '금연모드 활성화, 챌린지를 진행해 보세요',
                                 '앱 새로고침 후 사용',
                                 [
@@ -375,7 +375,7 @@ export default function HomeScreen({ navigation }) {
                     },
                     {
                         text: '포기하기', onPress: () => {
-                            changeToNonSmoker(), Alert.alert(
+                            changeToSmoker(), Alert.alert(
                                 '흡연모드 활성화',
                                 '앱 새로고침 후 사용',
                                 [
@@ -420,7 +420,7 @@ export default function HomeScreen({ navigation }) {
             a[1] = a[1] + 1
         }
         await firestore().collection("UserInfo").doc(user.uid).update({
-            smoker: false,
+            smoker: true,
             SmokingTime: a,
             smokedLoss: firebase.firestore.FieldValue.arrayUnion(smokingMoney + "/" + a),
             smokedAmount: firebase.firestore.FieldValue.arrayUnion(smokingShow + "/" + a)
@@ -436,6 +436,13 @@ export default function HomeScreen({ navigation }) {
             ongoing: false,
             success: 1,
         })
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            smoke:"흡연 모드로 전환"
+        }).catch(
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                smoke:"흡연 모드로 전환"
+            })
+        )
     }
 
     //금연 시작시에
@@ -457,7 +464,7 @@ export default function HomeScreen({ navigation }) {
             a[1]=a[1]+1
         }
         await firestore().collection("UserInfo").doc(user.uid).update({
-            smoker: true,
+            smoker: false,
             SmokingTime: a,
             smokedSavedLoss: firebase.firestore.FieldValue.arrayUnion(smokingMoney + "/" + a),
             smokedSavedAmount: firebase.firestore.FieldValue.arrayUnion(smokingShow + "/" + a),
@@ -467,6 +474,13 @@ export default function HomeScreen({ navigation }) {
         await firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
             setSmoker(doc.data().smoker)
         })
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            smoke:"금연 모드로 전환"
+        }).catch(
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                smoke:"금연 모드로 전환"
+            })
+        )
     }
 
     const ChallengeParticipate = () => Alert.alert(

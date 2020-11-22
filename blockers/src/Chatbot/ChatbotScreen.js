@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
     View,
     Text,
@@ -10,7 +10,8 @@ import {
     Image,
     StyleSheet,
     Dimensions,
-    Button
+    Linking,
+    Alert
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -21,6 +22,8 @@ import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+import link from "react-native-kakao-links";
+import { useScreens } from "react-native-screens";
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
 
@@ -88,6 +91,7 @@ export default function ChatbotMain({ navigation }) {
     const [one, setOne] = useState(false);
     const [two, setTwo] = useState(false);
     const [three, setThree] = useState(false);
+    const [four, setFour] = useState(false);
     const onOne = () => {
         setOne(true);
         setTimeout(() => {
@@ -107,6 +111,13 @@ export default function ChatbotMain({ navigation }) {
         setTimeout(() => {
             navigation.navigate("ChatbotThree")
             setThree(false);
+        }, 200)
+    }
+    const onFour = () => {
+        setFour(true);
+        setTimeout(() => {
+            navigation.navigate("ChatbotFour")
+            setFour(false);
         }, 200)
     }
  
@@ -152,6 +163,18 @@ export default function ChatbotMain({ navigation }) {
                             }
                         ]}>금연 리포트</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={onFour} style={[
+                        style.box, {
+                            backgroundColor: three ? "#5cc27b" : "#ffffff",
+                            borderWidth: three ? 0 : 1,
+                        }
+                    ]}>
+                        <Text style={[
+                            style.bold, {
+                                color: three ? "#ffffff" : "#303030"
+                            }
+                        ]}>복약관리</Text>
+                    </TouchableOpacity>
                 </ScrollView>
                 <BannerAd
       unitId={adUnitId}  
@@ -170,6 +193,17 @@ export default function ChatbotMain({ navigation }) {
 }
 
 export function ChatbotOne({ navigation }) {
+    function link(){
+        var url="https://nosmk.khealth.or.kr/nsk/user/extra/ntcc/service/service/jsp/Page.do?siteMenuIdx=65"
+        Linking.canOpenURL(url)
+.then(supported => {
+  if (!supported) {
+    console.log('Unsupported URL: ' + url)
+  } else {
+    return Linking.openURL(url)
+  }
+}).catch(err => console.error('An error occurred ', err))
+    }
     const Information = [
         {
             id: 1,
@@ -197,23 +231,6 @@ export function ChatbotOne({ navigation }) {
             content: " 문의 번호는 1577 - 1000이며 금연치료를 희망하는 모든 국민들이 사용 가능하며, 1년에 3회만 이용할 수 있다. 금연 진료 및 상담을 진행하며 이용금액은 3회 방문부터 본인 부담금을 면제해주며 최종 치료 완료 시 전액 환불 받는다. "
         },
     ]
-    const supportedURL = "https://nosmk.khealth.or.kr/nsk/user/extra/ntcc/service/service/jsp/Page.do?siteMenuIdx=65";
-
-    const OpenURLButton = ({ url, children }) => {
-      const handlePress = useCallback(async () => {
-        // Checking if the link is supported for links with custom URL scheme.
-        const supported = await Linking.canOpenURL(url);
-    
-        if (supported) {
-          // Opening the link with some app, if the URL scheme is "http" the web link should be opened
-          // by some browser in the mobile
-          await Linking.openURL(url);
-        } else {
-          Alert.alert(`Don't know how to open this URL: ${url}`);
-        }
-      }, [url]);
-      return <Button title={children} onPress={handlePress} />;
-    };
     
     return (
         <>
@@ -249,7 +266,7 @@ export function ChatbotOne({ navigation }) {
                             marginTop: 32,
                             marginBottom: 16
                         }}>더 자세한 정보는 아래 링크에서 확인하세요.</Text>
-                        <OpenURLButton url={supportedURL}>
+                        <TouchableOpacity onPress={link}>
                         <Text style={{
                             fontFamily: "NunitoSans-Regular",
                             fontSize: 14,
@@ -257,8 +274,7 @@ export function ChatbotOne({ navigation }) {
                             textDecorationLine: "underline",
                             marginBottom: 32
                         }}>바로가기</Text>
-                        </OpenURLButton>
-                        
+                        </TouchableOpacity>
                     </View>
                 </ScrollView>
                 <BannerAd
@@ -278,6 +294,39 @@ export function ChatbotOne({ navigation }) {
 }
 
 export function ChatbotTwo({ navigation }) {
+    function linkA(){
+        var url="https://www.nosmokeguide.go.kr/index.do"
+        Linking.canOpenURL(url)
+.then(supported => {
+  if (!supported) {
+    console.log('Unsupported URL: ' + url)
+  } else {
+    return Linking.openURL(url)
+  }
+}).catch(err => console.error('An error occurred ', err))
+    }
+    function linkB(){
+        var url="https://nosmk.khealth.or.kr/nsk/"
+        Linking.canOpenURL(url)
+.then(supported => {
+  if (!supported) {
+    console.log('Unsupported URL: ' + url)
+  } else {
+    return Linking.openURL(url)
+  }
+}).catch(err => console.error('An error occurred ', err))
+    }
+    function linkC(){
+        var url="http://www.kash.or.kr/user_new/main.asp"
+        Linking.canOpenURL(url)
+.then(supported => {
+  if (!supported) {
+    console.log('Unsupported URL: ' + url)
+  } else {
+    return Linking.openURL(url)
+  }
+}).catch(err => console.error('An error occurred ', err))
+    }
 
     return (
         <>
@@ -302,12 +351,14 @@ export function ChatbotTwo({ navigation }) {
                                 color: "#303030",
                                 lineHeight: 19
                             }}>온라인에서 금연 실천을 도와주는 정부기관 금연 서비스 입니다. </Text>
+                            <TouchableOpacity onPress={linkA}>
                             <Text style={{
                                 fontFamily: "NunitoSans-Regular",
                                 fontSize: 14,
                                 color: "#5cc27b",
                                 textDecorationLine: "underline"
                             }}>바로가기</Text>
+                            </TouchableOpacity>
                         </Text>
                         <View style={style.shadowbox}>
                             <Image width={100} height={60} resizeMode="contain" source={require("../icon/smokeknock.png")} />
@@ -325,12 +376,14 @@ export function ChatbotTwo({ navigation }) {
                                 color: "#303030",
                                 lineHeight: 19
                             }}>금연에 대한 정보들이 모여 있는 웹사이트 입니다. {"\n"}한국건강증진개발원에서 운영하고 있습니다. </Text>
+                           <TouchableOpacity onPress={linkB}>
                             <Text style={{
                                 fontFamily: "NunitoSans-Regular",
                                 fontSize: 14,
                                 color: "#5cc27b",
                                 textDecorationLine: "underline"
                             }}>바로가기</Text>
+                            </TouchableOpacity>
                         </Text>
                         <View style={style.shadowbox}>
                             <Image width={200} height={30} resizeMode="contain" source={require("../icon/smokeexercise.png")} />
@@ -348,12 +401,14 @@ export function ChatbotTwo({ navigation }) {
                                 color: "#303030",
                                 lineHeight: 19
                             }}>금연 관련 운동들을 하고 있는 민간단체 입니다. </Text>
+                            <TouchableOpacity onPress={linkC}>
                             <Text style={{
                                 fontFamily: "NunitoSans-Regular",
                                 fontSize: 14,
                                 color: "#5cc27b",
                                 textDecorationLine: "underline"
                             }}>바로가기</Text>
+                            </TouchableOpacity>
                         </Text>
                     </View>
                 </ScrollView>
@@ -1223,6 +1278,633 @@ function TabTwo({ navigation }) {
                     }}>{resultAcontent}</Text>
                 </View>
             </ScrollView>
+        </>
+    )
+}
+
+export function ChatbotFour({ navigation }) {
+    const [one, setOne] = useState(false);
+    const [two, setTwo] = useState(false);
+    const onOne = () => {
+        setOne(true);
+        setTimeout(() => {
+            navigation.navigate("ChatbotWell");
+            setOne(false);
+        }, 200)
+    }
+    const onTwo = () => {
+        setTwo(true);
+        setTimeout(() => {
+            navigation.navigate("ChatbotCham")
+            setTwo(false);
+        }, 200)
+    }
+
+    return (
+        <>
+            <StatusBar barStyle="dark-content" />
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                <Header navigation={navigation} title="금연정보" />
+                <ScrollView>
+                    <TouchableOpacity onPress={onOne} style={[
+                        style.box, {
+                            backgroundColor: one ? "#5cc27b" : "#ffffff",
+                            borderWidth: one ? 0 : 1,
+                        }
+                    ]}>
+                        <Text style={[
+                            style.bold, {
+                                color: one ? "#ffffff" : "#303030"
+                            }
+                        ]}>웰부트린</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={onTwo} style={[
+                        style.box, {
+                            backgroundColor: two ? "#5cc27b" : "#ffffff",
+                            borderWidth: two ? 0 : 1,
+                        }
+                    ]}>
+                        <Text style={[
+                            style.bold, {
+                                color: two ? "#ffffff" : "#303030"
+                            }
+                        ]}>챔픽스</Text>
+                    </TouchableOpacity>
+                </ScrollView>
+                <BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+    
+            </SafeAreaView>
+        </>
+    )
+}
+export function ChatbotWell({ navigation }) {
+    const [one, setOne] = useState(false);
+    const [two, setTwo] = useState(false);
+    const onOne = () => {
+        setOne(true);
+        setTimeout(() => {
+            drugOn()
+            setOne(false);
+        }, 200)
+    }
+    const onTwo = () => {
+        setTwo(true);
+        setTimeout(() => {
+            drugOff()
+            setTwo(false);
+        }, 200)
+    }
+    async function drugOn(){
+        var a = moment().toArray()
+
+        if (a[1] === 12) {
+            a[0]=a[0]+1
+            a[1] = 1
+        } else {
+            a[1] = a[1] + 1
+        }
+        const USER = await firebase.auth().currentUser
+        console.log(USER.uid)
+        for(i=0;i<a[2]+84;i++){
+            
+            a=moment().add(i,"days")
+              
+            a=a.toArray()
+            if (a[1] === 12) {
+                a[0]=a[0]+1
+                a[1] = 1
+            } else {
+                a[1] = a[1] + 1
+            }
+            
+            console.log(a[0]+"-"+a[1]+"-"+a[2])
+            if(a[1]<10){
+                if(a[2]<10){
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
+                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
+                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        })
+                    )
+                }else{
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
+                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
+                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        })
+                    )
+                }
+                
+            }else{
+                if(a[2]<10){
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
+                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
+                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        })
+                    )
+                }else{
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        })
+                    )
+                }
+                
+            }
+            
+        }
+        
+        
+        Alert.alert("복약 등록되었습니다")
+        // navigation.navigate("Home")
+    }
+    async function drugOff(){
+        var a = moment().toArray()
+
+        if (a[1] === 12) {
+            a[0]=a[0]+1
+            a[1] = 1
+        } else {
+            a[1] = a[1] + 1
+        }
+        const USER = await firebase.auth().currentUser
+        console.log(USER.uid)
+        for(i=0;i<a[2]+84;i++){
+            
+            a=moment().add(i,"days")
+              
+            a=a.toArray()
+            if (a[1] === 12) {
+                a[0]=a[0]+1
+                a[1] = 1
+            } else {
+                a[1] = a[1] + 1
+            }
+            
+            console.log(a[0]+"-"+a[1]+"-"+a[2])
+            if(a[1]<10){
+                if(a[2]<10){
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
+                        drugB:""
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
+                            drugB:""
+                        })
+                    )
+                }else{
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
+                        drugB:""
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
+                            drugB:""
+                        })
+                    )
+                }
+                
+            }else{
+                if(a[2]<10){
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
+                        drugB:""
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
+                            drugB:""
+                        })
+                    )
+                }else{
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+                        drugB:""
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                            drugB:""
+                        })
+                    )
+                }
+                
+            }
+            
+        }
+        
+        
+        Alert.alert("복약 등록 취소되었습니다")
+        // navigation.navigate("Home")
+    }
+    return (
+        <>
+            <StatusBar barStyle="dark-content" />
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                <Header navigation={navigation} title="금연 지원사업 정보" />
+                <ScrollView>
+                    <View style={{ paddingHorizontal: "8%" }}>
+                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 16,
+                                        color: "#303030",
+                                        marginTop: 32,
+                                        marginBottom: 16
+                                    }}>1. 부프로피온 (Bupropion) 웰부트린서방정®</Text>
+                                     <Image source={require('../icon/well.png')}  alignItems= "center"
+                            justifyContent= "center"
+                            alignSelf= "center" resizeMode="contain" style={{ width: 200, height: 95 }} />
+                                    <Text style={{
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans-Regular",
+                                        color: "#303030"
+                                    }}> 처음 6일간은 150mg을 1일 1회 투여한 후, 7일 이후에는 150mg씩 1일 2회 투여한다. 투여간격은 최소 8시 간이며, 투여기간은 최소 7주다. 1회 투여량은 150mg, 1일 투여량은 300mg을 초과해서는 안 된다. 약물이 장시간에 걸쳐 서서히 방출되는 서방정이므로 씹거나 분할해서 복용하면 안 된다.</Text>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 14,
+                            color: "#5cc27b",
+                            marginTop: 32,
+                            marginBottom: 16
+                        }}>복용방법</Text>
+               <Text style={{
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans-Regular",
+                                        color: "#303030"
+                                    }}>  니코틴 의존을 치료하기 위한 단기간의 보조요법으로 금연 일주일 전부터 복용 시작하여 7~12주간 복용합니다 그 이상 복용할 경우에는 전문의와 상담을 통해 결정합니다.
+                                    </Text>
+                                    <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 14,
+                            color: "#5cc27b",
+                            marginTop: 32,
+                            marginBottom: 16
+                        }}>부작용</Text>
+                         <Text style={{
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans-Regular",
+                                        color: "#303030"
+                                    }}>   두통, 오심, 구강건조 및 갈증, 변비, 수면장애, 구토, 식욕변화, 초조 등
+
+                                    </Text>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 14,
+                            color: "#5cc27b",
+                            marginTop: 32,
+                            marginBottom: 16
+                        }}>금기증</Text>
+                         <Text style={{
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans-Regular",
+                                        color: "#303030"
+                                    }}>자살성향 증가보고 {`\n`}
+                                    임산부 및 수유부{`\n`}
+                                    18세 미만 소아 및 청소년{`\n`}
+                                    약 성분에 과민증이 있는 환자{`\n`}
+                                    발작병력 환자{`\n`}
+                                    중추신경계에 종양이 있는 환자{`\n`}
+                                    알코올 또는 진정약물을 갑자기 중단한자{`\n`}
+                                    대식증 또는 신경성 식욕부진 환자{`\n`}
+                                    MAO 억제제 투여중인 환자{`\n`}
+                                    </Text>
+                    </View>
+                    <View style={{flexDirection:"row",justifyContent:"space-evenly",marginTop:32}}>
+                    <TouchableOpacity onPress={onOne} style={
+                        {width:100,height:35, borderRadius: 28,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            alignSelf: "center",
+                            borderColor: "#5cc27b",
+                            backgroundColor: one ? "#5cc27b" : "#ffffff",
+                            borderWidth: one ? 0 : 1,
+                        }
+                    }>
+                        <Text style={[
+                            style.bold, {
+                                color: one ? "#ffffff" : "#303030"
+                            }
+                        ]}>복약등록</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={onTwo} style={
+                        {width:100,height:35, borderRadius: 28,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            alignSelf: "center",
+                            borderColor: "#FB5757",
+                            backgroundColor: two ? "#FB5757" : "#ffffff",
+                            borderWidth: two ? 0 : 1,
+                        }
+                    }>
+                        <Text style={[
+                            style.bold, {
+                                color: two ? "#ffffff" : "#303030"
+                            }
+                        ]}>복약 취소</Text>
+                    </TouchableOpacity>
+                    </View>
+                </ScrollView>
+                <BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+    
+            </SafeAreaView>
+        </>
+    )
+}
+export function ChatbotCham({ navigation }) {
+    const [one, setOne] = useState(false);
+    const [two, setTwo] = useState(false);
+    // const [user,setUser]=useState("");
+    // useEffect(() => {
+    //         auth().onAuthStateChanged(userAuth => {
+    //             setUser(userAuth)
+    //         })
+    //     })
+    const onOne = () => {
+        setOne(true);
+        setTimeout(() => {
+            drugOn()
+            setOne(false);
+        }, 200)
+    }
+    const onTwo = () => {
+        setTwo(true);
+        setTimeout(() => {
+            drugOff()
+            setTwo(false);
+        }, 200)
+    }
+    async function drugOn(){
+        var a = moment().toArray()
+
+        if (a[1] === 12) {
+            a[0]=a[0]+1
+            a[1] = 1
+        } else {
+            a[1] = a[1] + 1
+        }
+        const USER = await firebase.auth().currentUser
+        console.log(USER.uid)
+        for(i=0;i<a[2]+84;i++){
+            
+            a=moment().add(i,"days")
+              
+            a=a.toArray()
+            if (a[1] === 12) {
+                a[0]=a[0]+1
+                a[1] = 1
+            } else {
+                a[1] = a[1] + 1
+            }
+            
+            console.log(a[0]+"-"+a[1]+"-"+a[2])
+            if(a[1]<10){
+                if(a[2]<10){
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
+                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
+                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        })
+                    )
+                }else{
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
+                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
+                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        })
+                    )
+                }
+                
+            }else{
+                if(a[2]<10){
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
+                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
+                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        })
+                    )
+                }else{
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        })
+                    )
+                }
+                
+            }
+            
+        }
+        
+        
+        Alert.alert("복약 등록되었습니다")
+        // navigation.navigate("Home")
+    }
+    async function drugOff(){
+        var a = moment().toArray()
+
+        if (a[1] === 12) {
+            a[0]=a[0]+1
+            a[1] = 1
+        } else {
+            a[1] = a[1] + 1
+        }
+        const USER = await firebase.auth().currentUser
+        console.log(USER.uid)
+        for(i=0;i<a[2]+84;i++){
+            
+            a=moment().add(i,"days")
+              
+            a=a.toArray()
+            if (a[1] === 12) {
+                a[0]=a[0]+1
+                a[1] = 1
+            } else {
+                a[1] = a[1] + 1
+            }
+            
+            console.log(a[0]+"-"+a[1]+"-"+a[2])
+            if(a[1]<10){
+                if(a[2]<10){
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
+                        drugB:""
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
+                            drugB:""
+                        })
+                    )
+                }else{
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
+                        drugB:""
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
+                            drugB:""
+                        })
+                    )
+                }
+                
+            }else{
+                if(a[2]<10){
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
+                        drugB:""
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
+                            drugB:""
+                        })
+                    )
+                }else{
+                    firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+                        drugB:""
+                    }).catch(
+                        firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                            drugB:""
+                        })
+                    )
+                }
+                
+            }
+            
+        }
+        
+        
+        Alert.alert("복약 등록 취소되었습니다")
+        // navigation.navigate("Home")
+    }
+    return (
+        <>
+            <StatusBar barStyle="dark-content" />
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                <Header navigation={navigation} title="금연 지원사업 정보" />
+                <ScrollView>
+                    <View style={{ paddingHorizontal: "8%" }}>
+                    <Text style={{
+                                        fontFamily: "NunitoSans-Bold",
+                                        fontSize: 16,
+                                        color: "#303030",
+                                        marginTop: 32,
+                                        marginBottom: 16
+                                    }}>2. 바레니클린 (Varenicline) 챔픽스®</Text>
+                                      <Image source={require('../icon/cham.png')}  alignItems= "center"
+                            justifyContent= "center"
+                            alignSelf= "center" resizeMode="contain" style={{ width: 200, height: 95 }} />
+                                    <Text style={{
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans-Regular",
+                                        color: "#303030"
+                                    }}>  권장 용량은 1~3일째에는 0.5mg씩 1일 1회, 4~7일째에는 0.5mg씩 1일 2회, 8일~투여 종료 시까지는 1mg 씩 1일 2회로 증량하면서 투여한다. 투여기간은 12주이며, 필요에 따라 12주간 더 투여할 수 있다.</Text>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 14,
+                            color: "#5cc27b",
+                            marginTop: 32,
+                            marginBottom: 16
+                        }}>복용방법</Text>
+               <Text style={{
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans-Regular",
+                                        color: "#303030"
+                                    }}>  투여기간은 12 주 이며, 그 이상 복용할 경우에는 전문의와 상담을 통해 결정합니다. 첫 3-4일은 구역반응이 나타날 수 있기 때문에 식후에 충분한 양의 물과 함께 복용합니다.
+
+                                    </Text>
+                                    <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 14,
+                            color: "#5cc27b",
+                            marginTop: 32,
+                            marginBottom: 16
+                        }}>부작용</Text>
+                         <Text style={{
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans-Regular",
+                                        color: "#303030"
+                                    }}>    구역, 구토, 수면 장애, 변비(복부팽만), 매스꺼움, 울렁거림, 특이한 꿈, 미각변화 등.
+
+
+                                    </Text>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 14,
+                            color: "#5cc27b",
+                            marginTop: 32,
+                            marginBottom: 16
+                        }}>금기증</Text>
+                         <Text style={{
+                                        fontSize: 14,
+                                        fontFamily: "NunitoSans-Regular",
+                                        color: "#303030"
+                                    }}>임산부 및 수유중인 여성{`\n`}
+18세 미만 소아 및 청소년{`\n`}
+심장질환자{`\n`}
+노인환자{`\n`}
+심근경색{`\n`}
+우울증 및 신경정신과 환자{`\n`}
+행동변화, 초조, 우울증, 자살관념, 자살행동을 포함한 신경정신과 증상 악화 가능{`\n`}
+                                    </Text>
+                    </View>
+                    <View style={{flexDirection:"row",justifyContent:"space-evenly",marginTop:32}}>
+                    <TouchableOpacity onPress={onOne} style={
+                        {width:100,height:35, borderRadius: 28,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            alignSelf: "center",
+                            borderColor: "#5cc27b",
+                            backgroundColor: one ? "#5cc27b" : "#ffffff",
+                            borderWidth: one ? 0 : 1,
+                        }
+                    }>
+                        <Text style={[
+                            style.bold, {
+                                color: one ? "#ffffff" : "#303030"
+                            }
+                        ]}>복약등록</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={onTwo} style={
+                        {width:100,height:35, borderRadius: 28,
+                            alignItems: "center",
+                            justifyContent: "center",
+                            alignSelf: "center",
+                            borderColor: "#FB5757",
+                            backgroundColor: two ? "#FB5757" : "#ffffff",
+                            borderWidth: two ? 0 : 1,
+                        }
+                    }>
+                        <Text style={[
+                            style.bold, {
+                                color: two ? "#ffffff" : "#303030"
+                            }
+                        ]}>복약 취소</Text>
+                    </TouchableOpacity>
+                    </View>
+                </ScrollView>
+                <BannerAd
+      unitId={adUnitId}  
+      size={BannerAdSize.SMART_BANNER}
+      requestOptions={{
+        requestNonPersonalizedAdsOnly: true,
+      }}
+      onAdFailedToLoad={(error) => {
+        console.error('Advert failed to load: ', error);
+      }}
+    />
+    
+            </SafeAreaView>
         </>
     )
 }
