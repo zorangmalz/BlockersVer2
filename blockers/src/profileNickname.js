@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
@@ -50,23 +50,20 @@ const login = StyleSheet.create({
 
 export default function ProfileNickname({ navigation }) {
     const [nickname, setNickname] = useState('');
-    const [modalVisible, setModalVisible] = useState(false);
-    const [same, setSame] = useState(false);
+    const [currentNick, setCurrentNick] = useState("");
+    const [same, setSame] = useState(false)
 
-    async function NicknameUpdate() {
+    useEffect(() => {
         const user = firebase.auth().currentUser;
-        await firestore().collection("UserInfo").get()
-            .then(documentSnapshot => {
-                documentSnapshot.forEach(doc => {
-                    const data = doc.data().nickname
-                    if (nickname === data) {
-                        setSame(true)
-                    }
-                })
-            }).catch(error => {
-                console.log(error)
-            })
-        if (same) {
+        firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+            setCurrentNick(doc.data().nickname)
+        })
+    }, [])
+    
+    async function NicknameUpdate() {
+        setSame(false)
+        const user = firebase.auth().currentUser;
+        if (currentNick === nickname) {
             Alert.alert(
                 "중복된 닉네임입니다.",
                 "",
@@ -77,14 +74,23 @@ export default function ProfileNickname({ navigation }) {
                     }
                 ]
             )
-        } 
-        if (nickname.length > 0 && !same) {
+            setSame(true)
+        } else if (nickname.length > 0 && (currentNick !== nickname)) {
             console.log("변경")
             await firestore().collection("UserInfo").doc(user.uid)
                 .update({
                     nickname: nickname
                 });
-            setModalVisible(true)
+            Alert.alert(
+                "변경완료",
+                "",
+                [
+                    {
+                        text: "확인",
+                        onPress: navigation.goBack()
+                    }
+                ]
+            )
         }
     }
 
@@ -110,60 +116,10 @@ export default function ProfileNickname({ navigation }) {
                         </Text>
                     </View>
                 </View>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={{position: "absolute", width: WIDTH, height: HEIGHT, top: 0, backgroundColor: "#303030", opacity: 0.4}} />
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{
-                            width: 280,
-                            height: 180,
-                            borderRadius: 20,
-                            backgroundColor: '#ffffff',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Bold',
-                                fontSize: 16,
-                                color: '#303030',
-                                opacity: 0.8,
-                                marginTop: 20
-                            }}>변경완료</Text>
-                            <TouchableOpacity onPress={() => {
-                                navigation.goBack();
-                                setModalVisible(false);
-                            }}
-                                style={{
-                                    width: 280,
-                                    height: 45,
-                                    borderBottomRightRadius: 20,
-                                    borderBottomLeftRadius: 20,
-                                    backgroundColor: '#5cc27b',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    marginTop: 15
-                                }}>
-                                <Text style={{
-                                    fontSize: 16,
-                                    color: '#ffffff',
-                                    fontFamily: 'NunitoSans-Regular'
-                                }}>Ok</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
                 <ScrollView>
                     <View>
                         <TextInput onChangeText={text => setNickname(text)} style={[login.textinput, { width: "80%", marginTop: 32 }]} placeholder="닉네임" />
-                        {same === true ?
-                            <Text style={login.repeat}>중복된 닉네임입니다.</Text>
-                            :
-                            <Text></Text>
-                        }
+                        {same ? <Text style={login.repeat}>중복된 닉네임입니다.</Text> : <Text></Text>}
                     </View>
                 </ScrollView>
             </SafeAreaView>
