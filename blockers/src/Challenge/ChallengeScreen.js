@@ -244,12 +244,22 @@ export default function Challenge({ navigation }) {
         )
     }
 
-    //로그인 Modal 띄울때 사용
-    const [userlogin, setUserlogin] = useState(false);
+    //로그인 띄울때 사용
     const loginview = () => {
-        setTimeout(() => {
-            setUserlogin(true)
-        }, 200)
+        Alert.alert(
+            "로그인이 필요한 서비스입니다.",
+            "로그인하고 다양한 혜택을 만나보세요",
+            [
+                {
+                    text: "취소",
+                    onPress: () => console.log("둘러보기")
+                },
+                {
+                    text: "확인",
+                    onPress: () => navigation.navigate('로그인')
+                }
+            ]
+        )
     }
     
     const [smoker,setSmoker]=useState()
@@ -531,78 +541,6 @@ export default function Challenge({ navigation }) {
         <>
             <StatusBar barStyle="dark-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={userlogin}
-                    onRequestClose={() => setUserlogin(false)}
-                >
-                    <View style={{ width: WIDTH, height: HEIGHT, position: "absolute", backgroundColor: "#303030", opacity: 0.4 }} />
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{
-                            width: 280,
-                            height: 180,
-                            borderRadius: 20,
-                            backgroundColor: '#ffffff',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Bold',
-                                fontSize: 16,
-                                color: '#303030',
-                                opacity: 0.8,
-                                marginTop: 20
-                            }}>로그인이 필요한서비스입니다.</Text>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Regular',
-                                fontSize: 14,
-                                color: '#303030',
-                                opacity: 0.6,
-                                textAlign: 'center'
-                            }}>로그인하고 다양한 혜택을 만나보세요</Text>
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                marginTop: 15
-                            }}>
-                                <TouchableOpacity onPress={() => setUserlogin(false)} style={{
-                                    width: 140,
-                                    height: 55,
-                                    borderBottomLeftRadius: 20,
-                                    backgroundColor: '#999999',
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>둘러보기</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => {
-                                    navigation.navigate('로그인')
-                                    setUserlogin(false)
-                                }}
-                                    style={{
-                                        width: 140,
-                                        height: 55,
-                                        borderBottomRightRadius: 20,
-                                        backgroundColor: '#5cc27b',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>로그인</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
                     <View
                         style={{
