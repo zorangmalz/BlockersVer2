@@ -77,7 +77,7 @@ const wait = (timeout) => {
     });
 }
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen({ navigation}) {
     const ref = firestore().collection("UserInfo");
     const [smokeProof, setSmokeProof] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
     const [smokeProofTwo, setSmokeProofTwo] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
@@ -244,7 +244,6 @@ export default function HomeScreen({ navigation }) {
             var sub
             querySnapshot.forEach(documentSnapshot =>{
                 sub=documentSnapshot.data().smoketotal
-                console.log(sub,"sub")
                 if(sub){
                     total=total+sub
                 }

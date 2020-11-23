@@ -14,34 +14,24 @@ import auth, { firebase } from '@react-native-firebase/auth';
 export default function SplashScreen({ navigation }) {
     const [user,setUser]=useState("")
     const [animating, setAnimating] = useState(true);
-    const [first, setFirst] = useState(0);
-    const home = () => {
-        setTimeout(() =>  {
-            navigation.navigate('Home');
-        },50) 
-    }
+
     useEffect(() => {
         
+        const USER = firebase.auth().currentUser
         
-        auth().onAuthStateChanged(userAuth => {
-            setUser(userAuth)
-        })
-    }, [])
-    useEffect(() => {
-        
-        console.log(first);
-        if (first === 0) {
+        if(USER){
             setTimeout(() => {
                 setAnimating(false);
-                setFirst(first+1);
                 navigation.navigate('Home',{UID:user});
             }, 1000);
-        } else {
+        }else{
             setTimeout(() =>  {
-                navigation.navigate('Home',{UID:user});
-            },50) 
+                navigation.navigate('회원가입');
+            },1000)
         }
-    }, []);
+    }, [])
+   
+   
 
     return (
         <>

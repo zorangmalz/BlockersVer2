@@ -1352,7 +1352,7 @@ export function ChatbotWell({ navigation }) {
     const onOne = () => {
         setOne(true);
         setTimeout(() => {
-            drugOn()
+            drugCheck()
             setOne(false);
         }, 200)
     }
@@ -1363,7 +1363,35 @@ export function ChatbotWell({ navigation }) {
             setTwo(false);
         }, 200)
     }
-    async function drugOn(){
+    async function drugCheck(){
+        const USER = await firebase.auth().currentUser
+        console.log(USER.uid)
+        var check
+        await firestore().collection("UserInfo").doc(USER.uid).get().then(doc=>{
+            check=doc.data().drug
+        })
+        if(check){
+            Alert.alert(
+                '기존 복약 정보가 있습니다?',
+                '새로운 복약 정보를 등록하면 \n기존 정보가 사라집니다',
+                [
+                    {
+                        text: '취소', onPress: () => console.log('CANCEL Pressed')
+                    },
+                    {
+                        text: '등록하기', onPress: () => drugOn(USER)
+                    }
+                ]
+            )
+        }else{
+            drugOn(USER)
+        }
+    }
+    async function drugOn(USER){
+    
+        firestore().collection("UserInfo").doc(USER.uid).update({
+            drug:true
+        })
         var a = moment().toArray()
 
         if (a[1] === 12) {
@@ -1372,8 +1400,7 @@ export function ChatbotWell({ navigation }) {
         } else {
             a[1] = a[1] + 1
         }
-        const USER = await firebase.auth().currentUser
-        console.log(USER.uid)
+        var i
         for(i=0;i<a[2]+84;i++){
             
             a=moment().add(i,"days")
@@ -1386,7 +1413,8 @@ export function ChatbotWell({ navigation }) {
                 a[1] = a[1] + 1
             }
             
-            console.log(a[0]+"-"+a[1]+"-"+a[2])
+            
+            
             if(a[1]<10){
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
@@ -1434,6 +1462,7 @@ export function ChatbotWell({ navigation }) {
         // navigation.navigate("Home")
     }
     async function drugOff(){
+        
         var a = moment().toArray()
 
         if (a[1] === 12) {
@@ -1444,6 +1473,10 @@ export function ChatbotWell({ navigation }) {
         }
         const USER = await firebase.auth().currentUser
         console.log(USER.uid)
+        firestore().collection("UserInfo").doc(USER.uid).update({
+            drug:false
+        })
+        var i
         for(i=0;i<a[2]+84;i++){
             
             a=moment().add(i,"days")
@@ -1456,7 +1489,7 @@ export function ChatbotWell({ navigation }) {
                 a[1] = a[1] + 1
             }
             
-            console.log(a[0]+"-"+a[1]+"-"+a[2])
+
             if(a[1]<10){
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
@@ -1636,7 +1669,7 @@ export function ChatbotCham({ navigation }) {
     const onOne = () => {
         setOne(true);
         setTimeout(() => {
-            drugOn()
+            drugCheck()
             setOne(false);
         }, 200)
     }
@@ -1647,16 +1680,42 @@ export function ChatbotCham({ navigation }) {
             setTwo(false);
         }, 200)
     }
-    async function drugOn(){
+    async function drugCheck(){
+        const USER = await firebase.auth().currentUser
+        console.log(USER.uid)
+        var check
+        await firestore().collection("UserInfo").doc(USER.uid).get().then(doc=>{
+            check=doc.data().drug
+        })
+        if(check){
+            Alert.alert(
+                '기존 복약 정보가 있습니다?',
+                '새로운 복약 정보를 등록하면 \n기존 정보가 사라집니다',
+                [
+                    {
+                        text: '취소', onPress: () => console.log('CANCEL Pressed')
+                    },
+                    {
+                        text: '등록하기', onPress: () => drugOn(USER)
+                    }
+                ]
+            )
+        }else{
+            drugOn(USER)
+        }
+    }
+    async function drugOn(USER){
         var a = moment().toArray()
-
+        firestore().collection("UserInfo").doc(USER.uid).update({
+            drug:true
+        })
         if (a[1] === 12) {
             a[0]=a[0]+1
             a[1] = 1
         } else {
             a[1] = a[1] + 1
         }
-        const USER = await firebase.auth().currentUser
+        var i
         console.log(USER.uid)
         for(i=0;i<a[2]+84;i++){
             
@@ -1728,6 +1787,10 @@ export function ChatbotCham({ navigation }) {
         }
         const USER = await firebase.auth().currentUser
         console.log(USER.uid)
+        firestore().collection("UserInfo").doc(USER.uid).update({
+            drug:false
+        })
+        var i
         for(i=0;i<a[2]+84;i++){
             
             a=moment().add(i,"days")

@@ -16,7 +16,7 @@ import {AdEventType,InterstitialAd,BannerAd, BannerAdSize, TestIds } from '@reac
 import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
-import { create } from 'caver-js/packages/caver-account';
+
 
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 

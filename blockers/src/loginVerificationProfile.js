@@ -81,7 +81,8 @@ export default function LoginVerificationProfile({ navigation }) {
                 nickname: "Blockers" + totalUser,
                 gotProfile: true,
                 profilePicture: pic,
-                name: nick
+                name: nick,
+                drug:false
             })
         } else {
             await ref.doc(code).set({
@@ -89,7 +90,8 @@ export default function LoginVerificationProfile({ navigation }) {
                 sex: se,
                 nickname: "Blockers" + totalUser,
                 gotProfile: false,
-                name: nick
+                name: nick,
+                drug:false
             })
         }
         firestore().collection("TotalUser").doc("userNum").set(
