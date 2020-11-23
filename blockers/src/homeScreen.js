@@ -507,12 +507,22 @@ export default function HomeScreen({ navigation}) {
         ]
     )
 
-    //로그인 Modal 띄울때 사용
-    const [userlogin, setUserlogin] = useState(false);
+    //로그인 띄울때 사용
     const loginview = () => {
-        setTimeout(() => {
-            setUserlogin(true)
-        }, 200)
+        Alert.alert(
+            "로그인이 필요한 서비스입니다.",
+            "로그인하고 다양한 혜택을 만나보세요",
+            [
+                {
+                    text: "취소",
+                    onPress: () => console.log("둘러보기")
+                },
+                {
+                    text: "확인",
+                    onPress: () => navigation.navigate('로그인')
+                }
+            ]
+        )
     }
 
     const VIEWOPACITY = () => {
@@ -529,78 +539,6 @@ export default function HomeScreen({ navigation}) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={userlogin}
-                    onRequestClose={() => setUserlogin(false)}
-                >
-                    <View style={{ width: WIDTH, height: HEIGHT, position: "absolute", backgroundColor: "#303030", opacity: 0.4 }} />
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{
-                            width: 280,
-                            height: 180,
-                            borderRadius: 20,
-                            backgroundColor: '#ffffff',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Bold',
-                                fontSize: 16,
-                                color: '#303030',
-                                opacity: 0.8,
-                                marginTop: 20
-                            }}>로그인이 필요한서비스입니다.</Text>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Regular',
-                                fontSize: 14,
-                                color: '#303030',
-                                opacity: 0.6,
-                                textAlign: 'center'
-                            }}>로그인하고 다양한 혜택을 만나보세요</Text>
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                marginTop: 15
-                            }}>
-                                <TouchableOpacity onPress={() => setUserlogin(false)} style={{
-                                    width: 140,
-                                    height: 55,
-                                    borderBottomLeftRadius: 20,
-                                    backgroundColor: '#999999',
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>둘러보기</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => {
-                                    navigation.navigate('로그인')
-                                    setUserlogin(false)
-                                }}
-                                    style={{
-                                        width: 140,
-                                        height: 55,
-                                        borderBottomRightRadius: 20,
-                                        backgroundColor: '#5cc27b',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>로그인</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
                     <View
                         style={{
@@ -620,7 +558,7 @@ export default function HomeScreen({ navigation}) {
                         <TouchableOpacity onPress={Rotation}>
                             <AnimatedIonicons name="sync" size={27} color="#5cc27b" style={{ marginRight: 16, transform: [{ rotate: Sync }] }} />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={login ? () => navigation.navigate("AlramScreen") : loginview}>
                             <Image source={require('./icon/alram.png')} />
                         </TouchableOpacity>
                     </View>
@@ -795,7 +733,7 @@ export default function HomeScreen({ navigation}) {
                         }} onPress={login ?
                             () => { navigation.navigate('Calendar') }
                             :
-                            () => { loginview() }}>
+                            loginview}>
                             <MaterialCommunityIcons size={60} color="#5cc27b" name="calendar-blank" />
                             <Text style={{ fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 8 }}>금연달력</Text>
                         </TouchableOpacity>
@@ -804,7 +742,7 @@ export default function HomeScreen({ navigation}) {
                         }} onPress={login ?
                             () => { navigation.navigate('ChatbotMain') }
                             :
-                            () => { loginview() }}>
+                            loginview}>
                             <FontAwesome5 name="robot" size={50} color="#5cc27b" />
                             <Text style={{ fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 18 }}>금연 리포트 & 정보</Text>
                         </TouchableOpacity>
@@ -813,7 +751,7 @@ export default function HomeScreen({ navigation}) {
                         }} onPress={login ?
                             () => { navigation.navigate('SmokeAlertOne') }
                             :
-                            () => { loginview() }}>
+                            loginview}>
                             <Ionicons name="alert-circle-outline" size={60} color="#FF0000" />
                             <Text style={{fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#ff0000", marginTop: 4}}>흡연 경보</Text>
                         </TouchableOpacity>
@@ -863,7 +801,7 @@ export default function HomeScreen({ navigation}) {
                         <TouchableOpacity onPress={login ?
                             () => { navigation.navigate('DiaryWrite') }
                             :
-                            () => { loginview() }} style={{
+                            loginview} style={{
                                 alignItems: "flex-start",
                                 marginTop: 40,
                                 marginLeft: "10%",

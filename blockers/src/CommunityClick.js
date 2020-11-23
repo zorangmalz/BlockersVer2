@@ -287,7 +287,7 @@ export default function CommunityHome({ navigation, route }) {
                                     </Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                    <TouchableOpacity style={{ marginLeft: 8 }}>
+                                    <TouchableOpacity onPress={userlogined ? () => navigation.navigate("AlramScreen") : loginview} style={{ marginLeft: 8 }}>
                                         <Image source={require('./icon/alram.png')} />
                                     </TouchableOpacity>
                                 </View>
@@ -348,7 +348,7 @@ export default function CommunityHome({ navigation, route }) {
                             onPress={() => navigation.navigate('작성하기')}
                             style={{
                                 position: 'absolute',
-                                top: topposition * 1.3,
+                                top: HEIGHT * 0.75,
                                 right: "10%",
                                 backgroundColor: "white"
                             }}>

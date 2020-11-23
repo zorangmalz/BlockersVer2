@@ -47,13 +47,13 @@ export default function AlramScreen({ navigation }) {
             id: 2,
             title: "챌린지 알림",
             content: "진행해야할 챌린지가 추가되었습니다.",
-            date: "2020/10/30"
+            date: "2020/11/10"
         },
         {
             id: 3,
             title: "복약 알림",
             content: "복약을 진행해주세요.",
-            date: "2020/10/30"
+            date: "2020/11/20"
         },
     ]
     return (
@@ -84,12 +84,16 @@ export default function AlramScreen({ navigation }) {
                         renderItem={({ item }) => (
                             <>
                                 <View style={alram.box}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                             <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
                                             <Text style={alram.title}>{item.title}</Text>
                                         </View>
-                                        <Text></Text>
+                                        <Text style={{
+                                            fontFamily: "NunitoSans-Regular",
+                                            fontSize: 14,
+                                            color: "#303030"
+                                        }}>{item.date}</Text>
                                     </View>
                                     <Text style={alram.content}>{item.content}</Text>
                                 </View>

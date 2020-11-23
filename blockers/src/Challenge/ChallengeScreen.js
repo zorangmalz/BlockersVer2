@@ -556,7 +556,7 @@ export default function Challenge({ navigation }) {
                         <Text style={{ fontSize: 24, fontFamily: 'NunitoSans-Bold', color: '#5CC27B' }}>Challenge</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={logined ?() => navigation.navigate("AlramScreen") : loginview}>
                             <Image source={require('../icon/alram.png')} />
                         </TouchableOpacity>
                     </View>
@@ -685,7 +685,7 @@ export default function Challenge({ navigation }) {
                             alignItems: "center",
                             justifyContent: "space-evenly"
                         }}>
-                            <TouchableOpacity onPress={logined ? smoker ? () => smokerOrNot() : challenge ? () => makeMistake() : () => smokerOrNot() : () => smokerOrNot()} style={{
+                            <TouchableOpacity onPress={logined ? smoker ? () => smokerOrNot() : challenge ? () => makeMistake() : () => smokerOrNot() : loginview} style={{
                                 width: "55%",
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -1689,18 +1689,36 @@ export function ChallengeMission({ navigation, route }) {
     const [normalItem, setNormalItem] = useState([])
     const [finalItem, setFinalItem] = useState([])
     async function giveup() {
-        Alert.alert(
-            '이번 챌린지를 포기하시겠습니까?',
-            '',
-            [
-                {
-                    text: 'No', onPress: () => console.log('CANCEL Pressed')
-                },
-                {
-                    text: 'Yes', onPress: () => realGiveUp()
-                }
-            ]
-        )
+        var total
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").get().then(querySnapshot => {
+            total = querySnapshot.size - 1
+        })
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge" + total).get().then(doc => {
+            if (doc.data().ongoing) {
+                Alert.alert(
+                    '이번 챌린지를 포기하시겠습니까?',
+                    '',
+                    [
+                        {
+                            text: '취소', onPress: () => console.log('CANCEL Pressed')
+                        },
+                        {
+                            text: '확인', onPress: () => realGiveUp()
+                        }
+                    ]
+                )
+            } else {
+                Alert.alert(
+                    '참여한 챌린지가 존재하지 않습니다.',
+                    '',
+                    [
+                        {
+                            text: '확인', onPress: () => console.log("확인")
+                        }
+                    ]
+                )
+            }
+        })
     }
     async function realGiveUp() {
         var total
