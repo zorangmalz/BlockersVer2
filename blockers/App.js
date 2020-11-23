@@ -65,7 +65,7 @@ import { StressFinal, StressMain } from './src/Stress/Style';
 import StressResult from './src/Stress/StressResult'
 import AlcoholResult from './src/Alcohol/AlcoholResult'
 import SelfEsteemResult from './src/SelfEsteem/SelfEsteemResult'
-import DiaryWrite, { DiaryList } from './src/Diary/DiaryScreen';
+import DiaryWrite, { DiaryList,DiaryComplete } from './src/Diary/DiaryScreen';
 import ChatbotMain, { ChatbotOne, ChatbotThree, ChatbotTwo,ChatbotFour,ChatbotCham,ChatbotWell } from './src/Chatbot/ChatbotScreen';
 import SmokeAlertOne, { SmokeAlertFour, SmokeAlertThree, SmokeAlertTwo } from './src/SmokeAlert/SmokeAlert';
 import SolutionAOne from './src/SolutionAOne';
@@ -803,6 +803,14 @@ const App = ({ navigation }) => {
           <Stack.Screen 
             name="DiaryList"
             component={DiaryList}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+           <Stack.Screen 
+            name="DiaryComplete"
+            component={DiaryComplete}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false

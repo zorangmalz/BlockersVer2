@@ -112,7 +112,7 @@ export function Create({ navigation }) {
             advice: advice,
             date: a[0] + "-" + a[1] + "-" + a[2]
         }).then(
-            navigation.navigate("DiaryList")
+            navigation.navigate("DiaryComplete")
         )
     }
     //흡연충동 여부
