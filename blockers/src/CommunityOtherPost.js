@@ -365,15 +365,15 @@ export default function CommunityOtherPost({ route, navigation }) {
                 '신고가 누적되면 자동 삭제 됩니다.',
                 [
                     {
-                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                        text: '취소', onPress: () => console.log('CANCEL Pressed')
                     },
                     {
-                        text: '신고하기', onPress: () => Alert.alert(
+                        text: '확인', onPress: () => Alert.alert(
                             '이미 신고하셨습니다',
                             ""
                             [
                             {
-                                text: 'OK', onPress: () => console.log('OK Pressed')
+                                text: '확인', onPress: () => console.log('OK Pressed')
                             }
                             ]
                         )
@@ -387,15 +387,15 @@ export default function CommunityOtherPost({ route, navigation }) {
                 '신고가 누적되면 자동 삭제 됩니다.',
                 [
                     {
-                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                        text: '취소', onPress: () => console.log('CANCEL Pressed')
                     },
                     {
-                        text: '신고하기', onPress: () => Alert.alert(
+                        text: '확인', onPress: () => Alert.alert(
                             '신고완료',
                             '검토후 조치하겠습니다.',
                             [
                                 {
-                                    text: 'OK', onPress: () => console.log('OK Pressed')
+                                    text: '확인', onPress: () => console.log('OK Pressed')
                                 }
                             ]
                         )
@@ -456,7 +456,6 @@ export default function CommunityOtherPost({ route, navigation }) {
         await ref.doc(docID).update({
             commentNum: replynum - 1
         })
-
     }
     async function realertPost(a) {
         console.log(alertList, "fucking here")
@@ -468,15 +467,15 @@ export default function CommunityOtherPost({ route, navigation }) {
                 '신고가 누적되면 자동 삭제 됩니다.',
                 [
                     {
-                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                        text: '취소', onPress: () => console.log('CANCEL Pressed')
                     },
                     {
-                        text: '신고하기', onPress: () => Alert.alert(
+                        text: '확인', onPress: () => Alert.alert(
                             '이미 신고하셨습니다',
                             ""
                             [
                             {
-                                text: 'OK', onPress: () => console.log('OK Pressed')
+                                text: '확인', onPress: () => console.log('OK Pressed')
                             }
                             ]
                         )
@@ -490,15 +489,15 @@ export default function CommunityOtherPost({ route, navigation }) {
                 '신고가 누적되면 자동 삭제 됩니다.',
                 [
                     {
-                        text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                        text: '취소', onPress: () => console.log('CANCEL Pressed')
                     },
                     {
-                        text: '신고하기', onPress: () => Alert.alert(
+                        text: '확인', onPress: () => Alert.alert(
                             '신고완료',
                             '검토후 조치하겠습니다.',
                             [
                                 {
-                                    text: 'OK', onPress: () => console.log('OK Pressed')
+                                    text: '확인', onPress: () => console.log('OK Pressed')
                                 }
                             ]
                         )
@@ -682,16 +681,16 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                                         '삭제된 게시물은 되돌릴 수 없습니다.',
                                                                         [
                                                                             {
-                                                                                text: 'CANCEL', onPress: () => console.log('CANCEL Pressed')
+                                                                                text: '취소', onPress: () => console.log('CANCEL Pressed')
                                                                             },
                                                                             {
-                                                                                text: '삭제하기', onPress: () => {
+                                                                                text: '확인', onPress: () => {
                                                                                     redeletePost(item.reName), Alert.alert(
                                                                                         '삭제완료',
                                                                                         '',
                                                                                         [
                                                                                             {
-                                                                                                text: 'OK', onPress: () => console.log('삭제가 완료되었습니다.')
+                                                                                                text: '확인', onPress: () => console.log('삭제가 완료되었습니다.')
                                                                                             }
                                                                                         ]
                                                                                     )
