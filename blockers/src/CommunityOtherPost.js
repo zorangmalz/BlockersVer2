@@ -13,7 +13,8 @@ import {
     TouchableOpacity,
     Alert, 
     FlatList,
-    ActivityIndicator
+    ActivityIndicator,
+    RefreshControl
 } from 'react-native';
 import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
@@ -78,6 +79,13 @@ const community = StyleSheet.create({
         height: 15,
     },
 })
+
+const wait = (timeout) => {
+    return new Promise(resolve => {
+        setTimeout(resolve, timeout);
+    });
+}
+
 export default function CommunityOtherPost({ route, navigation }) {
     const [comment, setComment] = useState('');
     const [islogined, setIslogined] = useState(true);
@@ -117,6 +125,12 @@ export default function CommunityOtherPost({ route, navigation }) {
     const [textLoading, setTextLoading] = useState(false);
     const [picLoading, setPicLoading] = useState(false);
     const [replyLoading, setReplyLoading] = useState(false);
+
+    const [refreshing, setRefreshing] = useState(false);
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
 
     //댓글 작성하는 함수. 댓글 작성후에 reply collection에 추가를 하고 커멘트 숫자도 업로드한다
     async function writepost(b) {
@@ -181,7 +195,7 @@ export default function CommunityOtherPost({ route, navigation }) {
             })
             console.log("flvmtk", revmtk)
         }
-    }, [replynum, del])
+    }, [replynum, del, refreshing])
 
     //화면에 텍스트 및 좋아요를 띄워주는 함수.
     async function load() {
@@ -216,7 +230,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                 setMeLike(true)
             }
         }
-    }, [likeState, nick, del])
+    }, [likeState, nick, del, refreshing])
 
     //사진 불러오는 함수
     const [exist, setExist] = useState(true)
@@ -255,7 +269,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                 console.log("no its not")
             }
         }
-    }, [time])
+    }, [time, refreshing])
 
     //댓글을 보여주는 함수. 
     useEffect(() => {
@@ -318,7 +332,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                 setReplyLoading(true)
             })
         }
-    }, [state, vmtk, loading, commentState, del])
+    }, [state, vmtk, loading, commentState, del, refreshing])
 
     //게시글 좋아요 및 좋아요 취소
     async function likeMinus(a) {
@@ -542,7 +556,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 <Ionicons name="notifications" color="#666666" size={25} />
                             </TouchableOpacity>
                         </View>
-                        <ScrollView style={{ marginBottom: 50 }}>
+                        <ScrollView style={{ marginBottom: 50 }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                             <View style={{
                                 flexDirection: "row",
                                 justifyContent: "space-between",
