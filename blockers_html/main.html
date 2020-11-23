@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta name="viewport" content="initial-scale = 1.0, maximum-scale = 1.0, user-scalable = no, width = device-width">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>blockers</title>
+<link rel="stylesheet" type="text/css" href="./css/common.css">
+<link rel="stylesheet" type="text/css" href="./css/layout.css">
+<link rel="stylesheet" type="text/css" href="./css/fullpage.css">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
+<script type="text/javascript" src="./js/html5shiv.js"></script>
+<script type="text/javascript" src="./js/jquery.fullPage.js"></script>
+<script type="text/javascript" src="./js/jquery.easings.min.js"></script>
+<script type="text/javascript" src="./js/jquery.slimscroll.min.js"></script>
+<script type="text/javascript" src="./js/respond.src.js"></script>
+<script type="text/javascript" src="./js/modernizr.custom.js"></script>
+<!--[if lt IE 9]>
+<script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+<![endif]-->
+
+
+</head>
+<body>
+<h1><img src="./img/h1_logo.png" alt="로고"/></h1>
+<ul id="menu">
+    <li data-menuanchor="firstPage" class="active"><a href="#firstPage">home</a></li>
+    <li data-menuanchor="secondPage"><a href="#secondPage">about</a></li>
+    <li data-menuanchor="3rdPage"><a href="#3rdPage">service</a></li>
+    <li data-menuanchor="4thpage"><a href="#4thpage">contact</a></li>
+</ul>
+<span class="mailgo"><a href=""><img src="./img/ic_mail.png" alt=""/></a></span>
+<a id="moveSectionDown" href="#" class="en"><img src="./img/ic_scrolldown.png" alt="moveSectionDown"/> scroll</a>
+<div id="quick" class="en">
+	<h3>download</h3>
+	<ul>
+		<li><a href="" target="_blank"><img src="./img/ic_down01.png" class="web" alt="구글다운로드"/><img src="./img/ic_down01_mo.png" class="mobile" alt="구글다운로드"/></a></li>
+		<li><a href="" target="_blank"><img src="./img/ic_down02.png" class="web" alt="앱스토어다운로드"/><img src="./img/ic_down02_mo.png" class="mobile" alt="구글다운로드"/></a></li>
+	</ul>
+</div>
+<div class="en top_btn"><a href="" id="moveSectionUp" ><img src="./img/ic_top.png" alt=""/>go to up</a></div>
+<script>
+	$(function(){
+		$(window).scroll(function(){
+			var topPos=$(window).scrollTop()+325;
+			$("#quick").stop().animate({top:topPos + "px"},1000);
+		})
+	});
+</script>
+<div id="myContainer">
+	<div class="section" id="section0">
+		<div class="spot">
+			<span class="en mtxt">we block you</span>
+			<h2 class="kr">흡연을 막는다<em class="en green">blokers</em></h2>
+			<ul>
+				<li>챌린지 & 개인형<br/>
+					맞춤 금연 서비스</li>
+				<li>Blockers는 미션형 챌린지와 개인형<br/> 맞춤 솔루션을 통해 금연 도전자들의<br/> 금연 시도를 효과적으로 도와줍니다. </li>
+			</ul>
+			<p class="bigtxt enbig green"><strong>Block</strong><i><img src="./img/img_plus.png" alt="+"/></i><em> Smokers</em></p>
+			<span class="quit"><img src="./img/img_quit.png" alt=""/></span>
+			<span class="phone"><img src="./img/img_phone.png" alt=""/></span>
+		</div>
+	</div>
+	<div class="section" id="section1">
+		<p><img src="./img/img_program.png" alt=""/></p>
+		<div class="left">
+			<h3>기존 금연서비스들과 차원이 다른
+				<strong>신개념 금연 프로그램</strong></h3>
+			<ul>
+				<li>Blockers 챌린지를 통해 성공 인센티브를 수령하고 다양한 방법으로 소비할 수 있도록 연계합니다. 또한 금연 과정에서 파생되는 신체 데이터를 통해 건강이 좋아지는 과정을 한눈에 확인할 수 있습니다.</li>
+				<li>또한, 기업형 금연 프로그램으로 활용 가능해 임직원들의 금연 실천과, 실천 과정에서 파생되는 다양한 데이터를 수집할 수 있습니다.</li>
+			</ul>
+		</div>
+		<div class="right">
+			<div>
+				<h3><em>01</em><img src="./img/img_pro01.png" alt=""/>어플리케이션을 통한 <br/>높은 접근성</h3>
+				<ul>
+					<li><span>보건소/병의원을 찾아가거나 상담 전화를 기다리지 않아도 됩니다.</span></li>
+					<li><span>어플리케이션으로 언제 어디서나 금연을 실천합니다.</span></li>
+				</ul>
+			</div>
+			<div>
+				<h3><em>02</em><img src="./img/img_pro02.png" alt=""/>확실한 금연 인센티브로<br/> 금연 동기 강화</h3>
+				<ul>
+					<li><span>기능은 없고 광고만 있는 서비스에서 탈피했습니다.</span></li>
+					<li><span>금연에 성공하면 상금을 드립니다.</span></li>
+				</ul>
+			</div>
+			<div>
+				<h3><em>03</em><img src="./img/img_pro03.png" alt=""/>개인형 <br/> 맞춤형 솔루션</h3>
+				<ul>
+					<li><span>본인의 건강 리포트와 맞춤형 금연 정보들을 확인 할 수 있습니다.</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="section" id="section2">
+		<h2>주요 기능</h2>
+		<div class="function">
+			<div class="left">
+				<h3>이용방법</h3>
+				<span>Blockers 이용법은 매우 간단합니다.
+					먼저 흡연관리와 금연관리 중 본인의 원하는 서비스를 선택합니다. 금연을 바로 시작하기 전에 흡연 관리를 통해 본인의 흡연 상태를 체크할 수 있습니다.
+					금연을 시작하게 되면 챌린지에 참여해 미션을 진행합니다.
+				</span>
+				<div>
+					<p><span><em class="en">start</em> 흡연관리/금연관리 체크 후<br/> 챌린지 시작</span><img src="./img/img_way.png" alt=""/></p>
+					<ul>
+						<li class="bk"><span>챌린지 내용 </span></li>
+						<li><span><strong>설문조사</strong>다양한 흡연유형 중 본인의 유형을 파악 </span></li>
+						<li><span><strong>미션</strong>관리에 도움되는 챌린지 미션들을 수행 </span></li>
+						<li><span><strong>타액검사 키트 인증</strong>타액검사 키트로  체크 후  키트를 사용하는 사진과 키트 결과 사진을 업로드하여 미션 성공여부체크 </span></li>
+					</ul>
+				</div>
+			</div>
+			<div class="right">
+				<h3>맞춤형 정보제공</h3>
+				<span>금연과 관련된 정보를 챗봇에서 찾아볼 수 있습니다.<br/>
+						금연에 필요한 다양한 정보를 제공합니다. 또한 어플리케이션을 통해 수집된 데이터는 건강리포트와 캘린더를 통해 개인 맞춤형으로 제공됩니다.
+				</span>
+				<div>
+					<p><span> 금연과 관련된 정보를 <br/>챗봇에서 찾아볼 수 있습니다.</span><img src="./img/img_info.png" alt=""/></p>
+					<ul>
+						<li><span><strong>건강리포트</strong>챗봇에서 금연 리포트를 통해 금연/흡연을 진행하며 변화된 사용자의 건강 상태를 체크</span></li>
+						<li><span><strong>맞춤정보</strong>금연 보조 제품들의 정보를 확인</span></li>
+						<li><span><strong>금연지원 사업정보</strong>업데이트 되는 금연지원 컨텐츠들을 알림</span></li>
+						<li><span><strong>복약등록</strong>복약을 결심한 사용자는 복약등록 기능을 통해 캘린더에서 알림회신</span></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="section" id="section3">
+		<div class="greenbg"></div>
+		<p><img src="./img/img_myinfo.png" alt=""/></p>
+		<div class="left">
+			<h2>문의하기</h2>
+			<span>챌린지 & 개인형 맞춤 금연 솔루션
+				Blockers에 대해 궁금하신 점 있으시면
+				문의바랍니다. </span>
+		</div>
+		<div class="contact">
+			<h3 class="enbig">Be the Next Blockers</h3>
+			<ul>
+				<li> <img src="./img/ic_myinfo01.png" alt=""/>010.7922.1786</li>
+				<li> <img src="./img/ic_myinfo02.png" alt=""/>Jake@blockers.me</li>
+				<li> <img src="./img/ic_myinfo03.png" alt=""/>서울특별시 종로구 창경궁로 35길 38 </li>
+			</ul>
+		</div>
+		<cite class="en green">Copyright 2020 blokers All Rights Reserved. </cite>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+	function initialization(){
+		$('#myContainer').fullpage({
+		   // sectionsColor: ['#4A6FB1', '#4BBFC3', '#7BAABE', 'whitesmoke', '#ccddff'],
+			anchors: ['firstPage', 'secondPage', '3rdPage', '4thpage', 'lastPage'],
+			resize: false,
+			animateAnchor:false,
+			scrollOverflow:false,
+			autoScrolling:false,
+			responsive: 900,
+			fitSection: false,
+			menu: '#menu',
+			navigation:true,
+			continuousVertical:true,
+			//paddingTop: '20px',
+			css3: true
+			
+		});
+	}
+
+	 initialization();
+
+	$('#moveSectionUp').click(function(e){
+				e.preventDefault();
+				$.fn.fullpage.moveSectionUp();
+			});
+
+	$('#moveSectionDown').click(function(e){
+				e.preventDefault();
+				$.fn.fullpage.moveSectionDown();
+			});
+
+
+
+});
+
+$(function() {
+	$("#top_btn a").on("click", function() {
+		$("html, body").animate({scrollTop:0}, '500');
+		return false;
+	});
+});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

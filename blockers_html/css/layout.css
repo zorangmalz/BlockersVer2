@@ -1,0 +1,369 @@
+
+.web{display:block !important;}
+.mobile{display:none !important;}
+a{}
+.green{color:#5cc27b;}
+h1{position:fixed;left:1.0%;top:25px;z-index:90;}
+body{background:url(../img/bg_blockers.png) repeat;}
+
+ul#menu{position:fixed;right:4.5%;top:25px;z-index:90;}
+ul#menu li{float:left;padding:0 25px;}
+ul#menu li a{display:block;color:#222;font-family: 'Nunito', sans-serif;font-size:14px;text-transform:uppercase;font-weight:700;letter-spacing:1px;}
+ul#menu li.active a{color:#5cc27b;}
+a#moveSectionDown{position:fixed;bottom:2.5%;left:1.5%;z-index:90;color:#5cc27b;font-size:10px;letter-spacing:0.5px;text-transform:uppercase;font-weight:600;}
+a#moveSectionDown img{display:block;margin:0 auto;margin-bottom:5px;}
+span.mailgo{position:fixed;right:0.5%;top:10px;z-index:90;}
+
+#quick{position:absolute;right:0.25%;top:25%;width:79px;}
+#quick h3{display:block;text-align:center;font-size:10px;letter-spacing:1px;color:#5cc27b;text-transform:uppercase;font-weight:800;}
+#quick ul{display:block;border-radius:5px;background:#5cc27b;box-sizing:border-box;padding:7px 5px;width:100%;}
+#quick ul li{display:block;width:95%;padding:12px 0 20px 0;overflow:hidden;}
+#quick ul li:first-child{border-bottom:1px solid rgba(255,255,255,0.5);}
+.top_btn{position:fixed;bottom:2.5%;right:0.7%;z-index:90;}
+.top_btn img{display:block;margin:0 auto;text-align:center;margin-bottom:5px;}
+.top_btn a{display:block;font-size:10px;letter-spacing:1px;color:#5cc27b;text-transform:uppercase;font-weight:800;}
+
+#section0,
+#section0 .fp-tableCell{height:850px !important;}
+.spot{position:relative;width:100%;margin:0 auto;left:0px;text-align:center;top:0;background:url(../img/bg_center.png) no-repeat center 90%;height:100%;}
+.spot .mtxt{display:block;padding-top:20px;font-size:12px;color:#1f1f1f;letter-spacing:10px;text-transform:uppercase;font-weight:800;margin:0 auto;text-align:center;}
+.spot h2{display:block;font-size:55px;color:#1f1f1f;margin:0 auto;text-align:center;padding-top:30px;}
+.spot h2 em{display:block;margin:0 auto;font-style:normal;font-size:20px;letter-spacing:10px;text-transform:uppercase;}
+.spot ul{display:block;position:relative;margin:0 auto;text-align:center;padding:0px;max-width:1000px;padding-top:40px;overflow:hidden;}
+.spot ul li:first-child{float:left;font-size:30px;line-height:130%;text-align:left;font-weight:800;}
+.spot ul li:last-child{float:right;text-align:right;font-size:18px;line-height:140%;}
+.spot ul:after{content:'';position:absolute;width:30%;left:35%;top:48%;height:3px;background:#fff;margin:0 auto;text-align:center;}
+.spot p{position:relative;margin:0 auto;text-align:center;max-width:1346px;text-transform:uppercase;font-size:110px;font-style:italic;letter-spacing:1px;}
+.spot p strong{display:inline-block;font-size:120px;vertical-align:middle;margin-left:10%;}
+.spot p em,
+.spot p i{display:inline-block;vertical-align:middle;}
+.spot p i{padding:0 30px;}
+.spot span.quit{display:block;margin:0 auto;text-align:center;margin-top:-50px;}
+.spot span.phone{position:absolute;margin:0 auto;text-align:center;width:100%;left:0px;bottom:0%;}
+.spot span.phone img{position:relative;margin:0 auto;text-align:center;}
+
+.section{position:relative;width:90% !important;margin:0 auto;text-align:center;overflow:hidden;}
+#section1 {height:733px !important;margin-top:40px;}
+#section1 .fp-tableCell{height:733px !important;}
+#section1 p{position:absolute;left:30%;z-index:11;top:10%;}
+#section1 .left{position:absolute;width:45%;background:#5255b2;z-index:10;top:0px;height:82%;padding:7% 3%;box-sizing:border-box;}
+#section1 .left h3{display:block;color:#5cc27b;font-size:35px;font-weight:300;letter-spacing:-1px;line-height:150%;}
+#section1 .left h3 strong{display:block;font-size:55px;}
+#section1 .left ul{padding:0px;margin:0px;margin-top:80px;width:67%;}
+#section1 .left ul li{display:block;font-size:17px;color:#fff;font-weight:200;padding-bottom:20px;line-height:150%;text-align:justify;}
+
+#section1 .right{position:absolute;width:60%;background:#fff;z-index:5;top:53px;right:0px;padding:7% 2% 7% 13%;;box-sizing:border-box;height:95%;}
+#section1 .right > div{display:inline-block;width:30%;text-align:center;vertical-align:top;margin:0 1.3%;}
+#section1 .right > div h3{display:block;margin:0 auto;font-size:20px;color:#1f1f1f;font-family: 'Noto Sans KR', sans-serif;padding-bottom:10px;border-bottom:1px solid #aaaaaa;letter-spacing:-1px;}
+#section1 .right > div h3 em{display:block;margin:0 auto;color:#5cc27b;letter-spacing:1px;font-family: 'Nunito', sans-serif;font-style:normal;}
+#section1 .right > div h3 img{display:block;margin:0 auto;margin-top:20px;margin-bottom:20px;}
+#section1 .right > div ul{padding:0px;margin:0px;padding:30px 10px;}
+#section1 .right > div ul li{display:block;text-align:left;font-size:16px;color:#666666;margin-bottom:20px;letter-spacing:-1px;}
+#section1 .right > div ul li span{display:inline-block;width:90%;margin-left:8px;}
+#section1 .right > div ul li:before{content:'';display:inline-block;width:5px;height:5px;border-radius:50%;background:#5cc27b;vertical-align:top;margin-top:10px;}
+
+#section2{padding:150px 0 0 0!important;height:856px !important;}
+#section2 .fp-tableCell{height:856px !important;}
+#section2 h2{display:block;color:#5e62d0;font-size:55px;letter-spacing:-1px;padding-bottom:50px;}
+#section2 div.function{display:block;width:90%;margin:0 auto;text-align:center;background:url(../img/bg_greenline.png) repeat-y  center top;overflow:hidden;height:100%;}
+#section2 div.function:before{content:'';position:absolute;width:100%;height:17px;left:0px;margin:0 auto;background:url(../img/ic_bul.png) no-repeat center top;}
+#section2 div.function:after{content:'';position:absolute;bottom:0px;width:100%;height:17px;left:0px;margin:0 auto;background:url(../img/ic_bul.png) no-repeat center bottom;}
+#section2 div.function .left{float:left;width:47%;position:relative;}
+#section2 div.function .right{float:right;width:47%;text-align:right;position:relative;}
+#section2 div.function div h3{font-size:35px;color:#5e62d0;display:block;padding-bottom:40px;letter-spacing:-1px;}
+#section2 div.function div > span{width:80%;font-size:17px;color:#333;display:block;padding-bottom:40px;letter-spacing:-1px;font-weight:400;line-height:170%;}
+#section2 div.function .right > span{float:right;text-align:right;display:block;overflow:hidden;clear:both;}
+
+#section2 div.function .left div{display:block;width:100%;position:relative;}
+#section2 div.function .left div:before{content:'';position:absolute;left:0px;width:55%;margin-top:25%;height:1px;background:#b5b5b5;z-index:-1;}
+#section2 div.function .left div p{position:absolute;left:0;top:0px;letter-spacing:-1px;}
+#section2 div.function .left div p em{display:block;font-size:10px;font-style:normal;text-transform:uppercase;letter-spacing:1px;}
+#section2 div.function .left div p span{position:absolute;left:15px;top:20px;color:#fbfbfb;font-size:20px;}
+
+#section2 div.function .left div ul{position:relative;float:right;text-align:left;padding:0px;margin:0px;margin-top:50px;width:45%;}
+#section2 div.function .left div ul:before{content:'';position:absolute;left:0px;height:65.5%;margin-top:5%;width:1px;background:#b5b5b5;z-index:-1;}
+#section2 div.function .left div ul li{display:block;margin-bottom:30px;font-size:16px;color:#666;font-weight:400;letter-spacing:-1px;}
+#section2 div.function .left div ul li:before{content:'';width:30px;float:left;margin-top:5%;height:1px;background:#b5b5b5;z-index:-1;margin-right:10px;}
+#section2 div.function .left div ul li strong{display:block;color:#000;font-size:20px;margin-bottom:7px;}
+#section2 div.function .left div ul li.bk span{background:#434343;color:#fff;font-size:20px;line-height:50px;padding:0 15px;box-sizing:border-box;}
+#section2 div.function .left div ul li > span{display:inline-block;width:85%;}
+
+#section2 div.function .right div{display:block;width:100%;position:relative;overflow:hidden;}
+#section2 div.function .right div:before{content:'';position:absolute;right:0px;width:55%;margin-top:25%;height:1px;background:#b5b5b5;z-index:-1;}
+#section2 div.function .right div p{position:absolute;right:0;top:0px;letter-spacing:-1px;}
+#section2 div.function .right div p span{position:absolute;right:15px;top:20px;color:#fbfbfb;font-size:20px;}
+#section2 div.function .right div ul{position:relative;float:left;text-align:left;padding:0px;margin:0px;margin-top:50px;width:45%;}
+#section2 div.function .right div ul:before{content:'';position:absolute;right:0px;height:75.5%;margin-top:0%;width:1px;background:#b5b5b5;z-index:-1;}
+#section2 div.function .right div ul li{display:block;margin-bottom:30px;font-size:16px;color:#666;font-weight:400;letter-spacing:-1px;}
+#section2 div.function .right div ul li:after{content:'';width:30px;float:right;margin-top:0%;height:1px;background:#b5b5b5;z-index:-1;margin-left:10px;}
+#section2 div.function .right div ul li strong{display:block;color:#000;font-size:20px;margin-bottom:7px;}
+#section2 div.function .right div ul li.bk span{background:#434343;color:#fff;font-size:20px;line-height:50px;padding:0 15px;box-sizing:border-box;}
+#section2 div.function .right div ul li > span{display:inline-block;width:75%;}
+#section2 div.function .right div p img,
+#section2 div.function .left div p img{max-width:100%;}
+
+#section3{padding:150px 0 0 0!important;height:756px !important;}
+#section3 .fp-tableCell{height:756px !important;vertical-align:top !important;position:relative;}
+#section3 .greenbg{width:60%;background:#5cc27b;right:10px;height:567px;top:30px;position:absolute;z-index:-1;}
+#section3 .left{position:absolute;width:30%;left:3%;z-index:10;}
+#section3 .left h2{display:block;text-align:left;color:#5e62d0;font-size:55px;margin-top:70px;margin-bottom:70px;}
+#section3 .left h2:after{content:'';display:inline-block;width:38%;height:3px;background:#5cc27b;margin-left:35px;letter-spacing:-1;}
+#section3 .left span{display:block;width:55%;font-size:17px;color:#333;}
+#section3 .contact{display:block;position:relative;padding:3% 5%;box-sizing:border-box;text-align:left;background:url(../img/bg_gray.png) repeat;width:65%;margin-left:25%;min-height:538px;}
+#section3 .contact h3{display:block;font-size:55px;color:#5cc27b;letter-spacing:1px;letter-spacing:5px;text-transform:uppercase;margin-top:35px;}
+#section3 .contact ul{padding:0px;margin:0px;margin-top:100px;}
+#section3 .contact ul li{display:block;font-size:18px;color:#5cc27b;margin-bottom:20px;font-family: 'Nunito', sans-serif;}
+#section3 .contact ul li img{display:inline-block;margin-right:15px;}
+#section3 p{position:absolute;right:4%;bottom:25%;z-index:10;}
+#section3 p img{position:relative;float:right;}
+#section3 cite{display:block;margin:0 auto;text-align:center;font-size:12px;letter-spacing:2px;padding-top:120px;font-style:normal;font-weight:bold;text-transform:uppercase;}
+
+
+
+@media screen and (max-width: 1700px) {
+#section2 div.function .right div:before,
+#section2 div.function .left div:before{display:none;}
+#section2 div.function .right div ul:before,
+#section2 div.function .left div ul:before{display:none;}
+#section2 div.function .left div ul li:after{display:none;}
+#section2 div.function .left div ul li:before,
+#section2 div.function .right div ul li:after{display:none;}
+
+}
+
+@media screen and (max-width: 1500px) {
+
+#section1 p img{max-width:70%}
+#quick{width:65px;}
+#quick img{max-width:100%;}
+
+#section1 .left h3{font-size:30px;}
+#section1 .left h3 strong{font-size:40px;}
+#section1 .left ul li{font-size:15px;}
+#section1 p{left:28%;top:13%;}
+#section1 .right > div h3 img{max-width:100%;}
+#section1 .right > div h3{font-size:16px;}
+#section1 .right > div ul li{font-size:14px;}
+#section1 .right{height:auto;}
+#section2,
+#section2 .fp-tableCell{height:780px !important;}
+#section2{padding:100px 0 0 0 !important;}
+#section2 div.function div > span{font-size:15px;}
+#section2 div.function .right div p,
+#section2 div.function .left div p{width:55%;}
+#section2 div.function .left div ul{margin-top:0px;}
+#section2 div.function .right div ul{margin-top:20px;}
+#section2 div.function .left div ul li.bk,
+#section2 div.function .left div ul li strong,
+#section2 div.function .right div ul li strong{font-size:18px;}
+
+#section2 div.function .left div ul li > span,
+#section2 div.function .right div ul li > span{width:100%;}
+#section3 p{width:40%;}
+#section3 p img{max-width:100%;}
+#section3 .left h2:after{width:30%;}
+
+}
+@media screen and (max-width: 1300px) {
+h1{top:22px;}
+#section1 p{left:23%;top:25%}
+#section1 p img{max-width:60%;}
+#quick h3{font-size:9px}
+#quick{z-index:99;}
+ul#menu{right:5%}
+#section1 {height: 600px !important;}
+#section1 .fp-tableCell{height: 600px !important;}
+#section1 .right{padding:5% 2% 5% 12%;}
+#section1 .right > div ul{padding:10px 0;}
+#section2 div.function div h3{padding-bottom:20px;}
+#section2 div.function div > span{width:90%;}
+#section2 div.function .left div p span,
+#section2 div.function .right div p span{font-size:15px;}
+#section2 div.function .right div p, #section2 div.function .left div p{}
+#section3{padding:80px 0 0 0 !important;}
+#section2 h2{font-size:45px;}
+#section2 div.function div h3{font-size:30px;}
+#section3 .left h2{font-size:45px;}
+#section3 .contact h3{font-size:45px;}
+#section3 p img{max-width:80%;}
+#section3 .contact{min-height:430px;}
+#section3,
+#section3 .fp-tableCell{height:650px !important;}
+#section3 .greenbg{height:70%;}
+#section3 .left span{width:60%;font-size:15px;}
+#section3 .contact ul{margin-top:50px;}
+
+}
+
+
+
+@media screen and (max-width: 1200px) {
+ul#menu{display:none;}
+.spot ul li:last-child{font-size:16px;}
+.spot ul{max-width:850px;}
+.spot ul li:first-child{font-size:25px;}
+.spot p,
+.spot p strong{font-size:80px;}
+.spot p strong{margin-left:0px;}
+.spot span.phone{bottom:5%;}
+.spot span.phone img{max-width:50%;}
+.spot span.quit{margin-top:-20px;}
+.spot span.quit img{max-width:50%;}
+.spot h2{font-size:45px;}
+#section1{margin-top:0px;}
+#section1 p{top:27%;}
+#section1 p img{max-width:50%;}
+#section2 div.function .left div ul li.bk, #section2 div.function .left div ul li strong, #section2 div.function .right div ul li strong{font-size:16px;}
+#section2 div.function .left div ul li,
+#section2 div.function .right div ul li{font-size:14px;letter-spacing:0;}
+#section2, #section2 .fp-tableCell{height:680px !important}
+}
+@media screen and (max-width: 1100px) {
+.section{width:85% !important;}
+#section1 .left{position:relative;width:100%;height:auto;}
+#section1 .right{position:relative;width:100%;height:auto;top:0px;}
+#section1 p{left:60%;top:10%;}
+#section1 p img{max-width:80%;}
+#section1 .left ul{width:60%;margin-top:40px;}
+#section1 .right{padding:5% 0}
+#section1 .left h3 strong{font-size:35px;}
+span.mailgo img{width:65px;}
+
+#section2{padding:60px 0 0 0 !important;}
+#section2 div.function{width:100%;height:auto;}
+#section2 h2{font-size:35px;}
+#section2 div.function{background:none;}
+#section2 div.function:before,
+#section2 div.function:after{display:none;}
+#section2 div.function div h3{font-size:25px;}
+#section2 div.function .left div{overflow:hidden;}
+#section2 div.function .right,
+#section2 div.function .left{float:none;display:block;width:100%;overflow:hidden;text-align:left;margin-bottom:40px;}
+#section2 div.function .left{padding-bottom:50px;border-bottom:1px solid #ddd;}
+#section2 div.function .right > span{float:none;text-align:left;}
+#section2 div.function .right div p, #section2 div.function .left div p{width:45%;}
+#section2 div.function .right div ul,
+#section2 div.function .left div ul{width:54%}
+#section2 div.function .right div p{}
+#section2 div.function .right div p span{text-align:right;}
+#section2 div.function div > span{width:100%;}
+
+#section3 .left{width:55%;}
+#section3 .contact h3{font-size:25px;text-align:right;}
+#section3 .left h2{margin-bottom:25px;margin-top:35px;font-size:35px;}
+#section3 .left h2:after{width:25%;margin-left:15px;}
+#section3 .left span{width:50%;}
+#section3 .contact{width:70%;float:right;overflow:hidden;}
+#section3 .greenbg{display:none;}
+#section3 .contact ul li{text-align:right;}
+#section3 p{width:50%;right:50%;}
+#section3 .contact{min-height:350px !important;}
+#section3 .contact ul li{font-size:16px;}
+#section3 cite{margin-top:45px;overflow:hidden;width:100%;}
+#section3 p{bottom:29%;}
+.top_btn a,
+a#moveSectionDown{display:none;}
+
+}
+
+
+@media screen and (max-width: 740px) {
+.web{display:none !important;}
+.mobile{display:block !important;}
+body{overflow:hidden;}
+#myContainer{overflow:hidden;width:100%;box-sizing:border-box;}
+.section{width:100% !important;box-sizing:border-box;padding:0px !important;}
+.top_btn{display:none;}
+h1{position:relative;top:0px;left:0px;width:100%;margin:0 auto;text-align:center;padding-top:15px;}
+span.mailgo{display:none;}
+#section0, #section0 .fp-tableCell{height:690px !important}
+.spot h2{padding-top:15px;}
+.spot .mtxt{padding-top:30px;}
+.spot{background-size:120%;background-position:center 70%;}
+.spot h2{font-size:30px;font-weight:900;}
+.spot h2 em{font-size:18px;font-weight:800;}
+.spot ul{padding-top:20px;}
+.spot ul li:first-child{width:100%;float:none;display:block;margin:0 auto;text-align:center;font-size:18px;padding-bottom:15px;}
+.spot ul li br{display:none;}
+.spot ul:after{display:none;}
+.spot ul li:last-child{width:80%;font-size:14px;float:none;display:block;margin:0 auto;text-align:center;}
+.spot p, .spot p strong{font-size:45px;}
+.spot p i {padding:3px;display:block;}
+.spot p i img{max-width:45px;}
+.spot p strong{display:block;padding-top:30px;}
+.spot span.phone{bottom:2%;}
+.spot span.quit img{max-width:65%;}
+.spot span.phone img{max-width:85%;}
+.spot span.quit{margin-top:0px;}
+
+#quick{position:fixed;bottom:0px;width:100%;right:0px;top:auto !important;bottom:0px;overflow:hidden;border-top-left-radius: 5px;border-top-right-radius: 5px;background: #5cc27b;box-sizing:border-box;
+	box-shadow: 1px -13px 20px rgba(0, 0, 0, 0.1)  ; 
+	-webkit-box-shadow: 1px -13px 20px rgba(0, 0, 0, 0.1)  ; 
+	-moz-box-shadow: 1px -13px 20px rgba(0, 0, 0, 0.1)  ; 
+}
+#quick ul{border:none;padding:0px;margin:0px;}
+#quick h3{text-align:center;color:#fff;padding:8px 0}
+#quick ul li{float:left;position:relative;text-align:center;width:50%;box-sizing:border-box;padding:5px 0}
+#quick ul li:first-child{border-bottom:none;}
+#quick ul li:first-child:after{content:'';position:absolute;right:0px;width:1px;height:70%;background:rgba(255,255,255,0.2);top:4px;}
+#quick ul li img{margin:0 auto;}
+
+#section1 .left h3{font-size:20px;margin:0 auto;text-align:center;}
+#section1 p{display:none;}
+#section1 .left ul{width:100%;}
+#section1 .left{padding: 7% 5%;}
+#section1 .left ul li{font-size:14px;}
+#section1 .left h3 strong{font-size:30px;}
+
+#section1 .right > div{display:block;text-align:center;margin:0px auto;width:90%;}
+#section1 .right > div h3 br{display:none;}
+#section1 .right > div h3{border-bottom:0px;background:#f9f9f9;padding-top:10px;}
+#section1 .right > div h3 img{margin-top:5px;margin-bottom:5px;max-width:100px;}
+
+#section2{padding:30px 0 0 0 !important;}
+#section2 h2{padding-bottom:15px;margin-bottom:15px;border-bottom:1px solid #ddd;font-size:30px;}
+#section2 div.function div h3{text-align:center;}
+#section2 div.function .right, #section2 div.function .left{width:90%;margin:0 auto;}
+#section2 div.function div > span{font-size:14px;}
+#section2 div.function .left > span,
+#section2 div.function .right > span{padding-bottom:20px;}
+#section2 div.function .right div p, #section2 div.function .left div p{position:relative;width:100%;margin:0 auto;text-align:center;}
+#section2 div.function .right div p img, 
+#section2 div.function .left div p img{display:block;margin:0 auto;text-align:center;max-width:100%;}
+#section2 div.function .left div p {margin-right:-15px;}
+#section2 div.function .right div p {margin-left:-8px;}
+#section2 div.function .left div p span{text-align:left;}
+#section2 div.function .right div ul, #section2 div.function .left div ul{width:100%;}
+#section2 div.function .left div ul li.bk, 
+#section2 div.function .left div ul li strong, 
+#section2 div.function .right div ul li strong{}
+#section2 div.function .left div ul li, #section2 div.function .right div ul li{margin-bottom:10px;padding-bottom:10px;border-bottom:1px dotted #999;}
+#section2 div.function .left div ul li:first-child,
+#section2 div.function .left div ul li:last-child{border-bottom:none;}
+#section2 div.function .left div ul li:last-child{padding:0px;margin:0px;}
+#section2 div.function .left{padding-bottom:20px;}
+#section2 div.function .right h3{padding-top:30px;}
+#section3 .contact h3{font-size:20px;}
+#section3{padding:30px 0 0 0 !important;}
+#section3 .contact h3{text-align:center;}
+#section3 .contact ul li{text-align:center;}
+#section3 .left{width:90%;margin:0 auto;position:relative;left:0px;box-sizing:border-box;}
+#section3 .left h2{margin:0 auto;font-size:30px;text-align:center;
+	padding-bottom: 15px;
+    font-size: 30px;
+}
+#section3 .left h2:after{display:none;}
+#section3 .left span{font-size:14px;text-align:center;width:100%;display:block;margin:0 auto;padding-bottom:20px;}
+#section3 .contact{box-sizing:border-box;width:100%;margin-left:0px;min-height:280px !important}
+#section3 .contact ul{margin-top:25px;}
+#section3 p{display:none;}
+#section3 .contact ul li{margin-bottom:10px;}
+
+#section3 cite{padding:20px 0;font-size:10px;}
+#section3, #section3 .fp-tableCell{height:530px !important}
+}
+
+
+
+
+
