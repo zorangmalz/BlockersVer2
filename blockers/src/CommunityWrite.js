@@ -45,7 +45,8 @@ const community = StyleSheet.create({
         borderColor: '#707070',
         alignItems: 'flex-start',
         justifyContent: "center",
-        height: 50
+        height: 50,
+        paddingRight: 32
     },
     titleandcontent: {
         fontSize: 14,
@@ -58,7 +59,8 @@ const community = StyleSheet.create({
         height: WIDTH*1.2,
         borderBottomWidth: 0.5,
         borderColor: '#707070',
-        paddingTop: 8
+        paddingTop: 8,
+        paddingRight: 32
     },
     picturetext: {
         fontSize: 14,

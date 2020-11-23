@@ -33,14 +33,14 @@ export default function SelfEsteemResult({navigation,route}) {
         if(result>1){
         if(result>=45){
             setResults("Good")
-            setResultcontent( "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!")
+            setResultcontent( "높은 자기효능감을 가지고있군요! 금연을 성공할 수 있는 자신감이있는 상태입니다. 챗봇 & 건강리포트에서 내 상태 변화와 다양한 정보를 알아보세요!")
         }else if(35<=result){
             setResults("Normal")
-            setResultcontent("보통 수준의 자아 효능감을 가지고 있습니다. \n 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다.")
+            setResultcontent("보통 수준의 자아 효능감을 가지고 있습니다. 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다.")
             
         }else{
             setResults("Bad")      
-            setResultcontent("낮은 자아 효능감을 가지고 있습니다. \n 항상 자신감 있는 생각과 행동이 필요합니다.\n 내적인 자신감의 강화와 더불어 세심한 생활관리가 필요합니다.")
+            setResultcontent("낮은 자아 효능감을 가지고 있습니다. 항상 자신감 있는 생각과 행동이 필요합니다. 내적인 자신감의 강화와 더불어 세심한 생활관리가 필요합니다.")
         }
     }
         
@@ -117,15 +117,17 @@ export default function SelfEsteemResult({navigation,route}) {
                             <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{results}</Text>
                         </Text>
                     </ProgressCircle>
-                    <Text style={{
-                        fontFamily: "NunitoSans-Bold",
-                        fontSize: 16,
-                        color: "#303030",
-                        lineHeight: 30,
-                        alignSelf: "center",
-                        textAlign: "center",
-                        marginTop: 20
-                    }}>{resultcontent}</Text>
+                    <View style={{paddingRight: 32, paddingLeft: 32}}>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 16,
+                            color: "#303030",
+                            lineHeight: 30,
+                            alignSelf: "center",
+                            textAlign: "left",
+                            marginTop: 20
+                        }}>{resultcontent}</Text>
+                    </View>
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
