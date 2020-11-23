@@ -75,10 +75,6 @@ export default function CommunityWrite ({navigation}) {
     const [content, setContent] = useState('');
     const [imageOne, setImageOne] = useState(undefined);
     const [picone, setPicone] = useState(true);
-    const [imageTwo, setImageTwo] = useState(undefined);
-    const [pictwo, setPictwo] = useState(true);
-    const [imageThree, setImageThree] = useState(undefined);
-    const [picthree, setPicthree] = useState(true);
     const [user,setuser]=useState()
     const [nick,setNick]=useState()
     const [filename,setFilename]=useState()
@@ -181,30 +177,6 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
           }
         });
         setIsPicture(true)
-    };
-
-    const showCameraRoll2 = () => {
-        ImagePicker.launchImageLibrary(options, (response) => {
-          if (response.error) {
-            console.log('LaunchImageLibrary Error: ', response.error);
-          }
-          else {
-            setImageTwo(response.uri);
-            setPictwo(false);
-          }
-        });
-    };
-
-    const showCameraRoll3 = () => {
-        ImagePicker.launchImageLibrary(options, (response) => {
-          if (response.error) {
-            console.log('LaunchImageLibrary Error: ', response.error);
-          }
-          else {
-            setImageThree(response.uri);
-            setPicthree(false);
-          }
-        });
     };
 
     const [writeerror, setWriteerror] = useState(false)
@@ -319,28 +291,6 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
                         }}>
                             {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 92, height: 92 }} />}
                             {picone === true ? <Text style={community.picturetext}>Picture 1</Text> : <View /> }
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={showCameraRoll2} style={{
-                            width: 92,
-                            height: 92,
-                            backgroundColor: '#E5E5E5',
-                            marginRight: 16,
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}>
-                            {imageTwo && <Image resizeMode="stretch" source={{ uri: imageTwo }} style={{ width: 92, height: 92 }} />}
-                            {pictwo === true ? <Text style={community.picturetext}>Picture 2</Text> : <View /> }
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={showCameraRoll3} style={{
-                            width: 92,
-                            height: 92,
-                            backgroundColor: '#E5E5E5',
-                            marginRight: 16,
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}>
-                            {imageThree && <Image resizeMode="stretch" source={{ uri: imageThree }} style={{ width: 92, height: 92 }} />}
-                            {picthree === true ? <Text style={community.picturetext}>Picture 3</Text> : <View /> }
                         </TouchableOpacity>
                     </View>
                 </ScrollView>
