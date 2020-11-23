@@ -113,14 +113,14 @@ export default function StressResult({navigation,route}) {
                             <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{results}</Text>
                         </Text>
                     </ProgressCircle>
-                    <View style={{paddingRight: 16, paddingLeft: 16}}>
+                    <View style={{paddingRight: 32, paddingLeft: 32}}>
                         <Text style={{
                             fontFamily: "NunitoSans-Bold",
                             fontSize: 16,
                             color: "#303030",
                             lineHeight: 30,
                             alignSelf: "center",
-                            textAlign: "center",
+                            textAlign: "left",
                             marginTop: 20
                         }}>{resultcontent}</Text>
                     </View>
