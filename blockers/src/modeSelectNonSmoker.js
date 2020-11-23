@@ -218,7 +218,8 @@ export default function ModeSelectNonSmoker({ navigation }) {
                                     fontSize: 21,
                                     color: '#303030',
                                     fontFamily: 'NunitoSans-Regular',
-                                    paddingBottom: 0
+                                    paddingBottom: 0,
+                                    width: 100
                                 }}
                                     value={num}
                                     onChangeText={text => setNum(text)}
@@ -253,7 +254,6 @@ export default function ModeSelectNonSmoker({ navigation }) {
                                     fontFamily: 'NunitoSans-Regular',
                                     paddingBottom: 0,
                                     width: 100
-
                                 }}
                                     value={several}
                                     onChangeText={text => setSeveral(text)}

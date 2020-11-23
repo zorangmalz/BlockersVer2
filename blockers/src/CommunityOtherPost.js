@@ -15,7 +15,7 @@ import {
     FlatList,
     ActivityIndicator
 } from 'react-native';
-
+import firebase from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import moment from "moment";
@@ -81,7 +81,6 @@ const community = StyleSheet.create({
 export default function CommunityOtherPost({ route, navigation }) {
     const [comment, setComment] = useState('');
     const [islogined, setIslogined] = useState(true);
-    const [reIsLogined, setReIsLogined] = useState()
     const [title, setTitle] = useState();
     const [author, setAuthor] = useState();
     const [createdate, setCreateDate] = useState();
@@ -265,7 +264,8 @@ export default function CommunityOtherPost({ route, navigation }) {
             const { ID } = route.params
             setParam(ID)
             async function reply() {
-                firestore().collection('Community1').doc(ID).collection("Reply").get().then(querySnapshot => {
+                const USERUID = firebase.auth().currentUser.uid;
+                firestore().collection('Community1').doc(ID).collection("Reply").orderBy("fullTime").get().then(querySnapshot => {
                     let list = [];
                     console.log("comd")
                     setReplyNum(querySnapshot.size);
@@ -276,25 +276,35 @@ export default function CommunityOtherPost({ route, navigation }) {
                         } else {
                             setReMeLike(false)
                         }
-                        if (Uid === docs.data().writerUid) {
-                            setReIsLogined(true)
+                        if (USERUID === docs.data().writerUid) {
+                            list.push({
+                                reName: docs.data().fullTime + docs.data().content,
+                                reNick: docs.data().nick,
+                                reContent: docs.data().content,
+                                reLike: docs.data().like,
+                                reTime: docs.data().day + " " + docs.data().time,
+                                reProfile: docs.data().profilePicture,
+                                reUserUid: true,
+                                reWhoLike: docs.data().whoLike.length,
+                                reWhoLikeList: docs.data().whoLike,
+                                reWhoAlert: docs.data().whoAlert,
+                                reMeLike: reMelike
+                            });
                         } else {
-                            setReIsLogined(false)
+                            list.push({
+                                reName: docs.data().fullTime + docs.data().content,
+                                reNick: docs.data().nick,
+                                reContent: docs.data().content,
+                                reLike: docs.data().like,
+                                reTime: docs.data().day + " " + docs.data().time,
+                                reProfile: docs.data().profilePicture,
+                                reUserUid: false,
+                                reWhoLike: docs.data().whoLike.length,
+                                reWhoLikeList: docs.data().whoLike,
+                                reWhoAlert: docs.data().whoAlert,
+                                reMeLike: reMelike
+                            });
                         }
-                        list.push({
-                            reName: docs.data().fullTime + docs.data().content,
-                            reNick: docs.data().nick,
-                            reContent: docs.data().content,
-                            reLike: docs.data().like,
-                            reTime: docs.data().day + " " + docs.data().time,
-                            reProfile: docs.data().profilePicture,
-                            reUserUid: reIsLogined,
-                            reWhoLike: docs.data().whoLike.length,
-                            reWhoLikeList: docs.data().whoLike,
-                            reWhoAlert: docs.data().whoAlert,
-                            reMeLike: reMelike
-                        });
-
                     });
                     setItems(list);
                     console.log(list);
