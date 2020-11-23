@@ -12,7 +12,8 @@ import {
     Image,
     Modal,
     Dimensions,
-    ActivityIndicator
+    ActivityIndicator,
+    Alert
 } from 'react-native';
 import firebase from "@react-native-firebase/app";
 import auth from '@react-native-firebase/auth';
@@ -96,12 +97,22 @@ export default function MyPageScreen({ navigation }) {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
-    //Modal 띄울때 사용
-    const [userlogin, setUserlogin] = useState(false);
+    //로그인 띄울때 사용
     const loginview = () => {
-        setTimeout(() => {
-            setUserlogin(true)
-        }, 200)
+        Alert.alert(
+            "로그인이 필요한 서비스입니다.",
+            "로그인하고 다양한 혜택을 만나보세요",
+            [
+                {
+                    text: "취소",
+                    onPress: () => console.log("둘러보기")
+                },
+                {
+                    text: "확인",
+                    onPress: () => navigation.navigate('로그인')
+                }
+            ]
+        )
     }
 
     useEffect(() => {
@@ -175,22 +186,21 @@ export default function MyPageScreen({ navigation }) {
             };
         }, [])
     );
-    const [one,setOne]=useState(false)
-    const [three,setThree]=useState(false)
-    const [six,setSix]=useState(false)
-    async function getInfo(){
-        
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").where("success","==",2).get().then(function (querySnapshot) {
+    const [one, setOne] = useState(false)
+    const [three, setThree] = useState(false)
+    const [six, setSix] = useState(false)
+    async function getInfo() {
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").where("success", "==", 2).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
-                if(doc.data().long===1){
+                if (doc.data().long === 1) {
                     setOne(true)
-                }else if(doc.data().long===3){
+                } else if (doc.data().long === 3) {
                     setThree(true)
-                }else if(doc.data().long===6){
+                } else if (doc.data().long === 6) {
                     setSix(true)
                 }
             })
-            
+
         })
     }
     const Success = [
@@ -218,78 +228,6 @@ export default function MyPageScreen({ navigation }) {
                     <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
                     :
                     <>
-                        <Modal
-                            animationType="none"
-                            transparent={true}
-                            visible={userlogin}
-                            onRequestClose={() => setUserlogin(false)}
-                        >
-                            <View style={{ width: WIDTH, height: HEIGHT, position: "absolute", backgroundColor: "#303030", opacity: 0.4 }} />
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <View style={{
-                                    width: 280,
-                                    height: 180,
-                                    borderRadius: 20,
-                                    backgroundColor: '#ffffff',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                }}>
-                                    <Text style={{
-                                        fontFamily: 'NunitoSans-Bold',
-                                        fontSize: 16,
-                                        color: '#303030',
-                                        opacity: 0.8,
-                                        marginTop: 20
-                                    }}>로그인이 필요한서비스입니다.</Text>
-                                    <Text style={{
-                                        fontFamily: 'NunitoSans-Regular',
-                                        fontSize: 14,
-                                        color: '#303030',
-                                        opacity: 0.6,
-                                        textAlign: 'center'
-                                    }}>로그인하고 다양한 혜택을 만나보세요</Text>
-                                    <View style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        marginTop: 15
-                                    }}>
-                                        <TouchableOpacity onPress={() => setUserlogin(false)} style={{
-                                            width: 140,
-                                            height: 55,
-                                            borderBottomLeftRadius: 20,
-                                            backgroundColor: '#999999',
-                                            justifyContent: 'center',
-                                            alignItems: 'center'
-                                        }}>
-                                            <Text style={{
-                                                fontSize: 16,
-                                                color: '#ffffff',
-                                                fontFamily: 'NunitoSans-Regular'
-                                            }}>둘러보기</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => {
-                                            navigation.navigate('로그인')
-                                            setUserlogin(false)
-                                        }}
-                                            style={{
-                                                width: 140,
-                                                height: 55,
-                                                borderBottomRightRadius: 20,
-                                                backgroundColor: '#5cc27b',
-                                                justifyContent: 'center',
-                                                alignItems: 'center'
-                                            }}>
-                                            <Text style={{
-                                                fontSize: 16,
-                                                color: '#ffffff',
-                                                fontFamily: 'NunitoSans-Regular'
-                                            }}>로그인</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View>
-                        </Modal>
                         <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
                             <View
                                 style={{
@@ -430,13 +368,12 @@ export default function MyPageScreen({ navigation }) {
                                 <>
                                 </>
                             }
-                            <View style={style.container}>
+                            <View style={[style.container, { marginTop: 8 }]}>
                                 <FlatList
                                     data={[
                                         { key: '개인정보', name: '개인정보' },
                                         { key: '공지사항', name: '공지사항' },
                                         { key: '이용약관', name: '이용약관' },
-                                        { key: '자주 묻는 질문', name: "자주 묻는 질문" },
                                     ]}
                                     renderItem={({ item }) => (
                                         <>
@@ -465,26 +402,26 @@ export default function MyPageScreen({ navigation }) {
                                     <Ionicons name="logo-facebook" size={36} />
                                 </TouchableOpacity>
                                 <TouchableOpacity>
-                                    <Ionicons name="logo-twitter" size={36} />
+                                    <Ionicons name="logo-youtube" size={36} />
                                 </TouchableOpacity>
                                 <TouchableOpacity>
-                                    <AntDesign name="medium-monogram" size={36} />
+                                    <Ionicons name="logo-instagram" size={36} />
                                 </TouchableOpacity>
                             </View>
                         </ScrollView>
 
                     </>
                 }
-                       <BannerAd
-      unitId={adUnitId}  
-      size={BannerAdSize.SMART_BANNER}
-      requestOptions={{
-        requestNonPersonalizedAdsOnly: true,
-      }}
-      onAdFailedToLoad={(error) => {
-        console.error('Advert failed to load: ', error);
-      }}
-    />
+                <BannerAd
+                    unitId={adUnitId}
+                    size={BannerAdSize.SMART_BANNER}
+                    requestOptions={{
+                        requestNonPersonalizedAdsOnly: true,
+                    }}
+                    onAdFailedToLoad={(error) => {
+                        console.error('Advert failed to load: ', error);
+                    }}
+                />
             </SafeAreaView>
         </>
     )

@@ -13,7 +13,8 @@ import {
     ActivityIndicator, 
     FlatList, 
     RefreshControl,
-    Modal
+    Modal,
+    Alert
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -115,19 +116,31 @@ export default function CommunityHome({ navigation, route }) {
     const [refreshing, setRefreshing] = useState(false);
     const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState();
+    
     //Flatlist Refreshing Control
     const onRefresh = useCallback(() => {
         setRefresh(true);
         wait(2000).then(() => setRefresh(false));
     }, []);
 
-    //로그인 모달 폼
-    const [userlogin, setUserlogin] = useState(false);
+    //로그인 띄울때 사용
     const loginview = () => {
-        setTimeout(() => {
-            setUserlogin(true)
-        }, 200)
+        Alert.alert(
+            "로그인이 필요한 서비스입니다.",
+            "로그인하고 다양한 혜택을 만나보세요",
+            [
+                {
+                    text: "취소",
+                    onPress: () => console.log("둘러보기")
+                },
+                {
+                    text: "확인",
+                    onPress: () => navigation.navigate('로그인')
+                }
+            ]
+        )
     }
+
     useFocusEffect(
         useCallback(() => {
             load()
@@ -297,78 +310,6 @@ export default function CommunityHome({ navigation, route }) {
                                 </TouchableOpacity>
                             </View>
                         </View>
-                        <Modal
-                            animationType="none"
-                            transparent={true}
-                            visible={userlogin}
-                            onRequestClose={() => setUserlogin(false)}
-                        >
-                            <View style={{ position: "absolute", top: 0, width: WIDTH, height: HEIGHT, backgroundColor: "#303030", opacity: 0.4 }} />
-                            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                <View style={{
-                                    width: 280,
-                                    height: 180,
-                                    borderRadius: 20,
-                                    backgroundColor: '#ffffff',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                }}>
-                                    <Text style={{
-                                        fontFamily: 'NunitoSans-Bold',
-                                        fontSize: 16,
-                                        color: '#303030',
-                                        opacity: 0.8,
-                                        marginTop: 20
-                                    }}>로그인이 필요한서비스입니다.</Text>
-                                    <Text style={{
-                                        fontFamily: 'NunitoSans-Regular',
-                                        fontSize: 14,
-                                        color: '#303030',
-                                        opacity: 0.6,
-                                        textAlign: 'center'
-                                    }}>로그인하고 다양한 혜택을 만나보세요</Text>
-                                    <View style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                        marginTop: 15
-                                    }}>
-                                        <TouchableOpacity onPress={() => setUserlogin(false)} style={{
-                                            width: 140,
-                                            height: 55,
-                                            borderBottomLeftRadius: 20,
-                                            backgroundColor: '#999999',
-                                            justifyContent: 'center',
-                                            alignItems: 'center'
-                                        }}>
-                                            <Text style={{
-                                                fontSize: 16,
-                                                color: '#ffffff',
-                                                fontFamily: 'NunitoSans-Regular'
-                                            }}>둘러보기</Text>
-                                        </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => {
-                                            navigation.navigate('회원가입')
-                                            setUserlogin(false)
-                                        }}
-                                            style={{
-                                                width: 140,
-                                                height: 55,
-                                                borderBottomRightRadius: 20,
-                                                backgroundColor: '#5cc27b',
-                                                justifyContent: 'center',
-                                                alignItems: 'center'
-                                            }}>
-                                            <Text style={{
-                                                fontSize: 16,
-                                                color: '#ffffff',
-                                                fontFamily: 'NunitoSans-Regular'
-                                            }}>로그인</Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                </View>
-                            </View>
-                        </Modal>
                         <FlatList
                             data={items}
                             refreshControl={<RefreshControl refreshing={refresh} onRefresh={onRefresh} />}

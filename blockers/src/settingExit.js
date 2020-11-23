@@ -35,14 +35,8 @@ const setting = StyleSheet.create({
 })
 
 export default function SettingExit({ navigation }) {
-    const [modalVisible, setModalVisible] = useState(false);
-    const modalbutton = () => {
-        setTimeout(() => {
-            setModalVisible(true)
-        }, 200)
-    }
-    const [agreeOne, setAgreeOne] = useState(true);
-    const [agreeTwo, setAgreeTwo] = useState(true);
+    const [agreeOne, setAgreeOne] = useState(false);
+    const [agreeTwo, setAgreeTwo] = useState(false);
     const OneCheck = () => { setAgreeOne(!agreeOne) }
     const TwoCheck = () => { setAgreeTwo(!agreeTwo) }
     const OneAgree = agreeOne === true ? <Ionicons size={12} color="#303030" name="checkmark" /> : <View />;
@@ -72,80 +66,6 @@ export default function SettingExit({ navigation }) {
                         </Text>
                     </View>
                 </View>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={{position: "absolute", width: WIDTH, height: HEIGHT, backgroundColor: "#303030", opacity: 0.4}} />
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{
-                            width: 280,
-                            height: 180,
-                            borderRadius: 20,
-                            backgroundColor: '#ffffff',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Bold',
-                                fontSize: 16,
-                                color: '#303030',
-                                opacity: 0.8,
-                                marginTop: 20
-                            }}>출금을 진행해주세요</Text>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Regular',
-                                fontSize: 14,
-                                color: '#303030',
-                                opacity: 0.6,
-                                textAlign: 'center',
-                                paddingRight: 12,
-                                paddingLeft: 12
-                            }}>출금을 완료하지 않으면 탈퇴가 불가능합니다</Text>
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                marginTop: 15
-                            }}>
-                                <TouchableOpacity onPress={() => setModalVisible(false)} style={{
-                                    width: 140,
-                                    height: 55,
-                                    borderBottomLeftRadius: 20,
-                                    backgroundColor: '#999999',
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>취소</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => {
-                                    navigation.navigate("SettingResetComplete")
-                                    setModalVisible(false)
-                                }}
-                                    style={{
-                                        width: 140,
-                                        height: 55,
-                                        borderBottomRightRadius: 20,
-                                        backgroundColor: '#5cc27b',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>확인</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
                 <ScrollView>
                     <Text style={{
                         fontSize: 18,
@@ -301,7 +221,7 @@ export default function SettingExit({ navigation }) {
             </SafeAreaView>
             <SafeAreaView style={{flex: 0}}>
                 {(agreeOne === true) && (agreeTwo === true) ?
-                    <TouchableOpacity onPress={modalbutton}>
+                    <TouchableOpacity onPress={() => navigation.navigate("SettingResetComplete")}>
                         <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>탈퇴하기</Text>
                         </View>

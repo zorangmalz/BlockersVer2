@@ -8,9 +8,9 @@ import {
     TouchableOpacity,
     StyleSheet,
     Image,
+    Alert,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Modal from 'react-native-modal';
 
 const setting = StyleSheet.create({
     agree: {
@@ -32,13 +32,7 @@ const setting = StyleSheet.create({
 })
 
 export default function MyPageRule({ navigation }) {
-    const [modalVisible, setModalVisible] = useState(false);
-    const modalbutton = () => {
-        setTimeout(() => {
-            setModalVisible(true)
-        }, 200)
-    }
-    const [agreeTwo, setAgreeTwo] = useState(true);
+    const [agreeTwo, setAgreeTwo] = useState(false);
     const TwoCheck = () => { setAgreeTwo(!agreeTwo) }
     const TwoAgree = agreeTwo === true ? require('./icon/exitcheck.png') : '';
     const noTwoAgree = agreeTwo === false ? require('./icon/exitcheck.png') : '';
@@ -65,84 +59,6 @@ export default function MyPageRule({ navigation }) {
                         </Text>
                     </View>
                 </View>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    isVisible={modalVisible}
-                    backdropOpacity={0.4}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{
-                            width: 280,
-                            height: 180,
-                            borderRadius: 20,
-                            backgroundColor: '#ffffff',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Bold',
-                                fontSize: 16,
-                                color: '#303030',
-                                opacity: 0.8,
-                                marginTop: 20
-                            }}>거부하시겠습니까?</Text>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Regular',
-                                fontSize: 14,
-                                color: '#303030',
-                                opacity: 0.6,
-                                textAlign: 'center',
-                                paddingRight: 12,
-                                paddingLeft: 12
-                            }}>유용한 정보와 혜택을 놓칠수 있습니다!</Text>
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                marginTop: 15
-                            }}>
-                                <TouchableOpacity onPress={() => {
-                                    setModalVisible(!modalVisible);
-                                    setAgreeTwo(true);
-                                }}
-                                    style={{
-                                        width: 140,
-                                        height: 55,
-                                        borderBottomLeftRadius: 20,
-                                        backgroundColor: '#999999',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>Cancel</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => {
-                                    setAgreeTwo(false);
-                                    setModalVisible(false);
-                                }}
-                                    style={{
-                                        width: 140,
-                                        height: 55,
-                                        borderBottomRightRadius: 20,
-                                        backgroundColor: '#5cc27b',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>거부하기</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
                 <ScrollView>
                     <View style={{
                         marginLeft: "5%",
@@ -267,7 +183,17 @@ export default function MyPageRule({ navigation }) {
                         }}>
                             <TouchableOpacity onPress={() => {
                                 TwoCheck();
-                                modalbutton();
+                                Alert.alert(
+                                    "거부하시겠습니까?",
+                                    "유용한 정보와 혜택을 놓칠 수 있습니다.",
+                                    [
+                                        {
+                                            text: "Cancel",
+                                            onPress: () => setAgreeTwo(true),
+                                        },
+                                        { text: "거부하기", onPress: () => setAgreeTwo(false) }
+                                    ],
+                                )
                             }}>
                                 <View style={setting.agreeBox}>
                                     <Image resizeMode="contain" source={noTwoAgree} />

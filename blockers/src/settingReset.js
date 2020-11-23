@@ -7,16 +7,13 @@ import {
     ScrollView,
     StyleSheet,
     TouchableOpacity,
-    Modal,
-    Dimensions
+    Dimensions,
+    Alert
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from "moment";
-
-const WIDTH = Dimensions.get("screen").width;
-const HEIGHT = Dimensions.get("screen").height;
 
 const setting = StyleSheet.create({
     largeText: {
@@ -58,11 +55,18 @@ const setting = StyleSheet.create({
 })
 
 export default function SettingReset({ navigation }) {
-    const [modalVisible, setModalVisible] = useState(false);
-    const modalbutton = () => {
-        setTimeout(() => {
-            setModalVisible(true)
-        }, 200)
+    const AlertButton = () => {
+        Alert.alert(
+            "초기화 하시겠습니까?",
+            "챌린지를 진행중인 경우 실패로 포기하게 됩니다.",
+            [
+                {
+                    text: "취소",
+                    onPress: () => console.log("Cancel"),
+                },
+                { text: "확인", onPress: () => reset() }
+            ]
+        )
     }
     const [stress, setStress] = useState(false);
     const [symptom, setSymptom] = useState(false);
@@ -71,7 +75,6 @@ export default function SettingReset({ navigation }) {
     const [select, setSelect] = useState([]);
     const [clear, setClear] = useState(false);
     const [user, setUser] = useState();
-    const [uid, setuid] = useState();
     const [initializing, setInitializing] = useState(true);
     const [fullTime,setFullTime]=useState();
 
@@ -110,7 +113,6 @@ export default function SettingReset({ navigation }) {
         setSelect(select.filter(info => info !== '습관'))
     }
     async function reset() {
-        setModalVisible(false)
         var a = moment().toArray()
         var b=fullTime
         var c = (b.diff(a, "seconds")) * -1
@@ -184,78 +186,6 @@ export default function SettingReset({ navigation }) {
                         </Text>
                     </View>
                 </View>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => setModalVisible(false)}
-                >
-                    <View style={{position: "absolute", width: WIDTH, height: HEIGHT, backgroundColor: "#303030", opacity: 0.4}} />
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{
-                            width: 280,
-                            height: 180,
-                            borderRadius: 20,
-                            backgroundColor: '#ffffff',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                        }}>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Bold',
-                                fontSize: 16,
-                                color: '#303030',
-                                opacity: 0.8,
-                                marginTop: 20
-                            }}>초기화 하시겠습니까?</Text>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Regular',
-                                fontSize: 14,
-                                color: '#303030',
-                                opacity: 0.6,
-                                textAlign: 'center'
-                            }}>챌린지를 진행중인 경우 으로 포기하게 됩니다.</Text>
-                            <View style={{
-                                flexDirection: 'row',
-                                alignItems: 'center',
-                                justifyContent: 'space-between',
-                                marginTop: 15
-                            }}>
-                                <TouchableOpacity onPress={() => setModalVisible(false)} style={{
-                                    width: 140,
-                                    height: 55,
-                                    borderBottomLeftRadius: 20,
-                                    backgroundColor: '#999999',
-                                    justifyContent: 'center',
-                                    alignItems: 'center'
-                                }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>취소</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={() => {
-                                    reset();
-                                    setModalVisible(false);
-                                }}
-                                    style={{
-                                        width: 140,
-                                        height: 55,
-                                        borderBottomRightRadius: 20,
-                                        backgroundColor: '#5cc27b',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        color: '#ffffff',
-                                        fontFamily: 'NunitoSans-Regular'
-                                    }}>초기화</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    </View>
-                </Modal>
                 <ScrollView style={{ marginBottom: 70, paddingTop: 32 }}>
                     <Text style={setting.largeText}>금연에 실패하셨나요?</Text>
                     <Text style={[setting.mediumText, { marginLeft: 48, marginBottom: 8 }]}>다음 도전을 도와드리기 위해</Text>
@@ -313,8 +243,10 @@ export default function SettingReset({ navigation }) {
                         </TouchableOpacity>
                     }
                 </ScrollView>
-                <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }} onPress={modalbutton}>
-                    <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
+            </SafeAreaView>
+            <SafeAreaView style={{flex: 0}}>
+                <TouchableOpacity onPress={select.length > 0 ? AlertButton : () => console.log("실패요인을 입력해주세요")}>
+                    <View style={{ width: "100%", height: 60, backgroundColor: select.length > 0 ? '#5cc27b' : '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>초기화</Text>
                     </View>
                 </TouchableOpacity>
