@@ -113,10 +113,11 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
         
 
         var a=moment().toArray()
-        console.log(a)
+        
 
         if(a[1]===12){
             a[1]=1
+            a[0]=a[0]+1
         }else{
             a[1]=a[1]+1
         }

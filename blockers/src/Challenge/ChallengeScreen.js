@@ -290,6 +290,7 @@ export default function Challenge({ navigation }) {
         var a = moment().toArray()
         if(a[1]===12){
             a[1]=1
+            a[0]=a[0]+1
         }else{
             a[1]=a[1]+1
         }
@@ -338,6 +339,7 @@ export default function Challenge({ navigation }) {
 
             if (a[1] === 12) {
                 a[1] = 1
+                a[0]=a[0]+1
             } else {
                 a[1] = a[1] + 1
             }
@@ -797,6 +799,7 @@ export function ChallengeRegister({ navigation }) {
 
         if (a[1] === 12) {
             a[1] = 1
+            a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
@@ -1894,6 +1897,7 @@ export function ChallengeSupport({ navigation }) {
 
         if (a[1] === 12) {
             a[1] = 1
+            a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
@@ -2123,6 +2127,7 @@ export function ChallengeSwear({ navigation }) {
 
         if (a[1] === 12) {
             a[1] = 1
+            a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
@@ -2145,6 +2150,7 @@ export function ChallengeSwear({ navigation }) {
 
         if (a[1] === 12) {
             a[1] = 1
+            a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
@@ -2337,6 +2343,7 @@ export function ChallengeSwearResult({ navigation }) {
 
         if (a[1] === 12) {
             a[1] = 1
+            a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
@@ -2622,6 +2629,7 @@ export function ChallengeMotivation({ navigation }) {
         console.log(a)
         if (a[1] === 12) {
             a[1] = 1
+            a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
@@ -3193,6 +3201,7 @@ export function ChallengeGD({ navigation }) {
 
         if (a[1] === 12) {
             a[1] = 1
+            a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
@@ -3360,6 +3369,7 @@ export function ChallengeGDResult({ navigation }) {
 
         if (a[1] === 12) {
             a[1] = 1
+            a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
@@ -3693,6 +3703,7 @@ export function ChallengeVeriImage({ navigation,route}) {
 
         if(a[1]===12){
             a[1]=1
+            a[0]=a[0]+1
         }else{
             a[1]=a[1]+1
         }

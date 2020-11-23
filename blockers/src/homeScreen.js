@@ -146,6 +146,7 @@ export default function HomeScreen({ navigation}) {
         var a = moment().toArray()
         if (a[1] === 12) {
             a[1] = 1
+            a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
@@ -212,6 +213,7 @@ export default function HomeScreen({ navigation}) {
         console.log(a)
         if (a[1] === 12) {
             a[1] = 1
+            a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
@@ -277,6 +279,9 @@ export default function HomeScreen({ navigation}) {
     // }, [user,login, userlogin, refreshing, Rotate, focus, smoker])
 
     useEffect(() => {
+        let now=new Date()
+        
+        console.log(String(now),"dfseafwe")
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
@@ -317,6 +322,7 @@ export default function HomeScreen({ navigation}) {
                 var a = moment().toArray()
                 if(a[1]===12){
                     a[1]=1
+                    a[0]=a[0]+1
                 }else{
                     a[1]=a[1]+1
                 }
@@ -416,6 +422,7 @@ export default function HomeScreen({ navigation}) {
         var a = moment().toArray()
         if (a[1] === 12) {
             a[1] = 1
+            a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
@@ -460,6 +467,7 @@ export default function HomeScreen({ navigation}) {
         var a = moment().toArray()
         if(a[1]===12){
             a[1]=1
+            a[0]=a[0]+1
         }else{
             a[1]=a[1]+1
         }

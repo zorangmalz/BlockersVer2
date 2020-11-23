@@ -48,7 +48,7 @@ export default function SolutionSmokeResult({navigation,route}) {
         
     },[])
     async function uploadInfo(){
-        var a=moment().toArray()
+        var a=
         console.log(a)
         
         if(a[1]===12){
