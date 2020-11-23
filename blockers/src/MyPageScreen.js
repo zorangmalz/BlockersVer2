@@ -176,6 +176,7 @@ export default function MyPageScreen({ navigation }) {
                     getImage()
                 }
                 getInfo()
+                console.log(one,three,six)
             }
             else {
                 setUserlogined(false);

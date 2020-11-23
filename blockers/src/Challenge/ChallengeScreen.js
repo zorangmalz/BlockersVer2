@@ -102,18 +102,19 @@ export default function Challenge({ navigation }) {
     useFocusEffect(
         useCallback(() => {
             //포커싱 되었을 떄
-            const USER = firebase.auth().currentUser
-            auth().onAuthStateChanged(userAuth => {
-                setUser(userAuth)
-            })
-            if (USER) {
-                setLogined(true)
-                firestore().collection("UserInfo").doc(USER.uid).get().then(doc => {
-                    setSmoker(doc.data().smoker)
-                })
+  
+            // auth().onAuthStateChanged(userAuth => {
+            //     setUser(userAuth)
+            // })
+            if (user) {
+                // setLogined(true)
+                // firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+                //     setSmoker(doc.data().smoker)
+                // })
                 hi()
                 if (challenge) {
                     checkRate()
+                    console.log("hereaefae")
                 }
             } else {
                 setLogined(false)
@@ -122,22 +123,29 @@ export default function Challenge({ navigation }) {
                 //포커싱 안 되었을 떄
                 
             };
-        }, [refreshing, logined, change])
+        }, [refreshing, logined, change,user])
     );
-
-    useEffect(() => {
+    useEffect(()=>{
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
+    },[])
+    useEffect(() => {
+      
         if(user){
             setLogined(true)
             firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
                 setSmoker(doc.data().smoker)
             })
+            hi()
+            if (challenge) {
+                checkRate()
+                console.log("hereaefae")
+            }
         } else {
             setLogined(false)
         }
-    }, [refreshing, logined, change])
+    }, [refreshing, logined, change,user])
 
     const AlertPart = () => Alert.alert(
         "미션",
@@ -715,7 +723,7 @@ export default function Challenge({ navigation }) {
                         <FlatList
                             horizontal={true}
                             data={logined ? smoker ? MissionData : challenge ? items : MissionData : MissionData}
-                            keyExtractor={(item) => item.id}
+                            keyExtractor={(item,index) => index.toString()}
                             renderItem={MissionItem}
                             style={{ paddingBottom: 5 }}
                             showsHorizontalScrollIndicator={false}
