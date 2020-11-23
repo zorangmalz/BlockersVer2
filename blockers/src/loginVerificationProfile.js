@@ -30,7 +30,7 @@ const login = StyleSheet.create({
         textAlign: 'center',
     },
     textinput: {
-        fontSize: 21,
+        fontSize: 18,
         fontFamily: 'NunitoSans-Bold',
         opacity: 0.7,
         color: '#000000',
@@ -141,7 +141,7 @@ export default function LoginVerificationProfile({ navigation }) {
             skipBackup: true,
             path: 'images',
         },
-        quality: 0.1
+        quality: 0.05
     };
 
 
