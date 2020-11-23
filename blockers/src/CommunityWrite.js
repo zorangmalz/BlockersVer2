@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
@@ -56,7 +56,7 @@ const community = StyleSheet.create({
     contentbox: {
         paddingLeft: 32,
         alignItems: 'flex-start',
-        height: WIDTH*1.2,
+        height: WIDTH * 1.2,
         borderBottomWidth: 0.5,
         borderColor: '#707070',
         paddingTop: 8,
@@ -69,79 +69,79 @@ const community = StyleSheet.create({
     }
 })
 
-export default function CommunityWrite ({navigation}) {
-    const ref=firestore().collection("Community1");
+export default function CommunityWrite({ navigation }) {
+    const ref = firestore().collection("Community1");
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [imageOne, setImageOne] = useState(undefined);
     const [picone, setPicone] = useState(true);
-    const [user,setuser]=useState()
-    const [nick,setNick]=useState()
-    const [filename,setFilename]=useState()
-    const [vmtkfldzm,setvmtkfldzm]=useState()
-    const [picture,setPicture]=useState()
-    const [isPicture,setIsPicture]=useState()
-    useEffect(()=>{
+    const [user, setuser] = useState()
+    const [nick, setNick] = useState()
+    const [filename, setFilename] = useState()
+    const [vmtkfldzm, setvmtkfldzm] = useState()
+    const [picture, setPicture] = useState()
+    const [isPicture, setIsPicture] = useState()
+    useEffect(() => {
 
-console.log(utils.FilePath.PICTURES_DIRECTORY);
-        auth().onAuthStateChanged(userAuth=>{
+        console.log(utils.FilePath.PICTURES_DIRECTORY);
+        auth().onAuthStateChanged(userAuth => {
             setuser(userAuth)
-            
+
         })
-        if(user){
+        if (user) {
             console.log(user)
-            firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot=>{
-                console.log(documentSnapshot.data().nickname,"hihi")
+            firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot => {
+                console.log(documentSnapshot.data().nickname, "hihi")
                 setNick(documentSnapshot.data().nickname)
                 setvmtkfldzm(documentSnapshot.data().profilePicture)
 
             })
-           
+
         }
-    },[user])
-    async function uploadImage(a){
-        const uri=imageOne;
-        setFilename(title+nick+a)
-        
-        const reference = storage().ref("community1/"+title+nick+a);
-        const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
-        
+    }, [user])
+    async function uploadImage(a) {
+        const uri = imageOne;
+        setFilename(title + nick + a)
+
+        const reference = storage().ref("community1/" + title + nick + a);
+        const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
+
         await reference.putFile(uploadUri);
         setPicture(true)
     }
-    async function writePost(){
-        
+    async function writePost() {
 
-        var a=moment().toArray()
-        
 
-        if(a[1]===12){
-            a[1]=1
-            a[0]=a[0]+1
-        }else{
-            a[1]=a[1]+1
+        var a = moment().toArray()
+
+
+        if (a[1] === 12) {
+            a[1] = 1
+            a[0] = a[0] + 1
+        } else {
+            a[1] = a[1] + 1
         }
-        console.log("is picture",isPicture)
-        if(isPicture){
-        await uploadImage(a)
+        console.log("is picture", isPicture)
+        if (isPicture) {
+            await uploadImage(a)
         }
-        await ref.doc(a+title).set({
-            context:content,
-            like:0,
-            title:title,
-            writerUid:user.uid,
-            fullTime:a,
-            time:a[3]+":"+a[4],
-            day:a[1]+"/"+a[2],
-            docName:a+title,
-            nickname:nick,
-            whoLike:[],
-            commentNum:0,
-            fullText:title+content,
-            whoAlert:[],
-            profilePicture:vmtkfldzm,
-            isPicture:isPicture
-            
+        await ref.doc(a + title).set({
+            context: content,
+            like: 0,
+            title: title,
+            writerUid: user.uid,
+            fullTime: a,
+            time: a[3] + ":" + a[4],
+            day: a[1] + "/" + a[2],
+            docName: a + title,
+            nickname: nick,
+            whoLike: [],
+            commentNum: 0,
+            fullText: title + content,
+            whoAlert: [],
+            profilePicture: vmtkfldzm,
+            isPicture: isPicture
+
         })
         Alert.alert(
             '업로드 완료',
@@ -152,7 +152,7 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
                 }
             ]
         )
-       
+
     }
     const options = {
         title: '사진가져오기',
@@ -164,22 +164,22 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
             skipBackup: true,
             path: 'images',
         },
-        quality:0.3
+        quality: 0.3
     };
-   
+
     const showCameraRoll1 = () => {
         ImagePicker.launchImageLibrary(options, (response) => {
-          if (response.error) {
-            console.log('LaunchImageLibrary Error: ', response.error);
-          }
-          else {
-            setImageOne(response.uri);
-            setPicone(false);
-          }
+            if (response.error) {
+                console.log('LaunchImageLibrary Error: ', response.error);
+            }
+            else {
+                setImageOne(response.uri);
+                setPicone(false);
+            }
         });
         setIsPicture(true)
     };
-    
+
     const errorview = () => {
         Alert.alert(
             "작성 오류",
@@ -236,7 +236,7 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
                             justifyContent: 'center'
                         }}>
                             {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 92, height: 92 }} />}
-                            {picone === true ? <Text style={community.picturetext}>Picture 1</Text> : <View /> }
+                            {picone === true ? <Text style={community.picturetext}>Picture 1</Text> : <View />}
                         </TouchableOpacity>
                     </View>
                 </ScrollView>

@@ -97,6 +97,7 @@ import SolutionSmokeResult from './src/SolutionSmokeResult';
 import SolutionResult from './src/SolutionResult';
 import NicotineResult from "./src/NicotineResult";
 import AlramScreen from './src/AlramScreen';
+import NotificationContents from './src/NotificationContents';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -288,6 +289,14 @@ const App = ({ navigation }) => {
           component={CommunityWrite}
           options={{
             gestureDirection: 'vertical-inverted',
+            headerShown: false
+          }}
+        />
+        <Stack.Screen 
+          name="NotificationContents"
+          component={NotificationContents}
+          options={{
+            gestureDirection: "vertical-inverted",
             headerShown: false
           }}
         />
