@@ -96,6 +96,7 @@ import SolutionSmokeThree from './src/SolutionSmokeThree';
 import SolutionSmokeResult from './src/SolutionSmokeResult';
 import SolutionResult from './src/SolutionResult';
 import NicotineResult from "./src/NicotineResult";
+import AlramScreen from './src/AlramScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -1259,6 +1260,14 @@ const App = ({ navigation }) => {
             component={NicotineResult}
             options={{
               gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="AlramScreen"
+            component={AlramScreen}
+            options={{
+              gestureDirection: "horizontal-inverted",
               headerShown: false
             }}
           />
