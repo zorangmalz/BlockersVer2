@@ -494,23 +494,19 @@ export function SmokeAlertFour({ navigation }) {
                         </View>
                     </View>
                 </ScrollView>
-                <View
-                    style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
+                <SafeAreaView style={{ flex: 0 }}>
+                  <TouchableOpacity onPress={()=>ㄴnavigation.navigate("Home")}>
+                    <View style={{
+                        width: "100%",
+                        height: 60,
+                        backgroundColor: '#5cc27b',
+                        justifyContent: 'center',
+                        alignItems: 'center'
                     }}>
-                    <BannerAd
-                        unitId={adUnitId}
-                        size={BannerAdSize.SMART_BANNER}
-                        requestOptions={{
-                            requestNonPersonalizedAdsOnly: true,
-                        }}
-                        onAdFailedToLoad={(error) => {
-                            console.error('Advert failed to load: ', error);
-                        }}
-                    />
-                </View>
+                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                    </View>
+                </TouchableOpacity>
+                </SafeAreaView>
             </SafeAreaView>
         </>
     )

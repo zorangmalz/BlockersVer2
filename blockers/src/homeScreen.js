@@ -114,7 +114,7 @@ export default function HomeScreen({ navigation}) {
             const USER = auth().currentUser
             if (USER) {
                 setLogin(true)
-                setViewOpacity(false)
+                // setViewOpacity(false)
                 firestore().collection("UserInfo").doc(USER.uid).get().then(doc => {
                     if (doc.data().SmokingTime) {
                         setViewOpacity(false)
@@ -217,6 +217,7 @@ export default function HomeScreen({ navigation}) {
         }
         await ref.doc(user.uid).get().then(documentSnapshot => {
             if (a[2] === documentSnapshot.data().smokeToday) {
+                console.log(documentSnapshot.data().smokeToday)
                 console.log("same")
             } else {
                 console.log("different")
