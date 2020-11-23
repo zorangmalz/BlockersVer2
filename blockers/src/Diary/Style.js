@@ -10,15 +10,17 @@ import {
     ScrollView,
     Dimensions,
     FlatList,
-    Alert
+    Alert,
+    ActivityIndicator
 } from "react-native";
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-
-const HEIGHT = Dimensions.get("window").height;
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
 
 export default function Header({ navigation, Create }) {
     return (
@@ -98,10 +100,10 @@ export function Create({ navigation }) {
         }
         firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
             diary:"일기 작성"
-        }).catch(()=>
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-            diary:"일기 작성"
-        }))
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+                diary: "일기 작성"
+            }))
         await firestore().collection("UserInfo").doc(user.uid).collection("Diary").doc(a + "diary").set({
             impulse: check,
             when: when,
@@ -136,7 +138,7 @@ export function Create({ navigation }) {
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
                 <Header navigation={navigation} Create={true} />
-                <ScrollView>
+                <KeyboardAwareScrollView>
                     <View style={{
                         marginLeft: "8%",
                         marginRight: "8%",
@@ -146,13 +148,7 @@ export function Create({ navigation }) {
                             fontFamily: "NunitoSans-Bold",
                             color: "#303030",
                             marginTop: HEIGHT * 0.05
-                        }}>오늘의 금연은 어떠셨나요?</Text>
-                        <Text style={{
-                            fontSize: 16,
-                            fontFamily: "NunitoSans-Bold",
-                            color: "#303030",
-                            marginTop: 4
-                        }}>짧게 오늘 하루를 말해주세요.</Text>
+                        }}>오늘의 금연은 어떠셨나요?{"\n"}짧게 오늘 하루를 말해주세요.</Text>
                         <Text style={{
                             fontFamily: "NunitoSans-Regular",
                             fontSize: 16,
@@ -256,14 +252,14 @@ export function Create({ navigation }) {
                                 paddingBottom: 8
                             }} />
                     </View>
-                </ScrollView>
+                </KeyboardAwareScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
-                <TouchableOpacity onPress={when.length > 0 && how.length > 0 && advice.length > 0 && state > 0 ? writeDiary : state===2 ? writeDiary : NotComplete}>
+                <TouchableOpacity onPress={when.length > 0 && how.length > 0 && advice.length > 0 && state > 0 ? writeDiary : state === 2 ? writeDiary : NotComplete}>
                     <View style={{
                         width: "100%",
                         height: 60,
-                        backgroundColor: when.length > 0 && how.length > 0 && advice.length > 0 && state > 0 ? '#5cc27b' : state===2 ? "#5cc27b" : "#c6c6c6",
+                        backgroundColor: when.length > 0 && how.length > 0 && advice.length > 0 && state > 0 ? '#5cc27b' : state === 2 ? "#5cc27b" : "#c6c6c6",
                         justifyContent: 'center',
                         alignItems: 'center'
                     }}>
@@ -355,6 +351,8 @@ const renderItem = ({ item }) => {
 export function List({ navigation }) {
     const [user, setUser] = useState()
     const [items, setItems] = useState()
+    const [exist, setExist] = useState(false)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
@@ -378,21 +376,35 @@ export function List({ navigation }) {
                     advice: doc.data().advice
                 });
             })
+            if (list.length > 0) {
+                setExist(true)
+            }
             setItems(list);
+            setLoading(false);
         })
     }
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-                <Header navigation={navigation} Create={false} />
-                <ScrollView style={{paddingTop: 16}}>
-                    <FlatList
-                        data={items}
-                        keyExtractor={(item) => item.id}
-                        renderItem={renderItem}
-                    />
-                </ScrollView>
+                {loading ?
+                    <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT - 20, left: WIDTH - 20 }} />
+                    :
+                    <>
+                        <Header navigation={navigation} Create={false} />
+                        <ScrollView style={{ paddingTop: 16 }}>
+                            {exist ?
+                                < FlatList
+                                    data={items}
+                                    keyExtractor={(item) => item.id}
+                                    renderItem={renderItem}
+                                />
+                                :
+                                <Text style={{ fontFamily: "NunitoSans-Bold", fontSize: 16, alignSelf: "center" }}>아직 작정한 일기가 없습니다.</Text>
+                            }
+                        </ScrollView>
+                    </>
+                }
             </SafeAreaView>
         </>
     )

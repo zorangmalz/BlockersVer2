@@ -19,7 +19,6 @@ import moment from "moment"
 import storage from '@react-native-firebase/storage';
 import { utils } from '@react-native-firebase/app';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Modal from 'react-native-modal';
 
 const WIDTH = Dimensions.get('window').width;
 
@@ -52,6 +51,7 @@ const community = StyleSheet.create({
         fontSize: 14,
         fontFamily: 'NunitoSans-Regular',
         color: '#666666',
+        width: "100%"
     },
     contentbox: {
         paddingLeft: 32,
@@ -178,12 +178,18 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
         });
         setIsPicture(true)
     };
-
-    const [writeerror, setWriteerror] = useState(false)
+    
     const errorview = () => {
-        setTimeout(() => {
-            setWriteerror(true)
-        }, 200)
+        Alert.alert(
+            "작성 오류",
+            "제목 본문 한글자 이상 작성해주세요",
+            [
+                {
+                    text: "확인",
+                    onPress: () => console.log("확인")
+                }
+            ]
+        )
     }
 
     return (
@@ -207,67 +213,6 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
                     {/* 중앙 맞추기 */}
                     <View style={{ width: "4%" }} />
                 </View>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={writeerror}
-                    onRequestClose={() => setWriteerror(false)}
-                >
-                    <View style={{ flex: 1, backgroundColor: '#000000', opacity: 0.4 }} />
-                </Modal>
-                <Modal
-                    animationType="none"
-                    transparent={true}
-                    visible={writeerror}
-                    onRequestClose={() => setWriteerror(false)}
-                >
-                    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{
-                            width: 280,
-                            height: 180,
-                            borderRadius: 20,
-                            backgroundColor: '#ffffff',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                            borderWidth: 1,
-                            borderColor: '#cccccc'
-                        }}>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Bold',
-                                fontSize: 16,
-                                color: '#000000',
-                                opacity: 0.8,
-                                marginTop: 20
-                            }}>작성 오류</Text>
-                            <Text style={{
-                                fontFamily: 'NunitoSans-Regular',
-                                fontSize: 14,
-                                color: '#000000',
-                                opacity: 0.6,
-                                textAlign: 'center'
-                            }}>제목 본문 한글자 이상 작성해주세요.</Text>
-                            <TouchableOpacity onPress={() => {
-                                setWriteerror(false)
-                            }}
-                                style={{
-                                    width: 280,
-                                    height: 45,
-                                    borderBottomRightRadius: 20,
-                                    borderBottomLeftRadius: 20,
-                                    backgroundColor: '#5cc27b',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    marginTop: 15
-                                }}>
-                                <Text style={{
-                                    fontSize: 16,
-                                    color: '#ffffff',
-                                    fontFamily: 'NunitoSans-Regular'
-                                }}>Ok</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </Modal>
                 <ScrollView>
                     <View style={community.titlebox}>
                         <TextInput value={title} onChangeText={text => setTitle(text)} style={community.titleandcontent} placeholder="제목" placeholderTextColor="#707070" />
@@ -296,8 +241,8 @@ console.log(utils.FilePath.PICTURES_DIRECTORY);
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
-                <TouchableOpacity onPress={() =>
-                    (title.length > 0) && (content.length > 0) ? writePost() : errorview()}>
+                <TouchableOpacity onPress={
+                    (title.length > 0) && (content.length > 0) ? () => writePost() : errorview}>
                     <View style={{ width: "100%", height: 60, backgroundColor: (title.length > 0) && (content.length > 0) ? '#5cc27b' : "#c6c6c6", justifyContent: 'center', alignItems: 'center' }}>
                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>작성완료</Text>
                     </View>
