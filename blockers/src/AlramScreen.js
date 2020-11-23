@@ -57,15 +57,24 @@ export default function AlramScreen({ navigation }) {
                         date:doc.data().date,
                         id:doc.data().realDate,
                         docID:doc.data().docID,
-                        type:doc.data().type
+                        type:doc.data().type,
+                        docName:doc.id
+                      
                     })
                 })
                 setItems(list)
             })
         }
-    })
+    },[user])
 
-
+    async function move(item,name){
+        console.log("here????")
+        console.log(name,item)
+        firestore().collection("UserInfo").doc(user.uid).collection("Alarm").doc(name).update({
+            stats:true
+        })
+        navigation.navigate("CommunityOtherPost",{docID:item,Uid:user.uid})
+    }
     const alramData = [
         {
             id: 1,
@@ -115,14 +124,20 @@ export default function AlramScreen({ navigation }) {
                             <>
                             {item.type==="community"? 
                                     <>
-                                    <TouchableOpacity onPress={()=>navigation.navigate("CommunityOtherPost",{docID:item.docID,Uid:user.uid})}>
+                                    <TouchableOpacity onPress={()=>move(item.docID,item.docName)}>
                                     <View style={alram.box}>
-                                    
-                                    
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                            
-                                            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
+                                            {item.stats ?
+                                            <>
+
+                                            </>
+                                             : 
+                                            <>
+ <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
+                                            </>
+                                             }
+                                           
                                             <Text style={alram.title}>{item.title}</Text>
                                         </View>
                                         <Text style={{

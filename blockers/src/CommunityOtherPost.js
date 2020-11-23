@@ -293,11 +293,11 @@ export default function CommunityOtherPost({ route, navigation }) {
         if (del === false) {
             setItems(items.splice(0, items.length))
             console.log(items, "??????")
-            const { ID } = route.params
-            setParam(ID)
+            
+            setParam(Uid)
             async function reply() {
                 
-                firestore().collection('Community1').doc(ID).collection("Reply").orderBy("fullTime").get().then(querySnapshot => {
+                firestore().collection('Community1').doc(docID).collection("Reply").orderBy("fullTime").get().then(querySnapshot => {
                     let list = [];
                     console.log("comd")
                     setReplyNum(querySnapshot.size);
