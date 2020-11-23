@@ -142,7 +142,7 @@ export default function CommunityOtherPost({ route, navigation }) {
         } else {
             a[1] = a[1] + 1
         }
-        console.log(docID)
+        console.log(docID,"docid")
 
         await ref.doc(docID).collection("Reply").doc(a + b).set({
             content: b,
@@ -158,6 +158,23 @@ export default function CommunityOtherPost({ route, navigation }) {
         })
         await ref.doc(docID).update({
             commentNum: replynum + 1
+        })
+        var writer
+        await firestore().collection("Community1").doc(docID).get().then(doc => {
+            writer=doc.data().writerUid
+        })
+        console.log(writer)
+        await firestore().collection("UserInfo").doc(writer).collection("Alarm").add({
+            type:"community",
+            date:a[0]+"/"+a[1]+"/"+a[2],
+            realDate:a,
+            stats:false,
+            title:"댓글 알림",
+            content:"회원님의 글에 누군가 댓글을 남겼습니다",
+            docID:docID
+        })
+        await firestore().collection("UserInfo").doc(writer).update({
+            alarm:true
         })
         setState(true)
         setComment("")
@@ -279,7 +296,7 @@ export default function CommunityOtherPost({ route, navigation }) {
             const { ID } = route.params
             setParam(ID)
             async function reply() {
-                const USERUID = firebase.auth().currentUser.uid;
+                
                 firestore().collection('Community1').doc(ID).collection("Reply").orderBy("fullTime").get().then(querySnapshot => {
                     let list = [];
                     console.log("comd")
@@ -291,7 +308,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                         } else {
                             setReMeLike(false)
                         }
-                        if (USERUID === docs.data().writerUid) {
+                        if (Uid === docs.data().writerUid) {
                             list.push({
                                 reName: docs.data().fullTime + docs.data().content,
                                 reNick: docs.data().nick,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -10,7 +10,9 @@ import {
     FlatList
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import moment from "moment"
+import firestore from '@react-native-firebase/firestore';
+import auth, { firebase } from '@react-native-firebase/auth';
 const alram = StyleSheet.create({
     title: {
         fontSize: 16,
@@ -36,6 +38,34 @@ const alram = StyleSheet.create({
 })
 
 export default function AlramScreen({ navigation }) {
+    const [user,setUser]=useState("")
+    const [items,setItems]=useState([])
+    useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+    },[])
+    useEffect(()=>{
+        if(user){
+            const list=[]
+            firestore().collection("UserInfo").doc(user.uid).collection("Alarm").orderBy("realDate","desc").onSnapshot(querySnapshot=>{
+                querySnapshot.forEach(function(doc){
+                    list.push({
+                        title:doc.data().title,
+                        content:doc.data().content,
+                        stats:doc.data().stats,
+                        date:doc.data().date,
+                        id:doc.data().realDate,
+                        docID:doc.data().docID,
+                        type:doc.data().type
+                    })
+                })
+                setItems(list)
+            })
+        }
+    })
+
+
     const alramData = [
         {
             id: 1,
@@ -80,12 +110,40 @@ export default function AlramScreen({ navigation }) {
                 </View>
                 <ScrollView>
                     <FlatList
-                        data={alramData}
+                        data={items}
                         renderItem={({ item }) => (
                             <>
-                                <View style={alram.box}>
+                            {item.type==="community"? 
+                                    <>
+                                    <TouchableOpacity onPress={()=>navigation.navigate("CommunityOtherPost",{docID:item.docID,Uid:user.uid})}>
+                                    <View style={alram.box}>
+                                    
+                                    
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                            
+                                            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
+                                            <Text style={alram.title}>{item.title}</Text>
+                                        </View>
+                                        <Text style={{
+                                            fontFamily: "NunitoSans-Regular",
+                                            fontSize: 14,
+                                            color: "#303030"
+                                        }}>{item.date}</Text>
+                                    </View>
+                                    <Text style={alram.content}>{item.content}</Text>
+                                </View>
+                                </TouchableOpacity>
+                                <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} /></>
+
+                                    : 
+                                    <>
+                                    <View style={alram.box}>
+                                    
+                                    
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                            
                                             <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
                                             <Text style={alram.title}>{item.title}</Text>
                                         </View>
@@ -98,6 +156,9 @@ export default function AlramScreen({ navigation }) {
                                     <Text style={alram.content}>{item.content}</Text>
                                 </View>
                                 <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
+                                    </>
+                                    }
+                                
                             </>
                         )}
                     />

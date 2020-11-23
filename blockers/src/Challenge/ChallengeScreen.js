@@ -102,7 +102,6 @@ export default function Challenge({ navigation }) {
     useFocusEffect(
         useCallback(() => {
             //포커싱 되었을 떄
-  
             // auth().onAuthStateChanged(userAuth => {
             //     setUser(userAuth)
             // })
@@ -120,8 +119,7 @@ export default function Challenge({ navigation }) {
                 setLogined(false)
             }
             return () => {
-                //포커싱 안 되었을 떄
-                
+                //포커싱 안 되었을 떄  
             };
         }, [refreshing, logined, change,user])
     );
@@ -368,6 +366,17 @@ export default function Challenge({ navigation }) {
                     visible: true,
                     week: parseInt(durationWeek, 10) + 1
                 })
+                await firestore().collection("UserInfo").doc(user.uid).collection("Alarm").add({
+                    type:"community",
+                    date:a[0]+"/"+a[1]+"/"+a[2],
+                    realDate:a,
+                    stats:false,
+                    title:"챌린지 알림",
+                    content:"진행해야 할 챌린지가 추가되었습니다."
+                })
+                await firestore().collection("UserInfo").doc(writer).update({
+                    alarm:true
+                })
 
             }
             if (monthFire < durationMonth) {
@@ -387,7 +396,17 @@ export default function Challenge({ navigation }) {
                     visible: true,
                     month: parseInt(durationMonth, 10) + 1
                 })
-
+                await firestore().collection("UserInfo").doc(user.uid).collection("Alarm").add({
+                    type:"community",
+                    date:a[0]+"/"+a[1]+"/"+a[2],
+                    realDate:a,
+                    stats:false,
+                    title:"챌린지 알림",
+                    content:"진행해야 할 챌린지가 추가되었습니다."
+                })
+                await firestore().collection("UserInfo").doc(writer).update({
+                    alarm:true
+                })
             }
             if (durationMonth > long) {
                 if (progressFor > 80) {
@@ -396,6 +415,17 @@ export default function Challenge({ navigation }) {
                     })
                     await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").update({
                         visible: true
+                    })
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Alarm").add({
+                        type:"community",
+                        date:a[0]+"/"+a[1]+"/"+a[2],
+                        realDate:a,
+                        stats:false,
+                        title:"챌린지 알림",
+                        content:"진행해야 할 챌린지가 추가되었습니다."
+                    })
+                    await firestore().collection("UserInfo").doc(writer).update({
+                        alarm:true
                     })
                 } else {
                     await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
