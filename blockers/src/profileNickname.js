@@ -9,15 +9,10 @@ import {
     SafeAreaView,
     ScrollView,
     StyleSheet,
-    Modal,
-    Dimensions
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from '@react-native-firebase/auth';
-
-const WIDTH = Dimensions.get("screen").width;
-const HEIGHT = Dimensions.get("screen").height;
 
 const login = StyleSheet.create({
     rule: {
@@ -54,16 +49,22 @@ export default function ProfileNickname({ navigation }) {
     const [same, setSame] = useState(false)
 
     useEffect(() => {
-        const user = firebase.auth().currentUser;
-        firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
-            setCurrentNick(doc.data().nickname)
-        })
-    }, [])
+        firestore().collection("UserInfo").get()
+            .then(documentSnapshot => {
+                documentSnapshot.forEach(doc => {
+                    const data = doc.data().nickname
+                    if (nickname === data) {
+                        setSame(true)
+                    } else {
+                        setSame(false)
+                    }
+                })
+            })
+    }, [nickname])
     
     async function NicknameUpdate() {
-        setSame(false)
-        const user = firebase.auth().currentUser;
-        if (currentNick === nickname) {
+        const user = firebase.auth().currentUser
+        if (same) {
             Alert.alert(
                 "중복된 닉네임입니다.",
                 "",
@@ -74,8 +75,7 @@ export default function ProfileNickname({ navigation }) {
                     }
                 ]
             )
-            setSame(true)
-        } else if (nickname.length > 0 && (currentNick !== nickname)) {
+        } else if (nickname.length > 0 && !same) {
             console.log("변경")
             await firestore().collection("UserInfo").doc(user.uid)
                 .update({
