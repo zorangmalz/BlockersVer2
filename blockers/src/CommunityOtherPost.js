@@ -442,6 +442,9 @@ export default function CommunityOtherPost({ route, navigation }) {
     async function redeletePost(a) {
         ref.doc(param).collection("Reply").doc(a).delete()
         setCommentState(true)
+        await ref.doc(docID).update({
+            commentNum: replynum - 1
+        })
 
     }
     async function realertPost(a) {
@@ -657,11 +660,6 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                         <TouchableOpacity onPress={() => pressReLike(item.reWhoLikeList, item.reName)} >
                                                             <View style={{ color: "#DDDDDD", borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
                                                                 <MaterialCommunityIcons name="thumb-up-outline" color="#8A8A8A" size={15} />
-                                                            </View>
-                                                        </TouchableOpacity>
-                                                        <TouchableOpacity>
-                                                            <View style={{ color: "#DDDDDD", borderWidth: 0.5, width: 30, height: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                                                <Ionicons name="chatbubble-ellipses-outline" color="#8A8A8A" size={15} />
                                                             </View>
                                                         </TouchableOpacity>
                                                         {/* 신고 및 삭제 누르는 버튼 */}

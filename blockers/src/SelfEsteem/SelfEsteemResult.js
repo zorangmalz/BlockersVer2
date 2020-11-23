@@ -117,15 +117,17 @@ export default function SelfEsteemResult({navigation,route}) {
                             <Text style={{ fontSize: 36, fontFamily: "NunitoSans-Bold" }}>{results}</Text>
                         </Text>
                     </ProgressCircle>
-                    <Text style={{
-                        fontFamily: "NunitoSans-Bold",
-                        fontSize: 16,
-                        color: "#303030",
-                        lineHeight: 30,
-                        alignSelf: "center",
-                        textAlign: "center",
-                        marginTop: 20
-                    }}>{resultcontent}</Text>
+                    <View style={{paddingRight: 16, paddingLeft: 16}}>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Bold",
+                            fontSize: 16,
+                            color: "#303030",
+                            lineHeight: 30,
+                            alignSelf: "center",
+                            textAlign: "center",
+                            marginTop: 20
+                        }}>{resultcontent}</Text>
+                    </View>
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
