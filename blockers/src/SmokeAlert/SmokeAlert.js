@@ -495,7 +495,7 @@ export function SmokeAlertFour({ navigation }) {
                     </View>
                 </ScrollView>
                 <SafeAreaView style={{ flex: 0 }}>
-                  <TouchableOpacity onPress={()=>ㄴnavigation.navigate("Home")}>
+                  <TouchableOpacity onPress={()=>navigation.navigate("Home")}>
                     <View style={{
                         width: "100%",
                         height: 60,
