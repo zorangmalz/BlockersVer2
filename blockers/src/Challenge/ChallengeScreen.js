@@ -29,6 +29,7 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import storage from '@react-native-firebase/storage';
 import RNKakaoLink from 'react-native-kakao-links';
 import { useFocusEffect } from "@react-navigation/native";
+import { utils } from '@react-native-firebase/app';
 
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
@@ -1645,7 +1646,7 @@ const mission = StyleSheet.create({
     }
 })
 
-const MissionBox = ({ color, name, data, navigation }) => {
+const MissionBox = ({ color, name, data, navigation, write }) => {
     const [fold, setFold] = useState(true);
     function noAnswer(){
         Alert.alert("응답기록이 없습니다.")
@@ -1681,19 +1682,24 @@ const MissionBox = ({ color, name, data, navigation }) => {
                     data={data}
                     keyExtractor={(item) => item.number}
                     renderItem={({ item }) => (
-                        (item.visible===false && item.period !="final" ? 
-                            <TouchableOpacity onPress={() => navigation.navigate(item.navigation,{UID:item.uid})}>
-                            <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
-                            <Text style={mission.regular}>{item.content}</Text>
-                        </TouchableOpacity>
+                        write ?
+                            <TouchableOpacity onPress={() => navigation.navigate(item.navigation, { UID: item.uid })}>
+                                <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
+                                <Text style={mission.regular}>{item.content}</Text>
+                            </TouchableOpacity>
                             :
-                            
-                            <TouchableOpacity onPress={noAnswer}>
-                            <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
-                            <Text style={mission.regular}>{item.content}</Text>
-                        </TouchableOpacity>
+                            (item.visible === false && item.period != "final" ?
+                                <TouchableOpacity onPress={() => navigation.navigate(item.navigation, { UID: item.uid })}>
+                                    <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
+                                    <Text style={mission.regular}>{item.content}</Text>
+                                </TouchableOpacity>
+                                :
+
+                                <TouchableOpacity onPress={noAnswer}>
+                                    <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
+                                    <Text style={mission.regular}>{item.content}</Text>
+                                </TouchableOpacity>
                             )
-                        
                     )}
                 />
                 :
@@ -1886,15 +1892,15 @@ export function ChallengeMission({ navigation, route }) {
                         <Text style={[mission.bold, { marginTop: 16, marginBottom: 16 }]}>미션을 클릭하면 응답내역을 볼 수 있습니다.</Text>
                         {monthItem.length > 0 ?
                             <>
-                                <MissionBox color="#fb5757" name="월간 미션 (월 1회)" data={monthItem} navigation={navigation} />
-                                <MissionBox color="#ffb83d" name="일반미션" data={normalItem} navigation={navigation} />
-                                <MissionBox color="#5cc27b" name="파이널미션" data={finalItem} navigation={navigation} />
+                                <MissionBox color="#fb5757" name="월간 미션 (월 1회)" data={monthItem} navigation={navigation} write={false} />
+                                <MissionBox color="#ffb83d" name="일반미션" data={normalItem} navigation={navigation} write={false} />
+                                <MissionBox color="#5cc27b" name="파이널미션" data={finalItem} navigation={navigation} write={true} />
                             </>
                             :
                             <>
-                                <MissionBox color="#fb5757" name="월간 미션 (월 1회)" data={Month} navigation={navigation} />
-                                <MissionBox color="#ffb83d" name="일반미션" data={Normal} navigation={navigation} />
-                                <MissionBox color="#5cc27b" name="파이널미션" data={Final} navigation={navigation} />
+                                <MissionBox color="#fb5757" name="월간 미션 (월 1회)" data={Month} navigation={navigation} write={false} />
+                                <MissionBox color="#ffb83d" name="일반미션" data={Normal} navigation={navigation} write={false} />
+                                <MissionBox color="#5cc27b" name="파이널미션" data={Final} navigation={navigation} write={true} />
                             </>
                         }
                     </View>
@@ -3974,47 +3980,283 @@ export function ChallengeKnowhow({ navigation }) {
     )
 }
 
+// export function ChallengeSuccess({ navigation }) {
+//     return (
+//         <>
+//             <StatusBar barStyle="dark-content" />
+//             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff", alignItems: "center", justifyContent: "center" }}>
+//                 <Image style={{ width: 150, height: 150, marginBottom: HEIGHT * 0.075 }} source={require('../icon/resetcheck.png')} />
+//                 <Text style={{
+//                     fontSize: 24,
+//                     color: "#303030",
+//                     fontFamily: "NunitoSans-Bold",
+//                     marginBottom: HEIGHT * 0.0125
+//                 }}>금연성공을 축하합니다!</Text>
+//                 <Text style={{
+//                     fontSize: 16,
+//                     color: "#303030",
+//                     fontFamily: "NunitoSans-Regular",
+//                     marginBottom: HEIGHT * 0.075
+//                 }}>주변사람들에게 성공을 알려보세요.</Text>
+//                 <Text style={{
+//                     fontSize: 18,
+//                     color: "#303030",
+//                     fontFamily: "NunitoSans-Bold",
+//                     marginBottom: HEIGHT * 0.025
+//                 }}>공유하기</Text>
+//             </SafeAreaView>
+//             <SafeAreaView style={{ flex: 0 }}>
+//                 <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+//                     <View style={{
+//                         width: "100%",
+//                         height: 60,
+//                         backgroundColor: '#5cc27b',
+//                         justifyContent: 'center',
+//                         alignItems: 'center'
+//                     }}>
+//                         <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+//                     </View>
+//                 </TouchableOpacity>
+//             </SafeAreaView>
+//         </>
+//     )
+// }
+
+const community = StyleSheet.create({
+    buttonbox: {
+        width: 52,
+        height: 24,
+        borderRadius: 5,
+        backgroundColor: '#5cc27b',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'flex-end',
+        margin: 16
+    },
+    buttontext: {
+        fontSize: 14,
+        fontFamily: 'NunitoSans-Bold',
+        color: '#ffffff'
+    },
+    titlebox: {
+        paddingLeft: 32,
+        borderWidth: 0.5,
+        borderColor: '#707070',
+        alignItems: 'flex-start',
+        justifyContent: "center",
+        height: 50,
+        paddingRight: 32
+    },
+    titleandcontent: {
+        fontSize: 14,
+        fontFamily: 'NunitoSans-Regular',
+        color: '#666666',
+        width: "100%"
+    },
+    contentbox: {
+        paddingLeft: 32,
+        alignItems: 'flex-start',
+        height: WIDTH * 1.2,
+        borderBottomWidth: 0.5,
+        borderColor: '#707070',
+        paddingTop: 8,
+        paddingRight: 32
+    },
+    picturetext: {
+        fontSize: 14,
+        color: '#ffffff',
+        fontFamily: 'NunitoSans-Regular'
+    }
+})
+
 export function ChallengeSuccess({ navigation }) {
+    const ref = firestore().collection("Community1");
+    const [content, setContent] = useState('');
+    const [imageOne, setImageOne] = useState(undefined);
+    const [picone, setPicone] = useState(true);
+    const [user, setuser] = useState()
+    const [nick, setNick] = useState()
+    const [filename, setFilename] = useState()
+    const [vmtkfldzm, setvmtkfldzm] = useState()
+    const [picture, setPicture] = useState()
+    const [isPicture, setIsPicture] = useState()
+    const [isLoading, setIsLoading] = useState(false)
+    useEffect(() => {
+
+        console.log(utils.FilePath.PICTURES_DIRECTORY);
+        auth().onAuthStateChanged(userAuth => {
+            setuser(userAuth)
+        })
+        if (user) {
+            console.log(user)
+            firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot => {
+                console.log(documentSnapshot.data().nickname, "hihi")
+                setNick(documentSnapshot.data().nickname)
+                setvmtkfldzm(documentSnapshot.data().profilePicture)
+            })
+        }
+    }, [user])
+    async function uploadImage(a) {
+        const uri = imageOne;
+        setFilename("[성공후기] " + nick + "님의 금연 성공 후기" + nick + a)
+
+        const reference = storage().ref("community1/" + "[성공후기] " + nick + "님의 금연 성공 후기" + nick + a);
+        const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
+
+        await reference.putFile(uploadUri);
+        setPicture(true)
+    }
+    async function writePost() {
+        setIsLoading(true)
+
+        var a = moment().toArray()
+
+
+        if (a[1] === 12) {
+            a[1] = 1
+            a[0] = a[0] + 1
+        } else {
+            a[1] = a[1] + 1
+        }
+        console.log("is picture", isPicture)
+        if (isPicture) {
+            await uploadImage(a)
+        }
+        await ref.doc(a + "[성공후기] " + nick + "님의 금연 성공 후기").set({
+            context: content,
+            like: 0,
+            title: "[성공후기] " + nick + "님의 금연 성공 후기",
+            writerUid: user.uid,
+            fullTime: a,
+            time: a[3] + ":" + a[4],
+            day: a[1] + "/" + a[2],
+            docName: a + "[성공후기] " + nick + "님의 금연 성공 후기",
+            nickname: nick,
+            whoLike: [],
+            commentNum: 0,
+            fullText: "[성공후기] " + nick + "님의 금연 성공 후기" + content,
+            whoAlert: [],
+            profilePicture: vmtkfldzm,
+            isPicture: isPicture
+
+        })
+        setIsLoading(false)
+        Alert.alert(
+            '업로드 완료',
+            '',
+            [
+                {
+                    text: 'OK', onPress: () => navigation.navigate("Home")
+                }
+            ]
+        )
+
+    }
+    const options = {
+        title: '사진가져오기',
+        customButtons: [
+            { name: 'button_id_1', title: 'CustomButton 1' },
+            { name: 'button_id_2', title: 'CustomButton 2' }
+        ],
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+        quality: 0.3
+    };
+
+    const showCameraRoll1 = () => {
+        ImagePicker.launchImageLibrary(options, (response) => {
+            if (response.error) {
+                console.log('LaunchImageLibrary Error: ', response.error);
+            }
+            else {
+                setImageOne(response.uri);
+                setPicone(false);
+            }
+        });
+        setIsPicture(true)
+    };
+
+    const errorview = () => {
+        Alert.alert(
+            "작성 오류",
+            "제목 본문 한글자 이상 작성해주세요",
+            [
+                {
+                    text: "확인",
+                    onPress: () => console.log("확인")
+                }
+            ]
+        )
+    }
+
     return (
         <>
-            <StatusBar barStyle="dark-content" />
-            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff", alignItems: "center", justifyContent: "center" }}>
-                <Image style={{ width: 150, height: 150, marginBottom: HEIGHT * 0.075 }} source={require('../icon/resetcheck.png')} />
-                <Text style={{
-                    fontSize: 24,
-                    color: "#303030",
-                    fontFamily: "NunitoSans-Bold",
-                    marginBottom: HEIGHT * 0.0125
-                }}>금연성공을 축하합니다!</Text>
-                <Text style={{
-                    fontSize: 16,
-                    color: "#303030",
-                    fontFamily: "NunitoSans-Regular",
-                    marginBottom: HEIGHT * 0.075
-                }}>주변사람들에게 성공을 알려보세요.</Text>
-                <Text style={{
-                    fontSize: 18,
-                    color: "#303030",
-                    fontFamily: "NunitoSans-Bold",
-                    marginBottom: HEIGHT * 0.025
-                }}>공유하기</Text>
+            <StatusBar barStyle="light-content" />
+            <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                {isLoading === true ?
+                    <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
+                    :
+                    <>
+                        <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Ionicons name="chevron-back" size={25} />
+                            </TouchableOpacity>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Text style={{ fontSize: 18 }}>
+                                    <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>작성하기</Text>
+                                </Text>
+                            </View>
+                            {/* 중앙 맞추기 */}
+                            <View style={{ width: "4%" }} />
+                        </View>
+                        <ScrollView>
+                            <View style={community.titlebox}>
+                                <Text style={community.titleandcontent}>[성공후기] {nick}님의 금연 성공 후기</Text>
+                                {/* <TextInput value={title} onChangeText={text => setTitle(text)} style={community.titleandcontent} placeholder="제목" placeholderTextColor="#707070" /> */}
+                            </View>
+                            <View style={community.contentbox}>
+                                <TextInput value={content} onChangeText={text => setContent(text)} style={community.titleandcontent} multiline={true} placeholder="내용" placeholderTextColor="#707070" />
+                            </View>
+                            <View style={{
+                                flexDirection: 'row',
+                                padding: 16,
+                                alignItems: 'center',
+                                justifyContent: 'flex-start'
+                            }}>
+                                <TouchableOpacity onPress={showCameraRoll1} style={{
+                                    width: 92,
+                                    height: 92,
+                                    backgroundColor: '#E5E5E5',
+                                    marginRight: 16,
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                    {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 92, height: 92 }} />}
+                                    {picone === true ? <Text style={community.picturetext}>Picture 1</Text> : <View />}
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView></>
+                }
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
-                <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-                    <View style={{
-                        width: "100%",
-                        height: 60,
-                        backgroundColor: '#5cc27b',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                <TouchableOpacity onPress={
+                    (content.length > 0) ? () => writePost() : errorview}>
+                    <View style={{ width: "100%", height: 60, backgroundColor: (content.length > 0) ? '#5cc27b' : "#c6c6c6", justifyContent: 'center', alignItems: 'center' }}>
+                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>작성완료</Text>
                     </View>
                 </TouchableOpacity>
             </SafeAreaView>
         </>
     )
 }
+
 export function ChallengeVeriResult({navigation,route}){
     const {UID}=route.params
     const [items,setItems]=useState([])
