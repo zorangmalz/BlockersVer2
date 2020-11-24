@@ -165,7 +165,7 @@ export default function ChatbotMain({ navigation }) {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={onFour} style={[
                         style.box, {
-                            backgroundColor: four ? "#5cc27b" : "#ffffff",
+                            backgroundColor: three ? "#5cc27b" : "#ffffff",
                             borderWidth: four ? 0 : 1,
                         }
                     ]}>
