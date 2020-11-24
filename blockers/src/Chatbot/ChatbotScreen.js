@@ -894,9 +894,29 @@ function TabTwo({ navigation }) {
             month = doc.data().month
         })
         console.log(month,"month")
-        getInfoAlcohol(total, month)
-        getInfoEsteem(total, month)
-        getInfoStress(total, month)
+        var checkA
+        var checkS
+        var checkE
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc(String(month)).get().then(doc => {
+            checkA=doc.data().stats
+        })
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc(String(month)).get().then(doc => {
+            checkS=doc.data().stats
+        })
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(month)).get().then(doc => {
+            checkE=doc.data().stats
+        })
+        console.log(checkA,checkE,checkS)
+        if(checkA){
+            getInfoAlcohol(total, month)
+        }
+        if(checkE){
+            getInfoEsteem(total, month)
+        }
+        if(checkS){
+            getInfoStress(total, month)
+        }
+       
     }
     var RA=0
     var RS=0
@@ -909,7 +929,7 @@ function TabTwo({ navigation }) {
             setResultsA(doc.data().resultWord)
             setResultAcontent(doc.data().result)
             RA=doc.data().resultNum
-        }).catch(error => console.error(error));
+        })
         if(RA===0){
             setResultA(0)
         }else{
@@ -924,7 +944,7 @@ function TabTwo({ navigation }) {
                 })
             })
             setItemA(list)
-        }).catch(error => console.error(error));
+        })
         console.log("Complete")
     }
     async function getInfoStress(total, month) {
@@ -934,7 +954,7 @@ function TabTwo({ navigation }) {
             setResultsS(doc.data().resultWord)
             setResultScontent(doc.data().result)
             RS=doc.data().resultNum
-        }).catch(error => console.error(error));
+        })
         const list = []
         if(RS===0){
             setResultS(0)
@@ -951,7 +971,7 @@ function TabTwo({ navigation }) {
                 })
             })
             setItemS(list)
-        }).catch(error => console.error(error));
+        })
     }
     async function getInfoEsteem(total, month) {
 
@@ -960,7 +980,7 @@ function TabTwo({ navigation }) {
             setResultsE(doc.data().resultWord)
             setResultEcontent(doc.data().result)
             RE=doc.data().resultNum
-        }).catch(error => console.error(error));
+        })
         if(RE===0){
             setResultE(0)
         }else{
@@ -976,7 +996,7 @@ function TabTwo({ navigation }) {
                 })
             })
             setItemE(list)
-        }).catch(error => console.error(error));
+        })
     }
     return (
         <>
@@ -1014,7 +1034,7 @@ function TabTwo({ navigation }) {
                                 marginTop: 8
                             }}>자기효능감</Text>
                         </ProgressCircle>
-                        <ProgressCircle size={72} color={resultsS === "Good" ? "#5cc27b" : resultsS == "Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={0.5}>
+                        <ProgressCircle size={72} color={resultsS === "Good" ? "#5cc27b" : resultsS == "Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={resultS}>
                             <Text style={{
                                 flex: 0,
                                 position: "absolute",
