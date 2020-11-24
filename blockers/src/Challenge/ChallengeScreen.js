@@ -107,10 +107,11 @@ export default function Challenge({ navigation }) {
             //     setUser(userAuth)
             // })
             if (user) {
-                // setLogined(true)
-                // firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
-                //     setSmoker(doc.data().smoker)
-                // })
+                //필요함 지우면 안됨 금연모드 흡연모드 불러올 때 필요
+                setLogined(true)
+                firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
+                    setSmoker(doc.data().smoker)
+                })
                 hi()
                 if (challenge) {
                     checkRate()

@@ -465,11 +465,11 @@ export default function HomeScreen({ navigation}) {
 
         interstitial.load();
         var a = moment().toArray()
-        if(a[1]===12){
-            a[1]=1
-            a[0]=a[0]+1
-        }else{
-            a[1]=a[1]+1
+        if (a[1] === 12) {
+            a[1] = 1
+            a[0] = a[0] + 1
+        } else {
+            a[1] = a[1] + 1
         }
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker: false,
@@ -482,11 +482,11 @@ export default function HomeScreen({ navigation}) {
         await firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
             setSmoker(doc.data().smoker)
         })
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-            smoke:"금연 모드로 전환"
+        await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+            smoke: "금연 모드로 전환"
         }).catch(
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-                smoke:"금연 모드로 전환"
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+                smoke: "금연 모드로 전환"
             })
         )
     }
@@ -500,7 +500,7 @@ export default function HomeScreen({ navigation}) {
             },
             {
                 text: '예', onPress: () => {
-                    changeToSmoker()
+                    changeToNonSmoker()
                     navigation.navigate("ChallengeRegister")
                 }
             }
@@ -781,7 +781,7 @@ export default function HomeScreen({ navigation}) {
                                     <Text style={{ fontSize: 16, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>금연을 시작해 보세요!</Text>
                                 </Text>
                             </View>
-                            <TouchableOpacity onPress={login ? smoker ? () => ChallengeParticipate() : () => { navigation.navigate('ChallengeRegister') } : () => { setUserlogin(true) }} style={{
+                            <TouchableOpacity onPress={login ? smoker ? ChallengeParticipate : () => { navigation.navigate('ChallengeRegister') } : () => { setUserlogin(true) }} style={{
                                     width: 100,
                                     height: 35,
                                     borderRadius: 18,
