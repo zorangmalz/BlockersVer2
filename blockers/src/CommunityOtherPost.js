@@ -491,7 +491,7 @@ export default function CommunityOtherPost({ route, navigation }) {
         }
     }
     async function redeletePost(a) {
-        ref.doc(param).collection("Reply").doc(a).delete()
+        await ref.doc(docID).collection("Reply").doc(a).delete()
         setCommentState(true)
         await ref.doc(docID).update({
             commentNum: replynum - 1
@@ -563,24 +563,23 @@ export default function CommunityOtherPost({ route, navigation }) {
             <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
                 {userLoading && textLoading && picLoading && replyLoading ?
                     <>
-                        <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                        <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                             <TouchableOpacity onPress={() => navigation.goBack()}>
                                 <Ionicons name="chevron-back" size={25} />
                             </TouchableOpacity>
                             <View
                                 style={{
+                                    height: 44,
                                     flexDirection: 'row',
                                     justifyContent: "flex-start",
                                     alignItems: 'center',
+                                    marginLeft: 24
                                 }}
                             >
                                 <Text style={{ fontSize: 18 }}>
                                     <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자유게시판</Text>
                                 </Text>
                             </View>
-                            <TouchableOpacity>
-                                <Ionicons name="notifications" color="#666666" size={25} />
-                            </TouchableOpacity>
                         </View>
                         <ScrollView style={{ marginBottom: 50 }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                             <View style={{

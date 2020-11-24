@@ -131,7 +131,6 @@ export default function Challenge({ navigation }) {
         })
     },[])
     useEffect(() => {
-      
         if(user){
             setLogined(true)
             firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
