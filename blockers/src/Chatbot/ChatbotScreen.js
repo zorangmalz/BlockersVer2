@@ -11,6 +11,7 @@ import {
     StyleSheet,
     Dimensions,
     Linking,
+    ActivityIndicator,  
     Alert
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -1385,30 +1386,31 @@ export function ChatbotFour({ navigation }) {
     )
 }
 export function ChatbotWell({ navigation }) {
+    const [loading, setLoading] = useState(false);
     const [one, setOne] = useState(false);
     const [two, setTwo] = useState(false);
     const onOne = () => {
         setOne(true);
         setTimeout(() => {
-            drugCheck()
+            drugCheckOn()
             setOne(false);
         }, 200)
     }
     const onTwo = () => {
         setTwo(true);
         setTimeout(() => {
-            drugOff()
+            drugCheckOff()
             setTwo(false);
         }, 200)
     }
-    async function drugCheck(){
+    async function drugCheckOn(){
         const USER = await firebase.auth().currentUser
         console.log(USER.uid)
         var check
         await firestore().collection("UserInfo").doc(USER.uid).get().then(doc=>{
             check=doc.data().drug
         })
-        if(check){
+        if(check==="well"||check==="cham"){
             Alert.alert(
                 '기존 복약 정보가 있습니다?',
                 '새로운 복약 정보를 등록하면 \n기존 정보가 사라집니다',
@@ -1426,9 +1428,9 @@ export function ChatbotWell({ navigation }) {
         }
     }
     async function drugOn(USER){
-    
+        setLoading(true)
         firestore().collection("UserInfo").doc(USER.uid).update({
-            drug:true
+            drug:"well"
         })
         var a = moment().toArray()
 
@@ -1495,12 +1497,27 @@ export function ChatbotWell({ navigation }) {
             }
             
         }
+        setLoading(false)
         
         
         Alert.alert("복약 등록되었습니다")
         // navigation.navigate("Home")
     }
-    async function drugOff(){
+    async function drugCheckOff(){
+        const USER = await firebase.auth().currentUser
+        console.log(USER.uid)
+        var check
+        await firestore().collection("UserInfo").doc(USER.uid).get().then(doc=>{
+            check=doc.data().drug
+        })
+        if(check==="cham"){
+            Alert.alert("챔픽스를 복용중입니다")
+        }else{
+            drugOff(USER)
+        }
+        
+    }
+    async function drugOff(USER){
         
         var a = moment().toArray()
 
@@ -1510,8 +1527,6 @@ export function ChatbotWell({ navigation }) {
         } else {
             a[1] = a[1] + 1
         }
-        const USER = await firebase.auth().currentUser
-        console.log(USER.uid)
         firestore().collection("UserInfo").doc(USER.uid).update({
             drug:false
         })
@@ -1579,7 +1594,10 @@ export function ChatbotWell({ navigation }) {
         <>
             <StatusBar barStyle="dark-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-                <Header navigation={navigation} title="금연 지원사업 정보" />
+            <Header navigation={navigation} title="금연 지원사업 정보" />
+                {loading ? 
+                <ActivityIndicator style={{ marginVertical: 15 }} size="large" color="#5cc27b" /> 
+                :
                 <ScrollView>
                     <View style={{ paddingHorizontal: "8%" }}>
                     <Text style={{
@@ -1681,6 +1699,9 @@ export function ChatbotWell({ navigation }) {
                     </TouchableOpacity>
                     </View>
                 </ScrollView>
+                }
+                
+                
                 <BannerAd
       unitId={adUnitId}  
       size={BannerAdSize.SMART_BANNER}
@@ -1708,25 +1729,25 @@ export function ChatbotCham({ navigation }) {
     const onOne = () => {
         setOne(true);
         setTimeout(() => {
-            drugCheck()
+            drugCheckOn()
             setOne(false);
         }, 200)
     }
     const onTwo = () => {
         setTwo(true);
         setTimeout(() => {
-            drugOff()
+            drugCheckOff()
             setTwo(false);
         }, 200)
     }
-    async function drugCheck(){
+    async function drugCheckOn(){
         const USER = await firebase.auth().currentUser
         console.log(USER.uid)
         var check
         await firestore().collection("UserInfo").doc(USER.uid).get().then(doc=>{
             check=doc.data().drug
         })
-        if(check){
+        if(check==="well"||check==="cham"){
             Alert.alert(
                 '기존 복약 정보가 있습니다?',
                 '새로운 복약 정보를 등록하면 \n기존 정보가 사라집니다',
@@ -1746,7 +1767,7 @@ export function ChatbotCham({ navigation }) {
     async function drugOn(USER){
         var a = moment().toArray()
         firestore().collection("UserInfo").doc(USER.uid).update({
-            drug:true
+            drug:"cham"
         })
         if (a[1] === 12) {
             a[0]=a[0]+1
@@ -1815,7 +1836,21 @@ export function ChatbotCham({ navigation }) {
         Alert.alert("복약 등록되었습니다")
         // navigation.navigate("Home")
     }
-    async function drugOff(){
+    async function drugCheckOff(){
+        const USER = await firebase.auth().currentUser
+        console.log(USER.uid)
+        var check
+        await firestore().collection("UserInfo").doc(USER.uid).get().then(doc=>{
+            check=doc.data().drug
+        })
+        if(check==="well"){
+            Alert.alert("웰부트린서방정을 복용중입니다")
+        }else{
+            drugOff(USER)
+        }
+    
+    }
+    async function drugOff(USER){
         var a = moment().toArray()
 
         if (a[1] === 12) {
@@ -1824,8 +1859,6 @@ export function ChatbotCham({ navigation }) {
         } else {
             a[1] = a[1] + 1
         }
-        const USER = await firebase.auth().currentUser
-        console.log(USER.uid)
         firestore().collection("UserInfo").doc(USER.uid).update({
             drug:false
         })

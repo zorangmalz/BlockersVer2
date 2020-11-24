@@ -7,6 +7,7 @@ import {
     StatusBar,
     StyleSheet,
     TouchableOpacity,
+    RefreshControl,
     FlatList
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -36,10 +37,20 @@ const alram = StyleSheet.create({
         marginLeft: 16
     }
 })
-
+const wait = (timeout) => {
+    return new Promise(resolve => {
+        setTimeout(resolve, timeout);
+    });
+}
 export default function AlramScreen({ navigation }) {
     const [user,setUser]=useState("")
     const [items,setItems]=useState([])
+    const [refreshing, setRefreshing] = React.useState(false);
+    const onRefresh = React.useCallback(() => {
+        setRefreshing(true);
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
+
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
@@ -65,7 +76,7 @@ export default function AlramScreen({ navigation }) {
                 setItems(list)
             })
         }
-    },[user])
+    },[user,refreshing])
 
     async function move(item,name){
         console.log("here????")
@@ -117,7 +128,7 @@ export default function AlramScreen({ navigation }) {
                         </Text>
                     </View>
                 </View>
-                <ScrollView>
+                    <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>} >
                     <FlatList
                         data={items}
                         renderItem={({ item }) => (

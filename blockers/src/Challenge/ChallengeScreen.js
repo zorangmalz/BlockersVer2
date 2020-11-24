@@ -92,10 +92,11 @@ export default function Challenge({ navigation }) {
     const [title, setTitle] = useState("");
     const [progress, setProgress] = useState(0);
     const [change, setChange] = useState("")
-    const [refreshing, setRefreshing] = React.useState(false);
+    
     const [items, setItems] = useState([])
     const [ratio, setRatio] = useState(0)
     const [logined, setLogined] = useState(true)
+    const [refreshing, setRefreshing] = React.useState(false);
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
@@ -369,7 +370,7 @@ export default function Challenge({ navigation }) {
                     week: parseInt(durationWeek, 10) + 1
                 })
                 await firestore().collection("UserInfo").doc(user.uid).collection("Alarm").add({
-                    type:"community",
+                    type:"challenge",
                     date:a[0]+"/"+a[1]+"/"+a[2],
                     realDate:a,
                     stats:false,
@@ -399,7 +400,7 @@ export default function Challenge({ navigation }) {
                     month: parseInt(durationMonth, 10) + 1
                 })
                 await firestore().collection("UserInfo").doc(user.uid).collection("Alarm").add({
-                    type:"community",
+                    type:"challenge",
                     date:a[0]+"/"+a[1]+"/"+a[2],
                     realDate:a,
                     stats:false,
@@ -416,7 +417,7 @@ export default function Challenge({ navigation }) {
                         visible: true
                     })
                     await firestore().collection("UserInfo").doc(user.uid).collection("Alarm").add({
-                        type:"community",
+                        type:"challenge",
                         date:a[0]+"/"+a[1]+"/"+a[2],
                         realDate:a,
                         stats:false,
@@ -425,6 +426,10 @@ export default function Challenge({ navigation }) {
                     })
                     await firestore().collection("UserInfo").doc(writer).update({
                         alarm:true
+                    })
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
+                        ongoing: false,
+                        success: 2
                     })
                 } else {
                     await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
