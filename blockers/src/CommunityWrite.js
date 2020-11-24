@@ -11,6 +11,7 @@ import {
     Dimensions,
     TextInput,
     Alert,
+    ActivityIndicator,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import firestore from '@react-native-firebase/firestore';
@@ -19,8 +20,10 @@ import moment from "moment"
 import storage from '@react-native-firebase/storage';
 import { utils } from '@react-native-firebase/app';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useScreens } from 'react-native-screens';
 
 const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get("screen").height;
 
 const community = StyleSheet.create({
     buttonbox: {
@@ -81,6 +84,7 @@ export default function CommunityWrite({ navigation }) {
     const [vmtkfldzm, setvmtkfldzm] = useState()
     const [picture, setPicture] = useState()
     const [isPicture, setIsPicture] = useState()
+    const [isLoading,setIsLoading]=useState(false)
     useEffect(() => {
 
         console.log(utils.FilePath.PICTURES_DIRECTORY);
@@ -110,7 +114,7 @@ export default function CommunityWrite({ navigation }) {
         setPicture(true)
     }
     async function writePost() {
-
+        setIsLoading(true)
 
         var a = moment().toArray()
 
@@ -143,6 +147,7 @@ export default function CommunityWrite({ navigation }) {
             isPicture: isPicture
 
         })
+        setIsLoading(false)
         Alert.alert(
             '업로드 완료',
             '',
@@ -197,7 +202,11 @@ export default function CommunityWrite({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                {isLoading===true ?
+                  <ActivityIndicator size="large" color="#5cc27b" style={{position: "absolute", top: HEIGHT/2-20, left: WIDTH/2-20}} />
+                 :
+                 <>
+                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
@@ -239,7 +248,11 @@ export default function CommunityWrite({ navigation }) {
                             {picone === true ? <Text style={community.picturetext}>Picture 1</Text> : <View />}
                         </TouchableOpacity>
                     </View>
-                </ScrollView>
+                </ScrollView></> 
+                 }
+                
+
+
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
                 <TouchableOpacity onPress={

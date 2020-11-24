@@ -14,6 +14,7 @@ import {
     KeyboardAvoidingView,
     Platform,
     RefreshControl,
+    ActivityIndicator,
     Alert,
     Modal
 } from 'react-native';
@@ -3731,6 +3732,7 @@ export function ChallengeVeriImage({ navigation,route}) {
     const [imageOne, setImageOne] = useState(undefined);
 
     const [user,setUser]=useState("")
+    const [isLoading,setIsLoading]=useState(false)
     const options = {
         title: '사진가져오기',
         customButtons: [
@@ -3750,6 +3752,7 @@ export function ChallengeVeriImage({ navigation,route}) {
         console.log(selects)
     },[])
     async function uploadImage(){
+        setIsLoading(true)
         var name
         await firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot=>{
             name=documentSnapshot.data().name
@@ -3797,6 +3800,7 @@ export function ChallengeVeriImage({ navigation,route}) {
                     how:selects
                 })
             ])
+            setIsLoading(false)
             navigation.navigate("Home")
     }
     const showCamera1 = () => {
@@ -3813,7 +3817,13 @@ export function ChallengeVeriImage({ navigation,route}) {
     return (
         <>
             <StatusBar barStyle="dark-content" />
+            {isLoading===true?
+                  <ActivityIndicator size="large" color="#5cc27b" style={{position: "absolute", top: HEIGHT/2-20, left: WIDTH/2-20}} />
+                 :
+                 <>
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                
+                  
                 <ChallengeHeader navigation={navigation} Title="금연활동 인증하기" />
                 <ScrollView style={{ paddingLeft: "8%", paddingRight: "8%" }}>
                     <TouchableOpacity onPress={showCamera1} style={{
@@ -3857,6 +3867,7 @@ export function ChallengeVeriImage({ navigation,route}) {
                         marginTop: HEIGHT * 0.05
                     }}>다음중 하나의 활동 사진을 첨부해주세요{"\n\n"}1. 취미 생활(운동, 동호회 등){"\n\n"}2. 금연 간식{"\n\n"}3. 흡연 관련 용품 버린 사진(ex 담배 부시기){"\n\n"}4. 본인만의 금연 비법</Text>
                 </ScrollView>
+                
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
                 {imagebool ?
@@ -3885,6 +3896,8 @@ export function ChallengeVeriImage({ navigation,route}) {
                     </TouchableOpacity>
                 }
             </SafeAreaView>
+            </>
+                }
         </>
     )
 }

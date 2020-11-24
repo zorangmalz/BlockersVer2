@@ -72,6 +72,15 @@ const login = StyleSheet.create({
       alignItems: 'center',
       alignSelf: 'center'  
     },
+    notbuttonbox:{
+      width: "90%",
+      height: 40,
+      borderRadius: 5,
+      backgroundColor: '#c6c6c6',
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'center'  
+    },
     signtext: {
         fontSize: 12,
         fontFamily: 'NunitoSans-Bold',
@@ -155,15 +164,21 @@ await firestore()
   };
 
     async function onGoogleButtonPress() {
-        // Get the users ID token
-        const { idToken } = await GoogleSignin.signIn();
-      
-        // Create a Google credential with the token
-        const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-      
-        // Sign-in the user with the credential
-        auth().signInWithCredential(googleCredential);
-        navigation.navigate("Home")
+       // Get the users ID token
+    const { idToken } = await GoogleSignin.signIn();
+
+    // Create a Google credential with the token
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+
+    const NewUser = (await auth().signInWithCredential(googleCredential)).additionalUserInfo.isNewUser
+    // Sign-in the user with the credential
+    if (NewUser === true) {
+      auth().signInWithCredential(googleCredential);
+      navigation.navigate("프로필 설정");
+    } else if (NewUser === false) {
+      auth().signInWithCredential(googleCredential);
+      navigation.navigate("Home");
+    }
       }
     useEffect(()=>{
         GoogleSignin.configure({
@@ -237,15 +252,27 @@ await firestore()
                     <Text style={login.text}>유효한 이메일을 입력해 주세요.</Text>
                     <TextInput value={password} onChangeText={text => setPassword(text)} textContentType="password" secureTextEntry={true} style={login.textinput} placeholder="비밀번호(영문, 숫자 포함 6자리)" placeholderTextColor="#999999" />
                     <Text style={login.text}>6자리 이상 입력해주세요.</Text>
+                    {email.length>0&&password.length>0 ?
                     <TouchableOpacity onPress={logins} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16}]}>
-                        <Text style={login.buttontext}>로그인</Text>
-                    </TouchableOpacity>
+                    <Text style={login.buttontext}>로그인</Text>
+                </TouchableOpacity>
+                    :
+                    <TouchableOpacity activeOpacity={0.3} style={[login.notbuttonbox, { marginTop: 16 }]}>
+                    <Text style={login.buttontext}>로그인</Text>
+                  </TouchableOpacity>
+                          
+                    }
+                    
                     <TouchableOpacity onPress={() => navigation.navigate('아이디/비밀번호 찾기')}>
                         <Text style={login.signtext}>아이디/비밀번호 찾기</Text>
                     </TouchableOpacity>
+                    
                     <TouchableOpacity onPress={() => navigation.navigate('회원가입')}>
-                        <Text style={login.signtext}>회원가입</Text>
-                    </TouchableOpacity>
+                    <Text style={login.signtext}>회원가입</Text>
+                </TouchableOpacity>
+                  
+                   
+                    
                     <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
                     {/* <TouchableOpacity onPress={onFacebookButtonPress} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#4a67ad'}]}>
                         <Text style={login.buttontext}>Facebook으로 로그인</Text>

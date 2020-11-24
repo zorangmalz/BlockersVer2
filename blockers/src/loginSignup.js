@@ -269,17 +269,13 @@ await firestore()
   // }
 
   useEffect(() => {
-
     GoogleSignin.configure({
       webClientId: '729209347504-nffbltomro80vel8sgdp22h3s7bd34nf.apps.googleusercontent.com',
     });
-
     if (newpassword === password) {
       if (password === "") {
-
       } else {
         setpassState(true)
-
       }
     } else {
       setpassState(false)
