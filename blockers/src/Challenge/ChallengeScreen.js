@@ -415,6 +415,9 @@ export default function Challenge({ navigation }) {
                     await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
                         visible: true
                     })
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").update({
+                        visible: true
+                    })
                     await firestore().collection("UserInfo").doc(user.uid).collection("Alarm").add({
                         type:"community",
                         date:a[0]+"/"+a[1]+"/"+a[2],
@@ -430,6 +433,9 @@ export default function Challenge({ navigation }) {
                     await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
                         visible: false
                     })
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").update({
+                        visible: false
+                    })
                     await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
                         ongoing: false,
                         success: 1
@@ -438,6 +444,9 @@ export default function Challenge({ navigation }) {
             } else {
                 if (progressFor < 80) {
                     await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
+                        visible: false
+                    })
+                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").update({
                         visible: false
                     })
                 }
@@ -1245,11 +1254,21 @@ export function ChallengeRegister({ navigation }) {
             visible:true,
             resNavi:"ChallengeGDResult"
         })
+        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").set({
+            title: "나만의 금연 노하우 공유하기",
+            content: "나만의 금연 비법을 공유해주세요",
+            period: "final",
+            id: 12,
+            navigate: "ChallengeKnowhow",
+            visible:false,
+            stats:false,
+            resNavi:"ChallengeKnowhow"
+        })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").set({
             title: "성공 후기 작성하기",
             content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요",
             period: "final",
-            id: 12,
+            id: 13,
             navigate: "ChallengeSuccess",
             visible:false,
             stats:false,
@@ -1849,7 +1868,12 @@ export function ChallengeMission({ navigation, route }) {
     const Final = [
         {
             number: 1,
-            title: "1. 성공 후기 작성하기",
+            title: "1. 나만의 금연 노하우 공유하기",
+            content: "스트레스와 금연의 밀접한 관계\n나의 스트레스를 체크하고 금연성공하세요.",
+        },
+        {
+            number: 2,
+            title: "2. 성공 후기 작성하기",
             content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요",
         },
     ]

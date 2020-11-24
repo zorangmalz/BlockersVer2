@@ -166,12 +166,12 @@ export default function ChatbotMain({ navigation }) {
                     <TouchableOpacity onPress={onFour} style={[
                         style.box, {
                             backgroundColor: three ? "#5cc27b" : "#ffffff",
-                            borderWidth: four ? 0 : 1,
+                            borderWidth: three ? 0 : 1,
                         }
                     ]}>
                         <Text style={[
                             style.bold, {
-                                color: four ? "#ffffff" : "#303030"
+                                color: three ? "#ffffff" : "#303030"
                             }
                         ]}>복약관리</Text>
                     </TouchableOpacity>
