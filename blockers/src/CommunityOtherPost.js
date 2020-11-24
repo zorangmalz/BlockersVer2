@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import {
     StatusBar,
     SafeAreaView,
@@ -23,6 +23,7 @@ import moment from "moment";
 import storage from '@react-native-firebase/storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useFocusEffect } from "@react-navigation/native";
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -242,12 +243,19 @@ export default function CommunityOtherPost({ route, navigation }) {
                 console.log("텍스트 및 좋아요가 안나옴")
                 setTextLoading(true)
             })
-
-            if (likeList.includes(Uid)) {
-                setMeLike(true)
-            }
         }
     }, [likeState, nick, del, refreshing])
+
+    useFocusEffect(
+        useCallback(() => {
+            if (likeList.includes(Uid)) {
+                setMeLike(true)
+            } else {
+                setMeLike(false)
+            }
+            return () => {}
+        }, [])
+    )
 
     //사진 불러오는 함수
     const [exist, setExist] = useState(true)
@@ -373,7 +381,8 @@ export default function CommunityOtherPost({ route, navigation }) {
         const userUID = Uid
         console.log(Uid, "Uid")
         console.log(likeList, "when pressed")
-        if (likeList.includes(Uid)) {
+        const INCLUDE = likeList.includes(Uid)
+        if (INCLUDE) {
             setLikeList(likeList.splice(likeList.indexOf(Uid), 1))
             console.log(likeList, "should be empty or Uid is deleted")
             setMeLike(false)
@@ -648,16 +657,9 @@ export default function CommunityOtherPost({ route, navigation }) {
                             }}>
                                 <Text style={community.content}>{content}</Text>
                                 <View style={[community.lowerbox, { alignSelf: "flex-end" }]}>
-                                    {meLike === true ?
-                                        <TouchableOpacity onPress={pressLike}>
-                                            <MaterialCommunityIcons name="thumb-up" color="#5cc27b" size={15} />
-                                        </TouchableOpacity>
-                                        :
-                                        <TouchableOpacity onPress={pressLike}>
-                                            <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} />
-                                        </TouchableOpacity>
-                                    }
-
+                                    <TouchableOpacity onPress={pressLike}>
+                                        <MaterialCommunityIcons name={meLike ? "thumb-up" : "thumb-up-outline"} color="#5cc27b" size={15} />
+                                    </TouchableOpacity>
                                     <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{like}</Text>
                                     <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
                                     <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{replynum}</Text>
