@@ -393,7 +393,7 @@ export default function Challenge({ navigation }) {
                     visible: true,
                     month: parseInt(durationMonth, 10) + 1
                 })
-                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알코올 평가(월1회)").update({
+                await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").update({
                     visible: true,
                     month: parseInt(durationMonth, 10) + 1
                 })
@@ -1255,7 +1255,7 @@ export function ChallengeRegister({ navigation }) {
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("나만의 금연 노하우 공유하기").set({
             title: "나만의 금연 노하우 공유하기",
-            content: "스트레스와 금연의 밀접한 관계 나의 스트레스를 체크하고 금연성공하세요.",
+            content: "나만의 금연 비법을 공유해주세요",
             period: "final",
             id: 12,
             navigate: "ChallengeKnowhow",
