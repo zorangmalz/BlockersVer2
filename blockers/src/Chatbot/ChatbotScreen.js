@@ -165,13 +165,13 @@ export default function ChatbotMain({ navigation }) {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={onFour} style={[
                         style.box, {
-                            backgroundColor: three ? "#5cc27b" : "#ffffff",
-                            borderWidth: three ? 0 : 1,
+                            backgroundColor: four ? "#5cc27b" : "#ffffff",
+                            borderWidth: four ? 0 : 1,
                         }
                     ]}>
                         <Text style={[
                             style.bold, {
-                                color: three ? "#ffffff" : "#303030"
+                                color: four ? "#ffffff" : "#303030"
                             }
                         ]}>복약관리</Text>
                     </TouchableOpacity>
@@ -890,27 +890,33 @@ function TabTwo({ navigation }) {
         })
         console.log(total)
         var month
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").get().then(doc => {
-            month = doc.data().month - 1
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).get().then(doc => {
+            month = doc.data().month
         })
+        console.log(month,"month")
         getInfoAlcohol(total, month)
         getInfoEsteem(total, month)
         getInfoStress(total, month)
     }
+    var RA=0
+    var RS=0
+    var RE=0
     async function getInfoAlcohol(total, month) {
-
+        
         console.log(month, total)
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc(String(month)).get().then(doc => {
             setResultA(doc.data().resultNum)
             setResultsA(doc.data().resultWord)
             setResultAcontent(doc.data().result)
-        }).catch((err) => {
-            console.err(err),
-                setResultsA("-")
+            RA=doc.data().resultNum
+        }).catch(error => console.error(error));
+        if(RA===0){
+            setResultA(0)
+        }else{
+            setResultA(RA*0.025)
         }
-        )
         const list = []
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").onSnapshot(querySnapshot => {
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").onSnapshot(querySnapshot => {
             querySnapshot.forEach(doc => {
                 list.push({
                     degree: doc.data().stats,
@@ -918,20 +924,26 @@ function TabTwo({ navigation }) {
                 })
             })
             setItemA(list)
-        })
+        }).catch(error => console.error(error));
         console.log("Complete")
     }
     async function getInfoStress(total, month) {
 
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc(String(month)).get().then(doc => {
-            setResultS(doc.data().resultNum)
+            // setResultS(doc.data().resultNum)
             setResultsS(doc.data().resultWord)
             setResultScontent(doc.data().result)
-        }).catch(
-            setResultsS("-")
-        )
+            RS=doc.data().resultNum
+        }).catch(error => console.error(error));
         const list = []
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").onSnapshot(querySnapshot => {
+        if(RS===0){
+            setResultS(0)
+            console.log("why?",RS)
+        }else{
+            setResultS(RS*0.01538)
+            console.log(RS*0.01538,"RS")
+        }
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").onSnapshot(querySnapshot => {
             querySnapshot.forEach(doc => {
                 list.push({
                     degree: doc.data().stats,
@@ -939,19 +951,24 @@ function TabTwo({ navigation }) {
                 })
             })
             setItemS(list)
-        })
+        }).catch(error => console.error(error));
     }
     async function getInfoEsteem(total, month) {
 
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(month)).get().then(doc => {
-            setResultE(doc.data().resultNum)
+            // setResultE(doc.data().resultNum)
             setResultsE(doc.data().resultWord)
             setResultEcontent(doc.data().result)
-        }).catch(
-            setResultsE("-")
-        )
+            RE=doc.data().resultNum
+        }).catch(error => console.error(error));
+        if(RE===0){
+            setResultE(0)
+        }else{
+            setResultE(RE*0.02)
+        }
         const list = []
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").onSnapshot(querySnapshot => {
+        console.log(resultE)
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").onSnapshot(querySnapshot => {
             querySnapshot.forEach(doc => {
                 list.push({
                     degree: doc.data().stats,
@@ -959,7 +976,7 @@ function TabTwo({ navigation }) {
                 })
             })
             setItemE(list)
-        })
+        }).catch(error => console.error(error));
     }
     return (
         <>
@@ -980,7 +997,7 @@ function TabTwo({ navigation }) {
                         paddingRight: 16,
                         marginBottom: 32
                     }}>
-                        <ProgressCircle size={72} color={resultsE === "Good" ? "#5cc27b" : resultsE == "Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={resultE * 0.02}>
+                        <ProgressCircle size={72} color={resultsE === "Good" ? "#5cc27b" : resultsE == "Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={resultE}>
                             <Text style={{
                                 flex: 0,
                                 position: "absolute",
@@ -997,7 +1014,7 @@ function TabTwo({ navigation }) {
                                 marginTop: 8
                             }}>자기효능감</Text>
                         </ProgressCircle>
-                        <ProgressCircle size={72} color={resultsS === "Good" ? "#5cc27b" : resultsS == "Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={resultS * 0.01538}>
+                        <ProgressCircle size={72} color={resultsS === "Good" ? "#5cc27b" : resultsS == "Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={0.5}>
                             <Text style={{
                                 flex: 0,
                                 position: "absolute",
@@ -1018,7 +1035,7 @@ function TabTwo({ navigation }) {
                             size={72}
                             borderWidth={0}
                             thickness={5}
-                            progress={resultA * 0.025}
+                            progress={resultA}
                             color={resultsA === "Good" ? "#5cc27b" : resultsA == "Normal" ? "#ffb83d" : "#fb5757"}
                             unfilledColor="#E0E5EC"
                         >
