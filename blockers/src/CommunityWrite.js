@@ -20,7 +20,6 @@ import moment from "moment"
 import storage from '@react-native-firebase/storage';
 import { utils } from '@react-native-firebase/app';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useScreens } from 'react-native-screens';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -84,7 +83,7 @@ export default function CommunityWrite({ navigation }) {
     const [vmtkfldzm, setvmtkfldzm] = useState()
     const [picture, setPicture] = useState()
     const [isPicture, setIsPicture] = useState()
-    const [isLoading,setIsLoading]=useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     useEffect(() => {
 
         console.log(utils.FilePath.PICTURES_DIRECTORY);
@@ -144,16 +143,16 @@ export default function CommunityWrite({ navigation }) {
             fullText: title + content,
             whoAlert: [],
             profilePicture: vmtkfldzm,
-            isPicture: isPicture
-
+            isPicture: isPicture,
+            isRepair: false
         })
         setIsLoading(false)
         Alert.alert(
-            '업로드 완료',
+            '수정 완료',
             '',
             [
                 {
-                    text: 'OK', onPress: () => navigation.navigate("Home")
+                    text: '확인', onPress: () => navigation.navigate("Home")
                 }
             ]
         )
@@ -201,70 +200,65 @@ export default function CommunityWrite({ navigation }) {
     return (
         <>
             <StatusBar barStyle="light-content" />
-            
-                {isLoading===true ?
-                  <ActivityIndicator size="large" color="#5cc27b" style={{position: "absolute", top: HEIGHT/2-20, left: WIDTH/2-20}} />
-                 :
-                 <>
-                 <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="chevron-back" size={25} />
-                    </TouchableOpacity>
-                    <View
-                        style={{
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                        }}
-                    >
-                        <Text style={{ fontSize: 18 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>작성하기</Text>
-                        </Text>
-                    </View>
-                    {/* 중앙 맞추기 */}
-                    <View style={{ width: "4%" }} />
-                </View>
-                <ScrollView>
-                    <View style={community.titlebox}>
-                        <TextInput value={title} onChangeText={text => setTitle(text)} style={community.titleandcontent} placeholder="제목" placeholderTextColor="#707070" />
-                    </View>
-                    <View style={community.contentbox}>
-                        <TextInput value={content} onChangeText={text => setContent(text)} style={community.titleandcontent} multiline={true} placeholder="내용" placeholderTextColor="#707070" />
-                    </View>
-                    <View style={{
-                        flexDirection: 'row',
-                        padding: 16,
-                        alignItems: 'center',
-                        justifyContent: 'flex-start'
-                    }}>
-                        <TouchableOpacity onPress={showCameraRoll1} style={{
-                            width: 92,
-                            height: 92,
-                            backgroundColor: '#E5E5E5',
-                            marginRight: 16,
-                            alignItems: 'center',
-                            justifyContent: 'center'
-                        }}>
-                            {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 92, height: 92 }} />}
-                            {picone === true ? <Text style={community.picturetext}>Picture 1</Text> : <View />}
+            {isLoading === true ?
+                <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
+                :
+                <>
+                    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                        <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Ionicons name="chevron-back" size={25} />
+                            </TouchableOpacity>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Text style={{ fontSize: 18 }}>
+                                    <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>작성하기</Text>
+                                </Text>
+                            </View>
+                            {/* 중앙 맞추기 */}
+                            <View style={{ width: "4%" }} />
+                        </View>
+                        <ScrollView>
+                            <View style={community.titlebox}>
+                                <TextInput value={title} onChangeText={text => setTitle(text)} style={community.titleandcontent} placeholder="제목" placeholderTextColor="#707070" />
+                            </View>
+                            <View style={community.contentbox}>
+                                <TextInput value={content} onChangeText={text => setContent(text)} style={community.titleandcontent} multiline={true} placeholder="내용" placeholderTextColor="#707070" />
+                            </View>
+                            <View style={{
+                                flexDirection: 'row',
+                                padding: 16,
+                                alignItems: 'center',
+                                justifyContent: 'flex-start'
+                            }}>
+                                <TouchableOpacity onPress={showCameraRoll1} style={{
+                                    width: 92,
+                                    height: 92,
+                                    backgroundColor: '#E5E5E5',
+                                    marginRight: 16,
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                    {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 92, height: 92 }} />}
+                                    {picone === true ? <Text style={community.picturetext}>Picture 1</Text> : <View />}
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+                    </SafeAreaView>
+                    <SafeAreaView style={{ flex: 0 }}>
+                        <TouchableOpacity onPress={
+                            (title.length > 0) && (content.length > 0) ? () => writePost() : errorview}>
+                            <View style={{ width: "100%", height: 60, backgroundColor: (title.length > 0) && (content.length > 0) ? '#5cc27b' : "#c6c6c6", justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>작성완료</Text>
+                            </View>
                         </TouchableOpacity>
-                    </View>
-                </ScrollView> 
-                
-                
-
-
-            </SafeAreaView>
-            <SafeAreaView style={{ flex: 0 }}>
-                <TouchableOpacity onPress={
-                    (title.length > 0) && (content.length > 0) ? () => writePost() : errorview}>
-                    <View style={{ width: "100%", height: 60, backgroundColor: (title.length > 0) && (content.length > 0) ? '#5cc27b' : "#c6c6c6", justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>작성완료</Text>
-                    </View>
-                </TouchableOpacity>
-            </SafeAreaView>
-            </>
-}
+                    </SafeAreaView>
+                </>
+            }
         </>
     )
 }

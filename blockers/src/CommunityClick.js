@@ -196,7 +196,8 @@ export default function CommunityHome({ navigation, route }) {
                                 like: doc.data().whoLike.length,
                                 docname: doc.data().docName,
                                 replynum: doc.data().commentNum,
-                                isPicture: doc.data().isPicture
+                                isPicture: doc.data().isPicture,
+                                isRepair: doc.data().isRepair
                             });
                         } else {
                             
@@ -207,7 +208,8 @@ export default function CommunityHome({ navigation, route }) {
                                 like: doc.data().whoLike.length,
                                 docname: doc.data().docName,
                                 replynum: doc.data().commentNum,
-                                isPicture: doc.data().isPicture
+                                isPicture: doc.data().isPicture,
+                                isRepair: doc.data().isRepair
                             });
                         }
                     }
@@ -235,7 +237,8 @@ export default function CommunityHome({ navigation, route }) {
                                     like: doc.data().whoLike.length,
                                     docname: doc.data().docName,
                                     replynum: doc.data().commentNum,
-                                    isPicture: doc.data().isPicture
+                                    isPicture: doc.data().isPicture,
+                                    isRepair: doc.data().isRepair
                                 });
                             }
                             else {
@@ -246,7 +249,8 @@ export default function CommunityHome({ navigation, route }) {
                                     like: doc.data().whoLike.length,
                                     docname: doc.data().docName,
                                     replynum: doc.data().commentNum,
-                                    isPicture: doc.data().isPicture
+                                    isPicture: doc.data().isPicture,
+                                    isRepair: doc.data().isRepair
                                 });
                             }
                         }
@@ -352,7 +356,10 @@ export default function CommunityHome({ navigation, route }) {
                                         </View>
                                         <Text ellipsizeMode="tail" numberOfLines={2} style={community.content}>{item.context}</Text>
                                         <View style={community.lowerbox}>
-                                            <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
+                                            <Text style={[community.timethumbreply, { color: '#707070' }]}>
+                                                <Text>{item.time}</Text>
+                                                {item.isRepair ? <Text> (수정됨)</Text> : <></>}
+                                            </Text>
                                             <View style={{ flexDirection: "row", alignItems: "center" }}>
                                                 {item.isPicture === true ?
                                                     <Ionicons name="image-outline" size={15} />

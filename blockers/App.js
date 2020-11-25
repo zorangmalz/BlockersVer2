@@ -24,7 +24,7 @@ import SettingExit from './src/SettingExit';
 import SettingExitComplete from './src/SettingExitComplete';
 import SettingOften from './src/SettingOften';
 import CommunityClick from './src/CommunityClick';
-import CommunityOtherPost from './src/CommunityOtherPost';
+import CommunityOtherPost, { CommunityReWrite } from './src/CommunityOtherPost';
 import Calendars from './src/Calendar';
 import MyPageScreen from './src/MyPageScreen';
 import Notification from './src/Notification';
@@ -242,6 +242,14 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="작성하기"
           component={CommunityWrite}
+          options={{
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
+          }}
+        />
+        <Stack.Screen 
+          name="CommunityReWrite"
+          component={CommunityReWrite}
           options={{
             gestureDirection: 'vertical-inverted',
             headerShown: false

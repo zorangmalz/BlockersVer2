@@ -11,12 +11,12 @@ import {
     Keyboard,
     Dimensions,
     TouchableOpacity,
-    Alert, 
+    Alert,
     FlatList,
     ActivityIndicator,
     RefreshControl
 } from 'react-native';
-import firebase from '@react-native-firebase/app';
+import firebase, { utils } from '@react-native-firebase/app';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import moment from "moment";
@@ -24,6 +24,7 @@ import storage from '@react-native-firebase/storage';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useFocusEffect } from "@react-navigation/native";
+import ImagePicker from 'react-native-image-picker';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -79,6 +80,50 @@ const community = StyleSheet.create({
         width: 15,
         height: 15,
     },
+    buttonbox: {
+        width: 52,
+        height: 24,
+        borderRadius: 5,
+        backgroundColor: '#5cc27b',
+        justifyContent: 'center',
+        alignItems: 'center',
+        alignSelf: 'flex-end',
+        margin: 16
+    },
+    buttontext: {
+        fontSize: 14,
+        fontFamily: 'NunitoSans-Bold',
+        color: '#ffffff'
+    },
+    titlebox: {
+        paddingLeft: 32,
+        borderWidth: 0.5,
+        borderColor: '#707070',
+        alignItems: 'flex-start',
+        justifyContent: "center",
+        height: 50,
+        paddingRight: 32
+    },
+    titleandcontent: {
+        fontSize: 14,
+        fontFamily: 'NunitoSans-Regular',
+        color: '#666666',
+        width: "100%"
+    },
+    contentbox: {
+        paddingLeft: 32,
+        alignItems: 'flex-start',
+        height: WIDTH * 1.2,
+        borderBottomWidth: 0.5,
+        borderColor: '#707070',
+        paddingTop: 8,
+        paddingRight: 32
+    },
+    picturetext: {
+        fontSize: 14,
+        color: '#ffffff',
+        fontFamily: 'NunitoSans-Regular'
+    }
 })
 
 const wait = (timeout) => {
@@ -617,7 +662,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 <Text style={community.title}>{!title ? "" : title}</Text>
                                 {islogined === true ?
                                     <Text style={[community.dateandrepair, { alignSelf: 'center' }]}>
-                                        <TouchableOpacity onPress={() => navigation.navigate('작성하기')}>
+                                        <TouchableOpacity onPress={() => navigation.navigate('CommunityReWrite', {docID : docID})}>
                                             <Text style={community.dateandrepair}>수정 | </Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() =>
@@ -811,6 +856,193 @@ export default function CommunityOtherPost({ route, navigation }) {
                     <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT - 20, left: WIDTH - 20, backgroundColor: "#ffffff" }} />
                 }
             </SafeAreaView>
+        </>
+    )
+}
+
+export function CommunityReWrite({ navigation, route }) {
+    const ref = firestore().collection("Community1");
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [imageOne, setImageOne] = useState(undefined);
+    const [picone, setPicone] = useState(true);
+    const [user, setuser] = useState()
+    const [nick, setNick] = useState()
+    const [filename, setFilename] = useState()
+    const [vmtkfldzm, setvmtkfldzm] = useState()
+    const [picture, setPicture] = useState()
+    const [isPicture, setIsPicture] = useState()
+    const [isLoading, setIsLoading] = useState(false)
+    const { docID } = route.params
+
+    useEffect(() => {
+        console.log(utils.FilePath.PICTURES_DIRECTORY);
+        auth().onAuthStateChanged(userAuth => {
+            setuser(userAuth)
+        })
+        if (user) {
+            console.log(user)
+            firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot => {
+                console.log(documentSnapshot.data().nickname, "hihi")
+                setNick(documentSnapshot.data().nickname)
+                setvmtkfldzm(documentSnapshot.data().profilePicture)
+            })
+            firestore().collection("Community1").doc(docID).get().then(doc => {
+                setTitle(doc.data().title)
+                setContent(doc.data().context)
+            })
+        }
+    }, [user])
+
+    async function uploadImage(a) {
+        const uri = imageOne;
+        setFilename(title + nick + a)
+
+        const reference = storage().ref("community1/" + title + nick + a);
+        const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
+
+        await reference.putFile(uploadUri);
+        setPicture(true)
+    }
+
+    async function writePost() {
+        setIsLoading(true)
+
+        var a = moment().toArray()
+
+
+        if (a[1] === 12) {
+            a[1] = 1
+            a[0] = a[0] + 1
+        } else {
+            a[1] = a[1] + 1
+        }
+        console.log("is picture", isPicture)
+        if (isPicture) {
+            await uploadImage(a)
+        }
+        await ref.doc(docID).update({
+            context: content,
+            title: title,
+            fullText: title + content,
+            profilePicture: vmtkfldzm,
+            isPicture: isPicture,
+            isRepair: true
+        })
+        setIsLoading(false)
+        Alert.alert(
+            '수정 완료',
+            '',
+            [
+                {
+                    text: '확인', onPress: () => navigation.navigate("Home")
+                }
+            ]
+        )
+
+    }
+
+    const options = {
+        title: '사진가져오기',
+        customButtons: [
+            { name: 'button_id_1', title: 'CustomButton 1' },
+            { name: 'button_id_2', title: 'CustomButton 2' }
+        ],
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+        quality: 0.3
+    };
+
+    const showCameraRoll1 = () => {
+        ImagePicker.launchImageLibrary(options, (response) => {
+            if (response.error) {
+                console.log('LaunchImageLibrary Error: ', response.error);
+            }
+            else {
+                setImageOne(response.uri);
+                setPicone(false);
+            }
+        });
+        setIsPicture(true)
+    };
+
+    const errorview = () => {
+        Alert.alert(
+            "작성 오류",
+            "제목 본문 한글자 이상 작성해주세요",
+            [
+                {
+                    text: "확인",
+                    onPress: () => console.log("확인")
+                }
+            ]
+        )
+    }
+
+    return (
+        <>
+            <StatusBar barStyle="light-content" />
+            {isLoading === true ?
+                <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
+                :
+                <>
+                    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+                        <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Ionicons name="chevron-back" size={25} />
+                            </TouchableOpacity>
+                            <View
+                                style={{
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Text style={{ fontSize: 18 }}>
+                                    <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>작성하기</Text>
+                                </Text>
+                            </View>
+                            {/* 중앙 맞추기 */}
+                            <View style={{ width: "4%" }} />
+                        </View>
+                        <ScrollView>
+                            <View style={community.titlebox}>
+                                <TextInput value={title} onChangeText={text => setTitle(text)} style={community.titleandcontent} placeholder={title} placeholderTextColor="#707070" />
+                            </View>
+                            <View style={community.contentbox}>
+                                <TextInput value={content} onChangeText={text => setContent(text)} style={community.titleandcontent} multiline={true} placeholder={content} placeholderTextColor="#707070" />
+                            </View>
+                            <View style={{
+                                flexDirection: 'row',
+                                padding: 16,
+                                alignItems: 'center',
+                                justifyContent: 'flex-start'
+                            }}>
+                                <TouchableOpacity onPress={showCameraRoll1} style={{
+                                    width: 92,
+                                    height: 92,
+                                    backgroundColor: '#E5E5E5',
+                                    marginRight: 16,
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                    {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 92, height: 92 }} />}
+                                    {picone === true ? <Text style={community.picturetext}>Picture 1</Text> : <View />}
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+                    </SafeAreaView>
+                    <SafeAreaView style={{ flex: 0 }}>
+                        <TouchableOpacity onPress={
+                            (title.length > 0) && (content.length > 0) ? () => writePost() : errorview}>
+                            <View style={{ width: "100%", height: 60, backgroundColor: (title.length > 0) && (content.length > 0) ? '#5cc27b' : "#c6c6c6", justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Regular' }}>작성완료</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </SafeAreaView>
+                </>
+            }
         </>
     )
 }
