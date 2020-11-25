@@ -82,7 +82,8 @@ export default function SolutionSmokeResult({navigation,route}) {
         await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+totals).collection("ChallengeDetail").doc("니코틴 중독 평가하기").update({
             visible:false,
             resContent:data[nico].content,
-            resNum:total
+            resNum:total,
+            stats:true
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
             challenge:"미션 진행"
