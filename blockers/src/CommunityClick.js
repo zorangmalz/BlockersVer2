@@ -167,7 +167,7 @@ export default function CommunityHome({ navigation, route }) {
             }
         })
         console.log(user)
-    }, [user])
+    }, [user,refreshing,refresh])
 
     //검색어 입력
     const [searchWord, setSearchWord] = useState("");
@@ -386,15 +386,15 @@ export default function CommunityHome({ navigation, route }) {
                                 backgroundColor: "white"
                             }}>
                             <View style={{
-                                width: 36,
-                                height: 36,
+                                width: 56,
+                                height: 56,
                                 borderColor: '#5cc27b',
                                 borderWidth: 1,
-                                borderRadius: 18,
+                                borderRadius: 28,
                                 alignItems: 'center',
                                 justifyContent: 'center',
                             }}>
-                                <MaterialCommunityIcons name="pencil" color="#5cc27b" size={25} />
+                                <MaterialCommunityIcons name="pencil" color="#5cc27b" size={45} />
                             </View>
                         </TouchableOpacity>
                     </>

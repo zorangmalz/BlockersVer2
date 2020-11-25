@@ -261,7 +261,9 @@ export default function CommunityOtherPost({ route, navigation }) {
     }, [replynum, del, refreshing])
 
     //화면에 텍스트 및 좋아요를 띄워주는 함수.
+    var realTitle
     async function load() {
+        
         firestore().collection("Community1").doc(docID).get().then(doc => {
             setTitle(doc.data().title)
             setContent(doc.data().context)
@@ -274,7 +276,9 @@ export default function CommunityOtherPost({ route, navigation }) {
             setAlertList(doc.data().whoAlert)
             setVmtk(doc.data().profilePicture)
             setDocName(doc.data().docName)
-        })
+            realTitle=String(doc.data().title)+String(doc.data().nickname)+String(doc.data().time)
+        })  
+        console.log(realTitle,"rekjwfpoiqwejofi")
     }
 
     useEffect(() => {
@@ -666,7 +670,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 <Text style={community.title}>{!title ? "" : title}</Text>
                                 {islogined === true ?
                                     <Text style={[community.dateandrepair, { alignSelf: 'center' }]}>
-                                        <TouchableOpacity onPress={() => navigation.navigate('CommunityReWrite', {docID : docID})}>
+                                        <TouchableOpacity onPress={() => navigation.navigate('CommunityReWrite', {docID : docID,titles:realTitle})}>
                                             <Text style={community.dateandrepair}>수정 | </Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() =>
@@ -857,7 +861,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                         </View>
                     </>
                     :
-                    <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT - 20, left: WIDTH - 20, backgroundColor: "#ffffff" }} />
+                    <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT/2 - 20, left: WIDTH/2 - 20, backgroundColor: "#ffffff" }} />
                 }
             </SafeAreaView>
         </>
@@ -878,13 +882,32 @@ export function CommunityReWrite({ navigation, route }) {
     const [isPicture, setIsPicture] = useState()
     const [isLoading, setIsLoading] = useState(false)
     const { docID } = route.params
+    const { titles } = route.params
 
+    const [imageSource,setImageSource]=useState("")
+
+    async function existPic(title) {
+            console.log(title,"title")
+            console.log("comeins")
+            
+            const url = await storage()
+                .refFromURL("gs://blockers-8a128.appspot.com/community1/" + String(title))
+                .getDownloadURL()
+                .catch(() => {
+                    
+                    console.log("사진이 없습니다.")
+                })
+            setImageSource(url)
+            
+        
+    }
     useEffect(() => {
         console.log(utils.FilePath.PICTURES_DIRECTORY);
         auth().onAuthStateChanged(userAuth => {
             setuser(userAuth)
         })
         if (user) {
+            existPic(titles)
             console.log(user)
             firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot => {
                 console.log(documentSnapshot.data().nickname, "hihi")
@@ -1030,8 +1053,18 @@ export function CommunityReWrite({ navigation, route }) {
                                     alignItems: 'center',
                                     justifyContent: 'center'
                                 }}>
+                                    {imageSource ? 
+                                    <>
+                                    {imageSource && <Image resizeMode="stretch" source={{ uri: imageSource }} style={{ width: 92, height: 92 }} />}
+                                    {picone === true ? <Text style={community.picturetext}>Picture 1</Text> : <View />}
+                                    </>
+                                    :
+                                    <>
                                     {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 92, height: 92 }} />}
                                     {picone === true ? <Text style={community.picturetext}>Picture 1</Text> : <View />}
+                                    </>
+                                    }
+                                    
                                 </TouchableOpacity>
                             </View>
                         </ScrollView>

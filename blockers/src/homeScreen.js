@@ -297,6 +297,7 @@ export default function HomeScreen({ navigation}) {
         if (user) {
             console.log("stsat")
             setLogin(true)
+            checkAlarm()
             firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc("2020-11-18").set({
                 hi:"hi"
             })
