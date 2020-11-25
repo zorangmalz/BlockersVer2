@@ -46,6 +46,7 @@ export default function AlramScreen({ navigation }) {
     const [user,setUser]=useState("")
     const [items,setItems]=useState([])
     const [refreshing, setRefreshing] = React.useState(false);
+    const [change,setChange]=useState(true)
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
@@ -76,7 +77,7 @@ export default function AlramScreen({ navigation }) {
                 setItems(list)
             })
         }
-    },[user,refreshing])
+    },[user,refreshing,change])
 
     async function move(item,name){
         console.log("here????")
@@ -85,6 +86,12 @@ export default function AlramScreen({ navigation }) {
             stats:true
         })
         navigation.navigate("CommunityOtherPost",{docID:item,Uid:user.uid})
+    }
+    async function challengeCheck(name){
+        firestore().collection("UserInfo").doc(user.uid).collection("Alarm").doc(name).update({
+            stats:true
+        })
+        setChange(false)
     }
     const alramData = [
         {
@@ -164,13 +171,23 @@ export default function AlramScreen({ navigation }) {
 
                                     : 
                                     <>
+                                    <TouchableOpacity onPress={()=>challengeCheck(item.docName)}>
                                     <View style={alram.box}>
                                     
                                     
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                             
-                                            <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
+                                        {item.stats ?
+                                            <>
+
+                                            </>
+                                             : 
+                                            <>
+ <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
+                                            </>
+                                             }
+                                           
                                             <Text style={alram.title}>{item.title}</Text>
                                         </View>
                                         <Text style={{
@@ -181,7 +198,9 @@ export default function AlramScreen({ navigation }) {
                                     </View>
                                     <Text style={alram.content}>{item.content}</Text>
                                 </View>
+                                </TouchableOpacity>
                                 <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
+                                
                                     </>
                                     }
                                 

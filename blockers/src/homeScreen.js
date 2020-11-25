@@ -262,6 +262,7 @@ export default function HomeScreen({ navigation}) {
         firestore().collection("UserInfo").doc(user.uid).collection("Alarm").where("stats","==",false).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 setAlarm(doc.data().stats)
+                console.log(doc.data().stats,"alarm")
             })
         }).catch(setAlarm(true))
     }
