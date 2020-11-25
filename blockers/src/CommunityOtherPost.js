@@ -926,7 +926,6 @@ export function CommunityReWrite({ navigation, route }) {
             title: title,
             fullText: title + content,
             profilePicture: vmtkfldzm,
-            isPicture: isPicture,
             isRepair: true
         })
         setIsLoading(false)
