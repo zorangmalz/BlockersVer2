@@ -16,7 +16,7 @@ const address  = StyleSheet.create({
         fontSize: 12,
         color: '#999999',
         opacity: 0.4,
-        fontFamily: 'NunitoSans-Bold'
+        fontFamily: 'Sans-Bold'
     },
     texttwo: {
         fontSize: 12,

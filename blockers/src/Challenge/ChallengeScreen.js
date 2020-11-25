@@ -365,7 +365,7 @@ export default function Challenge({ navigation }) {
             var y = moment(time)
             var durationWeek = moment.duration(x.diff(y)).asWeeks()
             var durationMonth = moment.duration(x.diff(y)).asMonths()
-
+            console.log(progressFor)
             // console.log(x)
             console.log(weekFire, monthFire)
             console.log(durationWeek, durationMonth)
@@ -386,7 +386,7 @@ export default function Challenge({ navigation }) {
                     title:"챌린지 알림",
                     content:"진행해야 할 챌린지가 추가되었습니다."
                 })
-                await firestore().collection("UserInfo").doc(writer).update({
+                await firestore().collection("UserInfo").doc(user.uid).update({
                     alarm:true
                 })
 
@@ -416,7 +416,7 @@ export default function Challenge({ navigation }) {
                     title:"챌린지 알림",
                     content:"진행해야 할 챌린지가 추가되었습니다."
                 })
-                await firestore().collection("UserInfo").doc(writer).update({
+                await firestore().collection("UserInfo").doc(user.uid).update({
                     alarm:true
                 })
             }
@@ -433,7 +433,7 @@ export default function Challenge({ navigation }) {
                         title:"챌린지 알림",
                         content:"진행해야 할 챌린지가 추가되었습니다."
                     })
-                    await firestore().collection("UserInfo").doc(writer).update({
+                    await firestore().collection("UserInfo").doc(user.uid).update({
                         alarm:true
                     })
                     await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
@@ -1715,13 +1715,16 @@ const MissionBox = ({ color, name, data, navigation, write }) => {
                     data={data}
                     keyExtractor={(item) => item.number}
                     renderItem={({ item }) => (
+                        <>
+                        
+                        {
                         write ?
-                            <TouchableOpacity onPress={() => navigation.navigate(item.navigation, { UID: item.uid })}>
+                            <TouchableOpacity onPress={noAnswer}>
                                 <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
                                 <Text style={mission.regular}>{item.content}</Text>
                             </TouchableOpacity>
                             :
-                            (item.visible === false && item.period != "final" ?
+                            (item.visible === false &&item.period!="final"?
                                 <TouchableOpacity onPress={() => navigation.navigate(item.navigation, { UID: item.uid })}>
                                     <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
                                     <Text style={mission.regular}>{item.content}</Text>
@@ -1733,6 +1736,8 @@ const MissionBox = ({ color, name, data, navigation, write }) => {
                                     <Text style={mission.regular}>{item.content}</Text>
                                 </TouchableOpacity>
                             )
+                        }
+                        </>
                     )}
                 />
                 :
@@ -4339,8 +4344,8 @@ export function ChallengeVeriResult({navigation,route}){
                         renderItem={({ item }) => (
                             <>
 <Image resizeMode="contain" style={{width:300,height:200}} source={{ uri: item.pic }}/>
-<Text>{item.idx}주차 </Text>
-<Text>{item.how}</Text>
+                        <Text style={{fontFamily:'NunitoSans-Bold',fontSize:16}}>{item.idx}주차</Text>
+                        <Text>{item.how}{`\n\n`}</Text>
                             </>
                         )}
         />
