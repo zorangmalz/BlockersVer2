@@ -34,8 +34,8 @@ const setting = StyleSheet.create({
 export default function MyPageRule({ navigation }) {
     const [agreeTwo, setAgreeTwo] = useState(false);
     const TwoCheck = () => { setAgreeTwo(!agreeTwo) }
-    const TwoAgree = agreeTwo === true ? require('./icon/exitcheck.png') : '';
-    const noTwoAgree = agreeTwo === false ? require('./icon/exitcheck.png') : '';
+    const TwoAgree = agreeTwo === true ? <Ionicons name="checkmark" size={12} color="#303030" /> : <></>;
+    const noTwoAgree = agreeTwo === false ? <Ionicons name="checkmark" size={12} color="#303030" /> : <></>;
 
     return (
         <>
@@ -196,13 +196,13 @@ export default function MyPageRule({ navigation }) {
                                 )
                             }}>
                                 <View style={setting.agreeBox}>
-                                    <Image resizeMode="contain" source={noTwoAgree} />
+                                    {noTwoAgree}
                                 </View>
                             </TouchableOpacity>
                             <Text style={setting.agree}>비동의</Text>
                             <TouchableOpacity onPress={TwoCheck}>
                                 <View style={[setting.agreeBox, { marginLeft: 16 }]}>
-                                    <Image source={TwoAgree} />
+                                    {TwoAgree}
                                 </View>
                             </TouchableOpacity>
                             <Text style={setting.agree}>동의</Text>

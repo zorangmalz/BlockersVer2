@@ -49,7 +49,7 @@ export default function AddressFind({ navigation }) {
                     <View style={address.addressbox}>
                         <TextInput style={{ width: "80%", fontSize: 14, color: 'black', opacity: 1 }} />
                         <TouchableOpacity>
-                            <Image source={require('./icon/search.png')} resizeMode="contain" style={{ width: 16, height: 16 }} />
+                            <Ionicons name="search" size={16} />
                         </TouchableOpacity>
                     </View>
                     <View style={{ borderWidth: 0.5, borderColor: '#dddddd', width: "100%", alignSelf: 'center' }} />

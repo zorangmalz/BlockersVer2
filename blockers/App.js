@@ -23,10 +23,6 @@ import SettingResetComplete from './src/SettingResetComplete';
 import SettingExit from './src/SettingExit';
 import SettingExitComplete from './src/SettingExitComplete';
 import SettingOften from './src/SettingOften';
-import WalletTransaction from './src/WalletTransaction';
-import WalletCharge from './src/WalletCharge';
-import { WalletWithdrawal, WalletWithdrawlComplete } from './src/WalletWithdrawal';
-import { WalletPassword } from './src/WalletPassword';
 import CommunityClick from './src/CommunityClick';
 import CommunityOtherPost from './src/CommunityOtherPost';
 import Calendars from './src/Calendar';
@@ -186,47 +182,6 @@ const App = ({ navigation }) => {
           options={{
             headerShown: false,
             gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="Transaction"
-          component={WalletTransaction}
-          options={{
-            headerShown: false,
-            gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="입금"
-          component={WalletCharge}
-          options={{
-            headerShown: false,
-            gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="WalletWithDrawal"
-          component={WalletWithdrawal}
-          options={{
-            headerTitle: "출금",
-            headerShown: false,
-            gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="WalletWithDrawlComplete"
-          component={WalletWithdrawlComplete}
-          options={{
-            headerTitle: "출금",
-            gestureDirection: 'vertical-inverted'
-          }}
-        />
-        <Stack.Screen
-          name="WalletPassword"
-          component={WalletPassword}
-          options={{
-            gestureDirection: 'vertical-inverted',
-            headerShown: false
           }}
         />
         <Stack.Screen
