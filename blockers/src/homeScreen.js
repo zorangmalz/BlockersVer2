@@ -31,7 +31,7 @@ import { useScreens } from 'react-native-screens';
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
 
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-8262202601779055/8327183632';
 
 
 

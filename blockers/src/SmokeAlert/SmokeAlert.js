@@ -10,7 +10,9 @@ import {
     ImageBackground,
     Dimensions,
     Image,
-    TextInput
+    TextInput,
+    BackHandler,
+    Alert
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import ProgressBar from 'react-native-progress/Bar';
@@ -49,7 +51,7 @@ const style = StyleSheet.create({
 const Header = ({ navigation }) => {
     return (
         <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
+            <TouchableOpacity onPress={()=>goBackWithAd(navigation)}>
                 <Ionicons name="chevron-back" size={25} />
             </TouchableOpacity>
             <View
@@ -68,7 +70,19 @@ const Header = ({ navigation }) => {
         </View>
     )
 }
-
+function goBackWithAd(navigation){
+    const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+        requestNonPersonalizedAdsOnly: true,
+    });
+    interstitial.onAdEvent((type) => {
+        if (type === AdEventType.LOADED) {
+            interstitial.show();
+        }
+    });
+    interstitial.load();
+    console.log("AD")
+    navigation.goBack()
+}
 // const Advertise = ({ navigation }) => {
 //     return (
 //         <TouchableOpacity>
@@ -158,6 +172,32 @@ function useInterval(callback, delay) {
 }
 
 export default function SmokeAlertOne({ navigation }) {
+
+    function goBackWithAd(){
+        const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+            requestNonPersonalizedAdsOnly: true,
+        });
+        interstitial.onAdEvent((type) => {
+            if (type === AdEventType.LOADED) {
+                interstitial.show();
+            }
+        });
+        interstitial.load();
+        console.log("AD")
+        
+    }
+    useEffect(()=>{
+        const backAction = () => {
+            goBackWithAd()
+          };
+      
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
+      
+          return () => backHandler.remove();
+    },[])
     const [delay, setDelay] = useState(1000);
     const [second, setSecond] = useState(0);
     const [isRunning, setIsRunning] = useState(true);
@@ -250,6 +290,31 @@ export default function SmokeAlertOne({ navigation }) {
 }
 
 export function SmokeAlertTwo({ navigation }) {
+    function goBackWithAd(){
+        const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+            requestNonPersonalizedAdsOnly: true,
+        });
+        interstitial.onAdEvent((type) => {
+            if (type === AdEventType.LOADED) {
+                interstitial.show();
+            }
+        });
+        interstitial.load();
+        console.log("AD")
+        
+    }
+    useEffect(()=>{
+        const backAction = () => {
+            goBackWithAd()
+          };
+      
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
+      
+          return () => backHandler.remove();
+    },[])
     const [Delay, setDelay] = useState(1000);
     const [Second, SetSecond] = useState(0);
     const [IsRunning, SetIsRunning] = useState(true);
@@ -347,6 +412,31 @@ export function SmokeAlertTwo({ navigation }) {
 }
 
 export function SmokeAlertThree({ navigation }) {
+    function goBackWithAd(){
+        const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+            requestNonPersonalizedAdsOnly: true,
+        });
+        interstitial.onAdEvent((type) => {
+            if (type === AdEventType.LOADED) {
+                interstitial.show();
+            }
+        });
+        interstitial.load();
+        console.log("AD")
+        
+    }
+    useEffect(()=>{
+        const backAction = () => {
+            goBackWithAd()
+          };
+      
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
+      
+          return () => backHandler.remove();
+    },[])
     const [delay, setDelay] = useState(1000);
     const [second, setSecond] = useState(0);
     const [isRunning, setIsRunning] = useState(true);
@@ -442,6 +532,31 @@ export function SmokeAlertThree({ navigation }) {
 }
 
 export function SmokeAlertFour({ navigation }) {
+    function goBackWithAd(){
+        const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+            requestNonPersonalizedAdsOnly: true,
+        });
+        interstitial.onAdEvent((type) => {
+            if (type === AdEventType.LOADED) {
+                interstitial.show();
+            }
+        });
+        interstitial.load();
+        console.log("AD")
+        
+    }
+    useEffect(()=>{
+        const backAction = () => {
+            goBackWithAd()
+          };
+      
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
+      
+          return () => backHandler.remove();
+    },[])
     return (
         <>
             <StatusBar barStyle="dark-content" />
