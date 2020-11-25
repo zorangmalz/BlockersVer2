@@ -83,10 +83,10 @@ import {
     Text,
     TouchableOpacity,
     Dimensions,
-    ActivityIndicator, 
-    FlatList, 
+    ActivityIndicator,
+    FlatList,
     RefreshControl,
-    Alert
+    Alert,
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -187,7 +187,7 @@ export default function Notification({ navigation, route }) {
     const [refreshing, setRefreshing] = useState(false);
     const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState();
-    
+
     //Flatlist Refreshing Control
     const onRefresh = useCallback(() => {
         setRefresh(true);
@@ -215,7 +215,7 @@ export default function Notification({ navigation, route }) {
     useFocusEffect(
         useCallback(() => {
             load()
-            return () => {}
+            return () => { }
         }, [filtered, refresh])
     )
 
@@ -242,7 +242,7 @@ export default function Notification({ navigation, route }) {
         var a = moment().toArray()
         if (a[1] === 12) {
             a[1] = 1
-            a[0]=a[0]+1
+            a[0] = a[0] + 1
         } else {
             a[1] = a[1] + 1
         }
@@ -330,60 +330,64 @@ export default function Notification({ navigation, route }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-                <>
-                    <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <Ionicons name="chevron-back" size={25} />
-                        </TouchableOpacity>
-                        <View
-                            style={{
-                                height: 44,
-                                flexDirection: 'row',
-                                justifyContent: "flex-start",
-                                alignItems: 'center',
-                                marginLeft: 24
-                            }}
-                        >
-                            <Text style={{ fontSize: 18 }}>
-                                <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>공지사항</Text>
-                            </Text>
+                {loading ?
+                    <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
+                    :
+                    <>
+                        <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Ionicons name="chevron-back" size={25} />
+                            </TouchableOpacity>
+                            <View
+                                style={{
+                                    height: 44,
+                                    flexDirection: 'row',
+                                    justifyContent: "flex-start",
+                                    alignItems: 'center',
+                                    marginLeft: 24
+                                }}
+                            >
+                                <Text style={{ fontSize: 18 }}>
+                                    <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>공지사항</Text>
+                                </Text>
+                            </View>
                         </View>
-                    </View>
-                    <FlatList
-                        data={items}
-                        refreshControl={<RefreshControl refreshing={refresh} onRefresh={onRefresh} />}
-                        onEndReached={onEndReached}
-                        onEndReachedThreshold={0.8}
-                        keyExtractor={items.docname}
-                        renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('NotificationContents', { docID: item.docname, ID: item.docname, Uid: user.uid })} >
-                                <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
-                                <View style={community.board}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                        <View style={community.circle} />
-                                        <Text ellipsizeMode="tail" numberOfLines={1} style={community.title}>{item.title}</Text>
-                                    </View>
-                                    <Text ellipsizeMode="tail" numberOfLines={2} style={community.content}>{item.context}</Text>
-                                    <View style={community.lowerbox}>
-                                        <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
-                                        <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                            {item.isPicture === true ?
-                                                <Ionicons name="image-outline" size={15} />
-                                                :
-                                                <></>
-                                            }
-                                            <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} style={{ marginLeft: 16 }} />
-                                            <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
-                                            <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
-                                            <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
+                        <FlatList
+                            data={items}
+                            refreshControl={<RefreshControl refreshing={refresh} onRefresh={onRefresh} />}
+                            onEndReached={onEndReached}
+                            onEndReachedThreshold={0.8}
+                            keyExtractor={items.docname}
+                            renderItem={({ item }) => (
+                                <TouchableOpacity onPress={() => navigation.navigate('NotificationContents', { docID: item.docname, ID: item.docname, Uid: user.uid })} >
+                                    <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
+                                    <View style={community.board}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                            <View style={community.circle} />
+                                            <Text ellipsizeMode="tail" numberOfLines={1} style={community.title}>{item.title}</Text>
+                                        </View>
+                                        <Text ellipsizeMode="tail" numberOfLines={2} style={community.content}>{item.context}</Text>
+                                        <View style={community.lowerbox}>
+                                            <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
+                                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                                {item.isPicture === true ?
+                                                    <Ionicons name="image-outline" size={15} />
+                                                    :
+                                                    <></>
+                                                }
+                                                <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} style={{ marginLeft: 16 }} />
+                                                <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
+                                                <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
+                                                <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
+                                            </View>
                                         </View>
                                     </View>
-                                </View>
-                            </TouchableOpacity>
-                        )}
-                    />
-                    {refreshing ? <ActivityIndicator style={{ marginVertical: 15 }} size="large" color="#5cc27b" /> : <></>}
-                </>
+                                </TouchableOpacity>
+                            )}
+                        />
+                        {refreshing ? <ActivityIndicator style={{ marginVertical: 15 }} size="large" color="#5cc27b" /> : <></>}
+                    </>
+                }
             </SafeAreaView>
         </>
     )

@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView,
     ScrollView,
@@ -8,12 +8,17 @@ import {
     StyleSheet,
     TouchableOpacity,
     RefreshControl,
-    FlatList
+    FlatList,
+    Dimensions
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
+
 const alram = StyleSheet.create({
     title: {
         fontSize: 16,
@@ -43,10 +48,11 @@ const wait = (timeout) => {
     });
 }
 export default function AlramScreen({ navigation }) {
-    const [user,setUser]=useState("")
-    const [items,setItems]=useState([])
+    const [user, setUser] = useState("")
+    const [items, setItems] = useState([])
     const [refreshing, setRefreshing] = React.useState(false);
-    const [change,setChange]=useState(true)
+    const [change, setChange] = useState(true)
+    const [loading, setLoading] = useState(false)
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
@@ -56,40 +62,41 @@ export default function AlramScreen({ navigation }) {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
-    },[])
-    useEffect(()=>{
-        if(user){
-            const list=[]
-            firestore().collection("UserInfo").doc(user.uid).collection("Alarm").orderBy("realDate","desc").onSnapshot(querySnapshot=>{
-                querySnapshot.forEach(function(doc){
+    }, [])
+    useEffect(() => {
+        if (user) {
+            setLoading(true)
+            const list = []
+            firestore().collection("UserInfo").doc(user.uid).collection("Alarm").orderBy("realDate", "desc").onSnapshot(querySnapshot => {
+                querySnapshot.forEach(function (doc) {
                     list.push({
-                        title:doc.data().title,
-                        content:doc.data().content,
-                        stats:doc.data().stats,
-                        date:doc.data().date,
-                        id:doc.data().realDate,
-                        docID:doc.data().docID,
-                        type:doc.data().type,
-                        docName:doc.id
-                      
+                        title: doc.data().title,
+                        content: doc.data().content,
+                        stats: doc.data().stats,
+                        date: doc.data().date,
+                        id: doc.data().realDate,
+                        docID: doc.data().docID,
+                        type: doc.data().type,
+                        docName: doc.id
                     })
                 })
                 setItems(list)
             })
+            setLoading(false)
         }
-    },[user,refreshing,change])
+    }, [user, refreshing, change])
 
-    async function move(item,name){
+    async function move(item, name) {
         console.log("here????")
-        console.log(name,item)
+        console.log(name, item)
         firestore().collection("UserInfo").doc(user.uid).collection("Alarm").doc(name).update({
-            stats:true
+            stats: true
         })
-        navigation.navigate("CommunityOtherPost",{docID:item,Uid:user.uid})
+        navigation.navigate("CommunityOtherPost", { docID: item, Uid: user.uid })
     }
-    async function challengeCheck(name){
+    async function challengeCheck(name) {
         firestore().collection("UserInfo").doc(user.uid).collection("Alarm").doc(name).update({
-            stats:true
+            stats: true
         })
         setChange(false)
     }
@@ -117,97 +124,103 @@ export default function AlramScreen({ navigation }) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
-                        <Ionicons name="chevron-back" size={25} />
-                    </TouchableOpacity>
-                    <View
-                        style={{
-                            height: 44,
-                            flexDirection: 'row',
-                            justifyContent: "flex-start",
-                            alignItems: 'center',
-                            marginLeft: 24
-                        }}
-                    >
-                        <Text style={{ fontSize: 18 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>알림</Text>
-                        </Text>
-                    </View>
-                </View>
-                    <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>} >
-                    <FlatList
-                        data={items}
-                        renderItem={({ item }) => (
-                            <>
-                            {item.type==="community"? 
+                {loading ?
+                    <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
+                    :
+                    <>
+                        <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                                <Ionicons name="chevron-back" size={25} />
+                            </TouchableOpacity>
+                            <View
+                                style={{
+                                    height: 44,
+                                    flexDirection: 'row',
+                                    justifyContent: "flex-start",
+                                    alignItems: 'center',
+                                    marginLeft: 24
+                                }}
+                            >
+                                <Text style={{ fontSize: 18 }}>
+                                    <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>알림</Text>
+                                </Text>
+                            </View>
+                        </View>
+                        <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />} >
+                            <FlatList
+                                data={items}
+                                renderItem={({ item }) => (
                                     <>
-                                    <TouchableOpacity onPress={()=>move(item.docID,item.docName)}>
-                                    <View style={alram.box}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                            {item.stats ?
+                                        {item.type === "community" ?
                                             <>
+                                                <TouchableOpacity onPress={() => move(item.docID, item.docName)}>
+                                                    <View style={alram.box}>
+                                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
+                                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                                                                {item.stats ?
+                                                                    <>
+
+                                                                    </>
+                                                                    :
+                                                                    <>
+                                                                        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
+                                                                    </>
+                                                                }
+
+                                                                <Text style={alram.title}>{item.title}</Text>
+                                                            </View>
+                                                            <Text style={{
+                                                                fontFamily: "NunitoSans-Regular",
+                                                                fontSize: 14,
+                                                                color: "#303030"
+                                                            }}>{item.date}</Text>
+                                                        </View>
+                                                        <Text style={alram.content}>{item.content}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} /></>
+
+                                            :
+                                            <>
+                                                <TouchableOpacity onPress={() => challengeCheck(item.docName)}>
+                                                    <View style={alram.box}>
+
+
+                                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
+                                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+
+                                                                {item.stats ?
+                                                                    <>
+
+                                                                    </>
+                                                                    :
+                                                                    <>
+                                                                        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
+                                                                    </>
+                                                                }
+
+                                                                <Text style={alram.title}>{item.title}</Text>
+                                                            </View>
+                                                            <Text style={{
+                                                                fontFamily: "NunitoSans-Regular",
+                                                                fontSize: 14,
+                                                                color: "#303030"
+                                                            }}>{item.date}</Text>
+                                                        </View>
+                                                        <Text style={alram.content}>{item.content}</Text>
+                                                    </View>
+                                                </TouchableOpacity>
+                                                <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
 
                                             </>
-                                             : 
-                                            <>
- <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
-                                            </>
-                                             }
-                                           
-                                            <Text style={alram.title}>{item.title}</Text>
-                                        </View>
-                                        <Text style={{
-                                            fontFamily: "NunitoSans-Regular",
-                                            fontSize: 14,
-                                            color: "#303030"
-                                        }}>{item.date}</Text>
-                                    </View>
-                                    <Text style={alram.content}>{item.content}</Text>
-                                </View>
-                                </TouchableOpacity>
-                                <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} /></>
+                                        }
 
-                                    : 
-                                    <>
-                                    <TouchableOpacity onPress={()=>challengeCheck(item.docName)}>
-                                    <View style={alram.box}>
-                                    
-                                    
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between" }}>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
-                                            
-                                        {item.stats ?
-                                            <>
-
-                                            </>
-                                             : 
-                                            <>
- <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: '#5cc27b' }} />
-                                            </>
-                                             }
-                                           
-                                            <Text style={alram.title}>{item.title}</Text>
-                                        </View>
-                                        <Text style={{
-                                            fontFamily: "NunitoSans-Regular",
-                                            fontSize: 14,
-                                            color: "#303030"
-                                        }}>{item.date}</Text>
-                                    </View>
-                                    <Text style={alram.content}>{item.content}</Text>
-                                </View>
-                                </TouchableOpacity>
-                                <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
-                                
                                     </>
-                                    }
-                                
-                            </>
-                        )}
-                    />
-                </ScrollView>
+                                )}
+                            />
+                        </ScrollView>
+                    </>
+                }
             </SafeAreaView>
         </>
     )

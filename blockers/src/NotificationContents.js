@@ -11,7 +11,7 @@ import {
     Keyboard,
     Dimensions,
     TouchableOpacity,
-    Alert, 
+    Alert,
     FlatList,
     ActivityIndicator,
     RefreshControl
@@ -92,7 +92,7 @@ export default function NotificationContents({ route, navigation }) {
     const [author, setAuthor] = useState();
     const [createdate, setCreateDate] = useState();
     const [content, setContent] = useState();
-    const [docName,setDocName]=useState();
+    const [docName, setDocName] = useState();
     const [like, setLike] = useState();
     const [items, setItems] = useState([]);
     const ref = firestore().collection('Community2');
@@ -117,7 +117,7 @@ export default function NotificationContents({ route, navigation }) {
     //for Reply
     const [relikeState, setReLikeState] = useState()
     const [reMelike, setReMeLike] = useState()
-    const [commentState,setCommentState]=useState()
+    const [commentState, setCommentState] = useState()
 
     //로딩 화면
     const [userLoading, setUserLoading] = useState(false);
@@ -137,7 +137,7 @@ export default function NotificationContents({ route, navigation }) {
         console.log(b)
         if (a[1] === 12) {
             a[1] = 1
-            a[0]=a[0]+1
+            a[0] = a[0] + 1
         } else {
             a[1] = a[1] + 1
         }
@@ -367,7 +367,7 @@ export default function NotificationContents({ route, navigation }) {
             likePlus(likeList);
         }
     }
-    
+
     async function alertPost() {
         console.log(alertList, "fucking here")
         const userID = Uid
@@ -759,7 +759,7 @@ export default function NotificationContents({ route, navigation }) {
                         </View>
                     </>
                     :
-                    <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT - 20, left: WIDTH - 20, backgroundColor: "#ffffff" }} />
+                    <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20, backgroundColor: "#ffffff" }} />
                 }
             </SafeAreaView>
         </>

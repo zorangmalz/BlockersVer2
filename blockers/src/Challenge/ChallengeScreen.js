@@ -92,12 +92,12 @@ export default function Challenge({ navigation }) {
     const [title, setTitle] = useState("");
     const [progress, setProgress] = useState(0);
     const [change, setChange] = useState("")
-    
+
     const [items, setItems] = useState([])
     const [ratio, setRatio] = useState(0)
     const [logined, setLogined] = useState(true)
     const [refreshing, setRefreshing] = React.useState(false);
-    const [alarm,setAlarm]=useState(true)
+    const [alarm, setAlarm] = useState(true)
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
@@ -126,22 +126,22 @@ export default function Challenge({ navigation }) {
             return () => {
                 //포커싱 안 되었을 떄  
             };
-        }, [refreshing, logined, change,user])
+        }, [refreshing, logined, change, user])
     );
-    useEffect(()=>{
+    useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
-    },[])
-    async function checkAlarm(){
-        firestore().collection("UserInfo").doc(user.uid).collection("Alarm").where("stats","==",false).get().then(function (querySnapshot) {
+    }, [])
+    async function checkAlarm() {
+        firestore().collection("UserInfo").doc(user.uid).collection("Alarm").where("stats", "==", false).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 setAlarm(doc.data().stats)
             })
         }).catch(setAlarm(true))
     }
     useEffect(() => {
-        if(user){
+        if (user) {
             checkAlarm()
             setLogined(true)
             firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
@@ -155,16 +155,16 @@ export default function Challenge({ navigation }) {
         } else {
             setLogined(false)
         }
-    }, [refreshing, logined, change,user])
+    }, [refreshing, logined, change, user])
 
     const AlertPart = () => Alert.alert(
         "미션",
         "챌린지에 먼저 참가해주세요",
         [
-          { text: "확인", onPress: () => console.log("OK Pressed") }
+            { text: "확인", onPress: () => console.log("OK Pressed") }
         ]
-      );
-    
+    );
+
     const MissionItem = ({ item }) => {
         return (
             <View style={{
@@ -206,7 +206,7 @@ export default function Challenge({ navigation }) {
                                 marginRight: 8
                             }} />
                             :
-    
+
                             (item.period === "once" ?
                                 <View style={{
                                     width: 8,
@@ -257,7 +257,7 @@ export default function Challenge({ navigation }) {
                         <Text style={main.title}>진행하기</Text>
                     </TouchableOpacity>
                 }
-    
+
             </View>
         )
     }
@@ -279,8 +279,8 @@ export default function Challenge({ navigation }) {
             ]
         )
     }
-    
-    const [smoker,setSmoker]=useState()
+
+    const [smoker, setSmoker] = useState()
 
     async function smokerOrNot() {
         console.log("comeins")
@@ -306,11 +306,11 @@ export default function Challenge({ navigation }) {
     async function changeToNonSmoker() {
         console.log("nonsmoker")
         var a = moment().toArray()
-        if(a[1]===12){
-            a[1]=1
-            a[0]=a[0]+1
-        }else{
-            a[1]=a[1]+1
+        if (a[1] === 12) {
+            a[1] = 1
+            a[0] = a[0] + 1
+        } else {
+            a[1] = a[1] + 1
         }
 
         await firestore().collection("UserInfo").doc(user.uid).update({
@@ -318,12 +318,12 @@ export default function Challenge({ navigation }) {
             SmokingTime: a,
             smokeDaily: 0,
         })
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-            smoke:"금연 모드로 전환"
-        }).catch(()=>
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-            smoke:"금연 모드로 전환"
-        }))
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+            smoke: "금연 모드로 전환"
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+                smoke: "금연 모드로 전환"
+            }))
         navigation.navigate("ChallengeRegister")
     }
     async function hi() {
@@ -357,7 +357,7 @@ export default function Challenge({ navigation }) {
 
             if (a[1] === 12) {
                 a[1] = 1
-                a[0]=a[0]+1
+                a[0] = a[0] + 1
             } else {
                 a[1] = a[1] + 1
             }
@@ -379,15 +379,15 @@ export default function Challenge({ navigation }) {
                     week: parseInt(durationWeek, 10) + 1
                 })
                 await firestore().collection("UserInfo").doc(user.uid).collection("Alarm").add({
-                    type:"challenge",
-                    date:a[0]+"/"+a[1]+"/"+a[2],
-                    realDate:a,
-                    stats:false,
-                    title:"챌린지 알림",
-                    content:"진행해야 할 챌린지가 추가되었습니다."
+                    type: "challenge",
+                    date: a[0] + "/" + a[1] + "/" + a[2],
+                    realDate: a,
+                    stats: false,
+                    title: "챌린지 알림",
+                    content: "진행해야 할 챌린지가 추가되었습니다."
                 })
                 await firestore().collection("UserInfo").doc(user.uid).update({
-                    alarm:true
+                    alarm: true
                 })
 
             }
@@ -409,15 +409,15 @@ export default function Challenge({ navigation }) {
                     month: parseInt(durationMonth, 10) + 1
                 })
                 await firestore().collection("UserInfo").doc(user.uid).collection("Alarm").add({
-                    type:"challenge",
-                    date:a[0]+"/"+a[1]+"/"+a[2],
-                    realDate:a,
-                    stats:false,
-                    title:"챌린지 알림",
-                    content:"진행해야 할 챌린지가 추가되었습니다."
+                    type: "challenge",
+                    date: a[0] + "/" + a[1] + "/" + a[2],
+                    realDate: a,
+                    stats: false,
+                    title: "챌린지 알림",
+                    content: "진행해야 할 챌린지가 추가되었습니다."
                 })
                 await firestore().collection("UserInfo").doc(user.uid).update({
-                    alarm:true
+                    alarm: true
                 })
             }
             if (durationMonth > long) {
@@ -426,15 +426,15 @@ export default function Challenge({ navigation }) {
                         visible: true
                     })
                     await firestore().collection("UserInfo").doc(user.uid).collection("Alarm").add({
-                        type:"challenge",
-                        date:a[0]+"/"+a[1]+"/"+a[2],
-                        realDate:a,
-                        stats:false,
-                        title:"챌린지 알림",
-                        content:"진행해야 할 챌린지가 추가되었습니다."
+                        type: "challenge",
+                        date: a[0] + "/" + a[1] + "/" + a[2],
+                        realDate: a,
+                        stats: false,
+                        title: "챌린지 알림",
+                        content: "진행해야 할 챌린지가 추가되었습니다."
                     })
                     await firestore().collection("UserInfo").doc(user.uid).update({
-                        alarm:true
+                        alarm: true
                     })
                     await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
                         ongoing: false,
@@ -603,25 +603,25 @@ export default function Challenge({ navigation }) {
                     <View style={{ flexDirectiofn: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                         <TouchableOpacity style={{ width: 27, height: 27 }} onPress={logined ? () => navigation.navigate("AlramScreen") : loginview}>
                             <Ionicons name="notifications" color="#5cc27b" size={27} />
-                            {alarm? 
-                           <></>
-                           : 
-                            <View style={{
-                                width: 10,
-                                height: 10,
-                                borderRadius: 5,
-                                alignItems: "center",
-                                justifyContent: "center",
-                                backgroundColor: "#ffffff",
-                                position: "absolute",
-                                zIndex: 1,
-                                left: 15,
-                                top: 1
-                            }}>
-                                <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#FFB83D" }} />
-                            </View>
+                            {alarm ?
+                                <></>
+                                :
+                                <View style={{
+                                    width: 10,
+                                    height: 10,
+                                    borderRadius: 5,
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    backgroundColor: "#ffffff",
+                                    position: "absolute",
+                                    zIndex: 1,
+                                    left: 15,
+                                    top: 1
+                                }}>
+                                    <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#FFB83D" }} />
+                                </View>
                             }
-                            
+
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -779,7 +779,7 @@ export default function Challenge({ navigation }) {
                         <FlatList
                             horizontal={true}
                             data={logined ? smoker ? MissionData : challenge ? items : MissionData : MissionData}
-                            keyExtractor={(item,index) => index.toString()}
+                            keyExtractor={(item, index) => index.toString()}
                             renderItem={MissionItem}
                             style={{ paddingBottom: 5 }}
                             showsHorizontalScrollIndicator={false}
@@ -825,6 +825,7 @@ export function ChallengeRegister({ navigation }) {
     const [month, dispatch] = useReducer(MonthDispatcher, 0);
     const [name, setName] = useState("")
     const [user, setUser] = useState()
+    const [loading, setLoading] = useState(false)
 
     const OneMonth = () => {
         dispatch({
@@ -857,13 +858,14 @@ export function ChallengeRegister({ navigation }) {
     }, [user])
 
     async function uploadChallenge() {
+        setLoading(true)
         var total = 0
         var a = moment().toArray()
         console.log(a)
 
         if (a[1] === 12) {
             a[1] = 1
-            a[0]=a[0]+1
+            a[0] = a[0] + 1
         } else {
             a[1] = a[1] + 1
         }
@@ -879,344 +881,344 @@ export function ChallengeRegister({ navigation }) {
                 name: name,
                 progress: 0,
                 challengePeriod: a,
-                success:0,
-                number:total,
-                week:1,
-                month:1
+                success: 0,
+                number: total,
+                week: 1,
+                month: 1
             }
         )
-        if(month===1){
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
-            title: "금연활동 인증하기 (주1회)",
-            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는 것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
-            stats: false,
-            period: "once",
-            id: 10,
-            navigate: "ChallengeVeri",
-            visible:true,
-            week:1,
-            resNavi:"ChallengeVeriResult"
-        })    
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").set({
-            title: "스트레스 평가(월1회)",
-            content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
-            stats: false,
-            period: "monthly",
-            id: 1,
-            navigate: "StressMain",
-            visible:true,
-            month:1,
-            resNavi:"StressResult"
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
-            title: "자기 효능감 평가(월1회)",
-            content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요",
-            stats: false,
-            period: "monthly",
-            id: 2,
-            navigate: "SelfEsteemMain",
-            visible:true,
-            month:1,
-            resNavi:"SelfEsteemResult"
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").set({
-            title: "알콜중독 평가(월1회)",
-            content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요",
-            stats: false,
-            period: "monthly",
-            id: 3,
-            navigate: "AlcoholMain",
-            visible:true,
-            month:1,
-            resNavi:"AlcoholResult"
-        })
-    }else if(month===3){
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
-            title: "금연활동 인증하기 (주1회)",
-            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
-            stats: false,
-            period: "once",
-            id: 10,
-            navigate: "ChallengeVeri",
-            visible:true,
-            week:1,
-            resNavi:"ChallengeVeriResult"
-        })
+        if (month === 1) {
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
+                title: "금연활동 인증하기 (주1회)",
+                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는 것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
+                stats: false,
+                period: "once",
+                id: 10,
+                navigate: "ChallengeVeri",
+                visible: true,
+                week: 1,
+                resNavi: "ChallengeVeriResult"
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").set({
+                title: "스트레스 평가(월1회)",
+                content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
+                stats: false,
+                period: "monthly",
+                id: 1,
+                navigate: "StressMain",
+                visible: true,
+                month: 1,
+                resNavi: "StressResult"
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
+                title: "자기 효능감 평가(월1회)",
+                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요",
+                stats: false,
+                period: "monthly",
+                id: 2,
+                navigate: "SelfEsteemMain",
+                visible: true,
+                month: 1,
+                resNavi: "SelfEsteemResult"
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").set({
+                title: "알콜중독 평가(월1회)",
+                content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요",
+                stats: false,
+                period: "monthly",
+                id: 3,
+                navigate: "AlcoholMain",
+                visible: true,
+                month: 1,
+                resNavi: "AlcoholResult"
+            })
+        } else if (month === 3) {
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
+                title: "금연활동 인증하기 (주1회)",
+                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
+                stats: false,
+                period: "once",
+                id: 10,
+                navigate: "ChallengeVeri",
+                visible: true,
+                week: 1,
+                resNavi: "ChallengeVeriResult"
+            })
 
 
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("1").set({
-           stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("2").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("3").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("4").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("5").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("6").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("7").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("8").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("9").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("10").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("11").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("12").set({
-            stats:false
-         })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("1").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("2").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("3").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("4").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("5").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("6").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("7").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("8").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("9").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("10").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("11").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("12").set({
+                stats: false
+            })
 
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").set({
-            title: "스트레스 평가(월1회)",
-            content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
-            stats: false,
-            period: "monthly",
-            id: 1,
-            navigate: "StressMain",
-            visible:true,
-            month:1,
-            resNavi:"StressResult"
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("1").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("2").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("3").set({
-            stats:false
-        })
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
-            title: "자기 효능감 평가(월1회)",
-            content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요",
-            stats: false,
-            period: "monthly",
-            id: 2,
-            navigate: "SelfEsteemMain",
-            visible:true,
-            month:1,
-            resNavi:"SelfEsteemResult"
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("1").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("2").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("3").set({
-            stats:false
-        })
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").set({
-            title: "알콜중독 평가(월1회)",
-            content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요",
-            stats: false,
-            period: "monthly",
-            id: 3,
-            navigate: "AlcoholMain",
-            visible:true,
-            month:1,
-            resNavi:"AlcoholResult"
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("1").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("2").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("3").set({
-            stats:false
-        })
-    }else if(month===6){
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
-            title: "금연활동 인증하기 (주1회)",
-            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
-            stats: false,
-            period: "once",
-            id: 10,
-            navigate: "ChallengeVeri",
-            visible:true,
-            week:1,
-            resNavi:"ChallengeVeriResult"
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("1").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("2").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("3").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("4").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("5").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("6").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("7").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("8").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("9").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("10").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("11").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("12").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("13").set({
-            stats:false
-         })
-         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("14").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("15").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("16").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("17").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("18").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("19").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("20").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("21").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("22").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("23").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("24").set({
-             stats:false
-          })
-          firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("25").set({
-            stats:false
-         })
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").set({
-            title: "스트레스 평가(월1회)",
-            content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
-            stats: false,
-            period: "monthly",
-            id: 1,
-            navigate: "StressMain",
-            visible:true,
-            month:1,
-            resNavi:"StressResult"
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("1").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("2").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("3").set({
-            stats:false
-        }) 
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("4").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("5").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("6").set({
-            stats:false
-        })
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
-            title: "자기 효능감 평가(월1회)",
-            content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을 체크하고 금연 성공하세요",
-            stats: false,
-            period: "monthly",
-            id: 2,
-            navigate: "SelfEsteemMain",
-            visible:true,
-            month:1,
-            resNavi:"SelfEsteemResult"
-        })
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").set({
+                title: "스트레스 평가(월1회)",
+                content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
+                stats: false,
+                period: "monthly",
+                id: 1,
+                navigate: "StressMain",
+                visible: true,
+                month: 1,
+                resNavi: "StressResult"
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("1").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("2").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("3").set({
+                stats: false
+            })
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
+                title: "자기 효능감 평가(월1회)",
+                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요",
+                stats: false,
+                period: "monthly",
+                id: 2,
+                navigate: "SelfEsteemMain",
+                visible: true,
+                month: 1,
+                resNavi: "SelfEsteemResult"
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("1").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("2").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("3").set({
+                stats: false
+            })
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").set({
+                title: "알콜중독 평가(월1회)",
+                content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요",
+                stats: false,
+                period: "monthly",
+                id: 3,
+                navigate: "AlcoholMain",
+                visible: true,
+                month: 1,
+                resNavi: "AlcoholResult"
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("1").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("2").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("3").set({
+                stats: false
+            })
+        } else if (month === 6) {
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
+                title: "금연활동 인증하기 (주1회)",
+                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
+                stats: false,
+                period: "once",
+                id: 10,
+                navigate: "ChallengeVeri",
+                visible: true,
+                week: 1,
+                resNavi: "ChallengeVeriResult"
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("1").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("2").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("3").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("4").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("5").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("6").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("7").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("8").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("9").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("10").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("11").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("12").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("13").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("14").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("15").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("16").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("17").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("18").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("19").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("20").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("21").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("22").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("23").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("24").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc("25").set({
+                stats: false
+            })
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").set({
+                title: "스트레스 평가(월1회)",
+                content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
+                stats: false,
+                period: "monthly",
+                id: 1,
+                navigate: "StressMain",
+                visible: true,
+                month: 1,
+                resNavi: "StressResult"
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("1").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("2").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("3").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("4").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("5").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").collection("stress").doc("6").set({
+                stats: false
+            })
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
+                title: "자기 효능감 평가(월1회)",
+                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을 체크하고 금연 성공하세요",
+                stats: false,
+                period: "monthly",
+                id: 2,
+                navigate: "SelfEsteemMain",
+                visible: true,
+                month: 1,
+                resNavi: "SelfEsteemResult"
+            })
 
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("1").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("2").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("3").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("4").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("5").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("6").set({
-            stats:false
-        })
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").set({
-            title: "알콜중독 평가(월1회)",
-            content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요",
-            stats: false,
-            period: "monthly",
-            id: 3,
-            navigate: "AlcoholMain",
-            visible:true,
-            month:1,
-            resNavi:"AlcoholResult"
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("1").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("2").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("3").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("4").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("5").set({
-            stats:false
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("6").set({
-            stats:false
-        })
-    }
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("1").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("2").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("3").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("4").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("5").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc("6").set({
+                stats: false
+            })
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").set({
+                title: "알콜중독 평가(월1회)",
+                content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요",
+                stats: false,
+                period: "monthly",
+                id: 3,
+                navigate: "AlcoholMain",
+                visible: true,
+                month: 1,
+                resNavi: "AlcoholResult"
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("1").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("2").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("3").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("4").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("5").set({
+                stats: false
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc("6").set({
+                stats: false
+            })
+        }
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 동기 설정하기").set({
             title: "금연 동기 설정하기",
             content: "금연을 하는 이유가 무엇인가요? 금연 동기는 앞으로 금연을 이어가는 가장 큰 힘이 될 수 있습니다",
@@ -1224,8 +1226,8 @@ export function ChallengeRegister({ navigation }) {
             period: "once",
             id: 4,
             navigate: "ChallengeMotivation",
-            visible:true,
-            resNavi:"ChallengeMotivationResult"
+            visible: true,
+            resNavi: "ChallengeMotivationResult"
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("니코틴 중독 평가하기").set({
             title: "니코틴 중독 평가하기",
@@ -1234,8 +1236,8 @@ export function ChallengeRegister({ navigation }) {
             period: "once",
             id: 5,
             navigate: "SolutionMain",
-            visible:true,
-            resNavi:"NicotineResult"
+            visible: true,
+            resNavi: "NicotineResult"
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 서약서 쓰기").set({
             title: "금연 서약서 쓰기",
@@ -1244,8 +1246,8 @@ export function ChallengeRegister({ navigation }) {
             period: "once",
             id: 6,
             navigate: "ChallengeSwear",
-            visible:true,
-            resNavi:"ChallengeSwearResult"
+            visible: true,
+            resNavi: "ChallengeSwearResult"
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 지지자 정하기").set({
             title: "금연 지지자 정하기",
@@ -1254,8 +1256,8 @@ export function ChallengeRegister({ navigation }) {
             period: "once",
             id: 7,
             navigate: "ChallengeSupport",
-            visible:true,
-            resNavi:"ChallengeSupport"
+            visible: true,
+            resNavi: "ChallengeSupport"
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("내 흡연유형 파악하기").set({
             title: "내 흡연유형 파악하기",
@@ -1264,10 +1266,10 @@ export function ChallengeRegister({ navigation }) {
             period: "once",
             id: 8,
             navigate: "SolutionAOne",
-            visible:true,
-            resNavi:"SolutionResult"
+            visible: true,
+            resNavi: "SolutionResult"
         })
-       
+
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금단증상 확인하기").set({
             title: "금단증상 확인하기",
             content: "금연을 하면서 피할 수 없는 금단증상! 나의 금단 증상을 파악하고 해결책을 찾아보세요.",
@@ -1275,8 +1277,8 @@ export function ChallengeRegister({ navigation }) {
             period: "once",
             id: 11,
             navigate: "ChallengeGD",
-            visible:true,
-            resNavi:"ChallengeGDResult"
+            visible: true,
+            resNavi: "ChallengeGDResult"
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").set({
             title: "성공 후기 작성하기",
@@ -1284,233 +1286,241 @@ export function ChallengeRegister({ navigation }) {
             period: "final",
             id: 12,
             navigate: "ChallengeSuccess",
-            visible:false,
-            stats:false,
-            resNavi:"ChallengeSuccess"
+            visible: false,
+            stats: false,
+            resNavi: "ChallengeSuccess"
         })
+        setLoading(false)
         navigation.navigate("ChallengeTab")
     }
     return (
         <>
             <StatusBar barStyle="dark-content" />
-            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between", height: 50, paddingTop: 5, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
-                    <View style={{ flexDirection: "row", alignItems: "center" }}>
-                        <TouchableOpacity onPress={() => navigation.goBack()}>
-                            <Ionicons name="chevron-back" size={25} />
-                        </TouchableOpacity>
-                        <View
-                            style={{
-                                height: 50,
-                                flexDirection: 'row',
-                                justifyContent: "flex-start",
-                                alignItems: 'center',
-                                marginLeft: 24
-                            }}
-                        >
-                            <Text style={{ fontSize: 18 }}>
-                                <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>개설하기</Text>
-                            </Text>
-                        </View>
-                    </View>
-                    <TouchableOpacity onPress={() => navigation.navigate("자주묻는 질문")} >
-                        <Text style={{
-                            fontSize: 14,
-                            color: "#303030",
-                            opacity: 0.6,
-                            textDecorationLine: "underline",
-                        }}>챌린지는 무엇인가요?</Text>
-                    </TouchableOpacity>
-                </View>
-                <ScrollView>
-                    <View style={{
-                        width: "90%",
-                        paddingLeft: "5%",
-                        paddingRight: "5%",
-                        alignSelf: "center",
-                        borderRadius: 10,
-                        backgroundColor: "#ffffff",
-                        elevation: Platform.OS === "android" ? 3 : 0,
-                        shadowColor: "#303030",
-                        shadowOffset: {
-                            width: 0,
-                            height: 2,
-                        },
-                        shadowOpacity: 0.22,
-                        shadowRadius: 2.22,
-                        marginTop: 16,
-                        paddingTop: HEIGHT * 0.025,
-                        paddingBottom: HEIGHT * 0.02,
-                        marginBottom: 16
-                    }}>
-                        <Text style={{
-                            fontSize: 16,
-                            fontFamily: "NunitoSans-Bold",
-                            color: "#303030",
-                            alignSelf: "center",
-                            marginBottom: HEIGHT * 0.05
-                        }}>{name}님의 금연 챌린지</Text>
-                        <Text style={[main.bold, { marginBottom: HEIGHT * 0.025 }]}>챌린지 제목</Text>
-                        <TextInput
-                            value={resolution}
-                            onChangeText={(text) => setResolution(text)}
-                            placeholder="금연에 임하는 각오를 적어주세요" style={{
-                                borderBottomColor: "#E5E5E5",
-                                borderBottomWidth: 1,
-                                paddingBottom: 8,
-                                marginBottom: HEIGHT * 0.05
-                            }} />
-                        <Text style={[main.bold, { marginBottom: HEIGHT * 0.025 }]}>기간 설정</Text>
-                        <View style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            marginBottom: HEIGHT * 0.05
-                        }}>
-                            <TouchableOpacity onPress={OneMonth} style={{
-                                width: 16,
-                                height: 16,
-                                borderRadius: 8,
-                                borderWidth: 0.5,
-                                borderColor: "#5cc27b",
-                                alignItems: "center",
-                                justifyContent: "center"
-                            }}>
-                                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: month === 1 ? "#5cc27b" : "#ffffff" }} />
-                            </TouchableOpacity>
-                            <Text style={{
-                                marginLeft: 4,
-                                marginRight: 8,
-                                fontSize: 14,
-                                color: "#303030",
-                                opacity: month === 1 ? 1 : 0.6,
-                                fontFamily: month === 1 ? "NunitoSans-Bold" : "NunitoSans-Regular"
-                            }}>1개월</Text>
-                            <TouchableOpacity onPress={ThreeMonth} style={{
-                                width: 16,
-                                height: 16,
-                                borderRadius: 8,
-                                borderWidth: 0.5,
-                                borderColor: "#5cc27b",
-                                alignItems: "center",
-                                justifyContent: "center"
-                            }}>
-                                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: month === 3 ? "#5cc27b" : "#ffffff" }} />
-                            </TouchableOpacity>
-                            <Text style={{
-                                marginLeft: 4,
-                                marginRight: 8,
-                                fontSize: 14,
-                                color: "#303030",
-                                opacity: month === 3 ? 1 : 0.6,
-                                fontFamily: month === 3 ? "NunitoSans-Bold" : "NunitoSans-Regular"
-                            }}>3개월</Text>
-                            <TouchableOpacity onPress={SixMonth} style={{
-                                width: 16,
-                                height: 16,
-                                borderRadius: 8,
-                                borderWidth: 0.5,
-                                borderColor: "#5cc27b",
-                                alignItems: "center",
-                                justifyContent: "center"
-                            }}>
-                                <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: month === 6 ? "#5cc27b" : "#ffffff" }} />
-                            </TouchableOpacity>
-                            <Text style={{
-                                marginLeft: 4,
-                                marginRight: 8,
-                                fontSize: 14,
-                                color: "#303030",
-                                opacity: month === 6 ? 1 : 0.6,
-                                fontFamily: month === 6 ? "NunitoSans-Bold" : "NunitoSans-Regular"
-                            }}>6개월(금연성공카드 증정)</Text>
-                        </View>
-                        <Text style={[main.bold, { marginBottom: HEIGHT * 0.025 }]}>챌린지 3컷 설명</Text>
-                        <View style={{
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            marginBottom: 16
-                        }}>
-                            <View style={{
-                                alignItems: "center",
-                            }}>
-                                <View style={{
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    width: 80,
-                                    height: 80,
-                                    borderWidth: 1,
-                                    borderColor: "#707070",
-                                    backgroundColor: "#ffffff"
-                                }}>
-                                    <Image source={require("../icon/missionone.png")} />
+            {loading ?
+                <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20, backgroundColor: "#ffffff" }} />
+                :
+                <>
+                    <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+
+                        <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: "space-between", height: 50, paddingTop: 5, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <TouchableOpacity onPress={() => navigation.goBack()}>
+                                    <Ionicons name="chevron-back" size={25} />
+                                </TouchableOpacity>
+                                <View
+                                    style={{
+                                        height: 50,
+                                        flexDirection: 'row',
+                                        justifyContent: "flex-start",
+                                        alignItems: 'center',
+                                        marginLeft: 24
+                                    }}
+                                >
+                                    <Text style={{ fontSize: 18 }}>
+                                        <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>개설하기</Text>
+                                    </Text>
                                 </View>
-                                <Text style={[main.bold, { marginTop: 8 }]}>1. 미션진행</Text>
                             </View>
+                            <TouchableOpacity onPress={() => navigation.navigate("자주묻는 질문")} >
+                                <Text style={{
+                                    fontSize: 14,
+                                    color: "#303030",
+                                    opacity: 0.6,
+                                    textDecorationLine: "underline",
+                                }}>챌린지는 무엇인가요?</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <ScrollView>
                             <View style={{
-                                alignItems: "center",
+                                width: "90%",
+                                paddingLeft: "5%",
+                                paddingRight: "5%",
+                                alignSelf: "center",
+                                borderRadius: 10,
+                                backgroundColor: "#ffffff",
+                                elevation: Platform.OS === "android" ? 3 : 0,
+                                shadowColor: "#303030",
+                                shadowOffset: {
+                                    width: 0,
+                                    height: 2,
+                                },
+                                shadowOpacity: 0.22,
+                                shadowRadius: 2.22,
+                                marginTop: 16,
+                                paddingTop: HEIGHT * 0.025,
+                                paddingBottom: HEIGHT * 0.02,
+                                marginBottom: 16
                             }}>
-                                <View style={{
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    width: 80,
-                                    height: 80,
-                                    borderWidth: 1,
-                                    borderColor: "#707070",
-                                    backgroundColor: "#ffffff"
-                                }}>
-                                    <Image source={require("../icon/missiontwo.png")} />
-                                </View>
-                                <Text style={[main.bold, { marginTop: 8 }]}>2. 금연 인증</Text>
-                            </View>
-                            <View style={{
-                                alignItems: "center",
-                            }}>
+                                <Text style={{
+                                    fontSize: 16,
+                                    fontFamily: "NunitoSans-Bold",
+                                    color: "#303030",
+                                    alignSelf: "center",
+                                    marginBottom: HEIGHT * 0.05
+                                }}>{name}님의 금연 챌린지</Text>
+                                <Text style={[main.bold, { marginBottom: HEIGHT * 0.025 }]}>챌린지 제목</Text>
+                                <TextInput
+                                    value={resolution}
+                                    onChangeText={(text) => setResolution(text)}
+                                    placeholder="금연에 임하는 각오를 적어주세요" style={{
+                                        borderBottomColor: "#E5E5E5",
+                                        borderBottomWidth: 1,
+                                        paddingBottom: 8,
+                                        marginBottom: HEIGHT * 0.05
+                                    }} />
+                                <Text style={[main.bold, { marginBottom: HEIGHT * 0.025 }]}>기간 설정</Text>
                                 <View style={{
                                     flexDirection: "row",
                                     alignItems: "center",
-                                    justifyContent: "flex-start",
-                                    width: 80,
-                                    height: 80,
-                                    borderWidth: 1,
-                                    borderColor: "#707070",
-                                    backgroundColor: "#ffffff"
+                                    marginBottom: HEIGHT * 0.05
                                 }}>
-                                    <Image source={require("../icon/missionthree.png")} />
+                                    <TouchableOpacity onPress={OneMonth} style={{
+                                        width: 16,
+                                        height: 16,
+                                        borderRadius: 8,
+                                        borderWidth: 0.5,
+                                        borderColor: "#5cc27b",
+                                        alignItems: "center",
+                                        justifyContent: "center"
+                                    }}>
+                                        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: month === 1 ? "#5cc27b" : "#ffffff" }} />
+                                    </TouchableOpacity>
+                                    <Text style={{
+                                        marginLeft: 4,
+                                        marginRight: 8,
+                                        fontSize: 14,
+                                        color: "#303030",
+                                        opacity: month === 1 ? 1 : 0.6,
+                                        fontFamily: month === 1 ? "NunitoSans-Bold" : "NunitoSans-Regular"
+                                    }}>1개월</Text>
+                                    <TouchableOpacity onPress={ThreeMonth} style={{
+                                        width: 16,
+                                        height: 16,
+                                        borderRadius: 8,
+                                        borderWidth: 0.5,
+                                        borderColor: "#5cc27b",
+                                        alignItems: "center",
+                                        justifyContent: "center"
+                                    }}>
+                                        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: month === 3 ? "#5cc27b" : "#ffffff" }} />
+                                    </TouchableOpacity>
+                                    <Text style={{
+                                        marginLeft: 4,
+                                        marginRight: 8,
+                                        fontSize: 14,
+                                        color: "#303030",
+                                        opacity: month === 3 ? 1 : 0.6,
+                                        fontFamily: month === 3 ? "NunitoSans-Bold" : "NunitoSans-Regular"
+                                    }}>3개월</Text>
+                                    <TouchableOpacity onPress={SixMonth} style={{
+                                        width: 16,
+                                        height: 16,
+                                        borderRadius: 8,
+                                        borderWidth: 0.5,
+                                        borderColor: "#5cc27b",
+                                        alignItems: "center",
+                                        justifyContent: "center"
+                                    }}>
+                                        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: month === 6 ? "#5cc27b" : "#ffffff" }} />
+                                    </TouchableOpacity>
+                                    <Text style={{
+                                        marginLeft: 4,
+                                        marginRight: 8,
+                                        fontSize: 14,
+                                        color: "#303030",
+                                        opacity: month === 6 ? 1 : 0.6,
+                                        fontFamily: month === 6 ? "NunitoSans-Bold" : "NunitoSans-Regular"
+                                    }}>6개월(금연성공카드 증정)</Text>
                                 </View>
-                                <Text style={[main.bold, { marginTop: 8 }]}>3. 금연 성공!</Text>
+                                <Text style={[main.bold, { marginBottom: HEIGHT * 0.025 }]}>챌린지 3컷 설명</Text>
+                                <View style={{
+                                    flexDirection: "row",
+                                    alignItems: "center",
+                                    justifyContent: "space-between",
+                                    marginBottom: 16
+                                }}>
+                                    <View style={{
+                                        alignItems: "center",
+                                    }}>
+                                        <View style={{
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            width: 80,
+                                            height: 80,
+                                            borderWidth: 1,
+                                            borderColor: "#707070",
+                                            backgroundColor: "#ffffff"
+                                        }}>
+                                            <Image source={require("../icon/missionone.png")} />
+                                        </View>
+                                        <Text style={[main.bold, { marginTop: 8 }]}>1. 미션진행</Text>
+                                    </View>
+                                    <View style={{
+                                        alignItems: "center",
+                                    }}>
+                                        <View style={{
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            width: 80,
+                                            height: 80,
+                                            borderWidth: 1,
+                                            borderColor: "#707070",
+                                            backgroundColor: "#ffffff"
+                                        }}>
+                                            <Image source={require("../icon/missiontwo.png")} />
+                                        </View>
+                                        <Text style={[main.bold, { marginTop: 8 }]}>2. 금연 인증</Text>
+                                    </View>
+                                    <View style={{
+                                        alignItems: "center",
+                                    }}>
+                                        <View style={{
+                                            flexDirection: "row",
+                                            alignItems: "center",
+                                            justifyContent: "flex-start",
+                                            width: 80,
+                                            height: 80,
+                                            borderWidth: 1,
+                                            borderColor: "#707070",
+                                            backgroundColor: "#ffffff"
+                                        }}>
+                                            <Image source={require("../icon/missionthree.png")} />
+                                        </View>
+                                        <Text style={[main.bold, { marginTop: 8 }]}>3. 금연 성공!</Text>
+                                    </View>
+                                </View>
                             </View>
-                        </View>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
-            <SafeAreaView style={{ flex: 0 }}>
-                {resolution.length > 0 && month > 0 ?
-                    <TouchableOpacity onPress={uploadChallenge}>
-                        <View style={{
-                            width: "100%",
-                            height: 60,
-                            backgroundColor: '#5cc27b',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
-                        </View>
-                    </TouchableOpacity>
-                    :
-                    <TouchableOpacity>
-                        <View style={{
-                            width: "100%",
-                            height: 60,
-                            backgroundColor: "#c6c6c6",
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
-                        </View>
-                    </TouchableOpacity>
-                }
-            </SafeAreaView>
+                        </ScrollView>
+                    </SafeAreaView>
+                    <SafeAreaView style={{ flex: 0 }}>
+                        {resolution.length > 0 && month > 0 ?
+                            <TouchableOpacity onPress={uploadChallenge}>
+                                <View style={{
+                                    width: "100%",
+                                    height: 60,
+                                    backgroundColor: '#5cc27b',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
+                                </View>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity>
+                                <View style={{
+                                    width: "100%",
+                                    height: 60,
+                                    backgroundColor: "#c6c6c6",
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
+                                </View>
+                            </TouchableOpacity>
+                        }
+                    </SafeAreaView>
+                </>
+            }
         </>
     )
 }
@@ -1546,29 +1556,29 @@ const history = StyleSheet.create({
     }
 })
 
-export function ChallengeHistory({ navigation,route }) {
-    const [items,setItems]=useState([])
-    const {UID}=route.params
+export function ChallengeHistory({ navigation, route }) {
+    const [items, setItems] = useState([])
+    const { UID } = route.params
     const title = "Challenge History";
-   
-    useEffect(()=>{
-        
+
+    useEffect(() => {
+
         getData()
-    },[])
-    async function getData(){
-        const list=[]
-        await firestore().collection("UserInfo").doc(UID).collection("Challenge").orderBy("number","asc").onSnapshot(querySnapshot => {
+    }, [])
+    async function getData() {
+        const list = []
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").orderBy("number", "asc").onSnapshot(querySnapshot => {
             querySnapshot.forEach(function (doc) {
                 list.push({
-                    ChallengeStep:doc.data().name+"님의 챌린지 ("+doc.data().long+"개월)",
-                    participationDate:doc.data().challengePeriod[0]+"/"+doc.data().challengePeriod[1]+"/"+doc.data().challengePeriod[2],
-                    rate:doc.data().progress+"%",
-                    success:doc.data().success,
-                    challengeNumber:doc.data().number
+                    ChallengeStep: doc.data().name + "님의 챌린지 (" + doc.data().long + "개월)",
+                    participationDate: doc.data().challengePeriod[0] + "/" + doc.data().challengePeriod[1] + "/" + doc.data().challengePeriod[2],
+                    rate: doc.data().progress + "%",
+                    success: doc.data().success,
+                    challengeNumber: doc.data().number
                 })
 
-        })
-        setItems(list)
+            })
+            setItems(list)
         })
     }
     return (
@@ -1618,20 +1628,20 @@ export function ChallengeHistory({ navigation,route }) {
                                     <View style={{ width: 80, height: 30, backgroundColor: '#5cc27b', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
                                         <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>진행중</Text>
                                     </View>
-                                    :(item.success===1?
+                                    : (item.success === 1 ?
                                         <>
-                                        <View style={{ width: 80, height: 30, backgroundColor: '#ff0000', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
-                                        <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>실패</Text>
-                                    </View>
+                                            <View style={{ width: 80, height: 30, backgroundColor: '#ff0000', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
+                                                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>실패</Text>
+                                            </View>
                                         </>
                                         :
                                         <>
-                                        <View style={{ width: 80, height: 30, backgroundColor: '#5cc27b', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
-                                        <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>성공</Text>
-                                    </View>
+                                            <View style={{ width: 80, height: 30, backgroundColor: '#5cc27b', borderRadius: 14, alignItems: 'center', justifyContent: 'center' }}>
+                                                <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16, color: '#ffffff' }}>성공</Text>
+                                            </View>
                                         </>
-                                        )
-                                    
+                                    )
+
                                 }
                             </View>
                         )}
@@ -1681,7 +1691,7 @@ const mission = StyleSheet.create({
 
 const MissionBox = ({ color, name, data, navigation, write }) => {
     const [fold, setFold] = useState(true);
-    function noAnswer(){
+    function noAnswer() {
         Alert.alert("응답기록이 없습니다.")
     }
     return (
@@ -1716,27 +1726,27 @@ const MissionBox = ({ color, name, data, navigation, write }) => {
                     keyExtractor={(item) => item.number}
                     renderItem={({ item }) => (
                         <>
-                        
-                        {
-                        write ?
-                            <TouchableOpacity onPress={noAnswer}>
-                                <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
-                                <Text style={mission.regular}>{item.content}</Text>
-                            </TouchableOpacity>
-                            :
-                            (item.visible === false &&item.period!="final"?
-                                <TouchableOpacity onPress={() => navigation.navigate(item.navigation, { UID: item.uid })}>
-                                    <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
-                                    <Text style={mission.regular}>{item.content}</Text>
-                                </TouchableOpacity>
-                                :
 
-                                <TouchableOpacity onPress={noAnswer}>
-                                    <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
-                                    <Text style={mission.regular}>{item.content}</Text>
-                                </TouchableOpacity>
-                            )
-                        }
+                            {
+                                write ?
+                                    <TouchableOpacity onPress={noAnswer}>
+                                        <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
+                                        <Text style={mission.regular}>{item.content}</Text>
+                                    </TouchableOpacity>
+                                    :
+                                    (item.visible === false && item.period != "final" ?
+                                        <TouchableOpacity onPress={() => navigation.navigate(item.navigation, { UID: item.uid })}>
+                                            <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
+                                            <Text style={mission.regular}>{item.content}</Text>
+                                        </TouchableOpacity>
+                                        :
+
+                                        <TouchableOpacity onPress={noAnswer}>
+                                            <Text style={[mission.bold, { marginTop: 16, marginBottom: 16, marginLeft: WIDTH * 0.08, marginRight: WIDTH * 0.08 }]}>{item.title}</Text>
+                                            <Text style={mission.regular}>{item.content}</Text>
+                                        </TouchableOpacity>
+                                    )
+                            }
                         </>
                     )}
                 />
@@ -1811,7 +1821,7 @@ export function ChallengeMission({ navigation, route }) {
                     uid: UID,
                     stats: doc.data().stats,
                     visible: doc.data().visible,
-                    period:doc.data().period
+                    period: doc.data().period
                 })
             })
             console.log(list)
@@ -1952,53 +1962,54 @@ export function ChallengeSupport({ navigation }) {
     const title = "금연지지자 정하기";
     const [name, setName] = useState("");
     const [help, setHelp] = useState("");
-    const [user,setUser]=useState("");
-    const [nick,setNick]=useState("")
-    const [day,setDay]=useState([])
-    const [link,setLink]=useState(false);
+    const [user, setUser] = useState("");
+    const [nick, setNick] = useState("")
+    const [day, setDay] = useState([])
+    const [link, setLink] = useState(false);
 
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
-            
+
         })
     })
     var total
-    async function uploadData(){
-        await firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+    async function uploadData() {
+        await firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
             setNick(doc.data().name)
         })
         var a = moment().toArray()
-        
+
         console.log(a)
 
         if (a[1] === 12) {
             a[1] = 1
-            a[0]=a[0]+1
+            a[0] = a[0] + 1
         } else {
             a[1] = a[1] + 1
         }
         setDay(a)
-        if(link){
+        if (link) {
             console.log(user.uid)
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
-            total = querySnapshot.size - 1
-        })
-        console.log(total)
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 지지자 정하기").update({
-            supporter:name,
-            content:help,
-            day:day,
-            stats:true
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-            challenge:"미션 진행"
-        }).catch(()=>
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-            challenge:"미션 진행"
-        }))
-        navigation.navigate("Home")}
-        else{
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
+                total = querySnapshot.size - 1
+            })
+            console.log(total)
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 지지자 정하기").update({
+                supporter: name,
+                content: help,
+                day: day,
+                stats: true
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+                challenge: "미션 진행"
+            }).catch(() =>
+                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+                    challenge: "미션 진행"
+                }))
+            navigation.navigate("Home")
+        }
+        else {
             Alert.alert("링크를 공유해보세요")
         }
     }
@@ -2025,7 +2036,7 @@ export function ChallengeSupport({ navigation }) {
         }
         setLink(true)
     }
-    async function kakaoios(){
+    async function kakaoios() {
         Alert.alert("아이폰에서는 지원하지 않는 기능입니다")
         setLink(true)
     }
@@ -2130,23 +2141,23 @@ export function ChallengeSupport({ navigation }) {
                         }}>
                             공유하기
                         </Text>
-                        {Platform.OS === 'android' ? 
-                        <TouchableOpacity onPress={kakao}>
-                        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around", marginTop: 18 }}>
-                           
-                            <Image source={require('../icon/kakao.png')} resizeMode="contain" style={{ width: 60, height: 60 }} />
-                        </View>
-                        </TouchableOpacity>
-                        : 
-                        <TouchableOpacity onPress={kakaoios}>
-                        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around", marginTop: 18 }}>
-                           
-                            <Image source={require('../icon/kakao.png')} resizeMode="contain" style={{ width: 60, height: 60 }} />
-                        </View>
-                        </TouchableOpacity>
+                        {Platform.OS === 'android' ?
+                            <TouchableOpacity onPress={kakao}>
+                                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around", marginTop: 18 }}>
+
+                                    <Image source={require('../icon/kakao.png')} resizeMode="contain" style={{ width: 60, height: 60 }} />
+                                </View>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity onPress={kakaoios}>
+                                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around", marginTop: 18 }}>
+
+                                    <Image source={require('../icon/kakao.png')} resizeMode="contain" style={{ width: 60, height: 60 }} />
+                                </View>
+                            </TouchableOpacity>
                         }
-                        
-                        
+
+
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -2182,70 +2193,70 @@ export function ChallengeSupport({ navigation }) {
 }
 
 export function ChallengeSwear({ navigation }) {
-    const [user,setUser]=useState("");
-    const [nick,setNick]=useState("")
-    const [day,setDay]=useState([])
-    const [comment1,setComment1]=useState("")
-    const [comment2,setComment2]=useState("")
-    const [comment3,setComment3]=useState("")
+    const [user, setUser] = useState("");
+    const [nick, setNick] = useState("")
+    const [day, setDay] = useState([])
+    const [comment1, setComment1] = useState("")
+    const [comment2, setComment2] = useState("")
+    const [comment3, setComment3] = useState("")
 
     useEffect(() => {
 
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
-        console.log(comment1,comment2,comment3)
+        console.log(comment1, comment2, comment3)
     })
     var total
-    async function uploadData(){
-        
+    async function uploadData() {
+
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
             total = querySnapshot.size - 1
         })
         console.log(total)
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 서약서 쓰기").update({
-            commentTotal:comment1+comment2+comment3,
-            comment1:comment1,
-            comment2:comment2,
-            comment3:comment3,
-            day:day,
-            stats:true
+            commentTotal: comment1 + comment2 + comment3,
+            comment1: comment1,
+            comment2: comment2,
+            comment3: comment3,
+            day: day,
+            stats: true
         })
         var a = moment().toArray()
-        
+
         console.log(a)
 
         if (a[1] === 12) {
             a[1] = 1
-            a[0]=a[0]+1
+            a[0] = a[0] + 1
         } else {
             a[1] = a[1] + 1
         }
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-            challenge:"미션 진행"
-        }).catch(()=>
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-            challenge:"미션 진행"
-        }))
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+            challenge: "미션 진행"
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+                challenge: "미션 진행"
+            }))
         navigation.navigate("Home")
     }
-    
-    useEffect(()=>{
-        firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+
+    useEffect(() => {
+        firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
             setNick(doc.data().name)
         })
         var a = moment().toArray()
-        
+
         console.log(a)
 
         if (a[1] === 12) {
             a[1] = 1
-            a[0]=a[0]+1
+            a[0] = a[0] + 1
         } else {
             a[1] = a[1] + 1
         }
         setDay(a)
-    },[user])
+    }, [user])
     const title = "금연 서약하기"
     return (
         <>
@@ -2269,7 +2280,7 @@ export function ChallengeSwear({ navigation }) {
                         }}>
                             <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: "#303030", marginRight: 8, marginTop: 4 }} />
                             <Text style={{ fontSize: 14, color: "#303030", width: "80%", fontFamily: "NunitoSans-Regular" }}>
-                    나<Text style={{ fontFamily: "NunitoSans-Bold" }}> {nick}</Text> 오늘부터 다음과 같은 이유로 금연할 것을 약속합니다.
+                                나<Text style={{ fontFamily: "NunitoSans-Bold" }}> {nick}</Text> 오늘부터 다음과 같은 이유로 금연할 것을 약속합니다.
                             </Text>
                         </View>
                         <KeyboardAvoidingView>
@@ -2298,7 +2309,7 @@ export function ChallengeSwear({ navigation }) {
                                 placeholderTextColor="#ffffff"
                                 multiline={true}
                                 value={comment2}
-                            onChangeText={text => setComment2(text)}
+                                onChangeText={text => setComment2(text)}
                                 style={{
                                     width: "100%",
                                     height: 64,
@@ -2318,7 +2329,7 @@ export function ChallengeSwear({ navigation }) {
                                 placeholderTextColor="#ffffff"
                                 multiline={true}
                                 value={comment3}
-                            onChangeText={text => setComment3(text)}
+                                onChangeText={text => setComment3(text)}
                                 style={{
                                     width: "100%",
                                     height: 64,
@@ -2364,7 +2375,7 @@ export function ChallengeSwear({ navigation }) {
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
-                {comment1.length > 0 && comment2.length > 0 &&comment3.length ?
+                {comment1.length > 0 && comment2.length > 0 && comment3.length ?
                     <TouchableOpacity onPress={uploadData}>
                         <View style={{
                             width: "100%",
@@ -2394,54 +2405,54 @@ export function ChallengeSwear({ navigation }) {
     )
 }
 export function ChallengeSwearResult({ navigation }) {
-    const [user,setUser]=useState("");
-    const [nick,setNick]=useState("")
-    const [day,setDay]=useState([])
-    const [comment1,setComment1]=useState("")
-    const [comment2,setComment2]=useState("")
-    const [comment3,setComment3]=useState("")
+    const [user, setUser] = useState("");
+    const [nick, setNick] = useState("")
+    const [day, setDay] = useState([])
+    const [comment1, setComment1] = useState("")
+    const [comment2, setComment2] = useState("")
+    const [comment3, setComment3] = useState("")
 
     useEffect(() => {
 
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
-        console.log(comment1,comment2,comment3)
+        console.log(comment1, comment2, comment3)
     })
     var total
-    async function getData(){
-        
+    async function getData() {
+
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
             total = querySnapshot.size - 1
         })
         console.log(total)
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 서약서 쓰기").get().then(doc=>{
-        setComment1(doc.data().comment1)
-        setComment2(doc.data().comment2)
-        setComment3(doc.data().comment3)
-        setDay(doc.data().day)
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 서약서 쓰기").get().then(doc => {
+            setComment1(doc.data().comment1)
+            setComment2(doc.data().comment2)
+            setComment3(doc.data().comment3)
+            setDay(doc.data().day)
         })
     }
-    
-    useEffect(()=>{
-        firestore().collection("UserInfo").doc(user.uid).get().then(doc=>{
+
+    useEffect(() => {
+        firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
             setNick(doc.data().name)
         })
         var a = moment().toArray()
-        
+
         console.log(a)
 
         if (a[1] === 12) {
             a[1] = 1
-            a[0]=a[0]+1
+            a[0] = a[0] + 1
         } else {
             a[1] = a[1] + 1
         }
         setDay(a)
-        if(user){
+        if (user) {
             getData()
         }
-    },[user])
+    }, [user])
     const title = "금연 서약하기"
     return (
         <>
@@ -2465,7 +2476,7 @@ export function ChallengeSwearResult({ navigation }) {
                         }}>
                             <View style={{ width: 12, height: 12, borderRadius: 6, backgroundColor: "#303030", marginRight: 8, marginTop: 4 }} />
                             <Text style={{ fontSize: 14, color: "#303030", width: "80%", fontFamily: "NunitoSans-Regular" }}>
-                    나<Text style={{ fontFamily: "NunitoSans-Bold" }}> {nick}</Text> 오늘부터 다음과 같은 이유로 금연할 것을 약속합니다.
+                                나<Text style={{ fontFamily: "NunitoSans-Bold" }}> {nick}</Text> 오늘부터 다음과 같은 이유로 금연할 것을 약속합니다.
                             </Text>
                         </View>
                         <KeyboardAvoidingView>
@@ -2494,7 +2505,7 @@ export function ChallengeSwearResult({ navigation }) {
                                 placeholderTextColor="#ffffff"
                                 multiline={true}
                                 value={comment2}
-                            onChangeText={text => setComment2(text)}
+                                onChangeText={text => setComment2(text)}
                                 style={{
                                     width: "100%",
                                     height: 64,
@@ -2514,7 +2525,7 @@ export function ChallengeSwearResult({ navigation }) {
                                 placeholderTextColor="#ffffff"
                                 multiline={true}
                                 value={comment3}
-                            onChangeText={text => setComment3(text)}
+                                onChangeText={text => setComment3(text)}
                                 style={{
                                     width: "100%",
                                     height: 64,
@@ -2559,7 +2570,7 @@ export function ChallengeSwearResult({ navigation }) {
                     </View>
                 </ScrollView>
             </SafeAreaView>
-           
+
         </>
     )
 }
@@ -2594,7 +2605,7 @@ export function ChallengeMotivation({ navigation }) {
     const countMotive = useRef(0);
     const [input, setInput] = useState("");
     const [health, setHealth] = useState(false);
-    const [user,setUser]=useState("");
+    const [user, setUser] = useState("");
     const onHealth = () => {
         if (health) {
             setMotivation(Motivation.filter(doc => {
@@ -2719,7 +2730,7 @@ export function ChallengeMotivation({ navigation }) {
         console.log(a)
         if (a[1] === 12) {
             a[1] = 1
-            a[0]=a[0]+1
+            a[0] = a[0] + 1
         } else {
             a[1] = a[1] + 1
         }
@@ -2727,16 +2738,16 @@ export function ChallengeMotivation({ navigation }) {
             total = querySnapshot.size - 1
         })
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 동기 설정하기").update({
-            motivation:Motivation,
-            stats:true,
-            visible:false
+            motivation: Motivation,
+            stats: true,
+            visible: false
         })
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-            challenge:"미션 진행"
-        }).catch(()=>
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-            challenge:"미션 진행"
-        }))
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+            challenge: "미션 진행"
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+                challenge: "미션 진행"
+            }))
         navigation.navigate("Home")
     }
     return (
@@ -2824,16 +2835,16 @@ export function ChallengeMotivation({ navigation }) {
     )
 }
 
-export function ChallengeMotivationResult({ navigation,route }) {
-    const {UID}=route.params
+export function ChallengeMotivationResult({ navigation, route }) {
+    const { UID } = route.params
     const [Motivation, setMotivation] = useState([]);
     const countMotive = useRef(0);
     const [input, setInput] = useState("");
     const [health, setHealth] = useState(false);
-    const [user,setUser]=useState("");
-    const [motive1,setMotive1]=useState("")
-    const [motive2,setMotive2]=useState("")
-    const [motive3,setMotive3]=useState("")
+    const [user, setUser] = useState("");
+    const [motive1, setMotive1] = useState("")
+    const [motive2, setMotive2] = useState("")
+    const [motive3, setMotive3] = useState("")
 
     const onHealth = () => {
         if (health) {
@@ -2949,37 +2960,38 @@ export function ChallengeMotivationResult({ navigation,route }) {
     }, [Motivation, countMotive])
     useEffect(() => {
         getInfo()
-        console.log(motive1,motive2,motive3,Motivation,"her")
-        if(Motivation){
+        console.log(motive1, motive2, motive3, Motivation, "her")
+        if (Motivation) {
             var i
-        for(i=0;i<3;i++){
-            if(Motivation[i]==="건강을 위해서"){
-                setHealth(true)
-            }else if (Motivation[i] === "자신감 확보") {
-                setConfidence(true);
-            }else if (Motivation[i] === "담배값 절약") {
-                setMoney(true);
-            }else if (Motivation[i] === "사회적 시선") {
-                setSocial(true);
-            }else if (Motivation[i] === "담배냄새가 싫어서") {
-                setHate(true);
-            }else if (Motivation[i] === "주변의 시선") {
-                setAround(true);
-            }else if (Motivation[i] === "주변의 권유") {
-                setAdvice(true);
+            for (i = 0; i < 3; i++) {
+                if (Motivation[i] === "건강을 위해서") {
+                    setHealth(true)
+                } else if (Motivation[i] === "자신감 확보") {
+                    setConfidence(true);
+                } else if (Motivation[i] === "담배값 절약") {
+                    setMoney(true);
+                } else if (Motivation[i] === "사회적 시선") {
+                    setSocial(true);
+                } else if (Motivation[i] === "담배냄새가 싫어서") {
+                    setHate(true);
+                } else if (Motivation[i] === "주변의 시선") {
+                    setAround(true);
+                } else if (Motivation[i] === "주변의 권유") {
+                    setAdvice(true);
+                }
             }
-        } }
-    },[user,Motivation])
+        }
+    }, [user, Motivation])
     var total
     async function getInfo() {
         await firestore().collection("UserInfo").doc(UID).collection("Challenge").get().then(querySnapshot => {
             total = querySnapshot.size - 1
         })
-        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 동기 설정하기").get().then(doc=>{
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 동기 설정하기").get().then(doc => {
             setMotivation(doc.data().motivation)
         })
-        
-        
+
+
     }
     return (
         <>
@@ -3021,7 +3033,7 @@ export function ChallengeMotivationResult({ navigation,route }) {
                     </View>
                 </ScrollView>
             </SafeAreaView>
-            
+
         </>
     )
 }
@@ -3285,13 +3297,15 @@ export function ChallengeGD({ navigation }) {
         })
 
     })
+    const [loading, setLoading] = useState(false)
     async function uploadInfo() {
+        setLoading(true)
         var a = moment().toArray()
         console.log(a)
 
         if (a[1] === 12) {
             a[1] = 1
-            a[0]=a[0]+1
+            a[0] = a[0] + 1
         } else {
             a[1] = a[1] + 1
         }
@@ -3301,130 +3315,137 @@ export function ChallengeGD({ navigation }) {
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금단증상 확인하기").update({
             detail: GD
         })
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-            challenge:"미션 진행"
-        }).catch(()=>
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-            challenge:"미션 진행"
-        }))
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+            challenge: "미션 진행"
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+                challenge: "미션 진행"
+            }))
+        setLoading(false)
         navigation.navigate("ChallengeGDResult")
     }
 
     return (
         <>
             <StatusBar barStyle="dark-content" />
-            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-                <ChallengeHeader navigation={navigation} Title="나의 금단증상은?" />
-                <ScrollView>
-                    <Text style={{
-                        fontSize: 16,
-                        fontFamily: "NunitoSans-Bold",
-                        lineHeight: 26,
-                        color: "#303030",
-                        marginLeft: "8%",
-                        marginTop: HEIGHT * 0.05
-                    }}>어떤 금단증상을 겪고 있나요? (최대 3개)</Text>
-                    <View style={{ paddingLeft: "5%", paddingRight: "5%", marginTop: HEIGHT * 0.08 }}>
-                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton content="신경과민" include={one} onPress={onOne} />
-                            <MotiveButton content="소화장애" include={two} onPress={onTwo} />
-                            <MotiveButton content="두통" include={three} onPress={onThree} />
-                        </View>
-                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton content="불면" include={four} onPress={onFour} />
-                            <MotiveButton content="현기증" include={five} onPress={onFive} />
-                            <MotiveButton content="우울감" include={six} onPress={onSix} />
-                            <MotiveButton content="피로감" include={seven} onPress={onSeven} />
-                        </View>
-                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton content="기침" include={eight} onPress={onEight} />
-                            <MotiveButton content="불안감" include={nine} onPress={onNine} />
-                            <MotiveButton content="집중력 감소" include={ten} onPress={onTen} />
-                            <MotiveButton content="배고픔" include={eleven} onPress={onEleven} />
-                        </View>
-                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton content="입안의 통증" include={twelve} onPress={onTwelve} />
-                            <MotiveButton content="쑤시는 느낌" include={thirteen} onPress={onThirteen} />
-                            <MotiveButton content="갈증" include={fourteen} onPress={onFourteen} />
-                        </View>
-                        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
-                            <MotiveButton content="없음" include={zero} onPress={onZero} />
-                            <TextInput value={input} onChangeText={(text) => setInput(text)}
-                                onSubmitEditing={() => setGD(GD.concat(input))}
-                                placeholder="기타" style={{
-                                    width: 156,
-                                    borderBottomWidth: 2,
-                                    borderBottomColor: "#5cc27b",
-                                    paddingBottom: 8,
-                                    marginLeft: 12,
-                                    fontSize: 16,
-                                    fontFamily: "NunitoSans-Bold",
-                                    color: "#303030",
-                                }} />
-                        </View>
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
-            <SafeAreaView style={{ flex: 0 }}>
-                {zero ?
-                    <TouchableOpacity onPress={() => {
-                        setGD([]);
-                        uploadInfo
-                    }}>
-                        <View style={{
-                            width: "100%",
-                            height: 60,
-                            backgroundColor: '#5cc27b',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
-                        </View>
-                    </TouchableOpacity>
-                    :
-                    <>
-                        {
-                            countGD.current > 0 ?
-                                <TouchableOpacity onPress={uploadInfo}>
-                                    <View style={{
-                                        width: "100%",
-                                        height: 60,
-                                        backgroundColor: '#5cc27b',
-                                        justifyContent: 'center',
-                                        alignItems: 'center'
-                                    }}>
-                                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
-                                    </View>
-                                </TouchableOpacity>
-                                :
-                                input.length > 0 ?
-                                    <TouchableOpacity onPress={uploadInfo}>
-                                        <View style={{
-                                            width: "100%",
-                                            height: 60,
-                                            backgroundColor: '#5cc27b',
-                                            justifyContent: 'center',
-                                            alignItems: 'center'
-                                        }}>
-                                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                    :
-                                    <TouchableOpacity>
-                                        <View style={{
-                                            width: "100%",
-                                            height: 60,
-                                            backgroundColor: '#c6c6c6',
-                                            justifyContent: 'center',
-                                            alignItems: 'center'
-                                        }}>
-                                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
-                                        </View>
-                                    </TouchableOpacity>
+            {loading ?
+                <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
+                :
+                <>
+                    <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                        <ChallengeHeader navigation={navigation} Title="나의 금단증상은?" />
+                        <ScrollView>
+                            <Text style={{
+                                fontSize: 16,
+                                fontFamily: "NunitoSans-Bold",
+                                lineHeight: 26,
+                                color: "#303030",
+                                marginLeft: "8%",
+                                marginTop: HEIGHT * 0.05
+                            }}>어떤 금단증상을 겪고 있나요? (최대 3개)</Text>
+                            <View style={{ paddingLeft: "5%", paddingRight: "5%", marginTop: HEIGHT * 0.08 }}>
+                                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+                                    <MotiveButton content="신경과민" include={one} onPress={onOne} />
+                                    <MotiveButton content="소화장애" include={two} onPress={onTwo} />
+                                    <MotiveButton content="두통" include={three} onPress={onThree} />
+                                </View>
+                                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+                                    <MotiveButton content="불면" include={four} onPress={onFour} />
+                                    <MotiveButton content="현기증" include={five} onPress={onFive} />
+                                    <MotiveButton content="우울감" include={six} onPress={onSix} />
+                                    <MotiveButton content="피로감" include={seven} onPress={onSeven} />
+                                </View>
+                                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+                                    <MotiveButton content="기침" include={eight} onPress={onEight} />
+                                    <MotiveButton content="불안감" include={nine} onPress={onNine} />
+                                    <MotiveButton content="집중력 감소" include={ten} onPress={onTen} />
+                                    <MotiveButton content="배고픔" include={eleven} onPress={onEleven} />
+                                </View>
+                                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+                                    <MotiveButton content="입안의 통증" include={twelve} onPress={onTwelve} />
+                                    <MotiveButton content="쑤시는 느낌" include={thirteen} onPress={onThirteen} />
+                                    <MotiveButton content="갈증" include={fourteen} onPress={onFourteen} />
+                                </View>
+                                <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
+                                    <MotiveButton content="없음" include={zero} onPress={onZero} />
+                                    <TextInput value={input} onChangeText={(text) => setInput(text)}
+                                        onSubmitEditing={() => setGD(GD.concat(input))}
+                                        placeholder="기타" style={{
+                                            width: 156,
+                                            borderBottomWidth: 2,
+                                            borderBottomColor: "#5cc27b",
+                                            paddingBottom: 8,
+                                            marginLeft: 12,
+                                            fontSize: 16,
+                                            fontFamily: "NunitoSans-Bold",
+                                            color: "#303030",
+                                        }} />
+                                </View>
+                            </View>
+                        </ScrollView>
+                    </SafeAreaView>
+                    <SafeAreaView style={{ flex: 0 }}>
+                        {zero ?
+                            <TouchableOpacity onPress={() => {
+                                setGD([]);
+                                uploadInfo
+                            }}>
+                                <View style={{
+                                    width: "100%",
+                                    height: 60,
+                                    backgroundColor: '#5cc27b',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
+                                </View>
+                            </TouchableOpacity>
+                            :
+                            <>
+                                {
+                                    countGD.current > 0 ?
+                                        <TouchableOpacity onPress={uploadInfo}>
+                                            <View style={{
+                                                width: "100%",
+                                                height: 60,
+                                                backgroundColor: '#5cc27b',
+                                                justifyContent: 'center',
+                                                alignItems: 'center'
+                                            }}>
+                                                <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
+                                            </View>
+                                        </TouchableOpacity>
+                                        :
+                                        input.length > 0 ?
+                                            <TouchableOpacity onPress={uploadInfo}>
+                                                <View style={{
+                                                    width: "100%",
+                                                    height: 60,
+                                                    backgroundColor: '#5cc27b',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+                                                }}>
+                                                    <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                            :
+                                            <TouchableOpacity>
+                                                <View style={{
+                                                    width: "100%",
+                                                    height: 60,
+                                                    backgroundColor: '#c6c6c6',
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center'
+                                                }}>
+                                                    <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>다음</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                }
+                            </>
                         }
-                    </>
-                }
-            </SafeAreaView>
+                    </SafeAreaView>
+                </>
+            }
         </>
     )
 }
@@ -3433,15 +3454,17 @@ export function ChallengeGDResult({ navigation }) {
     const [user, setUser] = useState("")
     const [detail, setDetail] = useState([])
     var total
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
         if (user) {
+            setLoading(true)
             getInfo()
         }
     }, [user])
-    
+
     async function getInfo() {
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
             total = querySnapshot.size - 1
@@ -3450,158 +3473,166 @@ export function ChallengeGDResult({ navigation }) {
             setDetail(doc.data().detail)
         })
         console.log(detail.length, "hh")
-       
+        setLoading(false)
     }
-    async function uploadInfo(){
+    async function uploadInfo() {
+        setLoading(true)
         var total = 0
         var a = moment().toArray()
         console.log(a)
 
         if (a[1] === 12) {
             a[1] = 1
-            a[0]=a[0]+1
+            a[0] = a[0] + 1
         } else {
             a[1] = a[1] + 1
         }
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
             total = querySnapshot.size - 1
         })
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금단증상 확인하기").update( {
-            stats:true,
-            date:a,
-            visible:false
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금단증상 확인하기").update({
+            stats: true,
+            date: a,
+            visible: false
         })
         navigation.navigate("Home")
+        setLoading(false)
     }
-    const data=[
+    const data = [
         {
-            id:1,
-            symptom:"갈증",
-            content:"얼음물 또는 주스를 한 모금씩 마시기,껌을 씹어 입마름을 해소하기,짜게 먹지 않기,양치질 하기,"
+            id: 1,
+            symptom: "갈증",
+            content: "얼음물 또는 주스를 한 모금씩 마시기,껌을 씹어 입마름을 해소하기,짜게 먹지 않기,양치질 하기,"
         },
         {
-            id:2,
-            symptom:"소화장애",
-            content:"고지방 음식, 단 음식, 카페인 함량이 많은 음식을 피하기,자극적인 음식을 피하기,섬유소가 많은 음식 섭취하기,"
+            id: 2,
+            symptom: "소화장애",
+            content: "고지방 음식, 단 음식, 카페인 함량이 많은 음식을 피하기,자극적인 음식을 피하기,섬유소가 많은 음식 섭취하기,"
         },
         {
-            id:3,
-            symptom:"기침",
-            content:"물을 많이 마셔 기관지 점막을 부드럽게 하기,항생제를 사용하지 않을 것,가능한 기침을 약하게 하기,"
+            id: 3,
+            symptom: "기침",
+            content: "물을 많이 마셔 기관지 점막을 부드럽게 하기,항생제를 사용하지 않을 것,가능한 기침을 약하게 하기,"
         },
         {
-            id:4,
-            symptom:"두통",
-            content:"물을 많이 마시고, 커피를 줄인다,가벼운 운동하기,따뜻한 물로 샤워하기,신선한 공기를 위해 창문을 열거나 가벼운 산책하기,5분 간 누워서 휴식 취하기,"
+            id: 4,
+            symptom: "두통",
+            content: "물을 많이 마시고, 커피를 줄인다,가벼운 운동하기,따뜻한 물로 샤워하기,신선한 공기를 위해 창문을 열거나 가벼운 산책하기,5분 간 누워서 휴식 취하기,"
         },
         {
-            id:5,
-            symptom:"배고픔",
-            content:"평소 세 끼의 식사를 적당한 양으로 규칙적으로 하기,칼로리가 낮은 스낵이나 음료 마시기 (물, 해바라기씨, 당근, 오이, 무가당 껌 등) ,체중관리를 위해 적당한 운동 병행하기,"
+            id: 5,
+            symptom: "배고픔",
+            content: "평소 세 끼의 식사를 적당한 양으로 규칙적으로 하기,칼로리가 낮은 스낵이나 음료 마시기 (물, 해바라기씨, 당근, 오이, 무가당 껌 등) ,체중관리를 위해 적당한 운동 병행하기,"
         },
         {
-            id:6,
-            symptom:"불면",
-            content:"이완운동하기,자기 전 무리한 운동하지 않기,명상하기,카페인 줄이기,	"
+            id: 6,
+            symptom: "불면",
+            content: "이완운동하기,자기 전 무리한 운동하지 않기,명상하기,카페인 줄이기,	"
         },
         {
-            id:7,
-            symptom:"불안감",
-            content:"온수로 목욕 또는 샤워, 가벼운 산책 또는 운동,누워서 쉬기,경험했던 조용하고 평화로운 장면 생각하기,"
+            id: 7,
+            symptom: "불안감",
+            content: "온수로 목욕 또는 샤워, 가벼운 산책 또는 운동,누워서 쉬기,경험했던 조용하고 평화로운 장면 생각하기,"
         },
         {
-            id:8,
-            symptom:"우울감",
-            content:"운동을 하여 땀을 흘리고, 물 많이 마시기,몸을 편하게 눕히는 이완 운동하기,따뜻한 물로 샤워하기,과일 쥬스 마시기,즐거운 생각하기,"
+            id: 8,
+            symptom: "우울감",
+            content: "운동을 하여 땀을 흘리고, 물 많이 마시기,몸을 편하게 눕히는 이완 운동하기,따뜻한 물로 샤워하기,과일 쥬스 마시기,즐거운 생각하기,"
         },
         {
-            id:9,
-            symptom:"신경과민",
-            content:"휴식을 취하고 신선한 공기를 마시며 산책하기,운동을 시작하거나 손으로 하는 다른 일에 집중하기,심호흡을 함으로써 긴장을 이완시키기,경험했던 조용하고 평화로운 장면 생각하기,"
+            id: 9,
+            symptom: "신경과민",
+            content: "휴식을 취하고 신선한 공기를 마시며 산책하기,운동을 시작하거나 손으로 하는 다른 일에 집중하기,심호흡을 함으로써 긴장을 이완시키기,경험했던 조용하고 평화로운 장면 생각하기,"
         },
         {
-            id:10,
-            symptom:"쑤시는 느낌",
-            content:"따뜻한 물로 목욕하기,따끔거리는 곳을 마사지 해주기,가벼운 산책하기,	"
+            id: 10,
+            symptom: "쑤시는 느낌",
+            content: "따뜻한 물로 목욕하기,따끔거리는 곳을 마사지 해주기,가벼운 산책하기,	"
         },
         {
-            id:11,
-            symptom:"입안의 통증",
-            content:"얼음물 또는 주스를 한 모금씩 마시기,껌을 씹어 입마름을 해소하기,짜게 먹지 않기,양치질 하기,"
+            id: 11,
+            symptom: "입안의 통증",
+            content: "얼음물 또는 주스를 한 모금씩 마시기,껌을 씹어 입마름을 해소하기,짜게 먹지 않기,양치질 하기,"
         },
         {
-            id:12,
-            symptom:"집중력 감소",
-            content:"휴식을 취하고 마음을 편히 갖고 심호흡을 하기,많이 힘들면 일을 중단하고 잠깐 눈 붙이기,명상을 통해 집중력 향상시키기,"
+            id: 12,
+            symptom: "집중력 감소",
+            content: "휴식을 취하고 마음을 편히 갖고 심호흡을 하기,많이 힘들면 일을 중단하고 잠깐 눈 붙이기,명상을 통해 집중력 향상시키기,"
         },
         {
-            id:13,
-            symptom:"피로감",
-            content:"금단 증상이 심한 2주간은 무리한 일을 피하기,낮에 잠깐씩 눈을 붙이거나 밤에는 평소보다 숙면하도록 하기,미리 주변에 양해를 구하고 금단 증상과 함께 피로감이 올 수 있음을 알릴 것,"
+            id: 13,
+            symptom: "피로감",
+            content: "금단 증상이 심한 2주간은 무리한 일을 피하기,낮에 잠깐씩 눈을 붙이거나 밤에는 평소보다 숙면하도록 하기,미리 주변에 양해를 구하고 금단 증상과 함께 피로감이 올 수 있음을 알릴 것,"
         },
         {
-            id:14,
-            symptom:"현기증",
-            content:"현기증 나는 순간을 잠시 쉬면서 넘기기,야외로 나가서 바람쐬기,천천히 일어나고 앉기,평소에 간단한 운동하기,"
+            id: 14,
+            symptom: "현기증",
+            content: "현기증 나는 순간을 잠시 쉬면서 넘기기,야외로 나가서 바람쐬기,천천히 일어나고 앉기,평소에 간단한 운동하기,"
         },
     ]
     return (
         <>
             <StatusBar barStyle="dark-content" />
-            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-                <ChallengeHeader navigation={navigation} Title="금단증상 대처방안" />
-                <ScrollView>
-                    <View style={{
-                        width: "90%",
-                        marginHorizontal: 32,
-                        marginTop: 32
-                    }}>
-                        <Text style={{  marginBottom:32,fontSize: 18, color: "#303030", fontFamily: 'NunitoSans-Bold' }}>
-                            금연을 시작하게 되면 평균 4주 정도 금단증상을 겪게 됩니다! 갑작스러운 신체변화에 두려워하지마시고 Blockers와 함께 이겨내보도록 합시다!
+            {loading ?
+                <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
+                :
+                <>
+                    <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                        <ChallengeHeader navigation={navigation} Title="금단증상 대처방안" />
+                        <ScrollView>
+                            <View style={{
+                                width: "90%",
+                                marginHorizontal: 32,
+                                marginTop: 32
+                            }}>
+                                <Text style={{ marginBottom: 32, fontSize: 18, color: "#303030", fontFamily: 'NunitoSans-Bold' }}>
+                                    금연을 시작하게 되면 평균 4주 정도 금단증상을 겪게 됩니다! 갑작스러운 신체변화에 두려워하지마시고 Blockers와 함께 이겨내보도록 합시다!
                       </Text>
-                        <FlatList
-                            data={data}
-                            keyExtractor={item => item.id}
-                            renderItem={({ item }) => (
-                                <>
-                                {detail.includes(item.symptom)?
-                                <>
-                                    <Text style={{
-                                        fontFamily: "NunitoSans-Bold",
-                                        fontSize: 18,
-                                        marginBottom: 16,
-                                        color: "#303030"
-                                    }}>금단증상 {item.id} : {item.symptom}</Text>
-                                    <Text style={{
-                                        fontFamily: "NuitoSans-Regular",
-                                        fontSize: 16,
-                                        color: "#303030",
-                                        lineHeight: 33,
-                                        marginBottom: 16
-                                    }}>{item.content}</Text>
-                                </>
-                                :
-                                <></>
-                                }
-                                </>
-                            )}
-                        />
-                    </View>
-                </ScrollView>
-            </SafeAreaView>
-            <SafeAreaView style={{ flex: 0 }}>
-                <TouchableOpacity onPress={uploadInfo}>
-                    <View style={{
-                        width: "100%",
-                        height: 60,
-                        backgroundColor: '#5cc27b',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}>
-                        <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
-                    </View>
-                </TouchableOpacity>
-            </SafeAreaView>
+                                <FlatList
+                                    data={data}
+                                    keyExtractor={item => item.id}
+                                    renderItem={({ item }) => (
+                                        <>
+                                            {detail.includes(item.symptom) ?
+                                                <>
+                                                    <Text style={{
+                                                        fontFamily: "NunitoSans-Bold",
+                                                        fontSize: 18,
+                                                        marginBottom: 16,
+                                                        color: "#303030"
+                                                    }}>금단증상 {item.id} : {item.symptom}</Text>
+                                                    <Text style={{
+                                                        fontFamily: "NuitoSans-Regular",
+                                                        fontSize: 16,
+                                                        color: "#303030",
+                                                        lineHeight: 33,
+                                                        marginBottom: 16
+                                                    }}>{item.content}</Text>
+                                                </>
+                                                :
+                                                <></>
+                                            }
+                                        </>
+                                    )}
+                                />
+                            </View>
+                        </ScrollView>
+                    </SafeAreaView>
+                    <SafeAreaView style={{ flex: 0 }}>
+                        <TouchableOpacity onPress={uploadInfo}>
+                            <View style={{
+                                width: "100%",
+                                height: 60,
+                                backgroundColor: '#5cc27b',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </SafeAreaView>
+                </>
+            }
         </>
     )
 }
@@ -3645,7 +3676,7 @@ const veri = StyleSheet.create({
 })
 
 export function ChallengeVeri({ navigation }) {
-    
+
     const quesone = "혼자 참기"
     const questwo = "금연약 복용"
     const questhree = "니코틴 대체용품 사용"
@@ -3658,7 +3689,7 @@ export function ChallengeVeri({ navigation }) {
     const pushone = () => {
         setSelect(select.concat(quesone));
         setTimeout(() => {
-            navigation.navigate('ChallengeVeriImage',{selects:quesone});
+            navigation.navigate('ChallengeVeriImage', { selects: quesone });
         }, 200)
     }
 
@@ -3669,7 +3700,7 @@ export function ChallengeVeri({ navigation }) {
     const pushtwo = () => {
         setSelect(select.concat(questwo));
         setTimeout(() => {
-            navigation.navigate('ChallengeVeriImage',{selects:questwo});
+            navigation.navigate('ChallengeVeriImage', { selects: questwo });
         }, 200)
     }
 
@@ -3680,7 +3711,7 @@ export function ChallengeVeri({ navigation }) {
     const pushthree = () => {
         setSelect(select.concat(questhree));
         setTimeout(() => {
-            navigation.navigate('ChallengeVeriImage',{selects:questhree});
+            navigation.navigate('ChallengeVeriImage', { selects: questhree });
         }, 200)
     }
 
@@ -3759,14 +3790,14 @@ export function ChallengeVeri({ navigation }) {
     )
 }
 
-export function ChallengeVeriImage({ navigation,route}) {
-    const {selects}=route.params
-    
+export function ChallengeVeriImage({ navigation, route }) {
+    const { selects } = route.params
+
     const [imagebool, setImageBool] = useState(false)
     const [imageOne, setImageOne] = useState(undefined);
 
-    const [user,setUser]=useState("")
-    const [isLoading,setIsLoading]=useState(false)
+    const [user, setUser] = useState("")
+    const [isLoading, setIsLoading] = useState(false)
     const options = {
         title: '사진가져오기',
         customButtons: [
@@ -3777,65 +3808,65 @@ export function ChallengeVeriImage({ navigation,route}) {
             skipBackup: true,
             path: 'images',
         },
-        quality:0.1
+        quality: 0.1
     };
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
         console.log(selects)
-    },[])
-    async function uploadImage(){
+    }, [])
+    async function uploadImage() {
         setIsLoading(true)
         var name
-        await firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot=>{
-            name=documentSnapshot.data().name
+        await firestore().collection("UserInfo").doc(user.uid).get().then(documentSnapshot => {
+            name = documentSnapshot.data().name
         })
-        var a=moment().toArray()
+        var a = moment().toArray()
         console.log(a)
 
-        if(a[1]===12){
-            a[1]=1
-            a[0]=a[0]+1
-        }else{
-            a[1]=a[1]+1
+        if (a[1] === 12) {
+            a[1] = 1
+            a[0] = a[0] + 1
+        } else {
+            a[1] = a[1] + 1
         }
 
-        const uri=imageOne;
-        const reference = storage().ref("User/"+name+"/"+a+name);
-        const uploadUri =  Platform.OS === 'android' ? uri.replace('file://', '') : uri;
-        
+        const uri = imageOne;
+        const reference = storage().ref("User/" + name + "/" + a + name);
+        const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
+
         await reference.putFile(uploadUri);
-        
+
         var url1 = await storage()
-            .refFromURL("gs://blockers-8a128.appspot.com/User/" +name+"/"+a+name)
+            .refFromURL("gs://blockers-8a128.appspot.com/User/" + name + "/" + a + name)
             .getDownloadURL();
 
         var size
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
-                size = querySnapshot.size-1
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
+            size = querySnapshot.size - 1
+        })
+        var week
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + size).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").get().then(doc => {
+            week = doc.data().week
+        })
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + size).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").update({
+            week: week + 1,
+            visible: false
+        })
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + size).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc(String(week)).update({
+            pic: url1,
+            stats: true,
+            how: selects
+        }).catch(() => [
+            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + size).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc(String(week)).set({
+                pic: url1,
+                stats: true,
+                how: selects
             })
-            var week
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+size).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").get().then(doc => {
-                week=doc.data().week
-            })
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+size).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").update({
-                week:week+1,
-                visible:false
-            })
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+size).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc(String(week)).update({
-                pic:url1,
-                stats:true,
-                how:selects
-            }).catch(()=>[
-                firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+size).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").doc(String(week)).set({
-                    pic:url1,
-                    stats:true,
-                    how:selects
-                })
-            ])
-            setIsLoading(false)
-            navigation.navigate("Home")
+        ])
+        setIsLoading(false)
+        navigation.navigate("Home")
     }
     const showCamera1 = () => {
         ImagePicker.launchCamera(options, (response) => {
@@ -3851,87 +3882,87 @@ export function ChallengeVeriImage({ navigation,route}) {
     return (
         <>
             <StatusBar barStyle="dark-content" />
-            {isLoading===true?
-                  <ActivityIndicator size="large" color="#5cc27b" style={{position: "absolute", top: HEIGHT/2-20, left: WIDTH/2-20}} />
-                 :
-                 <>
-            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-                
-                  
-                <ChallengeHeader navigation={navigation} Title="금연활동 인증하기" />
-                <ScrollView style={{ paddingLeft: "8%", paddingRight: "8%" }}>
-                    <TouchableOpacity onPress={showCamera1} style={{
-                        marginTop: HEIGHT * 0.03,
-                        width: 160,
-                        height: 160,
-                        borderRadius: 15,
-                        borderWidth: 1,
-                        borderColor: "#5cc27b",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        alignSelf: "center"
-                    }}>
+            {isLoading === true ?
+                <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
+                :
+                <>
+                    <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+
+
+                        <ChallengeHeader navigation={navigation} Title="금연활동 인증하기" />
+                        <ScrollView style={{ paddingLeft: "8%", paddingRight: "8%" }}>
+                            <TouchableOpacity onPress={showCamera1} style={{
+                                marginTop: HEIGHT * 0.03,
+                                width: 160,
+                                height: 160,
+                                borderRadius: 15,
+                                borderWidth: 1,
+                                borderColor: "#5cc27b",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                alignSelf: "center"
+                            }}>
+                                {imagebool ?
+                                    <>
+                                        {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 160, height: 160, borderRadius: 14, borderWidth: 1 }} />}
+                                    </>
+                                    :
+                                    <MaterialCommunityIcons name="plus" color="#5cc27b" size={120} />
+                                }
+                            </TouchableOpacity>
+                            <Text style={{
+                                fontSize: 16,
+                                fontFamily: "NunitoSans-Bold",
+                                color: "#303030",
+                                alignSelf: "center",
+                                marginTop: 8
+                            }}>사진 등록</Text>
+                            <Text style={{
+                                fontSize: 21,
+                                fontFamily: "NunitoSans-Bold",
+                                color: "#5cc27b",
+                                alignSelf: "center",
+                                marginTop: HEIGHT * 0.05
+                            }}>인증방법</Text>
+                            <Text style={{
+                                fontSize: 16,
+                                fontFamily: "NunitoSans-Regular",
+                                color: "#303030",
+                                alignSelf: "center",
+                                marginTop: HEIGHT * 0.05
+                            }}>다음중 하나의 활동 사진을 첨부해주세요{"\n\n"}1. 취미 생활(운동, 동호회 등){"\n\n"}2. 금연 간식{"\n\n"}3. 흡연 관련 용품 버린 사진(ex 담배 부시기){"\n\n"}4. 본인만의 금연 비법</Text>
+                        </ScrollView>
+
+                    </SafeAreaView>
+                    <SafeAreaView style={{ flex: 0 }}>
                         {imagebool ?
-                            <>
-                                {imageOne && <Image resizeMode="stretch" source={{ uri: imageOne }} style={{ width: 160, height: 160, borderRadius: 14, borderWidth: 1 }} />}
-                            </>
+                            <TouchableOpacity onPress={uploadImage}>
+                                <View style={{
+                                    width: "100%",
+                                    height: 60,
+                                    backgroundColor: '#5cc27b',
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>인증하기</Text>
+                                </View>
+                            </TouchableOpacity>
                             :
-                            <MaterialCommunityIcons name="plus" color="#5cc27b" size={120} />
+                            <TouchableOpacity>
+                                <View style={{
+                                    width: "100%",
+                                    height: 60,
+                                    backgroundColor: "#c6c6c6",
+                                    justifyContent: 'center',
+                                    alignItems: 'center'
+                                }}>
+                                    <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>인증하기</Text>
+                                </View>
+                            </TouchableOpacity>
                         }
-                    </TouchableOpacity>
-                    <Text style={{
-                        fontSize: 16,
-                        fontFamily: "NunitoSans-Bold",
-                        color: "#303030",
-                        alignSelf: "center",
-                        marginTop: 8
-                    }}>사진 등록</Text>
-                    <Text style={{
-                        fontSize: 21,
-                        fontFamily: "NunitoSans-Bold",
-                        color: "#5cc27b",
-                        alignSelf: "center",
-                        marginTop: HEIGHT * 0.05
-                    }}>인증방법</Text>
-                    <Text style={{
-                        fontSize: 16,
-                        fontFamily: "NunitoSans-Regular",
-                        color: "#303030",
-                        alignSelf: "center",
-                        marginTop: HEIGHT * 0.05
-                    }}>다음중 하나의 활동 사진을 첨부해주세요{"\n\n"}1. 취미 생활(운동, 동호회 등){"\n\n"}2. 금연 간식{"\n\n"}3. 흡연 관련 용품 버린 사진(ex 담배 부시기){"\n\n"}4. 본인만의 금연 비법</Text>
-                </ScrollView>
-                
-            </SafeAreaView>
-            <SafeAreaView style={{ flex: 0 }}>
-                {imagebool ?
-                    <TouchableOpacity onPress={uploadImage}>
-                        <View style={{
-                            width: "100%",
-                            height: 60,
-                            backgroundColor: '#5cc27b',
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>인증하기</Text>
-                        </View>
-                    </TouchableOpacity>
-                    :
-                    <TouchableOpacity>
-                        <View style={{
-                            width: "100%",
-                            height: 60,
-                            backgroundColor: "#c6c6c6",
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}>
-                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>인증하기</Text>
-                        </View>
-                    </TouchableOpacity>
-                }
-            </SafeAreaView>
-            </>
-                }
+                    </SafeAreaView>
+                </>
+            }
         </>
     )
 }
@@ -4309,51 +4340,51 @@ export function ChallengeSuccess({ navigation }) {
     )
 }
 
-export function ChallengeVeriResult({navigation,route}){
-    const {UID}=route.params
-    const [items,setItems]=useState([])
-    async function loadInfo(){
+export function ChallengeVeriResult({ navigation, route }) {
+    const { UID } = route.params
+    const [items, setItems] = useState([])
+    async function loadInfo() {
         var size
-        await firestore().collection("UserInfo").doc(UID).collection("Challenge").get().then(querySnapshot=>{
-            size=querySnapshot.size-1
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").get().then(querySnapshot => {
+            size = querySnapshot.size - 1
         })
-        const list=[]
-        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge"+size).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").where("stats","==",true).get().then(querySnapshot=>{
+        const list = []
+        await firestore().collection("UserInfo").doc(UID).collection("Challenge").doc("challenge" + size).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").where("stats", "==", true).get().then(querySnapshot => {
             querySnapshot.forEach(function (doc) {
                 list.push({
-                    pic:doc.data().pic,
-                    how:doc.data().how,
-                    idx:Number(doc.id)
+                    pic: doc.data().pic,
+                    how: doc.data().how,
+                    idx: Number(doc.id)
                 })
             })
             setItems(list)
             console.log(list)
         })
     }
-    useEffect(()=>{
-        
+    useEffect(() => {
+
         loadInfo()
-    },[])
-    return(
+    }, [])
+    return (
         <>
-        <StatusBar barStyle="dark-content"/>
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff", alignItems: "center", justifyContent: "center" }}>
-            <ScrollView>
-                <View>
-        <FlatList data={items}
-                        keyExtractor={item => item.idx}
-                        renderItem={({ item }) => (
-                            <>
-<Image resizeMode="contain" style={{width:300,height:200}} source={{ uri: item.pic }}/>
-                        <Text style={{fontFamily:'NunitoSans-Bold',fontSize:16}}>{item.idx}주차</Text>
-                        <Text>{item.how}{`\n\n`}</Text>
-                            </>
-                        )}
-        />
-            
-            </View>
-            </ScrollView>
-        </SafeAreaView>
+            <StatusBar barStyle="dark-content" />
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff", alignItems: "center", justifyContent: "center" }}>
+                <ScrollView>
+                    <View>
+                        <FlatList data={items}
+                            keyExtractor={item => item.idx}
+                            renderItem={({ item }) => (
+                                <>
+                                    <Image resizeMode="contain" style={{ width: 300, height: 200 }} source={{ uri: item.pic }} />
+                                    <Text style={{ fontFamily: 'NunitoSans-Bold', fontSize: 16 }}>{item.idx}주차</Text>
+                                    <Text>{item.how}{`\n\n`}</Text>
+                                </>
+                            )}
+                        />
+
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
         </>
     )
 }
