@@ -97,6 +97,7 @@ export default function Challenge({ navigation }) {
     const [ratio, setRatio] = useState(0)
     const [logined, setLogined] = useState(true)
     const [refreshing, setRefreshing] = React.useState(false);
+    const [alarm,setAlarm]=useState(true)
     const onRefresh = React.useCallback(() => {
         setRefreshing(true);
         wait(2000).then(() => setRefreshing(false));
@@ -132,8 +133,16 @@ export default function Challenge({ navigation }) {
             setUser(userAuth)
         })
     },[])
+    async function checkAlarm(){
+        firestore().collection("UserInfo").doc(user.uid).collection("Alarm").where("stats","==",false).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                setAlarm(doc.data().stats)
+            })
+        }).catch(setAlarm(true))
+    }
     useEffect(() => {
         if(user){
+            checkAlarm()
             setLogined(true)
             firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
                 setSmoker(doc.data().smoker)
@@ -591,9 +600,12 @@ export default function Challenge({ navigation }) {
                     >
                         <Text style={{ fontSize: 24, fontFamily: 'NunitoSans-Bold', color: '#5CC27B' }}>Challenge</Text>
                     </View>
-                    <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                    <View style={{ flexDirectiofn: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                         <TouchableOpacity style={{ width: 27, height: 27 }} onPress={logined ? () => navigation.navigate("AlramScreen") : loginview}>
                             <Ionicons name="notifications" color="#5cc27b" size={27} />
+                            {alarm? 
+                           <></>
+                           : 
                             <View style={{
                                 width: 10,
                                 height: 10,
@@ -608,6 +620,8 @@ export default function Challenge({ navigation }) {
                             }}>
                                 <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#FFB83D" }} />
                             </View>
+                            }
+                            
                         </TouchableOpacity>
                     </View>
                 </View>

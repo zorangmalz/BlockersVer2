@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* blockersTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* blockersTests.m */; };
 		0D2CC8CB24D7AC9E005BBC5F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0D2CC8CA24D7AC9E005BBC5F /* GoogleService-Info.plist */; };
-		0D97DE6B256DFBD7002E1E0A /* KakaoLink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D97DE6A256DFBD7002E1E0A /* KakaoLink.framework */; };
-		0D97DE6C256DFBD7002E1E0A /* KakaoLink.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D97DE6A256DFBD7002E1E0A /* KakaoLink.framework */; };
 		102D879E01FA1006EEF2B5D6 /* libPods-blockers-blockersTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBCD510CDB2831C5F626DAF3 /* libPods-blockers-blockersTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -49,7 +47,6 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* blockersTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = blockersTests.m; sourceTree = "<group>"; };
 		0D2CC8CA24D7AC9E005BBC5F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		0D97DE6A256DFBD7002E1E0A /* KakaoLink.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KakaoLink.framework; path = "../../../../Downloads/KakaoOpenSDK-1.23.5/KakaoLink.framework"; sourceTree = "<group>"; };
 		0DEEB08D252D639A003D142F /* blockers.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = blockers.entitlements; path = blockers/blockers.entitlements; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* blockers.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = blockers.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = blockers/AppDelegate.h; sourceTree = "<group>"; };
@@ -90,7 +87,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D97DE6B256DFBD7002E1E0A /* KakaoLink.framework in Frameworks */,
 				F9287550D69C7B7F629BA327 /* libPods-blockers.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,7 +103,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D97DE6C256DFBD7002E1E0A /* KakaoLink.framework in Frameworks */,
 				65C28003B93DFF2FC572D873 /* libPods-blockers-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,7 +146,6 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0D97DE6A256DFBD7002E1E0A /* KakaoLink.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
 				F10D9CA620A7651EDFDB59DC /* libPods-blockers.a */,

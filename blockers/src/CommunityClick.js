@@ -116,7 +116,7 @@ export default function CommunityHome({ navigation, route }) {
     const [refreshing, setRefreshing] = useState(false);
     const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState();
-    
+    const [alarm,setAlarm]=useState(true)
     //Flatlist Refreshing Control
     const onRefresh = useCallback(() => {
         setRefresh(true);
@@ -147,7 +147,13 @@ export default function CommunityHome({ navigation, route }) {
             return () => {}
         }, [filtered, refresh])
     )
-
+    async function checkAlarm(){
+        firestore().collection("UserInfo").doc(user.uid).collection("Alarm").where("stats","==",false).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                setAlarm(doc.data().stats)
+            })
+        }).catch(setAlarm(true))
+    }
     //로그인 상태 확인
     const [userlogined, setUserlogined] = useState(false);
     useEffect(() => {
@@ -155,6 +161,7 @@ export default function CommunityHome({ navigation, route }) {
             setUser(userAuth)
             if (user) {
                 setUserlogined(true)
+                checkAlarm()
             } else {
                 setUserlogined(false)
             }
@@ -192,7 +199,7 @@ export default function CommunityHome({ navigation, route }) {
                                 isPicture: doc.data().isPicture
                             });
                         } else {
-                            console.log("3")
+                            
                             list.push({
                                 title: doc.data().title,
                                 time: doc.data().day,
@@ -289,6 +296,9 @@ export default function CommunityHome({ navigation, route }) {
                             <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
                                 <TouchableOpacity style={{ width: 27, height: 27 }} onPress={userlogined ? () => navigation.navigate("AlramScreen") : loginview}>
                                     <Ionicons name="notifications" color="#5cc27b" size={27} />
+                                    {alarm? 
+                                    <></>
+                                    : 
                                     <View style={{
                                         width: 10,
                                         height: 10,
@@ -303,6 +313,8 @@ export default function CommunityHome({ navigation, route }) {
                                     }}>
                                         <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#FFB83D" }} />
                                     </View>
+                                    }
+                                    
                                 </TouchableOpacity>
                             </View>
                             </View>

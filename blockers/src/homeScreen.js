@@ -26,6 +26,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
 import { useFocusEffect } from "@react-navigation/native";
+import { useScreens } from 'react-native-screens';
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -103,7 +104,7 @@ export default function HomeScreen({ navigation}) {
     const [refreshing, setRefreshing] = React.useState(false);
     const [login, setLogin] = useState(false);
     const [focus, setFocus] = useState(false);
-
+    const [alarm,setAlarm]=useState(true)
     const [smokingSmoker,setSmokingSmoker]=useState(0)
     const [smokingSmokerMoney,setSmokingSmokerMoney]=useState(0)
 
@@ -113,6 +114,7 @@ export default function HomeScreen({ navigation}) {
             setFocus(true)
             const USER = auth().currentUser
             if (USER) {
+                checkAlarm()
                 setLogin(true)
                 // setViewOpacity(false)
                 firestore().collection("UserInfo").doc(USER.uid).get().then(doc => {
@@ -185,7 +187,7 @@ export default function HomeScreen({ navigation}) {
         var smoke = smokingDaily
         console.log(smoke, stats, "compare")
         if (Number(smoke) === Number(stats)) {
-            Alert.alert("고마펴싀발")
+            Alert.alert("기준치를 초과하셨습니다")
         }
         var history= await howMuch()
         setSmokingDaily(smoke + 1)
@@ -256,7 +258,13 @@ export default function HomeScreen({ navigation}) {
         return(total)
         console.log(total,"total")
     }
-
+    async function checkAlarm(){
+        firestore().collection("UserInfo").doc(user.uid).collection("Alarm").where("stats","==",false).get().then(function (querySnapshot) {
+            querySnapshot.forEach(function (doc) {
+                setAlarm(doc.data().stats)
+            })
+        }).catch(setAlarm(true))
+    }
     // useEffect(() => {
     //     auth().onAuthStateChanged(userAuth => {
     //         setUser(userAuth)
@@ -560,7 +568,10 @@ export default function HomeScreen({ navigation}) {
                         </TouchableOpacity>
                         <TouchableOpacity style={{ width: 27, height: 27 }} onPress={login ? () => navigation.navigate("AlramScreen") : loginview}>
                             <Ionicons name="notifications" color="#5cc27b" size={27} />
-                            <View style={{
+                            {alarm ?
+                            <></>
+                             :
+                             <View style={{
                                 width: 10,
                                 height: 10,
                                 borderRadius: 5,
@@ -574,6 +585,9 @@ export default function HomeScreen({ navigation}) {
                             }}>
                                 <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#FFB83D" }} />
                             </View>
+                             
+                              }
+                            
                         </TouchableOpacity>
                     </View>
                 </View>
