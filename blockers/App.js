@@ -31,7 +31,6 @@ import Notification from './src/Notification';
 import ProfileMain from './src/ProfileMain';
 import ProfilePasswordChange from './src/ProfilePasswordChange';
 import MyPageRule from './src/MypageRule';
-import AddressFind from './src/AddressFind';
 import CommunityWrite from './src/CommunityWrite';
 import MypageMyWriting from './src/MypageMyWriting';
 import LoginSignup from './src/LoginSignup';
@@ -162,15 +161,6 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="Home"
           component={HomeTab}
-          options={{
-            headerShown: false,
-            gestureDirection: 'vertical-inverted'
-          }}
-        />
-       
-        <Stack.Screen
-          name="주소찾기"
-          component={AddressFind}
           options={{
             headerShown: false,
             gestureDirection: 'vertical-inverted'

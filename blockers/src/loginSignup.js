@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -8,17 +8,21 @@ import {
   ScrollView,
   StatusBar,
   StyleSheet,
-  Alert
+  Alert,
+  ActivityIndicator,
+  Dimensions
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
-import { LoginManager, AccessToken } from 'react-native-fbsdk';
 import firestore from '@react-native-firebase/firestore';
 import KakaoLogins, { KAKAO_AUTH_TYPES } from '@react-native-seoul/kakao-login';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { firebase } from '@react-native-firebase/functions';
-import { Extrapolate } from 'react-native-reanimated';
+import { useFocusEffect } from '@react-navigation/native';
 // import { kakaoCustomAuth } from '../functions';
+
+const WIDTH = Dimensions.get("screen").width;
+const HEIGHT = Dimensions.get("screen").height;
 
 
 if (!KakaoLogins) {
@@ -103,62 +107,62 @@ export default function LoginSignup({ navigation }) {
   const [code, setCode] = useState('')
   const [passState, setpassState] = useState(false)
   const [texts, setTexts] = useState("")
-  const [passLong,setPassLong]=useState("6자리 이상 입력해주세요.")
+  const [passLong, setPassLong] = useState("6자리 이상 입력해주세요.")
   const [loginLoading, setLoginLoading] = useState(false);
   const [logoutLoading, setLogoutLoading] = useState(false);
   const [profileLoading, setProfileLoading] = useState(false);
   const [unlinkLoading, setUnlinkLoading] = useState(false);
-  const [user,setUser]=useState();
-  const [emailLong,setEmailLong]=useState("유효한 이메일을 입력해 주세요")
-  const [signUpState,setSignUpState]=useState(false)
+  const [user, setUser] = useState();
+  const [emailLong, setEmailLong] = useState("유효한 이메일을 입력해 주세요")
+  const [signUpState, setSignUpState] = useState(false)
   // const [token, setToken] = useState(TOKEN_EMPTY);
   const [profile, setProfile] = useState(PROFILE_EMPTY);
 
-  var kakaoAuth=firebase.functions().httpsCallable("kakaoCustomAuth");
+  var kakaoAuth = firebase.functions().httpsCallable("kakaoCustomAuth");
   // var kakaoAuth=firebase.functions().httpsCallable("helloworld");
-async function kakaoCheck(firebaseToken){
-const user= await auth().signInWithCustomToken(firebaseToken)
-console.log(user)
-let check=false
-await firestore()
-            .collection('UserInfo')
-            .get()
-            .then(querySnapshot => {
-                querySnapshot.forEach(function (doc) {
-                  if(doc.id===user.user.uid){
-                    check=true
-                  }
-                    
-                })
-            })
-  if (check){
-    console.log("old")
-    navigation.navigate("Home")
-  }else{
-    console.log("new")
-    navigation.navigate("프로필 설정")
+  async function kakaoCheck(firebaseToken) {
+    const user = await auth().signInWithCustomToken(firebaseToken)
+    console.log(user)
+    let check = false
+    await firestore()
+      .collection('UserInfo')
+      .get()
+      .then(querySnapshot => {
+        querySnapshot.forEach(function (doc) {
+          if (doc.id === user.user.uid) {
+            check = true
+          }
+
+        })
+      })
+    if (check) {
+      console.log("old")
+      navigation.navigate("Home")
+    } else {
+      console.log("new")
+      navigation.navigate("프로필 설정")
+    }
   }
-}
-  async function kakaoLogin(){
+  async function kakaoLogin() {
     console.log("come")
     logCallback('Login Start', setLoginLoading(true));
-     KakaoLogins.login([KAKAO_AUTH_TYPES.Talk, KAKAO_AUTH_TYPES.Account])
+    KakaoLogins.login([KAKAO_AUTH_TYPES.Talk, KAKAO_AUTH_TYPES.Account])
       .then(result => {
-        const realToken=result.accessToken
-         kakaoAuth({token:realToken}).then(function(res){
-        kakaoCheck(res.data.firebase_token)
-       
-        // kakaoGetProfile()
-        }).catch(err=>{
+        const realToken = result.accessToken
+        kakaoAuth({ token: realToken }).then(function (res) {
+          kakaoCheck(res.data.firebase_token)
+
+          // kakaoGetProfile()
+        }).catch(err => {
           logCallback(
-            `Failed:${err.code}:he ${err.message}`,  
+            `Failed:${err.code}:he ${err.message}`,
           );
         })
         logCallback(
           `Login Finished:${JSON.stringify(result)}`,
           setLoginLoading(false),
         );
-        
+
       })
       .catch(err => {
         if (err.code === 'E_CANCELLED_OPERATION') {
@@ -190,6 +194,7 @@ await firestore()
       });
   };
 
+  const [emailLoading, setEmailLoading] = useState(false);
   async function signup() {
     try {
       await ref.where("email", "==", email).get().then(function (querySnapshot) {
@@ -200,10 +205,6 @@ await firestore()
     } catch {
       auth()
         .createUserWithEmailAndPassword(email, password)
-        .then(() => {
-          console.log('User account created & signed in!');
-          navigation.navigate("프로필 설정")
-        })
         .catch(error => {
           if (error.code === 'auth/email-already-in-use') {
             console.log('That email address is already in use!');
@@ -221,11 +222,56 @@ await firestore()
           if (error.code === 'auth/invalid-email') {
             console.log('That email address is invalid!');
           }
-
           console.error(error);
-        });
+        })
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          console.log(user.emailVerified)
+          user.sendEmailVerification()
+          setEmailLoading(true)
+        } else {
+          console.log("없어유~")
+        }
+      })
     }
+  }
 
+  useEffect(() => {
+    if (produce) {
+      firebase.auth().onAuthStateChanged(function (user) {
+        
+      })
+    }
+  }, [emailLoading, produce])
+
+  const [produce, setProduce] = useState(false)
+  async function EmailVeri() {
+    await auth().currentUser.reload().then(() => {
+      firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+          console.log(user.emailVerified)
+          if (user.emailVerified) {
+            setEmailLoading(false)
+            console.log('User account created & signed in!');
+            navigation.navigate("프로필 설정")
+          } else if (user.emailVerified === false) {
+            setEmailLoading(false)
+            Alert.alert(
+              "이메일 인증",
+              "이메일 인증이 되지 않았습니다.",
+              [
+                {
+                  text: "확인",
+                  onPress: () => user.delete()
+                }
+              ]
+            )
+          }
+        } else {
+          console.log("사용자가 없음")
+        }
+      })
+    })
   }
 
   async function onGoogleButtonPress() {
@@ -285,22 +331,22 @@ await firestore()
       setTexts("비밀번호가 일치합니다")
     } else {
       setTexts("비밀번호가 일치하지 않습니다!!")
-      
+
     }
-    if(String(newpassword).length>=6){
+    if (String(newpassword).length >= 6) {
       setPassLong("확인")
-    }else{
+    } else {
       setPassLong("6자리 이상 입력해주세요.")
     }
-    if(email.includes("@")&&email.includes(".")){
+    if (email.includes("@") && email.includes(".")) {
       setEmailLong("확인")
-    }else{
+    } else {
       setEmailLong("유효한 이메일을 입력해 주세요.")
-      
+
     }
-    if(emailLong=="확인"&&passState==true&&passLong=="확인"){
+    if (emailLong == "확인" && passState == true && passLong == "확인") {
       setSignUpState(true)
-    }else{
+    } else {
       setSignUpState(false)
     }
   })
@@ -308,6 +354,13 @@ await firestore()
     <>
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+        {emailLoading ?
+        <>
+          <Text style={{ fontFamily: "NunitoSans-Regular", fontSize: 16, position:"absolute", top: HEIGHT/2-40, alignSelf: "center", color: "#303030"}}>3분 이내 이메일 인증 완료해주세요</Text>
+          <TouchableOpacity onPress={() => EmailVeri()} style={{height: 30, backgroundColor: "#5cc27b", position: "absolute", top: HEIGHT/2, alignSelf: "center", paddingLeft: 10, paddingRight: 10, borderRadius: 8}}><Text style={{fontFamily: "NunitoSans-Bold", fontSize: 16, color: "#ffffff"}}>인증 완료</Text></TouchableOpacity>
+        </>
+        :
+        <>
         <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Ionicons name="chevron-back" size={25} />
@@ -333,17 +386,17 @@ await firestore()
           <Text style={login.text}>{passLong}</Text>
           <TextInput value={password} onChangeText={text => setPassword(text)} textContentType="password" secureTextEntry={true} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="비밀번호 확인" placeholderTextColor="#999999" />
           <Text style={login.text}>{texts}</Text>
-            
-            {signUpState ? 
-          <TouchableOpacity onPress={signup} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16 }]}>
-          <Text style={login.buttontext}>회원가입</Text>
-        </TouchableOpacity>  
+
+          {signUpState ?
+            <TouchableOpacity onPress={signup} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16 }]}>
+              <Text style={login.buttontext}>회원가입</Text>
+            </TouchableOpacity>
             :
             <TouchableOpacity activeOpacity={0.3} style={[login.notbuttonbox, { marginTop: 16 }]}>
-            <Text style={login.buttontext}>회원가입</Text>
-          </TouchableOpacity>
-            }
-          
+              <Text style={login.buttontext}>회원가입</Text>
+            </TouchableOpacity>
+          }
+
           <TouchableOpacity onPress={() => navigation.navigate('로그인')}>
             <Text style={login.signtext}>이미 회원이신가요?</Text>
           </TouchableOpacity>
@@ -358,6 +411,8 @@ await firestore()
             <Text style={[login.buttontext, { color: '#303030' }]}>Kakaotalk으로 시작하기</Text>
           </TouchableOpacity>
         </ScrollView>
+        </>
+}
       </SafeAreaView>
     </>
   )
