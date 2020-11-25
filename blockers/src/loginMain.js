@@ -241,50 +241,45 @@ await firestore()
                             alignItems: 'center',
                             marginLeft: 24
                         }}
-                    >
-                        <Text style={{ fontSize: 18 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>로그인</Text>
-                        </Text>
-                    </View>
-                </View>
-                <ScrollView style={{ paddingTop: 20 }}>
-                    <TextInput value={email} onChangeText={text => setEmail(text)} style={login.textinput} placeholder="이메일 주소" placeholderTextColor="#999999" />
-                    <Text style={login.text}>유효한 이메일을 입력해 주세요.</Text>
-                    <TextInput value={password} onChangeText={text => setPassword(text)} textContentType="password" secureTextEntry={true} style={login.textinput} placeholder="비밀번호(영문, 숫자 포함 6자리)" placeholderTextColor="#999999" />
-                    <Text style={login.text}>6자리 이상 입력해주세요.</Text>
-                    {email.length>0&&password.length>0 ?
-                    <TouchableOpacity onPress={logins} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16}]}>
-                    <Text style={login.buttontext}>로그인</Text>
-                </TouchableOpacity>
-                    :
-                    <TouchableOpacity activeOpacity={0.3} style={[login.notbuttonbox, { marginTop: 16 }]}>
-                    <Text style={login.buttontext}>로그인</Text>
-                  </TouchableOpacity>
-                          
-                    }
-                    
-                    <TouchableOpacity onPress={() => navigation.navigate('아이디/비밀번호 찾기')}>
-                        <Text style={login.signtext}>아이디/비밀번호 찾기</Text>
-                    </TouchableOpacity>
-                    
-                    <TouchableOpacity onPress={() => navigation.navigate('회원가입')}>
-                    <Text style={login.signtext}>회원가입</Text>
-                </TouchableOpacity>
-                  
-                   
-                    
-                    <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
-                    {/* <TouchableOpacity onPress={onFacebookButtonPress} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#4a67ad'}]}>
+          >
+            <Text style={{ fontSize: 18 }}>
+              <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>로그인</Text>
+            </Text>
+          </View>
+        </View>
+        <ScrollView style={{ paddingTop: 20 }}>
+          <TextInput value={email} onChangeText={text => setEmail(text)} style={login.textinput} placeholder="이메일 주소" placeholderTextColor="#999999" />
+          <Text style={login.text}>유효한 이메일을 입력해 주세요.</Text>
+          <TextInput value={password} onChangeText={text => setPassword(text)} textContentType="password" secureTextEntry={true} style={login.textinput} placeholder="비밀번호(영문, 숫자 포함 6자리)" placeholderTextColor="#999999" />
+          <Text style={login.text}>6자리 이상 입력해주세요.</Text>
+          {email.length > 0 && password.length > 0 ?
+            <TouchableOpacity onPress={logins} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16 }]}>
+              <Text style={login.buttontext}>로그인</Text>
+            </TouchableOpacity>
+            :
+            <TouchableOpacity activeOpacity={0.3} style={[login.notbuttonbox, { marginTop: 16 }]}>
+              <Text style={login.buttontext}>로그인</Text>
+            </TouchableOpacity>
+          }
+          <TouchableOpacity onPress={() => navigation.navigate('본인인증')}>
+            <Text style={login.signtext}>비밀번호 찾기</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => navigation.navigate('회원가입')}>
+            <Text style={login.signtext}>회원가입</Text>
+          </TouchableOpacity>
+          <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
+          {/* <TouchableOpacity onPress={onFacebookButtonPress} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#4a67ad'}]}>
                         <Text style={login.buttontext}>Facebook으로 로그인</Text>
                     </TouchableOpacity> */}
-                    <TouchableOpacity onPress={onGoogleButtonPress} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#c45545'}]}>
-                        <Text style={login.buttontext}>Gmail로 로그인</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={kakaoLogin} activeOpacity={0.3} style={[login.buttonbox, {marginTop: 16, backgroundColor: '#f6e14b'}]}>
-                        <Text style={[login.buttontext, {color: '#000000'}]}>Kakaotalk으로 로그인</Text>
-                    </TouchableOpacity>
-                </ScrollView>
-            </SafeAreaView>
-        </>
-    )
+          <TouchableOpacity onPress={onGoogleButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#c45545' }]}>
+            <Text style={login.buttontext}>Gmail로 로그인</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={kakaoLogin} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#f6e14b' }]}>
+            <Text style={[login.buttontext, { color: '#000000' }]}>Kakaotalk으로 로그인</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </SafeAreaView>
+    </>
+  )
 }
