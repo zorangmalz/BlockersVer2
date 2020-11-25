@@ -2006,6 +2006,10 @@ export function ChallengeSupport({ navigation }) {
         }
         setLink(true)
     }
+    async function kakaoios(){
+        Alert.alert("아이폰에서는 지원하지 않는 기능입니다")
+        setLink(true)
+    }
     return (
         <>
             <StatusBar barStyle="dark-content" />
@@ -2107,13 +2111,22 @@ export function ChallengeSupport({ navigation }) {
                         }}>
                             공유하기
                         </Text>
-                        
+                        {Platform.OS === 'android' ? 
                         <TouchableOpacity onPress={kakao}>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around", marginTop: 18 }}>
                            
                             <Image source={require('../icon/kakao.png')} resizeMode="contain" style={{ width: 60, height: 60 }} />
                         </View>
                         </TouchableOpacity>
+                        : 
+                        <TouchableOpacity onPress={kakaoios}>
+                        <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around", marginTop: 18 }}>
+                           
+                            <Image source={require('../icon/kakao.png')} resizeMode="contain" style={{ width: 60, height: 60 }} />
+                        </View>
+                        </TouchableOpacity>
+                        }
+                        
                         
                     </View>
                 </ScrollView>
