@@ -27,3 +27,8 @@ BlockersVer2
 
 ## android build 에러
    1. app:stripDebugDebugSymbols FAILED : https://github.com/facebook/react-native/issues/28404
+
+## 기타
+   1. 이메일 인증: https://stackoverflow.com/questions/37900447/user-emailverified-doesnt-change-after-clicking-email-verification-link-firebas
+   
+      - 이때 auth().current.reload()로 갱신을 해줘야 user.emailverified가 바뀜
