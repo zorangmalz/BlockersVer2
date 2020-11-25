@@ -9,7 +9,7 @@ import {
     StyleSheet,
     TouchableOpacity
 } from 'react-native';
-
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
@@ -147,7 +147,7 @@ export default function ModeSelect({navigation}) {
                             <View>
                                 <TouchableOpacity onPressIn={pushone} onPress={() => setOne(!one)}>
                                     <View style={mode.buttonBox}>
-                                        <Image source={require('./icon/sun.png')} />
+                                        <Ionicons name="sunny" color="#FFA700" size={95} />
                                     </View>
                                 </TouchableOpacity>
                                 <Text style={[mode.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#303030', alignSelf: 'center' }]}>흡연관리</Text>
@@ -156,7 +156,7 @@ export default function ModeSelect({navigation}) {
                             <View>
                                 <TouchableOpacity onPressIn={filterone} onPress={() => setOne(!one)}>
                                     <View style={mode.activeButton}>
-                                        <Image source={require('./icon/sun.png')} />
+                                        <Ionicons name="sunny" color="#FFA700" size={95} />
                                     </View>
                                 </TouchableOpacity>
                                 <Text style={[mode.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030', alignSelf: 'center' }]}>흡연관리</Text>
@@ -166,7 +166,7 @@ export default function ModeSelect({navigation}) {
                             <View>
                                 <TouchableOpacity onPressIn={pushtwo} onPress={() => setTwo(!two)}>
                                     <View style={mode.buttonBox}>
-                                        <Image source={require('./icon/moon.png')} />
+                                        <Ionicons name="moon" color="#F4E100" size={85} />
                                     </View>
                                 </TouchableOpacity>
                                 <Text style={[mode.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#303030', alignSelf: 'center' }]}>금연관리</Text>
@@ -175,7 +175,7 @@ export default function ModeSelect({navigation}) {
                             <View>
                                 <TouchableOpacity onPressIn={filtertwo} onPress={() => setTwo(!two)}>
                                     <View style={mode.activeButton}>
-                                        <Image source={require('./icon/moon.png')} />
+                                        <Ionicons name="moon" color="#F4E100" size={85} />
                                     </View>
                                 </TouchableOpacity>
                                 <Text style={[mode.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030', alignSelf: 'center' }]}>금연관리</Text>

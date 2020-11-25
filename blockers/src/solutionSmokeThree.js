@@ -10,6 +10,7 @@ import {
     Image,
 } from 'react-native';
 import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
 const solution = StyleSheet.create({
@@ -164,14 +165,14 @@ export default function SolutionSmokeThree({ navigation,route }) {
                         {one === false ?
                             <TouchableOpacity onPressIn={pushone} onPress={() => setOne(!one)}>
                                 <View style={solution.buttonBox}>
-                                    <Image source={require('./icon/sun.png')} />
+                                    <Ionicons name="sunny" color="#FFA700" size={95} />
                                     <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#303030' }]}>오전</Text>
                                 </View>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity onPressIn={filterone} onPress={() => setOne(!one)}>
                                 <View style={solution.activeButton}>
-                                    <Image source={require('./icon/sun.png')} />
+                                    <Ionicons name="sunny" color="#FFA700" size={95} />
                                     <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>오전</Text>
                                 </View>
                             </TouchableOpacity>
@@ -179,14 +180,14 @@ export default function SolutionSmokeThree({ navigation,route }) {
                         {two === false ?
                             <TouchableOpacity onPressIn={pushtwo} onPress={() => setTwo(!two)}>
                                 <View style={solution.buttonBox}>
-                                    <Image source={require('./icon/moon.png')} />
+                                    <Ionicons name="moon" color="#F4E100" size={85} />
                                     <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#303030' }]}>오후 & 저녁</Text>
                                 </View>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity onPressIn={filtertwo} onPress={() => setTwo(!two)}>
                                 <View style={solution.activeButton}>
-                                    <Image source={require('./icon/moon.png')} />
+                                    <Ionicons name="moon" color="#F4E100" size={85} />
                                     <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>오후 & 저녁</Text>
                                 </View>
                             </TouchableOpacity>
@@ -203,14 +204,14 @@ export default function SolutionSmokeThree({ navigation,route }) {
                         {three === false ?
                             <TouchableOpacity onPressIn={pushthree} onPress={() => setThree(!three)}>
                                 <View style={solution.buttonBox}>
-                                    <Image source={require('./icon/sun.png')} />
+                                    <Ionicons name="sunny" color="#FFA700" size={95} />
                                     <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#303030' }]}>아침 첫담배</Text>
                                 </View>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity onPressIn={filterthree} onPress={() => setThree(!three)}>
                                 <View style={solution.activeButton}>
-                                    <Image source={require('./icon/sun.png')} />
+                                    <Ionicons name="sunny" color="#FFA700" size={95} />
                                     <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>아침 첫담배</Text>
                                 </View>
                             </TouchableOpacity>
@@ -218,14 +219,14 @@ export default function SolutionSmokeThree({ navigation,route }) {
                         {four === false ?
                             <TouchableOpacity onPressIn={pushfour} onPress={() => setFour(!four)}>
                                 <View style={solution.buttonBox}>
-                                    <Image source={require('./icon/moon.png')} />
+                                    <Ionicons name="moon" color="#F4E100" size={85} />
                                     <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Regular', color: '#303030' }]}>그 외</Text>
                                 </View>
                             </TouchableOpacity>
                             :
                             <TouchableOpacity onPressIn={filterfour} onPress={() => setFour(!four)}>
                                 <View style={solution.activeButton}>
-                                    <Image source={require('./icon/moon.png')} />
+                                    <Ionicons name="moon" color="#F4E100" size={85} />
                                     <Text style={[solution.mediumText, { fontFamily: 'NunitoSans-Bold', color: '#303030' }]}>그 외</Text>
                                 </View>
                             </TouchableOpacity>
