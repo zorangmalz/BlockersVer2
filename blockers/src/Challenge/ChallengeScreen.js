@@ -3468,7 +3468,8 @@ export function ChallengeGDResult({ navigation }) {
         })
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금단증상 확인하기").update( {
             stats:true,
-            date:a
+            date:a,
+            visible:false
         })
         navigation.navigate("Home")
     }
