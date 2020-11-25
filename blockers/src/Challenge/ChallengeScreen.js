@@ -1268,7 +1268,7 @@ export function ChallengeRegister({ navigation }) {
             title: "성공 후기 작성하기",
             content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요",
             period: "final",
-            id: 12,
+            id: 13,
             navigate: "ChallengeSuccess",
             visible:false,
             stats:false,
@@ -1868,7 +1868,7 @@ export function ChallengeMission({ navigation, route }) {
     const Final = [
         {
             number: 1,
-            title: "12. 성공 후기 작성하기",
+            title: "1. 성공 후기 작성하기",
             content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요",
         },
     ]
