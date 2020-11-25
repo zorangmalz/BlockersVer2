@@ -592,8 +592,22 @@ export default function Challenge({ navigation }) {
                         <Text style={{ fontSize: 24, fontFamily: 'NunitoSans-Bold', color: '#5CC27B' }}>Challenge</Text>
                     </View>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                        <TouchableOpacity onPress={logined ?() => navigation.navigate("AlramScreen") : loginview}>
-                            <Image source={require('../icon/alram.png')} />
+                        <TouchableOpacity style={{ width: 27, height: 27 }} onPress={logined ? () => navigation.navigate("AlramScreen") : loginview}>
+                            <Ionicons name="notifications" color="#5cc27b" size={27} />
+                            <View style={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 5,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                backgroundColor: "#ffffff",
+                                position: "absolute",
+                                zIndex: 1,
+                                left: 15,
+                                top: 1
+                            }}>
+                                <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#FFB83D" }} />
+                            </View>
                         </TouchableOpacity>
                     </View>
                 </View>

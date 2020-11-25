@@ -539,7 +539,7 @@ export default function HomeScreen({ navigation}) {
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
-                <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
+                <View accessibilityRole="header" style={{ zIndex: 0, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
                     <View
                         style={{
                             height: 44,
@@ -558,8 +558,22 @@ export default function HomeScreen({ navigation}) {
                         <TouchableOpacity onPress={Rotation}>
                             <AnimatedIonicons name="sync" size={27} color="#5cc27b" style={{ marginRight: 16, transform: [{ rotate: Sync }] }} />
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={login ? () => navigation.navigate("AlramScreen") : loginview}>
-                            <Image source={require('./icon/alram.png')} />
+                        <TouchableOpacity style={{ width: 27, height: 27 }} onPress={login ? () => navigation.navigate("AlramScreen") : loginview}>
+                            <Ionicons name="notifications" color="#5cc27b" size={27} />
+                            <View style={{
+                                width: 10,
+                                height: 10,
+                                borderRadius: 5,
+                                alignItems: "center",
+                                justifyContent: "center",
+                                backgroundColor: "#ffffff",
+                                position: "absolute",
+                                zIndex: 1,
+                                left: 15,
+                                top: 1
+                            }}>
+                                <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#FFB83D" }} />
+                            </View>
                         </TouchableOpacity>
                     </View>
                 </View>
