@@ -201,11 +201,12 @@ export default function CommunityWrite({ navigation }) {
     return (
         <>
             <StatusBar barStyle="light-content" />
-            <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
+            
                 {isLoading===true ?
                   <ActivityIndicator size="large" color="#5cc27b" style={{position: "absolute", top: HEIGHT/2-20, left: WIDTH/2-20}} />
                  :
                  <>
+                 <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                  <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Ionicons name="chevron-back" size={25} />
@@ -248,8 +249,8 @@ export default function CommunityWrite({ navigation }) {
                             {picone === true ? <Text style={community.picturetext}>Picture 1</Text> : <View />}
                         </TouchableOpacity>
                     </View>
-                </ScrollView></> 
-                 }
+                </ScrollView> 
+                
                 
 
 
@@ -262,6 +263,8 @@ export default function CommunityWrite({ navigation }) {
                     </View>
                 </TouchableOpacity>
             </SafeAreaView>
+            </>
+}
         </>
     )
 }
