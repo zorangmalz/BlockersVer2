@@ -7,5 +7,10 @@ module.exports = {
           android: null,
         },
       },
+      "react-native-kakao-links":{
+        platforms:{
+          ios:null
+        }
+      }
     },
   };

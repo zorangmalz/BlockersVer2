@@ -22,6 +22,8 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+  <key>GADApplicationIdentifier</key>
+  <string>ca-app-pub-8262202601779055~7221985522</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
