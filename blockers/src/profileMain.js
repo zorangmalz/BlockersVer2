@@ -231,7 +231,7 @@ export default function ProfileMain({ navigation }) {
                                 fontFamily: "NunitoSans-Bold",
                                 color: "#303030",
                                 fontSize: 18,
-                            }}>{user ? user.displayName : "미설정"}</Text></View>
+                            }}>{user.displayName ? user.displayName :name}</Text></View>
                             <View style={{
                                 flexDirection: "row",
                                 alignItems: "center",
