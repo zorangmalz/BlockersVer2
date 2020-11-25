@@ -282,15 +282,29 @@ export default function CommunityHome({ navigation, route }) {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <Text style={{ fontSize: 24 }}>
-                                        <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#5CC27B' }}>Community</Text>
-                                    </Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
-                                    <TouchableOpacity onPress={userlogined ? () => navigation.navigate("AlramScreen") : loginview} style={{ marginLeft: 8 }}>
-                                        <Image source={require('./icon/alram.png')} />
-                                    </TouchableOpacity>
-                                </View>
+                                <Text style={{ fontSize: 24 }}>
+                                    <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#5CC27B' }}>Community</Text>
+                                </Text>
+                            </View>
+                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center' }}>
+                                <TouchableOpacity style={{ width: 27, height: 27 }} onPress={userlogined ? () => navigation.navigate("AlramScreen") : loginview}>
+                                    <Ionicons name="notifications" color="#5cc27b" size={27} />
+                                    <View style={{
+                                        width: 10,
+                                        height: 10,
+                                        borderRadius: 5,
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        backgroundColor: "#ffffff",
+                                        position: "absolute",
+                                        zIndex: 1,
+                                        left: 15,
+                                        top: 1
+                                    }}>
+                                        <View style={{ width: 6, height: 6, borderRadius: 3, backgroundColor: "#FFB83D" }} />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
                             </View>
                             <View style={{
                                 width: "60%",
