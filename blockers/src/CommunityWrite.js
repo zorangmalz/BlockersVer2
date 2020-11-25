@@ -148,7 +148,7 @@ export default function CommunityWrite({ navigation }) {
         })
         setIsLoading(false)
         Alert.alert(
-            '수정 완료',
+            '작성 완료',
             '',
             [
                 {

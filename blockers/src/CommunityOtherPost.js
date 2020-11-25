@@ -406,7 +406,7 @@ export default function CommunityOtherPost({ route, navigation }) {
 
     //게시글 좋아요 및 좋아요 취소
     async function likeMinus(a) {
-        return ref.doc(param).update({
+        return ref.doc(docID).update({
             whoLike: a,
         }).then(() => {
             console.log("minus success")
@@ -414,7 +414,8 @@ export default function CommunityOtherPost({ route, navigation }) {
         });
     }
     async function likePlus(a) {
-        return ref.doc(param).update({
+        console.log(docID)
+        return ref.doc(docID).update({
             whoLike: a,
         }).then(() => {
             console.log("plus success")
@@ -426,6 +427,8 @@ export default function CommunityOtherPost({ route, navigation }) {
         const userUID = Uid
         console.log(Uid, "Uid")
         console.log(likeList, "when pressed")
+        var list=[]
+        list=likeList
         const INCLUDE = likeList.includes(Uid)
         if (INCLUDE) {
             setLikeList(likeList.splice(likeList.indexOf(Uid), 1))
@@ -493,7 +496,7 @@ export default function CommunityOtherPost({ route, navigation }) {
 
     }
     async function alertUpdate(a) {
-        return ref.doc(param).update({
+        return ref.doc(docID).update({
             whoAlert: a,
         }).then(() => {
             console.log("alert success")
@@ -502,8 +505,8 @@ export default function CommunityOtherPost({ route, navigation }) {
 
     //댓글 좋아요 및 좋아요 취소, 댓글 삭제
     async function relikeMinus(a, b) {
-
-        return ref.doc(param).collection("Reply").doc(b).update({
+        console.log(docID,"docID")
+        return ref.doc(docID).collection("Reply").doc(b).update({
             whoLike: a,
         }).then(() => {
             console.log("minus success")
@@ -512,7 +515,7 @@ export default function CommunityOtherPost({ route, navigation }) {
         });
     }
     async function relikePlus(a, b) {
-        return ref.doc(param).collection("Reply").doc(b).update({
+        return ref.doc(docID).collection("Reply").doc(b).update({
             whoLike: a
         }).then(() => {
             console.log("plus success")
@@ -522,6 +525,7 @@ export default function CommunityOtherPost({ route, navigation }) {
     }
 
     async function pressReLike(relikeList, name) {
+        console.log(name)
         const userUID = Uid
         console.log(Uid, "Uid")
         console.log(relikeList, "when pressed")
@@ -595,7 +599,7 @@ export default function CommunityOtherPost({ route, navigation }) {
 
     }
     async function realertUpdate(a, b) {
-        return ref.doc(param).collection("Reply").doc(a).update({
+        return ref.doc(docID).collection("Reply").doc(a).update({
             whoAlert: b,
         }).then(() => {
             console.log("alert success")
