@@ -698,7 +698,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                     </TouchableOpacity>
                                 }
                             </View>
-                            {imageSource && <Image style={community.image} resizeMode="cover" source={{ uri: imageSource }} />}
+                            {imageSource && <Image style={community.image} resizeMode="contain" source={{ uri: imageSource }} />}
                             <View style={{
                                 flexDirection: 'row',
                                 justifyContent: 'space-between',

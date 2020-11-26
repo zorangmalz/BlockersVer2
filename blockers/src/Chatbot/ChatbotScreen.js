@@ -532,6 +532,7 @@ function TabOne({ navigation }) {
     const [sub2, setSub2] = useState("")
     const [sub2Str, setSub2Str] = useState("")
     const [challengesmoke, setchallengesmoke] = useState(false)
+    const [smokingOrNot,setSmokingOrNot]=useState(false)
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
@@ -547,8 +548,8 @@ function TabOne({ navigation }) {
         var smokingTime
         await firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
             smokingTime = doc.data().SmokingTime
+            setSmokingOrNot(doc.data().smoker)
         })
-
         var a = moment().toArray()
 
         if (a[1] === 12) {
@@ -643,7 +644,35 @@ function TabOne({ navigation }) {
         <>
             <ScrollView style={{ backgroundColor: "#ffffff" }}>
                 <View style={{ marginLeft: 32, marginRight: 32 }}>
-                    <Image style={{ alignSelf: "center", marginTop: 32 }} source={require("../icon/lung.png")} />
+                {smokingOrNot ? 
+                <>
+                <Image style={{ alignSelf: "center", marginTop: 32 }} source={require("../icon/badLung.png")} />
+                <View style={{
+                    marginTop: 28,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "flex-start",
+                    marginBottom: 16
+                }}>
+                    <View style={{ width: 8, height: 8, backgroundColor: "#303030", borderRadius: 4, marginRight: 8 }} />
+                    <Text style={{ fontFamily: "NunitoSans-Bold", fontSize: 14, color: "#303030" }}>흡연중입니다</Text>
+                </View>
+                <View style={{
+                        marginTop: 16,
+                        marginBottom: 16
+                    }}>
+                        <Text style={{
+                            fontFamily: "NunitoSans-Regular",
+                            fontSize: 16,
+                            color: "#303030",
+                            opacity: 0.7,
+                            lineHeight: 26
+                        }}>건강이 나빠집니다 {`\n`}{`\n`}-심혈관 질환 증가{`\n`}-뇌졸증 위험 증가 {`\n`}- 호흡기 문제 {`\n`}- 임신 합병증 {`\n`}- 생식 건강 문제</Text>
+                    </View>
+                </>
+                :
+                <>
+                <Image style={{ alignSelf: "center", marginTop: 32 }} source={require("../icon/lung.png")} />
                     <View style={{
                         marginTop: 28,
                         flexDirection: "row",
@@ -666,6 +695,12 @@ function TabOne({ navigation }) {
                             lineHeight: 26
                         }}>{states[num].stats}</Text>
                     </View>
+                    </>
+
+                }
+                    
+
+              
                 </View>
                 <View style={{zIndex: 0}}>
                     <View style={{ height: 1, backgroundColor: "#cccccc", width: WIDTH }} />

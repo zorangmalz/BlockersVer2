@@ -209,25 +209,7 @@ export default function MypageMyWriting({ navigation }) {
 
                     
                 </ScrollView>
-                <TouchableOpacity 
-                    onPress={() => navigation.navigate('작성하기')}
-                    style={{
-                    position: 'absolute',
-                    top: topposition*1.3,
-                    right: "10%"
-                }}>
-                    <View style={{
-                        width: 36,
-                        height: 36,
-                        borderColor: '#5cc27b',
-                        borderWidth: 1,
-                        borderRadius: 18,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}>
-                        <MaterialCommunityIcons name="pencil" color="#5cc27b" size={25} />
-                    </View>
-                </TouchableOpacity>
+
             </SafeAreaView>
         </>
     )
