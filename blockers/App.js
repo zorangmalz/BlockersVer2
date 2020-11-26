@@ -35,9 +35,7 @@ import CommunityWrite from './src/CommunityWrite';
 import MypageMyWriting from './src/MypageMyWriting';
 import LoginSignup from './src/LoginSignup';
 import LoginMain from './src/LoginMain';
-import LoginFind from './src/LoginFind';
 import LoginVerification from './src/LoginVerification';
-import LoginFindId from './src/LoginFindId';
 import Challenge, { ChallengeVeriResult,ChallengeMotivationResult,ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowhow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage,ChallengeSwearResult } from './src/Challenge/ChallengeScreen';
 import ProfileNickname from './src/ProfileNickname';
 import LoginVerificationProfile from './src/LoginVerificationProfile';
@@ -270,14 +268,6 @@ const App = ({ navigation }) => {
           }}
         />
         <Stack.Screen
-          name="아이디/비밀번호 찾기"
-          component={LoginFind}
-          options={{
-            gestureDirection: 'vertical-inverted',
-            headerShown: false
-          }}
-        />
-        <Stack.Screen
           name="본인인증"
           component={LoginVerification}
           options={{
@@ -288,14 +278,6 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="프로필 설정"
           component={LoginVerificationProfile}
-          options={{
-            gestureDirection: 'vertical-inverted',
-            headerShown: false
-          }}
-        />
-        <Stack.Screen
-          name="아이디 찾기"
-          component={LoginFindId}
           options={{
             gestureDirection: 'vertical-inverted',
             headerShown: false
