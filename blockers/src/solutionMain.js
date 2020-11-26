@@ -60,7 +60,7 @@ export default function SolutionMain({navigation,route}) {
         }
     })
 
-    const title = "니코틴 중독 정도를 파악하고 \n 맞춤 금연전략을 세워보세요";
+    const title = "니코틴 중독 정도를 파악하고 \n 맞춤 금연전략을 세워보세요.";
 
     return (
         <>

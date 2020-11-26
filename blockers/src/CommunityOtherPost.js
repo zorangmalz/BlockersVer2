@@ -484,7 +484,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                     {
                         text: '확인', onPress: () => Alert.alert(
                             '신고완료',
-                            '검토후 조치하겠습니다.',
+                            '검토 후 조치하겠습니다.',
                             [
                                 {
                                     text: '확인', onPress: () => console.log('OK Pressed')
@@ -587,7 +587,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                     {
                         text: '확인', onPress: () => Alert.alert(
                             '신고완료',
-                            '검토후 조치하겠습니다.',
+                            '검토 후 조치하겠습니다.',
                             [
                                 {
                                     text: '확인', onPress: () => console.log('OK Pressed')

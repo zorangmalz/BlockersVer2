@@ -67,7 +67,7 @@ export default function Alcohol({ navigation, Nextpage, Title, Kind,total }) {
     const questwo = "월 1회 미만"
     const questhree = "월 1회"
     const quesfour = Kind ? "1주일에 2~3회" : "1주일에 1회"
-    const quesfive = Kind ? "1주일에 4회 이상" : "매일같이"
+    const quesfive = Kind ? "1주일에 4회 이상" : "매일 같이"
     const [one, setOne] = useState(false);
     const [two, setTwo] = useState(false);
     const [three, setThree] = useState(false);
@@ -146,7 +146,7 @@ export default function Alcohol({ navigation, Nextpage, Title, Kind,total }) {
             if (select[0] === "아니다") setTwo(false);
             if (select[0] === "보통이다") setThree(false);
             if (select[0] === Kind ? "1주일에 2~3회" : "1주일에 1회") setFour(false);
-            if (select[0] === Kind ? "1주일에 4회 이상" : "매일같이") setFive(false);
+            if (select[0] === Kind ? "1주일에 4회 이상" : "매일 같이") setFive(false);
             setSelect(select.slice(1, select.length));
             console.log(select);
             setClear(false);
@@ -414,7 +414,7 @@ export function AlcoholMain({ navigation,route }) {
         getInfo()
     },[])
 
-    const title = "알콜 중독은 흡연 실패에 큰 영향을 미칩니다. \n검사를 통해 본인의 알콜 중독정도를 파악해보세요";
+    const title = "알콜 중독은 흡연 실패에 큰 영향을 미칩니다. \n검사를 통해 본인의 알콜 중독정도를 파악해보세요.";
 
     const data = [
         {

@@ -169,7 +169,7 @@ export default function SolutionFOne({ navigation,route }) {
                     </View>
                 </View>
                 <ScrollView>
-                    <Text style={solution.largeText}>자신도 모르는 사이에 담배를 물고있는것을 발견한적이 있나요?</Text>
+                    <Text style={solution.largeText}>자신도 모르는 사이에 담배를 물고있는 것을 발견한 적이 있나요?</Text>
                     {one === false ?
                         <TouchableOpacity onPressIn={pushone} onPress={()=>setOne(!one)}>
                             <View style={solution.buttonBox}>

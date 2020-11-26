@@ -12,7 +12,7 @@ import {
     Dimensions,
     Linking,
     ActivityIndicator,  
-    Alert
+    Alert 
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -351,7 +351,7 @@ export function ChatbotTwo({ navigation }) {
                                 fontSize: 14,
                                 color: "#303030",
                                 lineHeight: 19
-                            }}>온라인에서 금연 실천을 도와주는 정부기관 금연 서비스 입니다. </Text>
+                            }}>온라인에서 금연 실천을 도와주는 정부기관 금연 서비스 입니다.{`\n`} </Text>
                             <TouchableOpacity onPress={linkA}>
                             <Text style={{
                                 fontFamily: "NunitoSans-Regular",
@@ -376,11 +376,12 @@ export function ChatbotTwo({ navigation }) {
                                 fontSize: 14,
                                 color: "#303030",
                                 lineHeight: 19
-                            }}>금연에 대한 정보들이 모여 있는 웹사이트 입니다. {"\n"}한국건강증진개발원에서 운영하고 있습니다. </Text>
+                            }}>금연에 대한 정보들이 모여 있는 웹사이트 입니다. {"\n"}한국건강증진개발원에서 운영하고 있습니다.{`\n`} </Text>
                            <TouchableOpacity onPress={linkB}>
                             <Text style={{
                                 fontFamily: "NunitoSans-Regular",
                                 fontSize: 14,
+                                
                                 color: "#5cc27b",
                                 textDecorationLine: "underline"
                             }}>바로가기</Text>
@@ -401,7 +402,7 @@ export function ChatbotTwo({ navigation }) {
                                 fontSize: 14,
                                 color: "#303030",
                                 lineHeight: 19
-                            }}>금연 관련 운동들을 하고 있는 민간단체 입니다. </Text>
+                            }}>금연 관련 운동들을 하고 있는 민간단체 입니다.{`\n`} </Text>
                             <TouchableOpacity onPress={linkC}>
                             <Text style={{
                                 fontFamily: "NunitoSans-Regular",

@@ -13,7 +13,7 @@ export default function SOne ({navigation}) {
 }
 
 export function STwo ({navigation,route}) {
-    const title = "생활의 중요한 일들을 통제하기가 힘든 것 같은가?";
+    const title = "생활의 중요한 일들을 통제하기가 힘든 것 같은가요?";
     const result=route.params
     return (
         <>
@@ -23,7 +23,7 @@ export function STwo ({navigation,route}) {
 }
 
 export function SThree ({navigation,route}) {
-    const title = "신경이 곤두서거나 스트레스를 받는다고 느꼈는가?";
+    const title = "신경이 곤두서거나 스트레스를 받는다고 느꼈는가요?";
     const result=route.params
     return (
         <>
@@ -33,7 +33,7 @@ export function SThree ({navigation,route}) {
 }
 
 export function SFour ({navigation,route}) {
-    const title = "당신의 생활에 일어난 중요한 변화에 효과적으로 대처하지 못했다고 느꼈나요??";
+    const title = "당신의 생활에 일어난 중요한 변화에 효과적으로 대처하지 못했다고 느꼈나요?";
     const result=route.params
     return (
         <>
@@ -53,7 +53,7 @@ export function SFive ({navigation,route}) {
 }
 
 export function SSix ({navigation,route}) {
-    const title = "당신이 해야하는 모든일들을 책임질 수 없다고 생각하나요?";
+    const title = "당신이 해야하는 모든 일들을 책임질 수 없다고 생각하나요?";
     const result=route.params
     return (
         <>

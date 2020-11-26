@@ -13,7 +13,8 @@ import {
     Modal,
     Dimensions,
     ActivityIndicator,
-    Alert
+    Alert,
+    Linking
 } from 'react-native';
 import firebase from "@react-native-firebase/app";
 import auth from '@react-native-firebase/auth';
@@ -97,6 +98,39 @@ export default function MyPageScreen({ navigation }) {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
+    function linkA(){
+        var url="https://www.facebook.com/%EA%B8%88%EC%97%B0-%EC%8B%A4%EC%B2%9C-%EC%84%9C%EB%B9%84%EC%8A%A4-Blockers-117538196638002"
+        Linking.canOpenURL(url)
+.then(supported => {
+  if (!supported) {
+    console.log('Unsupported URL: ' + url)
+  } else {
+    return Linking.openURL(url)
+  }
+}).catch(err => console.error('An error occurred ', err))
+    }
+    function linkB(){
+        var url="https://www.youtube.com/channel/UCQYf0JRtTdR2iT0LNSv9uFQ?view_as=subscriber"
+        Linking.canOpenURL(url)
+.then(supported => {
+  if (!supported) {
+    console.log('Unsupported URL: ' + url)
+  } else {
+    return Linking.openURL(url)
+  }
+}).catch(err => console.error('An error occurred ', err))
+    }
+    function linkC(){
+        var url="https://www.instagram.com/blockers_jorangmals_inc/?hl=ko"
+        Linking.canOpenURL(url)
+.then(supported => {
+  if (!supported) {
+    console.log('Unsupported URL: ' + url)
+  } else {
+    return Linking.openURL(url)
+  }
+}).catch(err => console.error('An error occurred ', err))
+    }
     //로그인 띄울때 사용
     const loginview = () => {
         Alert.alert(
@@ -400,13 +434,13 @@ export default function MyPageScreen({ navigation }) {
                                 alignItems: 'center',
                                 alignSelf: 'center'
                             }}>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={linkA}>
                                     <Ionicons name="logo-facebook" size={36} />
                                 </TouchableOpacity>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={linkB}>
                                     <Ionicons name="logo-youtube" size={36} />
                                 </TouchableOpacity>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={linkC}>
                                     <Ionicons name="logo-instagram" size={36} />
                                 </TouchableOpacity>
                             </View>

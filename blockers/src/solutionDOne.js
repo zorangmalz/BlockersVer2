@@ -168,7 +168,7 @@ export default function SolutionDOne({ navigation,route }) {
                     </View>
                 </View>
                 <ScrollView>
-                    <Text style={solution.largeText}>흥분하거나 화가 났을대 담배를 찾나요?</Text>
+                    <Text style={solution.largeText}>흥분하거나 화가 났을 때 담배를 찾나요?</Text>
                     {one === false ?
                         <TouchableOpacity onPressIn={pushone} onPress={()=>setOne(!one)}>
                             <View style={solution.buttonBox}>

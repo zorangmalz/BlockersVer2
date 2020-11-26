@@ -186,7 +186,7 @@ export default function SolutionDThree({ navigation,route }) {
                     </View>
                 </View>
                 <ScrollView>
-                    <Text style={solution.largeText}>마음이 울적하거나 걱정거리가 잇을 때 담배를 더 피우시나요?</Text>
+                    <Text style={solution.largeText}>마음이 울적하거나 걱정거리가 있을 때 담배를 더 피우시나요?</Text>
                     {one === false ?
                         <TouchableOpacity onPressIn={pushone} onPress={()=>setOne(!one)}>
                             <View style={solution.buttonBox}>

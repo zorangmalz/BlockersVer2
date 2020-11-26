@@ -15,7 +15,7 @@ export default function AOne({ navigation }) {
 export function AThree ({navigation,route}) {
     
     const result=route.params
-    const title = "한번 술을 마실 떄 소주 1병 또는 맥주 4병 이상 마시는 음주는 얼마나 자주 하십니까?";
+    const title = "한번 술을 마실 때 소주 1병 또는 맥주 4병 이상 마시는 음주는 얼마나 자주 하십니까?";
     return (
         <>
             <Alcohol navigation={navigation} Nextpage="AlcoholFour" Title={title} total={Number(JSON.stringify(result.result))} Kind={true} />

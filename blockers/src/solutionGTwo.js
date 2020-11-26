@@ -169,7 +169,7 @@ export default function SolutionGTwo({ navigation ,route}) {
                     </View>
                 </View>
                 <ScrollView>
-                    <Text style={solution.largeText}>동료/친구들과 함께 흥겨운 시간을 보낼때 흡연하시나요?</Text>
+                    <Text style={solution.largeText}>동료/친구들과 함께 흥겨운 시간을 보낼 때 흡연하시나요?</Text>
                     {one === false ?
                         <TouchableOpacity onPressIn={pushone} onPress={()=>setOne(!one)}>
                             <View style={solution.buttonBox}>

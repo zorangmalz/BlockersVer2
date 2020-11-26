@@ -759,7 +759,7 @@ export default function Challenge({ navigation }) {
                         marginTop: HEIGHT * 0.025,
                         marginBottom: HEIGHT * 0.025
                     }}>
-                        <Text style={main.title}>진행해야할 미션</Text>
+                        <Text style={main.title}>진행해야 할 미션</Text>
                         <TouchableOpacity onPress={logined ? () => navigation.navigate("ChallengeMission", { UID: user.uid }) : loginview}><Text style={main.underline}>전체미션</Text></TouchableOpacity>
                     </View>
                     <ScrollView horizontal={true}>
@@ -877,7 +877,7 @@ export function ChallengeRegister({ navigation }) {
         if (month === 1) {
             firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
                 title: "금연활동 인증하기 (주1회)",
-                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는 것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
+                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는 것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
                 stats: false,
                 period: "once",
                 id: 10,
@@ -888,7 +888,7 @@ export function ChallengeRegister({ navigation }) {
             })
             firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").set({
                 title: "스트레스 평가(월1회)",
-                content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
+                content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요.",
                 stats: false,
                 period: "monthly",
                 id: 1,
@@ -899,7 +899,7 @@ export function ChallengeRegister({ navigation }) {
             })
             firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
                 title: "자기 효능감 평가(월1회)",
-                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요",
+                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요.",
                 stats: false,
                 period: "monthly",
                 id: 2,
@@ -910,7 +910,7 @@ export function ChallengeRegister({ navigation }) {
             })
             firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").set({
                 title: "알콜중독 평가(월1회)",
-                content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요",
+                content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요.",
                 stats: false,
                 period: "monthly",
                 id: 3,
@@ -922,7 +922,7 @@ export function ChallengeRegister({ navigation }) {
         } else if (month === 3) {
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
                 title: "금연활동 인증하기 (주1회)",
-                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
+                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
                 stats: false,
                 period: "once",
                 id: 10,
@@ -972,7 +972,7 @@ export function ChallengeRegister({ navigation }) {
 
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").set({
                 title: "스트레스 평가(월1회)",
-                content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
+                content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요.",
                 stats: false,
                 period: "monthly",
                 id: 1,
@@ -992,7 +992,7 @@ export function ChallengeRegister({ navigation }) {
             })
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
                 title: "자기 효능감 평가(월1회)",
-                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요",
+                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요.",
                 stats: false,
                 period: "monthly",
                 id: 2,
@@ -1012,7 +1012,7 @@ export function ChallengeRegister({ navigation }) {
             })
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").set({
                 title: "알콜중독 평가(월1회)",
-                content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요",
+                content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요.",
                 stats: false,
                 period: "monthly",
                 id: 3,
@@ -1033,7 +1033,7 @@ export function ChallengeRegister({ navigation }) {
         } else if (month === 6) {
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
                 title: "금연활동 인증하기 (주1회)",
-                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
+                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
                 stats: false,
                 period: "once",
                 id: 10,
@@ -1119,7 +1119,7 @@ export function ChallengeRegister({ navigation }) {
             })
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").set({
                 title: "스트레스 평가(월1회)",
-                content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요",
+                content: "스트레스와 금연의 밀접한 관계, 나의 스트레스를 체크하고 금연 성공하세요.",
                 stats: false,
                 period: "monthly",
                 id: 1,
@@ -1148,7 +1148,7 @@ export function ChallengeRegister({ navigation }) {
             })
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
                 title: "자기 효능감 평가(월1회)",
-                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을 체크하고 금연 성공하세요",
+                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을 체크하고 금연 성공하세요.",
                 stats: false,
                 period: "monthly",
                 id: 2,
@@ -1178,7 +1178,7 @@ export function ChallengeRegister({ navigation }) {
             })
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").set({
                 title: "알콜중독 평가(월1회)",
-                content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요",
+                content: "알콜중독과 금연의 밀접한 관계, 나의 알콜중독을 체크하고 금연 성공하세요.",
                 stats: false,
                 period: "monthly",
                 id: 3,
@@ -1208,7 +1208,7 @@ export function ChallengeRegister({ navigation }) {
         }
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 동기 설정하기").set({
             title: "금연 동기 설정하기",
-            content: "금연을 하는 이유가 무엇인가요? 금연 동기는 앞으로 금연을 이어가는 가장 큰 힘이 될 수 있습니다",
+            content: "금연을 하는 이유가 무엇인가요? 금연 동기는 앞으로 금연을 이어가는 가장 큰 힘이 될 수 있습니다.",
             stats: false,
             period: "once",
             id: 4,
@@ -1238,7 +1238,7 @@ export function ChallengeRegister({ navigation }) {
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 지지자 정하기").set({
             title: "금연 지지자 정하기",
-            content: "앞으로 힘든 금연에 힘이될 사람들에게 금연 응원을 요청해보세요",
+            content: "앞으로 힘든 금연에 힘이 될 사람들에게 금연 응원을 요청해보세요.",
             stats: false,
             period: "once",
             id: 7,
@@ -1269,7 +1269,7 @@ export function ChallengeRegister({ navigation }) {
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").set({
             title: "성공 후기 작성하기",
-            content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요",
+            content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요.",
             period: "final",
             id: 12,
             navigate: "ChallengeSuccess",
@@ -1491,7 +1491,7 @@ export function ChallengeRegister({ navigation }) {
                                         fontSize: 14,
                                         color: "#303030",
                                         fontFamily: "NunitoSans-Regular"}}>실수 한번은 챌린지를 진행하는 도중 흡연을 하는 경우 자율적으로 누르는 버튼입니다.{`\n`}
-                                        실수 한번을 클릭하면 5%의 진행도가 차감됩니다.{`\n`}
+                                        실수 한 번을 클릭하면 5%의 진행도가 차감됩니다.{`\n`}
                                         사람들은 평균적으로 금연을 실천하면서 4.5회의 실패를 경험합니다.{`\n`}
                                         한번 담배를 피웠다고 실패한게 아닙니다. 끝까지 금연을 하려는 노력이 중요합니다!</Text>
                             </View>
@@ -3054,13 +3054,15 @@ export function ChallengeGD({ navigation }) {
     const [zero, setZero] = useState(false);
     const [user, setUser] = useState("");
     const onZero = () => {
-        if (!zero) {
-            setZero(true);
-            countGD.current = 0;
-            setGD([]);
-        } else {
+        if (zero) {
             setZero(false);
-            setGD([]);
+            countGD.current = 0;
+            setGD(GD.filter(doc => {
+                return doc !== "없음"
+            }))
+        } else {
+            setZero(true);
+            setGD(GD.concat("없음"))
             countGD.current = 0;
         }
     }
@@ -3265,6 +3267,7 @@ export function ChallengeGD({ navigation }) {
         console.log(GD);
         console.log(countGD);
         if (zero) {
+            
             setOne(false);
             setTwo(false);
             setThree(false);
@@ -3304,10 +3307,11 @@ export function ChallengeGD({ navigation }) {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
-
+console.log(zero)
     })
     const [loading, setLoading] = useState(false)
     async function uploadInfo() {
+        console.log("Here")
         setLoading(true)
         var a = moment().toArray()
         console.log(a)
@@ -3377,28 +3381,17 @@ export function ChallengeGD({ navigation }) {
                                 </View>
                                 <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 16 }}>
                                     <MotiveButton content="없음" include={zero} onPress={onZero} />
-                                    <TextInput value={input} onChangeText={(text) => setInput(text)}
-                                        onSubmitEditing={() => setGD(GD.concat(input))}
-                                        placeholder="기타" style={{
-                                            width: 156,
-                                            borderBottomWidth: 2,
-                                            borderBottomColor: "#5cc27b",
-                                            paddingBottom: 8,
-                                            marginLeft: 12,
-                                            fontSize: 16,
-                                            fontFamily: "NunitoSans-Bold",
-                                            color: "#303030",
-                                        }} />
+                                   
                                 </View>
                             </View>
                         </ScrollView>
                     </SafeAreaView>
                     <SafeAreaView style={{ flex: 0 }}>
                         {zero ?
-                            <TouchableOpacity onPress={() => {
-                                setGD([]);
+                            <TouchableOpacity onPress={
+                                
                                 uploadInfo
-                            }}>
+                            }>
                                 <View style={{
                                     width: "100%",
                                     height: 60,
@@ -3511,72 +3504,72 @@ export function ChallengeGDResult({ navigation }) {
         {
             id: 1,
             symptom: "갈증",
-            content: "얼음물 또는 주스를 한 모금씩 마시기,껌을 씹어 입마름을 해소하기,짜게 먹지 않기,양치질 하기,"
+            content: "얼음물 또는 주스를 한 모금씩 마시기,껌을 씹어 입마름을 해소하기,짜게 먹지 않기,양치질 하기."
         },
         {
             id: 2,
             symptom: "소화장애",
-            content: "고지방 음식, 단 음식, 카페인 함량이 많은 음식을 피하기,자극적인 음식을 피하기,섬유소가 많은 음식 섭취하기,"
+            content: "고지방 음식, 단 음식, 카페인 함량이 많은 음식을 피하기,자극적인 음식을 피하기,섬유소가 많은 음식 섭취하기."
         },
         {
             id: 3,
             symptom: "기침",
-            content: "물을 많이 마셔 기관지 점막을 부드럽게 하기,항생제를 사용하지 않을 것,가능한 기침을 약하게 하기,"
+            content: "물을 많이 마셔 기관지 점막을 부드럽게 하기,항생제를 사용하지 않을 것,가능한 기침을 약하게 하기."
         },
         {
             id: 4,
             symptom: "두통",
-            content: "물을 많이 마시고, 커피를 줄인다,가벼운 운동하기,따뜻한 물로 샤워하기,신선한 공기를 위해 창문을 열거나 가벼운 산책하기,5분 간 누워서 휴식 취하기,"
+            content: "물을 많이 마시고, 커피를 줄인다,가벼운 운동하기,따뜻한 물로 샤워하기,신선한 공기를 위해 창문을 열거나 가벼운 산책하기,5분 간 누워서 휴식 취하기."
         },
         {
             id: 5,
             symptom: "배고픔",
-            content: "평소 세 끼의 식사를 적당한 양으로 규칙적으로 하기,칼로리가 낮은 스낵이나 음료 마시기 (물, 해바라기씨, 당근, 오이, 무가당 껌 등) ,체중관리를 위해 적당한 운동 병행하기,"
+            content: "평소 세 끼의 식사를 적당한 양으로 규칙적으로 하기,칼로리가 낮은 스낵이나 음료 마시기 (물, 해바라기씨, 당근, 오이, 무가당 껌 등) ,체중관리를 위해 적당한 운동 병행하기."
         },
         {
             id: 6,
             symptom: "불면",
-            content: "이완운동하기,자기 전 무리한 운동하지 않기,명상하기,카페인 줄이기,	"
+            content: "이완운동하기,자기 전 무리한 운동하지 않기,명상하기,카페인 줄이기."
         },
         {
             id: 7,
             symptom: "불안감",
-            content: "온수로 목욕 또는 샤워, 가벼운 산책 또는 운동,누워서 쉬기,경험했던 조용하고 평화로운 장면 생각하기,"
+            content: "온수로 목욕 또는 샤워, 가벼운 산책 또는 운동,누워서 쉬기,경험했던 조용하고 평화로운 장면 생각하기."
         },
         {
             id: 8,
             symptom: "우울감",
-            content: "운동을 하여 땀을 흘리고, 물 많이 마시기,몸을 편하게 눕히는 이완 운동하기,따뜻한 물로 샤워하기,과일 쥬스 마시기,즐거운 생각하기,"
+            content: "운동을 하여 땀을 흘리고, 물 많이 마시기,몸을 편하게 눕히는 이완 운동하기,따뜻한 물로 샤워하기,과일 쥬스 마시기,즐거운 생각하기."
         },
         {
             id: 9,
             symptom: "신경과민",
-            content: "휴식을 취하고 신선한 공기를 마시며 산책하기,운동을 시작하거나 손으로 하는 다른 일에 집중하기,심호흡을 함으로써 긴장을 이완시키기,경험했던 조용하고 평화로운 장면 생각하기,"
+            content: "휴식을 취하고 신선한 공기를 마시며 산책하기,운동을 시작하거나 손으로 하는 다른 일에 집중하기,심호흡을 함으로써 긴장을 이완시키기,경험했던 조용하고 평화로운 장면 생각하기."
         },
         {
             id: 10,
             symptom: "쑤시는 느낌",
-            content: "따뜻한 물로 목욕하기,따끔거리는 곳을 마사지 해주기,가벼운 산책하기,	"
+            content: "따뜻한 물로 목욕하기,따끔거리는 곳을 마사지 해주기,가벼운 산책하기."
         },
         {
             id: 11,
             symptom: "입안의 통증",
-            content: "얼음물 또는 주스를 한 모금씩 마시기,껌을 씹어 입마름을 해소하기,짜게 먹지 않기,양치질 하기,"
+            content: "얼음물 또는 주스를 한 모금씩 마시기,껌을 씹어 입마름을 해소하기,짜게 먹지 않기,양치질 하기."
         },
         {
             id: 12,
             symptom: "집중력 감소",
-            content: "휴식을 취하고 마음을 편히 갖고 심호흡을 하기,많이 힘들면 일을 중단하고 잠깐 눈 붙이기,명상을 통해 집중력 향상시키기,"
+            content: "휴식을 취하고 마음을 편히 갖고 심호흡을 하기,많이 힘들면 일을 중단하고 잠깐 눈 붙이기,명상을 통해 집중력 향상시키기."
         },
         {
             id: 13,
             symptom: "피로감",
-            content: "금단 증상이 심한 2주간은 무리한 일을 피하기,낮에 잠깐씩 눈을 붙이거나 밤에는 평소보다 숙면하도록 하기,미리 주변에 양해를 구하고 금단 증상과 함께 피로감이 올 수 있음을 알릴 것,"
+            content: "금단 증상이 심한 2주간은 무리한 일을 피하기,낮에 잠깐씩 눈을 붙이거나 밤에는 평소보다 숙면하도록 하기,미리 주변에 양해를 구하고 금단 증상과 함께 피로감이 올 수 있음을 알릴 것."
         },
         {
             id: 14,
             symptom: "현기증",
-            content: "현기증 나는 순간을 잠시 쉬면서 넘기기,야외로 나가서 바람쐬기,천천히 일어나고 앉기,평소에 간단한 운동하기,"
+            content: "현기증 나는 순간을 잠시 쉬면서 넘기기,야외로 나가서 바람쐬기,천천히 일어나고 앉기,평소에 간단한 운동하기."
         },
     ]
     return (
@@ -3939,7 +3932,7 @@ export function ChallengeVeriImage({ navigation, route }) {
                                 color: "#303030",
                                 alignSelf: "center",
                                 marginTop: HEIGHT * 0.05
-                            }}>다음중 하나의 활동 사진을 첨부해주세요{"\n\n"}1. 취미 생활(운동, 동호회 등){"\n\n"}2. 금연 간식{"\n\n"}3. 흡연 관련 용품 버린 사진(ex 담배 부시기){"\n\n"}4. 본인만의 금연 비법</Text>
+                            }}>다음중 하나의 활동 사진을 첨부해주세요{"\n\n"}1. 취미 생활(운동, 동호회 등){"\n\n"}2. 금연 간식{"\n\n"}3. 흡연 관련 용품 버린 사진(ex 담배 부수기){"\n\n"}4. 본인만의 금연 비법</Text>
                         </ScrollView>
 
                     </SafeAreaView>

@@ -187,7 +187,7 @@ export default function SolutionBThree({ navigation,route }) {
                     </View>
                 </View>
                 <ScrollView>
-                    <Text style={solution.largeText}>담배연기로 모양을 만드는것을 좋아하시나요?</Text>
+                    <Text style={solution.largeText}>담배연기로 모양을 만드는 것을 좋아하시나요?</Text>
                     {one === false ?
                         <TouchableOpacity onPressIn={pushone} onPress={()=>setOne(!one)}>
                             <View style={solution.buttonBox}>
