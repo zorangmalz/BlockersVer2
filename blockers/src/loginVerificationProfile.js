@@ -195,10 +195,10 @@ export default function LoginVerificationProfile({ navigation }) {
             ]
         )
     }
-    function deletes(){
-        firebase.auth().onAuthStateChanged(function(user) {
-            user.delete()
-        })
+    async function deletes(){
+        const user = firebase.auth().currentUser
+        
+        user.delete()
         navigation.goBack()
     }
     return (
