@@ -242,7 +242,7 @@ export default function ModeSelectSmoker({ navigation, route }) {
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                    <TouchableOpacity onPress={finishLogin}>
+                    <TouchableOpacity onPress={Platform.OS === "android" ? finishLogin : navigation.goBack()}>
                         <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
                     <View

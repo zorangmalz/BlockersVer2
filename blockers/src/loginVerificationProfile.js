@@ -177,7 +177,7 @@ export default function LoginVerificationProfile({ navigation, route }) {
 
     //다음 버튼 눌렀는지 유무
     const [ios, setIos] = useState(false);
-    
+
     //ios 전용
     useEffect(() => {
         if (Platform.OS === "ios") {
@@ -254,7 +254,7 @@ export default function LoginVerificationProfile({ navigation, route }) {
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                    <TouchableOpacity onPress={finishLogin}>
+                    <TouchableOpacity onPress={Platform.OS === "android" ? finishLogin : navigation.goBack()}>
                         <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
                     <View
