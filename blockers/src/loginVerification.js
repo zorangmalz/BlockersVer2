@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
     View,
     Text,
@@ -45,13 +45,13 @@ const login = StyleSheet.create({
 
 export default function LoginVerification({ navigation }) {
     const [name, setName] = useState('');
-    async function findPassword(){
-        console.log(name,"name")
-        
+    async function findPassword() {
+        console.log(name, "name")
+
         firebase.auth().sendPasswordResetEmail(name)
         Alert.alert(
             "비밀번호 변경 메일이 발송되었습니다",
-           "이메일을 확인해 주세요",
+            "이메일을 확인해 주세요",
             [
                 {
                     text: "확인",
@@ -93,10 +93,10 @@ export default function LoginVerification({ navigation }) {
                         marginBottom: 32
                     }}>이메일 주소를 입력해주세요</Text>
                     <TextInput value={name} onSubmitEditing={Keyboard.dismiss} onChangeText={text => setName(text)} style={login.textinput} placeholder="Blockers@blockers.me" />
-                    
+
                 </ScrollView>
                 {name != '' ?
-                    <TouchableOpacity 
+                    <TouchableOpacity
                         onPress={findPassword}
                         style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}
                     >

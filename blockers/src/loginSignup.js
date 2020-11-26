@@ -120,7 +120,9 @@ export default function LoginSignup({ navigation }) {
 
   var kakaoAuth = firebase.functions().httpsCallable("kakaoCustomAuth");
   // var kakaoAuth=firebase.functions().httpsCallable("helloworld");
+  const [kakaoloading, setKakaoloading] = useState(false)
   async function kakaoCheck(firebaseToken) {
+    setKakaoloading(true)
     const user = await auth().signInWithCustomToken(firebaseToken)
     console.log(user)
     let check = false
@@ -136,13 +138,16 @@ export default function LoginSignup({ navigation }) {
         })
       })
     if (check) {
+      setKakaoloading(false)
       console.log("old")
       navigation.navigate("Home")
     } else {
+      setKakaoloading(false)
       console.log("new")
       navigation.navigate("프로필 설정")
     }
   }
+  
   async function kakaoLogin() {
     console.log("come")
     logCallback('Login Start', setLoginLoading(true));
@@ -151,7 +156,6 @@ export default function LoginSignup({ navigation }) {
         const realToken = result.accessToken
         kakaoAuth({ token: realToken }).then(function (res) {
           kakaoCheck(res.data.firebase_token)
-
           // kakaoGetProfile()
         }).catch(err => {
           logCallback(
@@ -195,7 +199,9 @@ export default function LoginSignup({ navigation }) {
   };
 
   const [emailLoading, setEmailLoading] = useState(false);
+  const [anonyLoading, setAnonyLoading] = useState(false);
   async function signup() {
+    setAnonyLoading(true)
     try {
       await ref.where("email", "==", email).get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
@@ -206,6 +212,7 @@ export default function LoginSignup({ navigation }) {
       auth()
         .createUserWithEmailAndPassword(email, password)
         .catch(error => {
+          setAnonyLoading(false)
           if (error.code === 'auth/email-already-in-use') {
             console.log('That email address is already in use!');
             navigation.navigate("로그인")
@@ -218,7 +225,6 @@ export default function LoginSignup({ navigation }) {
               ]
             )
           }
-
           if (error.code === 'auth/invalid-email') {
             console.log('That email address is invalid!');
           }
@@ -226,10 +232,12 @@ export default function LoginSignup({ navigation }) {
         })
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
+          setAnonyLoading(false)
           console.log(user.emailVerified)
           user.sendEmailVerification()
           setEmailLoading(true)
         } else {
+          setAnonyLoading(false)
           console.log("없어유~")
         }
       })
@@ -268,7 +276,9 @@ export default function LoginSignup({ navigation }) {
     })
   }
 
+  const [gmailLoading, setGmailLoading] = useState(false)
   async function onGoogleButtonPress() {
+    setGmailLoading(true)
     // Get the users ID token
     const { idToken } = await GoogleSignin.signIn();
 
@@ -279,9 +289,11 @@ export default function LoginSignup({ navigation }) {
     // Sign-in the user with the credential
     if (NewUser === true) {
       auth().signInWithCredential(googleCredential);
+      setGmailLoading(false)
       navigation.navigate("프로필 설정");
     } else if (NewUser === false) {
       auth().signInWithCredential(googleCredential);
+      setGmailLoading(false)
       navigation.navigate("Home");
     }
   }
@@ -348,63 +360,67 @@ export default function LoginSignup({ navigation }) {
     <>
       <StatusBar barStyle="light-content" />
       <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-        {emailLoading ?
-          <>
-            <Text style={{ fontFamily: "NunitoSans-Regular", fontSize: 16, position: "absolute", top: HEIGHT / 2 - 40, alignSelf: "center", color: "#303030" }}>3분 이내 이메일 인증 완료해주세요</Text>
-            <TouchableOpacity onPress={EmailVeri} style={{ height: 30, backgroundColor: "#5cc27b", position: "absolute", top: HEIGHT / 2, alignSelf: "center", paddingLeft: 10, paddingRight: 10, borderRadius: 8 }}><Text style={{ fontFamily: "NunitoSans-Bold", fontSize: 16, color: "#ffffff" }}>인증 완료</Text></TouchableOpacity>
-          </>
+        {kakaoloading || gmailLoading || anonyLoading ?
+          <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
           :
           <>
-            <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Ionicons name="chevron-back" size={25} />
-              </TouchableOpacity>
-              <View
-                style={{
-                  height: 44,
-                  flexDirection: 'row',
-                  justifyContent: "flex-start",
-                  alignItems: 'center',
-                  marginLeft: 24
-                }}
-              >
-                <Text style={{ fontSize: 18 }}>
-                  <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>회원가입</Text>
-                </Text>
-              </View>
-            </View>
-            <ScrollView style={{ paddingTop: 20 }}>
-              <TextInput value={email} onChangeText={text => setEmail(text)} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="이메일 주소" placeholderTextColor="#999999" />
-              <Text style={login.text}>{emailLong}</Text>
-              <TextInput value={newpassword} onChangeText={text => setNewpassword(text)} textContentType="newPassword" secureTextEntry={true} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="비밀번호(영문, 숫자 포함 6자리)" placeholderTextColor="#999999" />
-              <Text style={login.text}>{passLong}</Text>
-              <TextInput value={password} onChangeText={text => setPassword(text)} textContentType="password" secureTextEntry={true} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="비밀번호 확인" placeholderTextColor="#999999" />
-              <Text style={login.text}>{texts}</Text>
-
-              {signUpState ?
-                <TouchableOpacity onPress={signup} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16 }]}>
-                  <Text style={login.buttontext}>회원가입</Text>
-                </TouchableOpacity>
-                :
-                <TouchableOpacity activeOpacity={0.3} style={[login.notbuttonbox, { marginTop: 16 }]}>
-                  <Text style={login.buttontext}>회원가입</Text>
-                </TouchableOpacity>
-              }
-
-              <TouchableOpacity onPress={() => navigation.navigate('로그인')}>
-                <Text style={login.signtext}>이미 회원이신가요?</Text>
-              </TouchableOpacity>
-              <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
-              {/* <TouchableOpacity onPress={onFacebookButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#4a67ad' }]}>
+            {emailLoading ?
+              <>
+                <Text style={{ fontFamily: "NunitoSans-Regular", fontSize: 16, position: "absolute", top: HEIGHT / 2 - 40, alignSelf: "center", color: "#303030" }}>3분 이내 이메일 인증 완료해주세요</Text>
+                <TouchableOpacity onPress={EmailVeri} style={{ height: 30, backgroundColor: "#5cc27b", position: "absolute", top: HEIGHT / 2, alignSelf: "center", paddingLeft: 10, paddingRight: 10, borderRadius: 8 }}><Text style={{ fontFamily: "NunitoSans-Bold", fontSize: 16, color: "#ffffff" }}>인증 완료</Text></TouchableOpacity>
+              </>
+              :
+              <>
+                <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
+                  <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <Ionicons name="chevron-back" size={25} />
+                  </TouchableOpacity>
+                  <View
+                    style={{
+                      height: 44,
+                      flexDirection: 'row',
+                      justifyContent: "flex-start",
+                      alignItems: 'center',
+                      marginLeft: 24
+                    }}
+                  >
+                    <Text style={{ fontSize: 18 }}>
+                      <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>회원가입</Text>
+                    </Text>
+                  </View>
+                </View>
+                <ScrollView style={{ paddingTop: 20 }}>
+                  <TextInput value={email} onChangeText={text => setEmail(text)} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="이메일 주소" placeholderTextColor="#999999" />
+                  <Text style={login.text}>{emailLong}</Text>
+                  <TextInput value={newpassword} onChangeText={text => setNewpassword(text)} textContentType="newPassword" secureTextEntry={true} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="비밀번호(영문, 숫자 포함 6자리)" placeholderTextColor="#999999" />
+                  <Text style={login.text}>{passLong}</Text>
+                  <TextInput value={password} onChangeText={text => setPassword(text)} textContentType="password" secureTextEntry={true} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="비밀번호 확인" placeholderTextColor="#999999" />
+                  <Text style={login.text}>{texts}</Text>
+                  {signUpState ?
+                    <TouchableOpacity onPress={signup} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16 }]}>
+                      <Text style={login.buttontext}>회원가입</Text>
+                    </TouchableOpacity>
+                    :
+                    <TouchableOpacity activeOpacity={0.3} style={[login.notbuttonbox, { marginTop: 16 }]}>
+                      <Text style={login.buttontext}>회원가입</Text>
+                    </TouchableOpacity>
+                  }
+                  <TouchableOpacity onPress={() => navigation.navigate('로그인')}>
+                    <Text style={login.signtext}>이미 회원이신가요?</Text>
+                  </TouchableOpacity>
+                  <View style={{ width: "90%", height: 0.2, borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
+                  {/* <TouchableOpacity onPress={onFacebookButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#4a67ad' }]}>
             <Text style={login.buttontext}>Facebook으로 시작하기</Text>
           </TouchableOpacity> */}
-              <TouchableOpacity onPress={onGoogleButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#c45545' }]}>
-                <Text style={login.buttontext}>Gmail로 시작하기</Text>
-              </TouchableOpacity>
-              <TouchableOpacity isLoading={loginLoading} onPress={() => kakaoLogin()} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#f6e14b' }]}>
-                <Text style={[login.buttontext, { color: '#303030' }]}>Kakaotalk으로 시작하기</Text>
-              </TouchableOpacity>
-            </ScrollView>
+                  <TouchableOpacity onPress={onGoogleButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#c45545' }]}>
+                    <Text style={login.buttontext}>Gmail로 시작하기</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity isLoading={loginLoading} onPress={() => kakaoLogin()} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#f6e14b' }]}>
+                    <Text style={[login.buttontext, { color: '#303030' }]}>Kakaotalk으로 시작하기</Text>
+                  </TouchableOpacity>
+                </ScrollView>
+              </>
+            }
           </>
         }
       </SafeAreaView>
