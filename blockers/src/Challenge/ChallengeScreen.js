@@ -1959,6 +1959,22 @@ export function ChallengeMission({ navigation, route }) {
 }
 
 export function ChallengeSupport({ navigation }) {
+    const login=StyleSheet.create({
+        buttontext: {
+            fontSize: 17,
+            fontFamily: 'NunitoSans-Bold',
+            color: '#ffffff'
+          },
+          buttonbox: {
+            width: "70%",
+            height: 40,
+            borderRadius: 15,
+            backgroundColor: '#5cc27b',
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignSelf: 'center'
+          },
+    })
     const title = "금연지지자 정하기";
     const [name, setName] = useState("");
     const [help, setHelp] = useState("");
@@ -1997,9 +2013,10 @@ export function ChallengeSupport({ navigation }) {
             console.log(total)
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 지지자 정하기").update({
                 supporter: name,
-                content: help,
+                resContent: help,
                 day: day,
-                stats: true
+                stats: true,
+                visible:false
             })
             firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
                 challenge: "미션 진행"
@@ -2132,29 +2149,15 @@ export function ChallengeSupport({ navigation }) {
                                 placeholder="예시: 담배생각이 날때 말려줘!"
                             />
                         </KeyboardAvoidingView>
-                        <Text style={{
-                            fontSize: 18,
-                            fontFamily: "NunitoSans-Bold",
-                            color: "#303030",
-                            marginTop: 50,
-                            alignSelf: "center"
-                        }}>
-                            공유하기
-                        </Text>
+                  
                         {Platform.OS === 'android' ?
-                            <TouchableOpacity onPress={kakao}>
-                                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around", marginTop: 18 }}>
-
-                                    <Image source={require('../icon/kakao.png')} resizeMode="contain" style={{ width: 60, height: 60 }} />
-                                </View>
-                            </TouchableOpacity>
+                       <TouchableOpacity onPress={kakao} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 32, backgroundColor: '#f6e14b' }]}>
+                       <Text style={[login.buttontext, { color: '#303030' }]}>Kakaotalk으로 공유하기</Text>
+                     </TouchableOpacity>
                             :
-                            <TouchableOpacity onPress={kakaoios}>
-                                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around", marginTop: 18 }}>
-
-                                    <Image source={require('../icon/kakao.png')} resizeMode="contain" style={{ width: 60, height: 60 }} />
-                                </View>
-                            </TouchableOpacity>
+                            <TouchableOpacity  onPress={kakaoios} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 32, backgroundColor: '#f6e14b' }]}>
+                            <Text style={[login.buttontext, { color: '#303030' }]}>Kakaotalk으로 공유하기</Text>
+                          </TouchableOpacity>
                         }
 
 
@@ -2220,7 +2223,8 @@ export function ChallengeSwear({ navigation }) {
             comment2: comment2,
             comment3: comment3,
             day: day,
-            stats: true
+            stats: true,
+            visible:false
         })
         var a = moment().toArray()
 

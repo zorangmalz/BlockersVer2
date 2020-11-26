@@ -9,6 +9,7 @@ import {
     SafeAreaView,
     StyleSheet,
     ScrollView,
+    BackHandler,
     Alert
 } from 'react-native';
 import auth, { firebase } from '@react-native-firebase/auth';
@@ -102,7 +103,18 @@ export default function LoginVerificationProfile({ navigation }) {
             }
         )
     }
-
+    useEffect(()=>{
+        const backAction = () => {
+            finishLogin()
+          };
+      
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
+      
+          return () => backHandler.remove();
+    },[])
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
@@ -175,7 +187,7 @@ export default function LoginVerificationProfile({ navigation }) {
             '',
             [
                 {
-                    text: '확인', onPress: () => navigation.goBack()
+                    text: '확인', onPress: () => {navigation.goBack(), user.delete()}
                 },
                 {
                     text: '취소', onPress: () =>console.log("cancel")

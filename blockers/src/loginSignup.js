@@ -236,14 +236,6 @@ export default function LoginSignup({ navigation }) {
     }
   }
 
-  useEffect(() => {
-    if (produce) {
-      firebase.auth().onAuthStateChanged(function (user) {
-        
-      })
-    }
-  }, [emailLoading, produce])
-
   const [produce, setProduce] = useState(false)
   async function EmailVeri() {
     await auth().currentUser.reload().then(() => {
@@ -254,7 +246,7 @@ export default function LoginSignup({ navigation }) {
             setEmailLoading(false)
             console.log('User account created & signed in!');
             navigation.navigate("프로필 설정")
-          } else if (user.emailVerified === false) {
+          } else  {
             setEmailLoading(false)
             Alert.alert(
               "이메일 인증",
@@ -357,7 +349,7 @@ export default function LoginSignup({ navigation }) {
         {emailLoading ?
         <>
           <Text style={{ fontFamily: "NunitoSans-Regular", fontSize: 16, position:"absolute", top: HEIGHT/2-40, alignSelf: "center", color: "#303030"}}>3분 이내 이메일 인증 완료해주세요</Text>
-          <TouchableOpacity onPress={() => EmailVeri()} style={{height: 30, backgroundColor: "#5cc27b", position: "absolute", top: HEIGHT/2, alignSelf: "center", paddingLeft: 10, paddingRight: 10, borderRadius: 8}}><Text style={{fontFamily: "NunitoSans-Bold", fontSize: 16, color: "#ffffff"}}>인증 완료</Text></TouchableOpacity>
+          <TouchableOpacity onPress={EmailVeri} style={{height: 30, backgroundColor: "#5cc27b", position: "absolute", top: HEIGHT/2, alignSelf: "center", paddingLeft: 10, paddingRight: 10, borderRadius: 8}}><Text style={{fontFamily: "NunitoSans-Bold", fontSize: 16, color: "#ffffff"}}>인증 완료</Text></TouchableOpacity>
         </>
         :
         <>
