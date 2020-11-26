@@ -112,6 +112,7 @@ export default function ModeSelect({ navigation, route }) {
     }, [one, two]);
 
     function move() {
+        setIos(true)
         if (one == true) {
             forSmoker()
         } else {
@@ -134,6 +135,34 @@ export default function ModeSelect({ navigation, route }) {
         })
     }
 
+    //다음 버튼 눌렀는지 유무
+    const [ios, setIos] = useState(false);
+    
+    //ios 전용
+    useEffect(() => {
+        if (Platform.OS === "ios") {
+            if (ios === false) {
+                navigation.addListener('beforeRemove', (e) => {
+                    e.preventDefault();
+                    Alert.alert(
+                        '회원가입을 중단하겠습니까??',
+                        '',
+                        [
+                            {
+                                text: '취소', onPress: () => console.log("cancel")
+                            },
+                            {
+                                text: '확인',
+                                onPress: () => { navigation.dispatch(e.data.action), deletes() }
+                            },
+                        ]
+                    );
+                }), [navigation]
+            }
+        }
+    }, [ios]);
+
+    //android 전용
     useFocusEffect(
         React.useCallback(() => {
             const onBackPress = () => {
@@ -156,10 +185,10 @@ export default function ModeSelect({ navigation, route }) {
             '',
             [
                 {
-                    text: '확인', onPress: () => deletes()
+                    text: '취소', onPress: () => console.log("cancel")
                 },
                 {
-                    text: '취소', onPress: () => console.log("cancel")
+                    text: '확인', onPress: () => deletes()
                 }
             ]
         )
@@ -190,7 +219,6 @@ export default function ModeSelect({ navigation, route }) {
                 })
             })
         })
-        return true
     }
 
     return (

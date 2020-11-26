@@ -122,6 +122,7 @@ export default function ModeSelectNonSmoker({ navigation, route }) {
     }, [ten, twenty, thirty]);
 
     async function move() {
+        setIos(true)
         if (ten == true) {
             updateInfo(user.uid, select, num, 0)
         } else if (twenty == true) {
@@ -142,6 +143,34 @@ export default function ModeSelectNonSmoker({ navigation, route }) {
         navigation.navigate("Home")
     }
 
+    //다음 버튼 눌렀는지 유무
+    const [ios, setIos] = useState(false);
+    
+    //ios 전용
+    useEffect(() => {
+        if (Platform.OS === "ios") {
+            if (ios === false) {
+                navigation.addListener('beforeRemove', (e) => {
+                    e.preventDefault();
+                    Alert.alert(
+                        '회원가입을 중단하겠습니까??',
+                        '',
+                        [
+                            {
+                                text: '취소', onPress: () => console.log("cancel")
+                            },
+                            {
+                                text: '확인',
+                                onPress: () => { navigation.dispatch(e.data.action), deletes() }
+                            },
+                        ]
+                    );
+                }), [navigation]
+            }
+        }
+    }, [ios]);
+
+    //android 전용
     useFocusEffect(
         React.useCallback(() => {
             const onBackPress = () => {
@@ -164,10 +193,10 @@ export default function ModeSelectNonSmoker({ navigation, route }) {
             '',
             [
                 {
-                    text: '확인', onPress: () => deletes()
+                    text: '취소', onPress: () => console.log("cancel")
                 },
                 {
-                    text: '취소', onPress: () => console.log("cancel")
+                    text: '확인', onPress: () => deletes()
                 }
             ]
         )

@@ -84,6 +84,7 @@ export default function CommunityWrite({ navigation }) {
     const [picture, setPicture] = useState()
     const [isPicture, setIsPicture] = useState()
     const [isLoading, setIsLoading] = useState(false)
+
     useEffect(() => {
 
         console.log(utils.FilePath.PICTURES_DIRECTORY);
