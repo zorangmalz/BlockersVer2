@@ -58,7 +58,7 @@ export default function SettingReset({ navigation }) {
     const AlertButton = () => {
         Alert.alert(
             "초기화 하시겠습니까?",
-            "챌린지를 진행중인 경우 실패로 포기하게 됩니다.",
+            "금연 시계가 초기화됩니다.",
             [
                 {
                     text: "취소",

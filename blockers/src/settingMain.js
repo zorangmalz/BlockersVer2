@@ -74,7 +74,7 @@ export default function SettingMain({ navigation }) {
                             </TouchableOpacity>
                             <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
                             <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('초기화')}>
-                                <Text style={setting.mainText}>초기화</Text>
+                                <Text style={setting.mainText}>금연 시간 초기화</Text>
                             </TouchableOpacity>
                             <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
                             <View style={{ flexDirection: 'row', marginRight: 25, marginTop: 32, justifyContent: 'space-between', alignItems: 'center', paddingRight: 8 }}>
