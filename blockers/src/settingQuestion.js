@@ -51,7 +51,7 @@ export default function SettingQuestion({ navigation }) {
                     </View>
                 </View>
                 <ScrollView>
-                    <Text style={setting.email} >help@blockers.me</Text>
+                    <Text style={setting.email} >woong@blockers.me</Text>
                     <View style={{ justifyContent: 'center', alignItems: 'flex-start', marginLeft: 67 }}>
                         <Text style={setting.content} >해당 이메일로 서비스 이용 문의사항과</Text>
                         <Text style={setting.content} >피드백을 남겨주세요!</Text>

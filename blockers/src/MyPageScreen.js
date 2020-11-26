@@ -141,6 +141,7 @@ export default function MyPageScreen({ navigation }) {
         if (user) {
             const ref = firestore().collection("UserInfo").doc(user.uid)
             setUserlogined(true);
+            getInfo()
             ref.get()
                 .then(data => {
                     setNickname(data.data().nickname)
