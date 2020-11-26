@@ -115,6 +115,7 @@ export default function LoginSignup({ navigation }) {
   const [user, setUser] = useState();
   const [emailLong, setEmailLong] = useState("유효한 이메일을 입력해 주세요")
   const [signUpState, setSignUpState] = useState(false)
+  const [kakaoState,setKakaoState]=useState(false)
   // const [token, setToken] = useState(TOKEN_EMPTY);
   const [profile, setProfile] = useState(PROFILE_EMPTY);
 
@@ -139,22 +140,34 @@ export default function LoginSignup({ navigation }) {
       })
     if (check) {
       setKakaoloading(false)
+      setKakaoState(true)
       console.log("old")
       navigation.navigate("Home")
     } else {
       setKakaoloading(false)
+      setKakaoState(true)
       console.log("new")
       navigation.navigate("프로필 설정")
     }
   }
-  
+  useFocusEffect(
+    useCallback(() => {
+      console.log("focus")
+        setEmailLoading(false)
+        return () => {}
+    }, [])
+)
   async function kakaoLogin() {
+    setKakaoState(true)
     console.log("come")
+    
     logCallback('Login Start', setLoginLoading(true));
     KakaoLogins.login([KAKAO_AUTH_TYPES.Talk, KAKAO_AUTH_TYPES.Account])
       .then(result => {
         const realToken = result.accessToken
         kakaoAuth({ token: realToken }).then(function (res) {
+          
+          console.log(emailLoading,"emailLoading!!!!!!!!!!")
           kakaoCheck(res.data.firebase_token)
           // kakaoGetProfile()
         }).catch(err => {
@@ -179,24 +192,6 @@ export default function LoginSignup({ navigation }) {
         }
       });
   };
-  const kakaoGetProfile = () => {
-    logCallback('Get Profile Start', setProfileLoading(true));
-
-    KakaoLogins.getProfile()
-      .then(result => {
-        setProfile(result);
-        logCallback(
-          `Get Profile Finished:${JSON.stringify(result)}`,
-          setProfileLoading(false),
-        );
-      })
-      .catch(err => {
-        logCallback(
-          `Get Profile Failed:${err.code} ${err.message}`,
-          setProfileLoading(false),
-        );
-      });
-  };
 
   const [emailLoading, setEmailLoading] = useState(false);
   const [anonyLoading, setAnonyLoading] = useState(false);
@@ -209,7 +204,7 @@ export default function LoginSignup({ navigation }) {
         })
       })
     } catch {
-      auth()
+      await auth()
         .createUserWithEmailAndPassword(email, password)
         .catch(error => {
           setAnonyLoading(false)
@@ -230,23 +225,63 @@ export default function LoginSignup({ navigation }) {
           }
           console.error(error);
         })
-      firebase.auth().onAuthStateChanged(function (user) {
+        var unsubscribe=firebase.auth().onAuthStateChanged(function (user) {
+    
         if (user) {
+          console.log(user)
           setAnonyLoading(false)
-          console.log(user.emailVerified)
+          console.log(user.emailVerified,"emailverified")
           user.sendEmailVerification()
           setEmailLoading(true)
         } else {
           setAnonyLoading(false)
-          console.log("없어유~")
+          console.log("없어용~")
         }
-      })
+        })
+        unsubscribe()
     }
   }
+// async function EmailVeri() {
+  //   await auth().signInWithEmailAndPassword(email, password).then(() => {
+  //     const userVerify = auth().currentUser.emailVerified
+  //     console.log(userVerify)
+  //     console.log("카카오 하이")
+  //     console.log('User account created & signed in!')
+  //     if (userVerify) {
+  //       setEmailLoading(false)
+  //       navigation.navigate("프로필 설정")
+  //     }
+  //     else {
+  //       auth().currentUser.delete().then(() => {
+  //         setEmailLoading(false)
+  //         setEmail("")
+  //         setNewpassword("")
+  //         setPassword("")
+  //         setSignUpState(false)
+  //         Alert.alert(
+  //           "이메일 인증",
+  //           "이메일 인증이 되지 않았습니다.",
+  //           [
+  //             {
+  //               text: "취소",
+  //               onPress: () => console.log("취소")
+  //             },
+  //             {
+  //               text: "확인",
+  //               onPress: () => console.log("확인")
+  //             }
+  //           ]
+  //         )
+  //       })
+  //     }
+  //   })
+  // }
 
   async function EmailVeri() {
+    console.log("이메일 검사입니다 한번만 떠야되는데 ?")
     await auth().currentUser.reload()
-    await firebase.auth().onAuthStateChanged(function (user) {
+    var unsubscribe=firebase.auth().onAuthStateChanged((user) => {
+      console.log("흠.;..일단여기 첫ㅂ너째")
       if (user) {
         console.log(user.emailVerified)
         if (user.emailVerified) {
@@ -254,7 +289,9 @@ export default function LoginSignup({ navigation }) {
           console.log('User account created & signed in!');
           navigation.navigate("프로필 설정")
         } else {
+          console.log(emailLoading,"이게 진짜 true면 레전드")
           setEmailLoading(false)
+          console.log("why here!!!!!!!??!sfaesfaefase")
           Alert.alert(
             "이메일 인증",
             "이메일 인증이 되지 않았습니다.",
@@ -265,15 +302,18 @@ export default function LoginSignup({ navigation }) {
               },
               {
                 text: "확인",
-                onPress: () => user.delete()
+                onPress: () => (user.delete(),navigation.navigate("Home"))
               }
-            ]
+            ],
+            { cancelable: false }
           )
+        
         }
       } else {
         console.log("사용자가 없음")
       }
     })
+    unsubscribe()
   }
 
   const [gmailLoading, setGmailLoading] = useState(false)
@@ -364,10 +404,11 @@ export default function LoginSignup({ navigation }) {
           <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
           :
           <>
-            {emailLoading ?
+            {emailLoading ===true ?
               <>
+            
                 <Text style={{ fontFamily: "NunitoSans-Regular", fontSize: 16, position: "absolute", top: HEIGHT / 2 - 40, alignSelf: "center", color: "#303030" }}>3분 이내 이메일 인증 완료해주세요</Text>
-                <TouchableOpacity onPress={EmailVeri} style={{ height: 30, backgroundColor: "#5cc27b", position: "absolute", top: HEIGHT / 2, alignSelf: "center", paddingLeft: 10, paddingRight: 10, borderRadius: 8 }}><Text style={{ fontFamily: "NunitoSans-Bold", fontSize: 16, color: "#ffffff" }}>인증 완료</Text></TouchableOpacity>
+                <TouchableOpacity onPress={EmailVeri} style={{ height: 30, backgroundColor: "#5cc27b", position: "absolute", top: HEIGHT / 2 +100, alignSelf: "center", paddingLeft: 10, paddingRight: 10, borderRadius: 8 }}><Text style={{ fontFamily: "NunitoSans-Bold", fontSize: 16, color: "#ffffff" }}>인증 완료</Text></TouchableOpacity>
               </>
               :
               <>
