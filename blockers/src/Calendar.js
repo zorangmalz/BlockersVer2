@@ -71,6 +71,8 @@ async function getDiary(){
       }
       if(doc.data().drugB){
         item[a].push({drugB:doc.data().drugB})
+      }if(doc.data().endure){
+        item[a].push({endure:doc.data().endure})
       }
       
       
@@ -216,7 +218,26 @@ async function getDiary(){
                             </View>
                    
                             </>:<></>}
+                            {item.endure ? <>
+                              <View style={[styles.item, ]}>
+                  <View style={{ flexDirection: 'row',
+                                alignItems: "center",
+                                justifyContent: 'flex-start',
+                                marginBottom:10}}>
+                  <View style={{
+                                width: 8,
+                                height: 8,
+                                backgroundColor: "#57CFBF",
+                                borderRadius: 4,
+                                marginRight: 8
+                            }} />
+                            <Text style={{fontFamily:"NunitoSans-Bold"}}>한번만 참아봐</Text>
                             
+                            </View>
+                            <Text>{item.endure}</Text>
+                            </View>
+                   
+                            </>:<></>}
                 </>
                 
              ) }}

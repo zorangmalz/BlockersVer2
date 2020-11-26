@@ -18,6 +18,9 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import ProgressBar from 'react-native-progress/Bar';
 import ProgressCircle from "react-native-progress/Circle";
 import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
+import moment from "moment"
+import firestore from '@react-native-firebase/firestore';
+import auth, { firebase } from '@react-native-firebase/auth';
 
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
 
@@ -532,6 +535,7 @@ export function SmokeAlertThree({ navigation }) {
 }
 
 export function SmokeAlertFour({ navigation }) {
+    const [user,setUser]=useState("")
     function goBackWithAd(){
         const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
             requestNonPersonalizedAdsOnly: true,
@@ -545,7 +549,27 @@ export function SmokeAlertFour({ navigation }) {
         console.log("AD")
         
     }
+    async function saveCalendar(){
+        var a = moment().toArray()
+
+        if (a[1] === 12) {
+            a[1] = 1
+            a[0]=a[0]+1
+        } else {
+            a[1] = a[1] + 1
+        }
+        await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            endure:"참기에 성공하셨습니다"
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+                endure: "참기에 성공하셨습니다"
+            }))
+            navigation.navigate("Home")
+    }
     useEffect(()=>{
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
         const backAction = () => {
             goBackWithAd()
           };
@@ -610,7 +634,7 @@ export function SmokeAlertFour({ navigation }) {
                     </View>
                 </ScrollView>
                 <SafeAreaView style={{ flex: 0 }}>
-                  <TouchableOpacity onPress={()=>navigation.navigate("Home")}>
+                  <TouchableOpacity onPress={saveCalendar}>
                     <View style={{
                         width: "100%",
                         height: 60,
