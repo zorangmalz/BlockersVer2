@@ -18,7 +18,7 @@ import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Dropdown } from 'react-native-material-dropdown';
-import { useBackHandler } from '@react-native-community/hooks'
+
 
 const login = StyleSheet.create({
     rule: {
@@ -103,16 +103,17 @@ export default function LoginVerificationProfile({ navigation }) {
             }
         )
     }
-    const backAction = () => {
-        finishLogin()
-      };
-  
-      useBackHandler(backAction)
     useEffect(()=>{
-       
-        //   BackHandler.addEventListener("hardwareBackPress", backAction);
+        const backAction = () => {
+            finishLogin()
+          };
       
-        //   return () =>BackHandler.removeEventListener("hardwareBackPress", backAction);
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
+      
+          return () => backHandler.remove();
     },[])
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
@@ -182,7 +183,7 @@ export default function LoginVerificationProfile({ navigation }) {
     }
     function finishLogin(){
         Alert.alert(
-            '회원가입을 중단하겠습니까?',
+            '회원가입을 중단하겠습니까??',
             '',
             [
                 {

@@ -194,10 +194,12 @@ export default function SmokeAlertOne({ navigation }) {
             goBackWithAd()
           };
       
-           BackHandler.addEventListener("hardwareBackPress", backAction);
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
       
-          return () =>
-      BackHandler.removeEventListener("hardwareBackPress", backAction);
+          return () => backHandler.remove();
     },[])
     const [delay, setDelay] = useState(1000);
     const [second, setSecond] = useState(0);
@@ -309,10 +311,12 @@ export function SmokeAlertTwo({ navigation }) {
             goBackWithAd()
           };
       
-           BackHandler.addEventListener("hardwareBackPress", backAction);
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
       
-          return () =>
-          BackHandler.removeEventListener("hardwareBackPress", backAction);
+          return () => backHandler.remove();
     },[])
     const [Delay, setDelay] = useState(1000);
     const [Second, SetSecond] = useState(0);
@@ -429,10 +433,12 @@ export function SmokeAlertThree({ navigation }) {
             goBackWithAd()
           };
       
-           BackHandler.addEventListener("hardwareBackPress", backAction);
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
       
-          return () =>
-      BackHandler.removeEventListener("hardwareBackPress", backAction);
+          return () => backHandler.remove();
     },[])
     const [delay, setDelay] = useState(1000);
     const [second, setSecond] = useState(0);
@@ -568,10 +574,12 @@ export function SmokeAlertFour({ navigation }) {
             goBackWithAd()
           };
       
-           BackHandler.addEventListener("hardwareBackPress", backAction);
+          const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+          );
       
-          return () =>
-      BackHandler.removeEventListener("hardwareBackPress", backAction);
+          return () => backHandler.remove();
     },[])
     return (
         <>
