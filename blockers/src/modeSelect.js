@@ -7,11 +7,17 @@ import {
     SafeAreaView,
     ScrollView,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    BackHandler,
+    Alert
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
+import { LoginManager } from 'react-native-fbsdk';
+import storage from '@react-native-firebase/storage';
+import { useFocusEffect } from "@react-navigation/native";
 
 const mode = StyleSheet.create({
     title: {
@@ -56,12 +62,12 @@ const mode = StyleSheet.create({
     }
 })
 
-export default function ModeSelect({navigation}) {
+export default function ModeSelect({ navigation, route }) {
     const [one, setOne] = useState(false);
     const [two, setTwo] = useState(false);
     const [selectone, setSelectone] = useState([]);
-    const [pressed,setPressed]=useState(false)
-    const [user,setUser]=useState()
+    const [pressed, setPressed] = useState(false)
+    const [user, setUser] = useState()
     var countone = 2;
 
     const pushone = () => {
@@ -105,36 +111,95 @@ export default function ModeSelect({navigation}) {
         }
     }, [one, two]);
 
-    function move(){
-        if (one==true){
+    function move() {
+        if (one == true) {
             forSmoker()
-        }else{
+        } else {
             forNonSmoker()
         }
     }
-    function forSmoker(){
-        updateInfo(user.uid,true)
+    function forSmoker() {
+        updateInfo(user.uid, true)
         navigation.navigate("ModeSelectSmoker")
     }
-    function forNonSmoker(){ 
-        updateInfo(user.uid,false)
+    function forNonSmoker() {
+        updateInfo(user.uid, false)
         navigation.navigate("ModeSelectNonSmoker")
     }
 
-    const ref=firestore().collection("UserInfo");
-    async function updateInfo(code,state){
-      await ref.doc(code).update({
-          smoker:state
-      })
-  
+    const ref = firestore().collection("UserInfo");
+    async function updateInfo(code, state) {
+        await ref.doc(code).update({
+            smoker: state
+        })
     }
+
+    useFocusEffect(
+        React.useCallback(() => {
+            const onBackPress = () => {
+                if (route.name === "ModeSelect") {
+                    finishLogin()
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            return () =>
+                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }, [])
+    );
+
+    async function finishLogin() {
+        Alert.alert(
+            '회원가입을 중단하겠습니까??',
+            '',
+            [
+                {
+                    text: '확인', onPress: () => deletes()
+                },
+                {
+                    text: '취소', onPress: () => console.log("cancel")
+                }
+            ]
+        )
+    }
+
+    async function deletes() {
+        const user = firebase.auth().currentUser
+        firestore().collection("UserInfo").doc(user.uid).delete().then(() => {
+            storage().ref("/User/" + user.uid + "/프로필사진").delete().then(() => {
+                user.delete()
+                //로그아웃
+                auth().signOut().then(() => {
+                    //화면 전환
+                    navigation.navigate("Home");
+                }).catch(() => {
+                    LoginManager.logOut()
+                    navigation.navigate("Home");
+                })
+            }).catch(() => {
+                user.delete()
+                //로그아웃
+                auth().signOut().then(() => {
+                    //화면 전환
+                    navigation.navigate("Home");
+                }).catch(() => {
+                    LoginManager.logOut()
+                    navigation.navigate("Home");
+                })
+            })
+        })
+        return true
+    }
+
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <ScrollView>
                     <Text style={mode.title}>Welcome Blockers</Text>
-                    <Text style={[mode.mediumText, {alignSelf: 'center'}]}>Blockers에 오신 것을 환영합니다</Text>
+                    <Text style={[mode.mediumText, { alignSelf: 'center' }]}>Blockers에 오신 것을 환영합니다</Text>
                     <Text style={[mode.mediumText, { marginTop: 12, marginBottom: 30, alignSelf: 'center' }]}>시작하기 전에 회원님의 상태를 선택해주세요.</Text>
                     <View style={{
                         flexDirection: 'row',
@@ -182,32 +247,32 @@ export default function ModeSelect({navigation}) {
                             </View>
                         }
                     </View>
-                    <View style={{flexDirection: 'row', marginTop: 32, marginRight: 60, marginLeft: 48, alignItems: 'flex-start'}}>
-                        <View style={{width: 11, height: 11, borderRadius: 5.5, backgroundColor: '#303030', marginRight: 20, marginTop: 11}} />
+                    <View style={{ flexDirection: 'row', marginTop: 32, marginRight: 60, marginLeft: 48, alignItems: 'flex-start' }}>
+                        <View style={{ width: 11, height: 11, borderRadius: 5.5, backgroundColor: '#303030', marginRight: 20, marginTop: 11 }} />
                         <Text style={mode.mediumText}>
-                            <Text style={{fontFamily: 'NunitoSans-Bold'}}>흡연관리: </Text>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold' }}>흡연관리: </Text>
                             <Text>담배피는 양을 조절하고 천천히 금연하고 싶은 경우</Text>
                         </Text>
                     </View>
-                    <View style={{flexDirection: 'row', marginTop: 16, marginRight: 60, marginLeft: 48, alignItems: 'flex-start'}}>
-                        <View style={{width: 11, height: 11, borderRadius: 5.5, backgroundColor: '#303030', marginRight: 20, marginTop: 11}} />
+                    <View style={{ flexDirection: 'row', marginTop: 16, marginRight: 60, marginLeft: 48, alignItems: 'flex-start' }}>
+                        <View style={{ width: 11, height: 11, borderRadius: 5.5, backgroundColor: '#303030', marginRight: 20, marginTop: 11 }} />
                         <Text style={mode.mediumText}>
-                            <Text style={{fontFamily: 'NunitoSans-Bold'}}>금연관리: </Text>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold' }}>금연관리: </Text>
                             <Text>금연을 하고 있거나 시작하고 싶은 경우</Text>
                         </Text>
                     </View>
                 </ScrollView>
                 <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
-                    { pressed==true ?
-                    <TouchableOpacity onPress={move}>
+                    {pressed == true ?
+                        <TouchableOpacity onPress={move}>
                             <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
                             </View>
-                            </TouchableOpacity>
-                            :
-                            <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
-                            </View>
+                        </TouchableOpacity>
+                        :
+                        <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
+                        </View>
 
                     }
                 </TouchableOpacity>

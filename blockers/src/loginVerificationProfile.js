@@ -18,6 +18,7 @@ import storage from '@react-native-firebase/storage';
 import ImagePicker from 'react-native-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Dropdown } from 'react-native-material-dropdown';
+import { useFocusEffect } from "@react-navigation/native";
 
 
 const login = StyleSheet.create({
@@ -49,7 +50,7 @@ const login = StyleSheet.create({
     }
 })
 
-export default function LoginVerificationProfile({ navigation }) {
+export default function LoginVerificationProfile({ navigation, route }) {
     const [nickname, setNickname] = useState('');
     const [gender, setGender] = useState('');
     const [birthday, setBirthday] = useState('');
@@ -83,7 +84,7 @@ export default function LoginVerificationProfile({ navigation }) {
                 gotProfile: true,
                 profilePicture: pic,
                 name: nick,
-                drug:false,
+                drug: false,
                 email: user.email
             })
         } else {
@@ -93,7 +94,7 @@ export default function LoginVerificationProfile({ navigation }) {
                 nickname: "Blockers" + totalUser,
                 gotProfile: false,
                 name: nick,
-                drug:false,
+                drug: false,
                 email: user.email
             })
         }
@@ -103,43 +104,33 @@ export default function LoginVerificationProfile({ navigation }) {
             }
         )
     }
-    useEffect(()=>{
-        const backAction = () => {
-            finishLogin()
-          };
-      
-          const backHandler = BackHandler.addEventListener(
-            "hardwareBackPress",
-            backAction
-          );
-      
-          return () => backHandler.remove();
-    },[])
+
     useEffect(() => {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
     }, []);
 
-    useEffect(()=>{
-        if(user){
-        firestore().collection("TotalUser").doc("userNum").get().then(doc=>{
-            setTotalUser(doc.data().numCount)
-        })}
-    },[user])
+    useEffect(() => {
+        if (user) {
+            firestore().collection("TotalUser").doc("userNum").get().then(doc => {
+                setTotalUser(doc.data().numCount)
+            })
+        }
+    }, [user])
 
     async function move() {
         const uid = firebase.auth().currentUser.uid;
-        if(isImage){
+        if (isImage) {
             await uploadImage()
             var url2 = await storage()
-            .refFromURL("gs://blockers-8a128.appspot.com/User/" + uid + "/" + "프로필사진")
-            .getDownloadURL();
-        
-        } else{
-            var url2=""
+                .refFromURL("gs://blockers-8a128.appspot.com/User/" + uid + "/" + "프로필사진")
+                .getDownloadURL();
+
+        } else {
+            var url2 = ""
         }
-        console.log(url2,"url2~~~")
+        console.log(url2, "url2~~~")
         await updateInfo(user.uid, birthday, gender, nickname, url2)
         navigation.navigate("ModeSelect")
     }
@@ -166,7 +157,7 @@ export default function LoginVerificationProfile({ navigation }) {
             }
             else {
                 setImageOne(response.uri);
-                console.log(response.uri,"uri!!!!!")
+                console.log(response.uri, "uri!!!!!")
                 setPicone(false);
                 setIsImage(true)
             }
@@ -177,30 +168,51 @@ export default function LoginVerificationProfile({ navigation }) {
         const uri = imageOne;
         const reference = storage().ref("User/" + uid + "/프로필사진");
         const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
-        console.log(uploadUri,"uploadUri")
+        console.log(uploadUri, "uploadUri")
         await reference.putFile(uploadUri);
         setHaveProfile(true)
     }
-    function finishLogin(){
+
+    useFocusEffect(
+        React.useCallback(() => {
+            const onBackPress = () => {
+                if (route.name === "프로필 설정") {
+                    finishLogin()
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            return () =>
+                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }, [])
+    );
+
+    async function finishLogin() {
         Alert.alert(
             '회원가입을 중단하겠습니까??',
             '',
             [
                 {
-                    text: '확인', onPress: ()=>deletes()
+                    text: '확인', onPress: () => deletes()
                 },
                 {
-                    text: '취소', onPress: () =>console.log("cancel")
+                    text: '취소', onPress: () => console.log("cancel")
                 }
             ]
         )
     }
-    async function deletes(){
+
+    async function deletes() {
         const user = firebase.auth().currentUser
-        
-        user.delete()
-        navigation.goBack()
+        user.delete().then(() => {
+            navigation.goBack()
+        }).catch(() => {
+            navigation.goBack()
+        })
     }
+
     return (
         <>
             <StatusBar barStyle="light-content" />
@@ -242,10 +254,10 @@ export default function LoginVerificationProfile({ navigation }) {
                         <View style={{ marginLeft: "10%", flexDirection: 'row', justifyContent: 'flex-start', alignItems: "flex-end" }}>
                             <Dropdown
                                 baseColor="#5cc27b"
-                                itemTextStyle={{fontSize: 30, fontFamily: 'NunitoSans-Bold', color: "#303030"}}
+                                itemTextStyle={{ fontSize: 30, fontFamily: 'NunitoSans-Bold', color: "#303030" }}
                                 dropdownOffset={{ top: 0, left: 0 }}
                                 dropdownPosition={0}
-                                pickerStyle={{width: "25%"}}
+                                pickerStyle={{ width: "25%" }}
                                 containerStyle={{ width: "25%", height: 30 }}
                                 label="성별"
                                 data={GenderData}

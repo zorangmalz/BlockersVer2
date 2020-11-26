@@ -7,12 +7,17 @@ import {
     SafeAreaView,
     ScrollView,
     StyleSheet,
-    TextInput
+    TextInput,
+    BackHandler,
+    Alert
 } from 'react-native';
 import Ionicons from "react-native-vector-icons/Ionicons";
-
 import firestore from '@react-native-firebase/firestore';
+import firebase from '@react-native-firebase/app';
 import auth from '@react-native-firebase/auth';
+import { LoginManager } from 'react-native-fbsdk';
+import storage from '@react-native-firebase/storage';
+import { useFocusEffect } from "@react-navigation/native";
 
 const mode = StyleSheet.create({
     largeText: {
@@ -55,7 +60,7 @@ const mode = StyleSheet.create({
     }
 })
 
-export default function ModeSelectNonSmoker({ navigation }) {
+export default function ModeSelectNonSmoker({ navigation, route }) {
     const [ten, setTen] = useState(false);
     const [num, setNum] = useState('');
     const [twenty, setTwenty] = useState(false);
@@ -137,12 +142,70 @@ export default function ModeSelectNonSmoker({ navigation }) {
         navigation.navigate("Home")
     }
 
+    useFocusEffect(
+        React.useCallback(() => {
+            const onBackPress = () => {
+                if (route.name === "ModeSelectNonSmoker") {
+                    finishLogin()
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            return () =>
+                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }, [])
+    );
+
+    async function finishLogin() {
+        Alert.alert(
+            '회원가입을 중단하겠습니까??',
+            '',
+            [
+                {
+                    text: '확인', onPress: () => deletes()
+                },
+                {
+                    text: '취소', onPress: () => console.log("cancel")
+                }
+            ]
+        )
+    }
+
+    async function deletes() {
+        const user = firebase.auth().currentUser
+        firestore().collection("UserInfo").doc(user.uid).delete().then(() => {
+            storage().ref("/User/" + user.uid + "/프로필사진").delete().then(() => {
+                user.delete()
+                //로그아웃
+                auth().signOut().then(() => {
+                    //화면 전환
+                    navigation.navigate("Home");
+                }).catch(() => {
+                    LoginManager.logOut()
+                    navigation.navigate("Home");
+                })
+            }).catch(() => {
+                user.delete()
+                //로그아웃
+                auth().signOut().then(() => {
+                    //화면 전환
+                    navigation.navigate("Home");
+                }).catch(() => {
+                    LoginManager.logOut()
+                    navigation.navigate("Home");
+                })
+            })
+        })
+    }
+
     return (
         <>
             <StatusBar barStyle="light-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                    <TouchableOpacity onPress={finishLogin}>
                         <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
                     <View
