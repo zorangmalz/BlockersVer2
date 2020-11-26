@@ -187,13 +187,19 @@ export default function LoginVerificationProfile({ navigation }) {
             '',
             [
                 {
-                    text: '확인', onPress: () => {navigation.goBack(), user.delete()}
+                    text: '확인', onPress: ()=>deletes()
                 },
                 {
                     text: '취소', onPress: () =>console.log("cancel")
                 }
             ]
         )
+    }
+    function deletes(){
+        firebase.auth().onAuthStateChanged(function(user) {
+            user.delete()
+        })
+        navigation.goBack()
     }
     return (
         <>
