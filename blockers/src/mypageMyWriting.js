@@ -188,7 +188,7 @@ export default function MypageMyWriting({ navigation }) {
                         inverted={true}
                         keyExtractor={items.docname}
                         renderItem={({ item }) => (
-                            <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname })} >
+                            <TouchableOpacity onPress={() => navigation.navigate('CommunityOtherPost', { docID: item.docname, ID: item.docname,Uid:user.uid })} >
                                 <View style={community.board}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
                                         <View style={community.circle} />

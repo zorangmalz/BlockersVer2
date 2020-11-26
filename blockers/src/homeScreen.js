@@ -611,7 +611,7 @@ export default function HomeScreen({ navigation}) {
                                             </View>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                            <Image source={require('./icon/chicken1.png')} />
+                                            <Image source={require('./icon/RealChicken.png')} />
                                             <Text style={{
                                                 fontFamily: 'NunitoSans-Bold',
                                                 fontSize: 16,
