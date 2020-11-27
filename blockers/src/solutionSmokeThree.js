@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
+const adUnitId = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8262202601779055/7325930870":'ca-app-pub-1011958477260123/9244108660' ) ;
 
 const solution = StyleSheet.create({
     largeText: {

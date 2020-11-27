@@ -31,7 +31,7 @@ import RNKakaoLink from 'react-native-kakao-links';
 import { useFocusEffect } from "@react-navigation/native";
 import { utils } from '@react-native-firebase/app';
 
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
+const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-8262202601779055/8327183632';
 
 
 const WIDTH = Dimensions.get("window").width;
@@ -436,10 +436,7 @@ export default function Challenge({ navigation }) {
                     await firestore().collection("UserInfo").doc(user.uid).update({
                         alarm: true
                     })
-                    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
-                        ongoing: false,
-                        success: 2
-                    })
+                   
                 } else {
                     await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").update({
                         visible: false
@@ -1924,7 +1921,7 @@ export function ChallengeMission({ navigation, route }) {
                             <Ionicons name="chevron-back" size={25} />
                         </TouchableOpacity>
                         <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>전체 미션</Text>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>전체미션</Text>
                         </Text>
                     </View>
                     <View>
@@ -4224,6 +4221,14 @@ export function ChallengeSuccess({ navigation }) {
             profilePicture: vmtkfldzm,
             isPicture: isPicture
 
+        })
+        var total
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot=>{
+            total=querySnapshot.size-1
+        })
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
+            ongoing: false,
+            success: 2
         })
         setIsLoading(false)
         Alert.alert(

@@ -183,7 +183,6 @@ export default function Notification({ navigation, route }) {
     }
     const [loading, setLoading] = useState(true);
     const [items, setItems] = useState([]);
-    const [filtered, setFiltered] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const [refresh, setRefresh] = useState(false)
     const [user, setUser] = useState();
@@ -195,28 +194,12 @@ export default function Notification({ navigation, route }) {
     }, []);
 
     //로그인 띄울때 사용
-    const loginview = () => {
-        Alert.alert(
-            "로그인이 필요한 서비스입니다.",
-            "로그인하고 다양한 혜택을 만나보세요",
-            [
-                {
-                    text: "취소",
-                    onPress: () => console.log("둘러보기")
-                },
-                {
-                    text: "확인",
-                    onPress: () => navigation.navigate('로그인')
-                }
-            ]
-        )
-    }
-
+  
     useFocusEffect(
         useCallback(() => {
             load()
             return () => { }
-        }, [filtered, refresh])
+        }, [ refresh])
     )
 
     //로그인 상태 확인
@@ -234,7 +217,7 @@ export default function Notification({ navigation, route }) {
     }, [user])
 
     //검색어 입력
-    const [searchWord, setSearchWord] = useState("");
+
 
     //글 가져오는 함수
     async function load() {
@@ -246,8 +229,6 @@ export default function Notification({ navigation, route }) {
         } else {
             a[1] = a[1] + 1
         }
-        if (!filtered) {
-            console.log("나 여기")
             await firestore().collection('Community2').orderBy("fullTime", "desc").limit(Limit.current).get().then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     if (doc.data().fullTime) {
@@ -281,49 +262,7 @@ export default function Notification({ navigation, route }) {
                     setLoading(false);
                 }
             });
-        } else if (filtered) {
-            console.log("1")
-            const ref = firestore().collection('Community2').orderBy("fullTime", "desc").limit(Limit.current)
-            const b = String(searchWord)
-            console.log(b.split(""))
-            ref.get().then(querySnapshot => {
-                querySnapshot.forEach(function (doc) {
-                    const check = doc.data().fullText
-                    if (check.includes(b)) {
-                        if (doc.data().fullTime) {
-                            if (a[0] === doc.data().fullTime[0] && a[1] === doc.data().fullTime[1] && a[2] === doc.data().fullTime[2]) {
-                                list.push({
-                                    title: doc.data().title,
-                                    time: doc.data().time,
-                                    context: doc.data().context,
-                                    like: doc.data().whoLike.length,
-                                    docname: doc.data().docName,
-                                    replynum: doc.data().commentNum,
-                                    isPicture: doc.data().isPicture
-                                });
-                            }
-                            else {
-                                list.push({
-                                    title: doc.data().title,
-                                    time: doc.data().day,
-                                    context: doc.data().context,
-                                    like: doc.data().whoLike.length,
-                                    docname: doc.data().docName,
-                                    replynum: doc.data().commentNum,
-                                    isPicture: doc.data().isPicture
-                                });
-                            }
-                        }
-                    }
-                })
-                setItems(list);
-                if (loading) {
-                    setLoading(false);
-                }
-            }).catch(function (error) {
-                console.log("Error getting documents: ", error);
-            });
-        }
+       
     }
 
     return (
@@ -369,17 +308,7 @@ export default function Notification({ navigation, route }) {
                                         <Text ellipsizeMode="tail" numberOfLines={2} style={community.content}>{item.context}</Text>
                                         <View style={community.lowerbox}>
                                             <Text style={[community.timethumbreply, { color: '#707070' }]}>{item.time}</Text>
-                                            <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                                {item.isPicture === true ?
-                                                    <Ionicons name="image-outline" size={15} />
-                                                    :
-                                                    <></>
-                                                }
-                                                <MaterialCommunityIcons name="thumb-up-outline" color="#5cc27b" size={15} style={{ marginLeft: 16 }} />
-                                                <Text style={[community.timethumbreply, { color: '#7cce95', marginLeft: 4 }]} >{item.like}</Text>
-                                                <Ionicons name="chatbubble-ellipses-outline" color="#FFB83D" size={15} style={{ marginLeft: 16 }} />
-                                                <Text style={[community.timethumbreply, { color: '#ffb83d', marginLeft: 4 }]}>{item.replynum}</Text>
-                                            </View>
+                                         
                                         </View>
                                     </View>
                                 </TouchableOpacity>
