@@ -77,7 +77,7 @@ export default function SettingMain({ navigation }) {
                                 <Text style={setting.mainText}>금연 시계 초기화</Text>
                             </TouchableOpacity>
                             <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
-                            <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('ModeSelect')}>
+                            <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('SettingMode')}>
                                 <Text style={setting.mainText}>금연/흡연 정보 변경</Text>
                             </TouchableOpacity>
                             <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
