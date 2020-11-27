@@ -25,7 +25,7 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
 import link from "react-native-kakao-links";
 import { useScreens } from "react-native-screens";
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
+const adUnitId = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8262202601779055/7325930870":'ca-app-pub-1011958477260123/9244108660' ) ;
 
 
 const WIDTH = Dimensions.get("screen").width;

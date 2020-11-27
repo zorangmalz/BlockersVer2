@@ -18,7 +18,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 
 
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
+const adUnitId = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8262202601779055/7325930870":'ca-app-pub-1011958477260123/9244108660' ) ;
 
 
 const WIDTH = Dimensions.get("window").width;
@@ -481,33 +481,67 @@ export function SelfEsteemFinal({navigation,route}) {
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").get().then(doc=>{
             thisMonth=doc.data().month
         })
-        console.log(total)
-
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(thisMonth)).update({
-            stats:true,
-            result:content,
-            resultNum:result.result,
-            resultWord:resultWord
-        }).catch(()=>{
-            firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(thisMonth)).set({
+        var thatMonth
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).get().then(doc=>{
+            thatMonth=doc.data().long
+        })
+        if(thisMonth==thatMonth){
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(thisMonth)).update({
                 stats:true,
                 result:content,
-                
                 resultNum:result.result,
                 resultWord:resultWord
+            }).catch(()=>{
+                firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(thisMonth)).set({
+                    stats:true,
+                    result:content,
+                    
+                    resultNum:result.result,
+                    resultWord:resultWord
+                })
             })
-        })
+    
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").update({
+                visible:false,
+                stats:true,
+                month:thisMonth+1
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+                challenge:"미션 진행"
+            }).catch(()=>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                challenge:"미션 진행"
+            }))
+        }else{
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(thisMonth)).update({
+                stats:true,
+                result:content,
+                resultNum:result.result,
+                resultWord:resultWord
+            }).catch(()=>{
+                firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").collection("esteem").doc(String(thisMonth)).set({
+                    stats:true,
+                    result:content,
+                    
+                    resultNum:result.result,
+                    resultWord:resultWord
+                })
+            })
+    
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").update({
+                visible:false,
+                month:thisMonth+1
+            })
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+                challenge:"미션 진행"
+            }).catch(()=>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                challenge:"미션 진행"
+            }))
+        }
+        console.log(total)
 
-        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").update({
-            visible:false,
-            month:thisMonth+1
-        })
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-            challenge:"미션 진행"
-        }).catch(()=>
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-            challenge:"미션 진행"
-        }))
+       
     }
     useEffect(()=>{
         auth().onAuthStateChanged(userAuth => {

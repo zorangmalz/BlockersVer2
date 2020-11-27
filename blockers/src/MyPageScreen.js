@@ -24,7 +24,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import storage from '@react-native-firebase/storage';
 import { useFocusEffect } from "@react-navigation/native";
 import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
-const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-1011958477260123/9244108660';
+const adUnitId = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8262202601779055/7325930870":'ca-app-pub-1011958477260123/9244108660' ) ;
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -409,7 +409,7 @@ export default function MyPageScreen({ navigation }) {
                                     data={[
                                         { key: '개인정보', name: '개인정보' },
                                         { key: '공지사항', name: '공지사항' },
-                                        { key: '내가 쓴 글', name: '내가 쓴글' },
+                                        { key: '내가 쓴 글', name: '내가 쓴 글' },
                                     ]}
                                     renderItem={({ item }) => (
                                         <>
