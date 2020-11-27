@@ -127,7 +127,7 @@ export default function CommunityHome({ navigation, route }) {
     const loginview = () => {
         Alert.alert(
             "로그인이 필요한 서비스입니다.",
-            "로그인하고 다양한 혜택을 만나보세요",
+            "로그인하고 다양한 혜택을 만나보세요.",
             [
                 {
                     text: "취소",

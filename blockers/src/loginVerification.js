@@ -50,8 +50,8 @@ export default function LoginVerification({ navigation }) {
 
         firebase.auth().sendPasswordResetEmail(name)
         Alert.alert(
-            "비밀번호 변경 메일이 발송되었습니다",
-            "이메일을 확인해 주세요",
+            "비밀번호 변경 메일이 발송되었습니다.",
+            "이메일을 확인해 주세요.",
             [
                 {
                     text: "확인",
@@ -91,7 +91,7 @@ export default function LoginVerification({ navigation }) {
                         alignSelf: 'center',
                         marginTop: 16,
                         marginBottom: 32
-                    }}>이메일 주소를 입력해주세요</Text>
+                    }}>이메일 주소를 입력해주세요.</Text>
                     <TextInput value={name} onSubmitEditing={Keyboard.dismiss} onChangeText={text => setName(text)} style={login.textinput} placeholder="Blockers@blockers.me" />
 
                 </ScrollView>

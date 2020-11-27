@@ -38,7 +38,7 @@ export default function SplashScreen({ navigation }) {
             <SafeAreaView style={{ width: "100%", flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <TouchableOpacity onPress={() => navigation.navigate('Home')} style={{ justifyContent: 'center', alignItems: 'center' }}>
                     <Image
-                        source={require('./icon/blockerslogo.png')}
+                        source={require('./icon/blockersReal.png')}
                         style={{ width: 144, height: 144 }}
                     />
                     <Text

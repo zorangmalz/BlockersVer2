@@ -123,7 +123,7 @@ export default function LoginSignup({ navigation }) {
   // var kakaoAuth=firebase.functions().httpsCallable("helloworld");
   const [kakaoloading, setKakaoloading] = useState(false)
   async function kakaoCheck(firebaseToken) {
-    setKakaoloading(true)
+    
     const user = await auth().signInWithCustomToken(firebaseToken)
     console.log(user)
     let check = false
@@ -158,6 +158,7 @@ export default function LoginSignup({ navigation }) {
     }, [])
 )
   async function kakaoLogin() {
+    setKakaoloading(true)
     setKakaoState(true)
     console.log("come")
     
@@ -374,9 +375,9 @@ export default function LoginSignup({ navigation }) {
       console.log(password, newpassword, "different")
     }
     if (passState === true) {
-      setTexts("비밀번호가 일치합니다")
+      setTexts("비밀번호가 일치합니다.")
     } else {
-      setTexts("비밀번호가 일치하지 않습니다!!")
+      setTexts("비밀번호가 일치하지 않습니다!")
 
     }
     if (String(newpassword).length >= 6) {

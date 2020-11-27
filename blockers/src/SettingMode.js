@@ -804,7 +804,7 @@ export function SettingModeSelectSmoker({ navigation, route }) {
                     }
                     {twenty === true ?
                         <>
-                            <Text style={[modeB.largeText, { marginBottom: 0, marginTop: 32, marginLeft: "10%", alignSelf: "flex-start" }]}>한번 필때 몇번의 흡입을 하셨나요?</Text>
+                            <Text style={[modeB.largeText, { marginBottom: 0, marginTop: 32, marginLeft: "10%", alignSelf: "flex-start" }]}>한번 필 때 몇번의 흡입을 하셨나요?</Text>
                             <View style={{
                                 width: "35%",
                                 height: 50,

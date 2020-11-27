@@ -84,7 +84,7 @@ export default function LoginPassword({ navigation }) {
                     </View>
                 </View>
                 <ScrollView>
-                    <Text style={login.title}>새로운 비밀번호를 설정해주세요</Text>
+                    <Text style={login.title}>새로운 비밀번호를 설정해주세요.</Text>
                     <TextInput onSubmitEditing={leng} textContentType="password" secureTextEntry={true} onChangeText={text => setPass(text)} style={login.textinput} placeholder="비밀번호(영문, 숫자 포함 8자리)" />
                     {len === false ?
                         <Text style={login.text}>8자리 이상 입력해주세요.</Text>

@@ -164,7 +164,7 @@ export default function MypageMyWriting({ navigation }) {
                         }}
                     >
                         <Text style={{ fontSize: 18 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>내가 쓴글</Text>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>내가 쓴 글</Text>
                         </Text>
                     </View>
                 </View>

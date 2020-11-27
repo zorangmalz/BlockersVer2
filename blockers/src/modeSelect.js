@@ -145,7 +145,7 @@ export default function ModeSelect({ navigation, route }) {
                 navigation.addListener('beforeRemove', (e) => {
                     e.preventDefault();
                     Alert.alert(
-                        '회원가입을 중단하겠습니까??',
+                        '회원가입을 중단하겠습니까?',
                         '',
                         [
                             {
@@ -181,7 +181,7 @@ export default function ModeSelect({ navigation, route }) {
 
     async function finishLogin() {
         Alert.alert(
-            '회원가입을 중단하겠습니까??',
+            '회원가입을 중단하겠습니까?',
             '',
             [
                 {
@@ -227,7 +227,7 @@ export default function ModeSelect({ navigation, route }) {
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <ScrollView>
                     <Text style={mode.title}>Welcome Blockers</Text>
-                    <Text style={[mode.mediumText, { alignSelf: 'center' }]}>Blockers에 오신 것을 환영합니다</Text>
+                    <Text style={[mode.mediumText, { alignSelf: 'center' }]}>Blockers에 오신 것을 환영합니다.</Text>
                     <Text style={[mode.mediumText, { marginTop: 12, marginBottom: 30, alignSelf: 'center' }]}>시작하기 전에 회원님의 상태를 선택해주세요.</Text>
                     <View style={{
                         flexDirection: 'row',

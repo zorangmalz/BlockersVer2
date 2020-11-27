@@ -216,7 +216,7 @@ export default function CommunityOtherPost({ route, navigation }) {
             realDate:a,
             stats:false,
             title:"댓글 알림",
-            content:"회원님의 글에 누군가 댓글을 남겼습니다",
+            content:"회원님의 글에 누군가 댓글을 남겼습니다.",
             docID:docID
         })
         await firestore().collection("UserInfo").doc(writer).update({
@@ -564,7 +564,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                     },
                     {
                         text: '확인', onPress: () => Alert.alert(
-                            '이미 신고하셨습니다',
+                            '이미 신고하셨습니다.',
                             ""
                             [
                             {

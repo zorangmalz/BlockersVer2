@@ -248,7 +248,7 @@ async function getDiary(){
           // );}}
           renderEmptyData = {() => {return (<View style={[styles.item, { height: 10 }]}>
             
-          <Text>일정이 없습니다 </Text>
+          <Text>일정이 없습니다. </Text>
            
         </View>);}}
       markedDates={{}}

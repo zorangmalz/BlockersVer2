@@ -434,7 +434,7 @@ const Tab = createMaterialTopTabNavigator();
 const states = [
     {
         id: "금연 직후",
-        stats: "-입냄새가 나지 않습니다\n-음식 맛이 좋아집니다\n-치아가 하얗고 건강해집니다\n -후각이 돌아옵니다\n -옷과 머리에 나쁜 냄새가 사라집니다\n -계단을 오를 때 숨이 덜 차게 됩니다\n -손가락의 착색이 사라집니다"
+        stats: "-입냄새가 나지 않습니다\n-음식 맛이 좋아집니다\n-치아가 하얗고 건강해집니다\n -후각이 돌아옵니다\n -옷과 머리에 나쁜 냄새가 사라집니다\n -계단을 오를 때 숨이 덜 차게 됩니다\n -손가락의 착색이 사라집니다."
     },
     {
         id: "금연한지 20분 경과",
@@ -1449,7 +1449,7 @@ export function ChatbotWell({ navigation }) {
         if(check==="well"||check==="cham"){
             Alert.alert(
                 '기존 복약 정보가 있습니다?',
-                '새로운 복약 정보를 등록하면 \n기존 정보가 사라집니다',
+                '새로운 복약 정보를 등록하면 \n기존 정보가 사라집니다.',
                 [
                     {
                         text: '취소', onPress: () => console.log('CANCEL Pressed')
@@ -1495,18 +1495,18 @@ export function ChatbotWell({ navigation }) {
             if(a[1]<10){
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
-                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                     }).catch(
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
-                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
                     )
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
-                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                     }).catch(
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
-                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
                     )
                 }
@@ -1514,18 +1514,18 @@ export function ChatbotWell({ navigation }) {
             }else{
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
-                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                     }).catch(
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
-                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
                     )
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                     }).catch(
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                            drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
                     )
                 }
@@ -1536,7 +1536,7 @@ export function ChatbotWell({ navigation }) {
         setLoading(false)
         
         
-        Alert.alert("복약 등록되었습니다")
+        Alert.alert("복약 등록되었습니다.")
         // navigation.navigate("Home")
     }
     async function drugCheckOff(){
@@ -1547,7 +1547,7 @@ export function ChatbotWell({ navigation }) {
             check=doc.data().drug
         })
         if(check==="cham"){
-            Alert.alert("챔픽스를 복용중입니다")
+            Alert.alert("챔픽스를 복용중입니다.")
         }else{
             drugOff(USER)
         }
@@ -1623,7 +1623,7 @@ export function ChatbotWell({ navigation }) {
         }
         
         
-        Alert.alert("복약 등록 취소되었습니다")
+        Alert.alert("복약 등록 취소되었습니다.")
         // navigation.navigate("Home")
     }
     return (
@@ -1829,18 +1829,18 @@ export function ChatbotCham({ navigation }) {
             if(a[1]<10){
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
-                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                     }).catch(
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
-                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
                     )
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
-                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                     }).catch(
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
-                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
                     )
                 }
@@ -1848,18 +1848,18 @@ export function ChatbotCham({ navigation }) {
             }else{
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
-                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                     }).catch(
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
-                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
                     )
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                        drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                     }).catch(
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요"
+                            drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
                     )
                 }
@@ -1869,7 +1869,7 @@ export function ChatbotCham({ navigation }) {
         }
         
         
-        Alert.alert("복약 등록되었습니다")
+        Alert.alert("복약 등록되었습니다.")
         // navigation.navigate("Home")
     }
     async function drugCheckOff(){
@@ -1880,7 +1880,7 @@ export function ChatbotCham({ navigation }) {
             check=doc.data().drug
         })
         if(check==="well"){
-            Alert.alert("웰부트린서방정을 복용중입니다")
+            Alert.alert("웰부트린서방정을 복용중입니다.")
         }else{
             drugOff(USER)
         }
@@ -1955,7 +1955,7 @@ export function ChatbotCham({ navigation }) {
         }
         
         
-        Alert.alert("복약 등록 취소되었습니다")
+        Alert.alert("복약 등록 취소되었습니다.")
         // navigation.navigate("Home")
     }
     return (

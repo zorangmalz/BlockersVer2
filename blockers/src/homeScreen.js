@@ -107,9 +107,46 @@ export default function HomeScreen({ navigation}) {
     const [alarm,setAlarm]=useState(true)
     const [smokingSmoker,setSmokingSmoker]=useState(0)
     const [smokingSmokerMoney,setSmokingSmokerMoney]=useState(0)
+    const [num,setNum]=useState(0)
+  const tip=[
+      {
+          content:"금단증상은 우리 몸에 해를 미치는 증상이 아니에요"
+      },
+      {
+          content:"천천히, 규칙적으로, 깊은 복식 호흡을 하세요"
+      },
+      {
+          content:"니코틴 보조제 사용방법을 꼭 숙지하세요"
+      },
+      {
+          content:"재흡연은 예방할 수 있어요"   
+      },
+      {
+          content:"아침 식사를 거르지 말고 규칙적으로 식사하는 습관을 기르세요"   
+      },
+      {
+          content:"운동이나 취미생활을  시작해 보세요"   
+      },
+      {
+          content:"과로하거나 무리한 계획을 세우지 않아요"   
+      },
+      {
+          content:"매 달 스스로의 금연에 대해 상을 주세요"   
+      },
+      {
+          content:"적극적으로 스트레스를 관리하세요"   
+      },
+      {
+          content:"흡연 유혹이 생기는 상황을 피하세요"   
+      },
+      {
+          content:"간접흡연 노출은 어떤 실내 공기 오염보다 해로워요"   
+      }
+  ]
 
     useFocusEffect(
         useCallback(() => {
+        
             //포커싱 되었을 떄
             setFocus(true)
             const USER = auth().currentUser
@@ -187,7 +224,7 @@ export default function HomeScreen({ navigation}) {
         var smoke = smokingDaily
         console.log(smoke, stats, "compare")
         if (Number(smoke) === Number(stats)) {
-            Alert.alert("기준치를 초과하셨습니다")
+            Alert.alert("기준치를 초과하셨습니다.")
         }
         var history= await howMuch()
         setSmokingDaily(smoke + 1)
@@ -262,7 +299,7 @@ export default function HomeScreen({ navigation}) {
         firestore().collection("UserInfo").doc(user.uid).collection("Alarm").where("stats","==",false).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
                 setAlarm(doc.data().stats)
-                console.log(doc.data().stats,"alarm")
+                
             })
         }).catch(setAlarm(true))
     }
@@ -288,9 +325,8 @@ export default function HomeScreen({ navigation}) {
     // }, [user,login, userlogin, refreshing, Rotate, focus, smoker])
 
     useEffect(() => {
-        let now=new Date()
-        
-        console.log(String(now),"dfseafwe")
+        const getRandom=(min,max)=>Math.floor(Math.random()*(max-min)+min)
+        setNum(getRandom(0,11),"ransdofi")
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
@@ -503,7 +539,7 @@ export default function HomeScreen({ navigation}) {
 
     const ChallengeParticipate = () => Alert.alert(
         "챌린지를 진행하시겠습니까?",
-        "금연모드로 전환됩니다",
+        "금연모드로 전환됩니다.",
         [
             {
                 text: '아니오', onPress: () => console.log('CANCEL Pressed')
@@ -521,7 +557,7 @@ export default function HomeScreen({ navigation}) {
     const loginview = () => {
         Alert.alert(
             "로그인이 필요한 서비스입니다.",
-            "로그인하고 다양한 혜택을 만나보세요",
+            "로그인하고 다양한 혜택을 만나보세요.",
             [
                 {
                     text: "취소",
@@ -618,7 +654,7 @@ export default function HomeScreen({ navigation}) {
                                                 color: '#303030',
                                                 opacity: 0.8,
                                                 marginLeft: 16
-                                            }}>치킨이 날아갑니다</Text>
+                                            }}>치킨이 날아갑니다.</Text>
                                         </View>
                                        
                                     </>
@@ -750,7 +786,7 @@ export default function HomeScreen({ navigation}) {
                         <ImageBackground style={{ width: 25, height: 15, marginRight: 8, alignItems: "center", justifyContent: "center" }} resizeMode="stretch" source={require('./icon/tipbox.png')} >
                             <Text style={{ fontSize: 9, fontFamily: 'NunitoSans-Bold', color: "#ffffff" }}>TIP</Text>
                         </ImageBackground>
-                        <Text style={{ alignSelf: 'center', fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>물을 많이 마시면 니코틴 배출이 빨라집니다!</Text>
+                <Text style={{ alignSelf: 'center', fontSize: 14, fontFamily: 'NunitoSans-Regular', color: '#303030' }}>{tip[num].content}</Text>
                     </View>
                     <View style={{
                         flexDirection: 'row',

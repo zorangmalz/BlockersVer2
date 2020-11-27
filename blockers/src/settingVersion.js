@@ -40,7 +40,7 @@ export default function SettingVersion({ navigation }) {
                         marginTop: 32,
                         marginBottom: 32,
                         alignSelf: 'center'
-                    }}>Ver.2.0</Text>
+                    }}>Ver.1.0</Text>
                     <Text style={{
                         fontSize: 16,
                         fontFamily: 'NunitoSans-Regular',

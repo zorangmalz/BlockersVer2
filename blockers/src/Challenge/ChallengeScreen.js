@@ -68,19 +68,19 @@ export default function Challenge({ navigation }) {
         {
             id: 1,
             title: "진행중인 미션이 없습니다.",
-            content: "챌린지에 참가해보세요",
+            content: "챌린지에 참가해보세요.",
             doing: false
         },
         {
             id: 2,
             title: "진행중인 미션이 없습니다.",
-            content: "챌린지에 참가해보세요",
+            content: "챌린지에 참가해보세요.",
             doing: false
         },
         {
             id: 3,
             title: "진행중인 미션이 없습니다.",
-            content: "챌린지에 참가해보세요",
+            content: "챌린지에 참가해보세요.",
             doing: false
         }
     ]
@@ -266,7 +266,7 @@ export default function Challenge({ navigation }) {
     const loginview = () => {
         Alert.alert(
             "로그인이 필요한 서비스입니다.",
-            "로그인하고 다양한 혜택을 만나보세요",
+            "로그인하고 다양한 혜택을 만나보세요.",
             [
                 {
                     text: "취소",
@@ -288,7 +288,7 @@ export default function Challenge({ navigation }) {
             console.log("mustbehere")
             Alert.alert(
                 '챌린지를 진행하시겠습니까?',
-                '금연모드로 전환됩니다',
+                '금연모드로 전환됩니다.',
                 [
                     {
                         text: '아니오', onPress: () => console.log('CANCEL Pressed')
@@ -532,7 +532,7 @@ export default function Challenge({ navigation }) {
     async function makeMistake() {
         Alert.alert(
             '흡연하셨나요?',
-            '실수할 수 있습니다\n포기하지말고 끝까지 진행해보세요.',
+            '실수할 수 있습니다.\n포기하지말고 끝까지 진행해보세요.',
             [
                 {
                     text: '취소', onPress: () => console.log('CANCEL Pressed')
@@ -757,7 +757,7 @@ export default function Challenge({ navigation }) {
                         marginBottom: HEIGHT * 0.025
                     }}>
                         <Text style={main.title}>진행해야 할 미션</Text>
-                        <TouchableOpacity onPress={logined ? () => navigation.navigate("ChallengeMission", { UID: user.uid }) : loginview}><Text style={main.underline}>전체미션</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={logined ? () => navigation.navigate("ChallengeMission", { UID: user.uid }) : loginview}><Text style={main.underline}>전체 미션</Text></TouchableOpacity>
                     </View>
                     <ScrollView horizontal={true}>
                         <FlatList
@@ -1877,7 +1877,7 @@ export function ChallengeMission({ navigation, route }) {
         {
             number: 4,
             title: "4. 금연 지지자 정하기",
-            content: "앞으로 힘든 금연에 힘이될 사람들에게\n금연 응원을 요청해보세요",
+            content: "앞으로 힘든 금연에 힘이될 사람들에게\n금연 응원을 요청해보세요.",
         },
         {
             number: 5,
@@ -1888,7 +1888,7 @@ export function ChallengeMission({ navigation, route }) {
         {
             number: 6,
             title: "6. 금연활동 인증하기 (주 1회)",
-            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요",
+            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
         },
         {
             number: 7,
@@ -1900,7 +1900,7 @@ export function ChallengeMission({ navigation, route }) {
         {
             number: 1,
             title: "1. 성공 후기 작성하기",
-            content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요",
+            content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요.",
         },
     ]
     return (
@@ -1921,7 +1921,7 @@ export function ChallengeMission({ navigation, route }) {
                             <Ionicons name="chevron-back" size={25} />
                         </TouchableOpacity>
                         <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>전체미션</Text>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>전체 미션</Text>
                         </Text>
                     </View>
                     <View>
@@ -2039,7 +2039,7 @@ export function ChallengeSupport({ navigation }) {
         const contentObject = {
             title: "나의 금연 지지자가 되어줘!", //required
             link: LinkObject, //required
-            desc: nick + "님이" + name + "님께 보낸 메세지입니다\n" + help,
+            desc: nick + "님이" + name + "님께 보낸 메세지입니다.\n" + help,
             imageURL: 'https://drive.google.com/file/d/1C3XJ2i_zOLA_vpfgfePdoSgvTNNpa-ML/view?usp=sharing',
         }
 
@@ -2056,7 +2056,7 @@ export function ChallengeSupport({ navigation }) {
         setLink(true)
     }
     async function kakaoios() {
-        Alert.alert("아이폰에서는 지원하지 않는 기능입니다")
+        Alert.alert("아이폰에서는 지원하지 않는 기능입니다.")
         setLink(true)
     }
     return (
@@ -3929,7 +3929,7 @@ export function ChallengeVeriImage({ navigation, route }) {
                                 color: "#303030",
                                 alignSelf: "center",
                                 marginTop: HEIGHT * 0.05
-                            }}>다음중 하나의 활동 사진을 첨부해주세요{"\n\n"}1. 취미 생활(운동, 동호회 등){"\n\n"}2. 금연 간식{"\n\n"}3. 흡연 관련 용품 버린 사진(ex 담배 부수기){"\n\n"}4. 본인만의 금연 비법</Text>
+                            }}>다음 중 하나의 활동 사진을 첨부해주세요.{"\n\n"}1. 취미 생활(운동, 동호회 등){"\n\n"}2. 금연 간식{"\n\n"}3. 흡연 관련 용품 버린 사진(ex 담배 부수기){"\n\n"}4. 본인만의 금연 비법</Text>
                         </ScrollView>
 
                     </SafeAreaView>
