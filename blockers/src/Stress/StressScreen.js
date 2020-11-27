@@ -93,7 +93,7 @@ export function SNine ({navigation,route}) {
 }
 
 export function STen ({navigation,route}) {
-    const title = "당신이 해결해야 하는 일들 때문에 놀란적이 있었나요?";
+    const title = "당신이 해결해야 하는 일들 때문에 놀란 적이 있었나요?";
     const result=route.params
     return (
         <>

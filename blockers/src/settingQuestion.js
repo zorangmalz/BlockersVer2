@@ -12,7 +12,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const setting = StyleSheet.create({
     email : {
-        fontSize: 40,
+        fontSize: 30,
         fontFamily: 'NunitoSans-Regular',
         color: "#5CC27B",
         marginBottom: 32,

@@ -205,7 +205,7 @@ const App = ({ navigation }) => {
           }}
         />
         <Stack.Screen
-          name="내가 쓴글"
+          name="내가 쓴 글"
           component={MypageMyWriting}
           options={{
             gestureDirection: 'vertical-inverted',

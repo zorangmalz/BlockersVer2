@@ -16,7 +16,7 @@ const solution = StyleSheet.create({
     largeText: {
         fontSize: 20,
         fontFamily: 'NunitoSans-Bold',
-        color: '#5CC27B',
+        color: '#303030',
         marginLeft: 24,
         marginBottom: 50
     },
