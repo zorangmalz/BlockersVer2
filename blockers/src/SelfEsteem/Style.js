@@ -453,14 +453,14 @@ export function SelfEsteemFinal({navigation,route}) {
         }else if(35<=Number( result.result)){
             resultWord="Normal"
             setResults("Normal")
-            content="보통 수준의 자아 효능감을 가지고 있습니다. \n 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다."
-            setResultcontent("보통 수준의 자아 효능감을 가지고 있습니다. \n 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다.")
+            content="보통 수준의 자기 효능감을 가지고 있습니다. \n 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다."
+            setResultcontent("보통 수준의 자기 효능감을 가지고 있습니다. \n 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다.")
             
         }else{
             resultWord="Bad"
             setResults("Bad")      
-            content="낮은 자아 효능감을 가지고 있습니다. \n 항상 자신감 있는 생각과 행동이 필요합니다.\n 내적인 자신감의 강화와 더불어 세심한 생활관리가 필요합니다."
-            setResultcontent("낮은 자아 효능감을 가지고 있습니다. \n 항상 자신감 있는 생각과 행동이 필요합니다.\n 내적인 자신감의 강화와 더불어 세심한 생활관리가 필요합니다.")
+            content="낮은 자기 효능감을 가지고 있습니다. \n 항상 자신감 있는 생각과 행동이 필요합니다.\n 내적인 자신감의 강화와 더불어 세심한 생활관리가 필요합니다."
+            setResultcontent("낮은 자기 효능감을 가지고 있습니다. \n 항상 자신감 있는 생각과 행동이 필요합니다.\n 내적인 자신감의 강화와 더불어 세심한 생활관리가 필요합니다.")
         }
         var a=moment().toArray()
         console.log(a)

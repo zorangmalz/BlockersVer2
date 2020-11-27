@@ -442,8 +442,8 @@ export function StressFinal({navigation,route}) {
         }else if(35<= Number(result.result)){
             setResults("Normal")
             resultWord="Normal"
-            content="예방적 행위가 필요합니다. \n당신의 스트레스 반응이 위험한 상태로서 도움받을 필요가 있습니다. \n포괄적인 스트레스 관리 계획이 필요합니다."
-            setResultcontent("예방적 행위가 필요합니다. \n당신의 스트레스 반응이 위험한 상태로서 도움받을 필요가 있습니다. \n포괄적인 스트레스 관리 계획이 필요합니다.")
+            content="예방적 행위가 필요합니다. \n당신의 스트레스 반응이 위험한 상태로서 도움 받을 필요가 있습니다. \n포괄적인 스트레스 관리 계획이 필요합니다."
+            setResultcontent("예방적 행위가 필요합니다. \n당신의 스트레스 반응이 위험한 상태로서 도움 받을 필요가 있습니다. \n포괄적인 스트레스 관리 계획이 필요합니다.")
             console.log("here")
         }else {
             setResults("Good")    

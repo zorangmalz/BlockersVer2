@@ -35,7 +35,7 @@ export function AFour ({navigation,route}) {
 
 export function AFive ({navigation,route}) {
     const result=route.params
-    const title = "지난 1년간, 당신은 평소 할 수 있었던 일을 음주때문에 실패한 적이 얼마나 자주 있었습니까?";
+    const title = "지난 1년간, 당신은 평소 할 수 있었던 일을 음주 때문에 실패한 적이 얼마나 자주 있었습니까?";
     return (
         <>
             <Alcohol navigation={navigation} Nextpage="AlcoholSix" Title={title} total={Number(JSON.stringify(result.result))} Kind={false} />
@@ -65,7 +65,7 @@ export function ASeven ({navigation,route}) {
 
 export function AEight ({navigation,route}) {
     const result=route.params
-    const title = "음주로 인해 자신이나 다른사람이 다친적이 있었습니까?";
+    const title = "음주로 인해 자신이나 다른 사람이 다친 적이 있었습니까?";
     return (
         <>
             <AlcoholThree navigation={navigation} Nextpage="AlcoholNine" Title={title} total={Number(JSON.stringify(result.result))} />
@@ -75,7 +75,7 @@ export function AEight ({navigation,route}) {
 
 export function ANine ({navigation,route}) {
     const result=route.params
-    const title = "친척이나 친구, 또는 의사가 당신이 술 마시는 것을 걱정하거나 술끊기를 권유한 적이 있었습니까?";
+    const title = "친척이나 친구, 또는 의사가 당신이 술 마시는 것을 걱정하거나 술 끊기를 권유한 적이 있었습니까?";
     return (
         <>
             <AlcoholThree navigation={navigation} Nextpage="AlcoholFinal" Title={title} total={Number(JSON.stringify(result.result))} />

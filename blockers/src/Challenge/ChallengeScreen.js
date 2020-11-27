@@ -503,9 +503,9 @@ export default function Challenge({ navigation }) {
         setRatio(withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt)
         if (long === 1) {
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
-                progress: ((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 9.1 - mistake * 5).toFixed(2)
+                progress: ((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 7.69 - mistake * 5).toFixed(2)
             })
-            setProgress(((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 9.1 - mistake * 5).toFixed(2))
+            setProgress(((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 7.69 - mistake * 5).toFixed(2))
             // await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).get().then(doc => {
                 
             //         setProgress((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 9.1 - mistake * 5)
@@ -513,14 +513,14 @@ export default function Challenge({ navigation }) {
             // })
         } else if (long === 3) {
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
-                progress: ((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 4.76 - mistake * 5).toFixed(2)
+                progress: ((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 3.7 - mistake * 5).toFixed(2)
             })
-            setProgress(((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 4.76 - mistake * 5).toFixed(2))
+            setProgress(((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 3.7 - mistake * 5).toFixed(2))
         } else {
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
-                progress: ((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 2.7 - mistake * 5).toFixed(2)
+                progress: ((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 2.04 - mistake * 5).toFixed(2)
             })
-            setProgress(((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 2.7 - mistake * 5).toFixed(2))
+            setProgress(((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 2.04 - mistake * 5).toFixed(2))
         }
 
     }
@@ -899,7 +899,7 @@ export function ChallengeRegister({ navigation }) {
             })
             firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
                 title: "자기 효능감 평가(월1회)",
-                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요.",
+                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을 체크하고 금연 성공하세요.",
                 stats: false,
                 period: "monthly",
                 id: 2,
@@ -1474,23 +1474,23 @@ export function ChallengeRegister({ navigation }) {
                                 marginTop:16,
                                         fontSize: 14,
                                         color: "#303030",
-                                        fontFamily: "NunitoSans-Regular"}}>챌린지는 1,3,6 개월 길이로 진행할 수 있으며,{`\n`}
+                                        fontFamily: "NunitoSans-Regular"}}>챌린지는 1,3,6 개월 단위로 진행할 수 있으며,{`\n`}
                                         월별, 일반, 파이널 미션으로 구성되어 있습니다.{`\n`}
                                         월별 미션은 월 1회, 일반 미션은 챌린지당 1회, 파이널미션은 
-                                        챌린지 전체 진행도가 90% 이상인 경우 수행하게 됩니다.</Text>
+                                        챌린지 전체 진행도가 90% 이상인 경우 수행할 수 있습니다.</Text>
                                 <Text style={[main.bold,{marginTop:8}]}>진행도는 무엇인가요?</Text>
                                 <Text style={{ marginLeft: 4,
                                 marginTop:16,
                                         fontSize: 14,
                                         color: "#303030",
-                                        fontFamily: "NunitoSans-Regular"}}>진행도는 챌린지 미션을 진행할때마다 증가합니다.{`\n`}
-                                        1개월 챌린지의 경우 미션 당 9.1%, 3개월 챌린지는 4.76%, 6개월 챌린지는 2.76%의 진행도가 증가합니다.</Text>
+                                        fontFamily: "NunitoSans-Regular"}}>진행도는 챌린지 미션을 진행할 때마다 증가합니다.{`\n`}
+                                        1개월 챌린지의 경우 미션 당 7.69%, 3개월 챌린지는 3.7%, 6개월 챌린지는 2.04%의 진행도가 증가합니다.</Text>
                                 <Text style={[main.bold,{marginTop:8}]}>실수 한 번은 무엇인가요?</Text>
                                 <Text style={{ marginLeft: 4,
                                 marginTop:16,
                                         fontSize: 14,
                                         color: "#303030",
-                                        fontFamily: "NunitoSans-Regular"}}>실수 한번은 챌린지를 진행하는 도중 흡연을 하는 경우 자율적으로 누르는 버튼입니다.{`\n`}
+                                        fontFamily: "NunitoSans-Regular"}}>실수 한 번은 챌린지를 진행하는 도중 흡연을 하는 경우 자율적으로 누르는 버튼입니다.{`\n`}
                                         실수 한 번을 클릭하면 5%의 진행도가 차감됩니다.{`\n`}
                                         사람들은 평균적으로 금연을 실천하면서 4.5회의 실패를 경험합니다.{`\n`}
                                         한번 담배를 피웠다고 실패한게 아닙니다. 끝까지 금연을 하려는 노력이 중요합니다!</Text>
@@ -1924,7 +1924,7 @@ export function ChallengeMission({ navigation, route }) {
                             <Ionicons name="chevron-back" size={25} />
                         </TouchableOpacity>
                         <Text style={{ fontSize: 18, marginLeft: 20 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>전체미션</Text>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>전체 미션</Text>
                         </Text>
                     </View>
                     <View>
