@@ -23,6 +23,7 @@ import SettingResetComplete from './src/SettingResetComplete';
 import SettingExit from './src/SettingExit';
 import SettingExitComplete from './src/SettingExitComplete';
 import SettingOften from './src/SettingOften';
+
 import CommunityClick from './src/CommunityClick';
 import CommunityOtherPost, { CommunityReWrite } from './src/CommunityOtherPost';
 import Calendars from './src/Calendar';
@@ -315,6 +316,7 @@ const App = ({ navigation }) => {
             gestureDirection: 'vertical-inverted'
           }}
         />
+
         <Stack.Screen
           name="알림설정"
           component={SettingAlram}

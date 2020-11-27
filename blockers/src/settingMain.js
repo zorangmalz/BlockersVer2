@@ -69,8 +69,8 @@ export default function SettingMain({ navigation }) {
                             </View>
                         </View>
                         <ScrollView>
-                            <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('알림설정')} >
-                                <Text style={setting.mainText}>알림설정</Text>
+                            <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('문의하기')} >
+                                <Text style={setting.mainText}>문의하기</Text>
                             </TouchableOpacity>
                             <View style={{ width: "85%", height: 0.5, backgroundColor: "#C6C6C6", borderWidth: 0.2, borderColor: '#C6C6C6', alignSelf: 'center' }} />
                             <TouchableOpacity style={[setting.mainBox, { marginTop: 32 }]} onPress={() => navigation.navigate('초기화')}>
