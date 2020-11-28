@@ -34,7 +34,7 @@ const setting = StyleSheet.create({
     }
 })
 
-const Agree = "제2조 	[개인정보의 처리 및 보유기간] \n\n①	㈜조랑말즈는 원칙적으로 정보주체의 개인정보를 회원 탈퇴시 지체없이 파기하고 있습니다. 단, 회원에게 개인정보 보관기간에 대해 별도의 동의를 얻은 경우 또는 일정 기간 정보보관 의무를 부과하는 경우에는 해당기간 동안 개인정보를 안전하게 보관합니다. \n\n②	정보주체의 회원가입 또는 이용계약체결 시 개인정보 보관기간에 대해 동의를 얻은 경우는 아래와 같습니다. \n\n1.	서비스 부정이용 방지 : 탈퇴일로부터 [##]개월 보관 \n-	성명, 생년월일, E-mail주소, 휴대폰번호, 부정이용기록 \n\n2.	분쟁 및 민원 대응 : 탈퇴일로부터 [##]개월 보관 \n-	성명, 생년월일, E-mail주소, 휴대폰번호, 서비스 이용기록, 민원 접수 내역"
+const Agree = "제2조 	[개인정보의 처리 및 보유기간] \n\n①	㈜조랑말즈는 원칙적으로 정보주체의 개인정보를 회원 탈퇴시 지체없이 파기하고 있습니다. 단, 회원에게 개인정보 보관기간에 대해 별도의 동의를 얻은 경우 또는 일정 기간 정보보관 의무를 부과하는 경우에는 해당기간 동안 개인정보를 안전하게 보관합니다. \n\n②	정보주체의 회원가입 또는 이용계약체결 시 개인정보 보관기간에 대해 동의를 얻은 경우는 아래와 같습니다. \n\n1.	서비스 부정이용 방지 : 탈퇴일로부터 6개월 보관 \n-	성명, 생년월일, E-mail주소, 부정이용기록 \n\n2.	분쟁 및 민원 대응 : 탈퇴일로부터 6개월 보관 \n-	성명, 생년월일, E-mail주소, 서비스 이용기록, 민원 접수 내역"
 
 export default function SettingExit({ navigation }) {
     const [agreeOne, setAgreeOne] = useState(false);
@@ -78,18 +78,7 @@ export default function SettingExit({ navigation }) {
                         <Text style={{ fontFamily: 'NunitoSans-Bold' }}>모든 정보가 </Text>
                         <Text>삭제됩니다.</Text>
                     </Text>
-                    <Text style={{
-                        fontSize: 18,
-                        fontFamily: 'NunitoSans-Regular',
-                        color: '#303030',
-                        opacity: 0.8,
-                        marginTop: 8,
-                        marginLeft: 48
-                    }}>
-                        <Text>2. </Text>
-                        <Text style={{ fontFamily: 'NunitoSans-Bold' }}>출금</Text>
-                        <Text>을 진행해주시기 바랍니다.</Text>
-                    </Text>
+         
                     <View style={{
                         marginLeft: 16,
                         marginRight: 16,
