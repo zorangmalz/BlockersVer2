@@ -336,9 +336,7 @@ export default function HomeScreen({ navigation}) {
             console.log("stsat")
             setLogin(true)
             checkAlarm()
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc("2020-11-18").set({
-                hi:"hi"
-            })
+          
             ref.doc(user.uid).get().then(documentSnapshot => {
                 setSmoker(documentSnapshot.data().smoker)
                 setSmokeInfo(documentSnapshot.data().smokeInfo)
