@@ -645,6 +645,7 @@ export function SettingModeSelectSmoker({ navigation, route }) {
             console.log(select);
             setClear(false);
         }
+        console.log("hetre")
     }, [ten, twenty, thirty]);
 
     async function move() {
@@ -672,7 +673,9 @@ export function SettingModeSelectSmoker({ navigation, route }) {
             smokingAmount: amount,
             smokingMg: mg,
             smokeDaily: 0,
-            SmokingTime: a
+            SmokingTime: a,
+            
+
         })
         navigation.navigate("Home")
     }

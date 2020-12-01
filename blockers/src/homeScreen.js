@@ -91,7 +91,7 @@ export default function HomeScreen({ navigation}) {
     const [viewopacity, setViewOpacity] = useState(true);
 
     const [user, setUser] = useState()
-    const [fullTime, setfullTime] = useState()
+    const [fullTime, setfullTime] = useState([])
     const [check, setcheck] = useState(false)
     const [smoker, setSmoker] = useState(false)
     const [smokeInfo, setSmokeInfo] = useState()
@@ -108,6 +108,7 @@ export default function HomeScreen({ navigation}) {
     const [smokingSmoker,setSmokingSmoker]=useState(0)
     const [smokingSmokerMoney,setSmokingSmokerMoney]=useState(0)
     const [num,setNum]=useState(0)
+    const [fake,setFake]=useState("")
   const tip=[
       {
           content:"금단증상은 우리 몸에 해를 미치는 증상이 아니에요"
@@ -201,7 +202,7 @@ export default function HomeScreen({ navigation}) {
         setSec(parseInt(seconds % 86400 % 3600 % 60))
     }
     async function cutting(range) {
-        var a = moment().toArray()
+        var a = moment().toArray() 
         for (var i = 0; i < range; i++) {
             total[i] = 1
         }
@@ -249,13 +250,14 @@ export default function HomeScreen({ navigation}) {
     //보완...
     async function timeCheck() {
         var a = moment().toArray()
-        console.log(a)
+        
         if (a[1] === 12) {
             a[1] = 1
             a[0]=a[0]+1
         } else {
             a[1] = a[1] + 1
         }
+        console.log(a)
         await ref.doc(user.uid).get().then(documentSnapshot => {
             if (a[2] === documentSnapshot.data().smokeToday) {
                 console.log(documentSnapshot.data().smokeToday)
@@ -342,6 +344,7 @@ export default function HomeScreen({ navigation}) {
                 setSmokeInfo(documentSnapshot.data().smokeInfo)
                 setStats(documentSnapshot.data().smokingAmount)
                 setSmokingDaily(documentSnapshot.data().smokeDaily)
+                setFake(documentSnapshot.data().realTime)
                 cutting(documentSnapshot.data().smokingAmount)
                 console.log("smokeInfo and stats", smoker, smokeInfo, stats, smokingDaily)
                 if (!documentSnapshot.data().SmokingTime) {
@@ -359,19 +362,22 @@ export default function HomeScreen({ navigation}) {
 
     useEffect(() => {
         timeCheck().then(() => {
-            console.log("타임체크시작")
+            
         }).catch(err => console.log(err))
-        // console.log("s")
-        var b = moment(fullTime)
+        console.log("s")    
+        console.log(fullTime)
+        if(fullTime[1]===1){
+            fullTime[0]=fullTime[0]-1
+            fullTime[1]=12
+        }else{
+            fullTime[1]=fullTime[1]-1
+        }
+        console.log(fullTime,"this")
+        var b=moment(fullTime)
+        console.log(b,"b")
         if (fullTime) {
             const interval = setInterval(() => {
-                var a = moment().toArray()
-                if(a[1]===12){
-                    a[1]=1
-                    a[0]=a[0]+1
-                }else{
-                    a[1]=a[1]+1
-                }
+                var a = moment()
                 var c = (b.diff(a, "seconds")) * -1
                 timeCounter(c)
                 setSmokingShow(parseInt(c / 86400) * stats + parseInt(parseInt(c % 86400 / 3600) * stats / 24))
@@ -472,6 +478,7 @@ export default function HomeScreen({ navigation}) {
         } else {
             a[1] = a[1] + 1
         }
+        
         await firestore().collection("UserInfo").doc(user.uid).update({
             smoker: true,
             SmokingTime: a,

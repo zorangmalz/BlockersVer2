@@ -352,23 +352,22 @@ export default function Challenge({ navigation }) {
                 long = doc.data().long
                 progressFor = doc.data().progress
             })
-
-            var a = moment().toArray()
-
-            if (a[1] === 12) {
-                a[1] = 1
-                a[0] = a[0] + 1
-            } else {
-                a[1] = a[1] + 1
+            console.log(time,"time")
+            
+            if(time[1]===1){
+                time[0]=time[0]-1
+                time[1]=12
+            }else{
+                time[1]=time[1]-1
             }
-            var x = moment(a)
+            var x = moment()
             var y = moment(time)
             var durationWeek = moment.duration(x.diff(y)).asWeeks()
             var durationMonth = moment.duration(x.diff(y)).asMonths()
             console.log(progressFor)
             // console.log(x)
-            console.log(weekFire, monthFire)
-            console.log(durationWeek, durationMonth)
+            console.log(weekFire, monthFire,"firest")
+            console.log(durationWeek, durationMonth,"secons")
             if (weekFire < durationWeek) {
                 // console.log(parseInt(durationWeek,10))
                 await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
