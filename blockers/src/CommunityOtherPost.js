@@ -682,8 +682,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                                         text: '취소', onPress: () => console.log('CANCEL Pressed')
                                                     },
                                                     {
-                                                        text: '확안', onPress: () => deletePost()
-
+                                                        text: '확인', onPress: () => deletePost()
                                                     }
                                                 ]
                                             )

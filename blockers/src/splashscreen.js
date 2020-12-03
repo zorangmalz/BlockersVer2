@@ -20,7 +20,7 @@ export default function SplashScreen({ navigation }) {
         if (USER) {
             setTimeout(() => {
                 setAnimating(false);
-                navigation.navigate('Home', { UID: user, from: "Mode" });
+                navigation.navigate('Home', { UID: user });
             }, 1000);
         } else {
             setTimeout(() => {
@@ -30,7 +30,6 @@ export default function SplashScreen({ navigation }) {
     }, [])
 
    
-
     return (
         <>
             <SafeAreaView style={{ width: "100%", flex: 1, justifyContent: 'center', alignItems: 'center' }}>
