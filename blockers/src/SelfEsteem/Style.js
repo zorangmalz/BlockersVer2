@@ -302,7 +302,7 @@ export function SelfEsteemMain({ navigation,route }) {
         getInfo()
     },[])
     
-    const title = "자기효능감은 금연과 밀접한 관계가 있습니다. \n자기 효능감을 체크해 보세요."
+    const title = "자기 효능감은 금연과 밀접한 관계가 있습니다. \n자기 효능감을 체크해 보세요."
     const data = [
         {
             num: 1,

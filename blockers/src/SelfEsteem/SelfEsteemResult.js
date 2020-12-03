@@ -33,7 +33,7 @@ export default function SelfEsteemResult({navigation,route}) {
         if(result>1){
         if(result>=45){
             setResults("Good")
-            setResultcontent( "높은 자기효능감을 가지고 있군요! 금연을 성공할 수 있는 자신감이 있는 상태입니다. 금연 리포트 & 정보 에서 내 상태 변화와 다양한 정보를 알아보세요!")
+            setResultcontent( "높은 자기 효능감을 가지고 있군요! 금연을 성공할 수 있는 자신감이 있는 상태입니다. 금연 리포트 & 정보 에서 내 상태 변화와 다양한 정보를 알아보세요!")
         }else if(35<=result){
             setResults("Normal")
             setResultcontent("보통 수준의 자기 효능감을 가지고 있습니다. 이를 좀 더 높일 수 있도록 모든 일에 자신감을 가지시기 바랍니다.")
