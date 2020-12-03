@@ -1631,7 +1631,7 @@ export function ChatbotWell({ navigation }) {
         <>
             <StatusBar barStyle="dark-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-            <Header navigation={navigation} title="금연 지원사업 정보" />
+            <Header navigation={navigation} title="웰부트린" />
                 {loading ? 
                 <ActivityIndicator style={{ marginVertical: 15 }} size="large" color="#5cc27b" /> 
                 :
@@ -1963,7 +1963,7 @@ export function ChatbotCham({ navigation }) {
         <>
             <StatusBar barStyle="dark-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
-                <Header navigation={navigation} title="금연 지원사업 정보" />
+                <Header navigation={navigation} title="챔픽스" />
                 <ScrollView>
                     <View style={{ paddingHorizontal: "8%" }}>
                     <Text style={{
