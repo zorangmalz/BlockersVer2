@@ -226,8 +226,10 @@ export default function MyPageScreen({ navigation }) {
     const [three, setThree] = useState(false)
     const [six, setSix] = useState(false)
     async function getInfo() {
+        
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").where("success", "==", 2).get().then(function (querySnapshot) {
             querySnapshot.forEach(function (doc) {
+                console.log(doc.id)
                 if (doc.data().long === 1) {
                     setOne(true)
                 } else if (doc.data().long === 3) {
@@ -238,6 +240,8 @@ export default function MyPageScreen({ navigation }) {
             })
 
         })
+        console.log(one,three,six)
+        
     }
     const Success = [
         {

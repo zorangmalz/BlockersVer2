@@ -615,7 +615,7 @@ export function AlcoholFinal({navigation,route}) {
     
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").update({
                 visible:false,
-                stats:true,
+                
                 month:thisMonth+1
             })
             firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({

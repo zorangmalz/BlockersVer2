@@ -399,6 +399,7 @@ export default function Challenge({ navigation }) {
 
             }
             if (monthFire < durationMonth) {
+                if(long==3||long==6){
                 console.log(parseInt(durationMonth, 10))
                 await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
                     month: parseInt(durationMonth, 10) + 1
@@ -426,6 +427,9 @@ export default function Challenge({ navigation }) {
                 await firestore().collection("UserInfo").doc(user.uid).update({
                     alarm: true
                 })
+            }else{
+                console.log("no")
+            }
             }
             if (durationMonth > long) {
                 if (progressFor > 80) {
@@ -504,7 +508,7 @@ export default function Challenge({ navigation }) {
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").collection("veri").where("stats", "==", true).get().then(querySnapshot => {
             vericnt = querySnapshot.size
         })
-        setRatio(withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt)
+        
         if (long === 1) {
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
                 progress: ((withoutVeri + esteemcnt + alcoholcnt + stresscnt + vericnt) * 7.69 - mistake * 5).toFixed(2)
@@ -885,7 +889,7 @@ export function ChallengeRegister({ navigation }) {
                 content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는 것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
                 stats: false,
                 period: "once",
-                id: 10,
+                id: 9,
                 navigate: "ChallengeVeri",
                 visible: true,
                 week: 1,
@@ -930,7 +934,7 @@ export function ChallengeRegister({ navigation }) {
                 content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
                 stats: false,
                 period: "once",
-                id: 10,
+                id: 9,
                 navigate: "ChallengeVeri",
                 visible: true,
                 week: 1,
@@ -1041,7 +1045,7 @@ export function ChallengeRegister({ navigation }) {
                 content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
                 stats: false,
                 period: "once",
-                id: 10,
+                id: 9,
                 navigate: "ChallengeVeri",
                 visible: true,
                 week: 1,
@@ -1267,7 +1271,7 @@ export function ChallengeRegister({ navigation }) {
             content: "금연을 하면서 피할 수 없는 금단증상! 나의 금단 증상을 파악하고 해결책을 찾아보세요.",
             stats: false,
             period: "once",
-            id: 11,
+            id: 10,
             navigate: "ChallengeGD",
             visible: true,
             resNavi: "ChallengeGDResult"
@@ -1276,7 +1280,7 @@ export function ChallengeRegister({ navigation }) {
             title: "성공 후기 작성하기",
             content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요.",
             period: "final",
-            id: 12,
+            id: 11,
             navigate: "ChallengeSuccess",
             visible: false,
             stats: false,
@@ -2593,7 +2597,19 @@ export function ChallengeSwearResult({ navigation }) {
                     </View>
                 </ScrollView>
             </SafeAreaView>
-
+            <SafeAreaView style={{ flex: 0 }}>
+                        <TouchableOpacity onPress={()=>navigation.goBack()}>
+                            <View style={{
+                                width: "100%",
+                                height: 60,
+                                backgroundColor: '#5cc27b',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </SafeAreaView>
         </>
     )
 }
@@ -3056,7 +3072,19 @@ export function ChallengeMotivationResult({ navigation, route }) {
                     </View>
                 </ScrollView>
             </SafeAreaView>
-
+            <SafeAreaView style={{ flex: 0 }}>
+                        <TouchableOpacity onPress={()=>navigation.goBack()}>
+                            <View style={{
+                                width: "100%",
+                                height: 60,
+                                backgroundColor: '#5cc27b',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </SafeAreaView>
         </>
     )
 }

@@ -483,7 +483,7 @@ export function StressFinal({navigation,route}) {
     
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("스트레스 평가(월1회)").update({
                 visible:false,
-                stats:true,
+                
                 month:thisMonth+1
             })
             firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
