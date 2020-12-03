@@ -59,6 +59,7 @@ async function getDiary(){
       item[a]=new Array()
       if(doc.data().diary){
         item[a].push({diary:doc.data().diary})
+        
       }
       if(doc.data().challenge){
         item[a].push({challenge:doc.data().challenge})
@@ -73,6 +74,7 @@ async function getDiary(){
         item[a].push({drugB:doc.data().drugB})
       }if(doc.data().endure){
         item[a].push({endure:doc.data().endure})
+        
       }
       
       
@@ -80,10 +82,11 @@ async function getDiary(){
       
       // item[doc.id]=[{diary:doc.data().diary},{challenge:doc.data().challenge},{smoke:doc.data().smoke},{drugA:doc.data().drugA},{drugB:doc.data().drugB}]
       
-      // console.log(item)
+      
     })
 
   })
+
 } 
   return (
     <>

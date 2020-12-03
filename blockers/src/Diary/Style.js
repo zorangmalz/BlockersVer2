@@ -99,12 +99,51 @@ export function Create({ navigation }) {
         } else {
             var check = "없었다"
         }
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-            diary:"일기 작성"
-        }).catch(() =>
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
-                diary: "일기 작성"
-            }))
+        if(a[1]<10){
+            if(a[2]<10){
+                 firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
+                    diary:"일기 작성"
+                }).catch(()=>
+                     firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
+                        diary:"일기 작성"
+                    })
+                )
+            }else{
+                 firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
+                    diary:"일기 작성"
+                }).catch(()=>
+                     firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
+                        diary:"일기 작성"
+                    })
+                )
+            }
+            
+        }else{
+            if(a[2]<10){
+                 firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
+                    diary:"일기 작성"
+                }).catch(()=>
+                     firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
+                        diary:"일기 작성"
+                    })
+                )
+            }else{
+                 firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+                    diary:"일기 작성"
+                }).catch(()=>
+                     firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                        diary:"일기 작성"
+                    })
+                )
+            }
+            
+        }
+        // firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+        //     diary:"일기 작성"
+        // }).catch(() =>
+        //     firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+        //         diary: "일기 작성"
+        //     }))
         await firestore().collection("UserInfo").doc(user.uid).collection("Diary").doc(a + "diary").set({
             impulse: check,
             when: when,

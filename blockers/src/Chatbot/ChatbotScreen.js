@@ -1496,7 +1496,7 @@ export function ChatbotWell({ navigation }) {
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
                         drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
                             drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
@@ -1504,7 +1504,7 @@ export function ChatbotWell({ navigation }) {
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
                         drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
                             drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
@@ -1515,7 +1515,7 @@ export function ChatbotWell({ navigation }) {
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
                         drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
                             drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
@@ -1523,7 +1523,7 @@ export function ChatbotWell({ navigation }) {
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
                         drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
                             drugA:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
@@ -1583,18 +1583,18 @@ export function ChatbotWell({ navigation }) {
             if(a[1]<10){
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
-                        drugB:""
-                    }).catch(
+                        drugA:""
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
-                            drugB:""
+                            drugA:""
                         })
                     )
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
-                        drugB:""
-                    }).catch(
+                        drugA:""
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
-                            drugB:""
+                            drugA:""
                         })
                     )
                 }
@@ -1602,18 +1602,18 @@ export function ChatbotWell({ navigation }) {
             }else{
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
-                        drugB:""
-                    }).catch(
+                        drugA:""
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
-                            drugB:""
+                            drugA:""
                         })
                     )
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-                        drugB:""
-                    }).catch(
+                        drugA:""
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-                            drugB:""
+                            drugA:""
                         })
                     )
                 }
@@ -1830,7 +1830,7 @@ export function ChatbotCham({ navigation }) {
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
                         drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
                             drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
@@ -1838,7 +1838,7 @@ export function ChatbotCham({ navigation }) {
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
                         drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
                             drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
@@ -1849,7 +1849,7 @@ export function ChatbotCham({ navigation }) {
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
                         drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
                             drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
@@ -1857,7 +1857,7 @@ export function ChatbotCham({ navigation }) {
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
                         drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
                             drugB:"복용일입니다. 복용법에 따라 섭취해 주세요."
                         })
@@ -1916,7 +1916,7 @@ export function ChatbotCham({ navigation }) {
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
                         drugB:""
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
                             drugB:""
                         })
@@ -1924,7 +1924,7 @@ export function ChatbotCham({ navigation }) {
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
                         drugB:""
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
                             drugB:""
                         })
@@ -1935,7 +1935,7 @@ export function ChatbotCham({ navigation }) {
                 if(a[2]<10){
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
                         drugB:""
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
                             drugB:""
                         })
@@ -1943,7 +1943,7 @@ export function ChatbotCham({ navigation }) {
                 }else{
                     firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
                         drugB:""
-                    }).catch(
+                    }).catch(()=>
                         firestore().collection("UserInfo").doc(USER.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
                             drugB:""
                         })

@@ -558,12 +558,46 @@ export function SmokeAlertFour({ navigation }) {
         } else {
             a[1] = a[1] + 1
         }
-        await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-            endure:"참기에 성공하셨습니다"
-        }).catch(() =>
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
-                endure: "참기에 성공하셨습니다"
-            }))
+        if(a[1]<10){
+            if(a[2]<10){
+                await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
+                    endure:"참기에 성공하셨습니다"
+                }).catch(()=>
+                     firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
+                        endure:"참기에 성공하셨습니다"
+                    })
+                )
+            }else{
+                await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
+                    endure:"참기에 성공하셨습니다"
+                }).catch(()=>
+                     firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
+                        endure:"참기에 성공하셨습니다"
+                    })
+                )
+            }
+            
+        }else{
+            if(a[2]<10){
+                await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
+                    endure:"참기에 성공하셨습니다"
+                }).catch(()=>
+                     firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
+                        endure:"참기에 성공하셨습니다"
+                    })
+                )
+            }else{
+                await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+                    endure:"참기에 성공하셨습니다"
+                }).catch(()=>
+                     firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                        endure:"참기에 성공하셨습니다"
+                    })
+                )
+            }
+            
+        }
+       
             navigation.navigate("Home")
     }
     useEffect(()=>{
