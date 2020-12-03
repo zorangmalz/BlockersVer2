@@ -305,10 +305,10 @@ export default function LoginVerificationProfile({ navigation, route }) {
                     <View style={{ marginTop: "70%" }}>
                         <Text style={login.rule}>
                             계정 생성시 Blockers
-                        <Text style={{ textDecorationLine: 'underline' }}> 개인정보 처리약관</Text>
+                        <TouchableOpacity onPress={() => navigation.navigate("개인정보처리방침")}><Text style={{ textDecorationLine: 'underline' }}> 개인정보 처리약관</Text></TouchableOpacity>
                         과</Text>
                         <Text style={login.rule}>
-                            <Text style={{ textDecorationLine: 'underline' }}>이용약관</Text>
+                            <TouchableOpacity onPress={() => navigation.navigate("서비스 이용 약관")}><Text style={{ textDecorationLine: 'underline' }}>이용약관</Text></TouchableOpacity>
                         에 동의하게 됩니다.(마케팅 정보 수신동의 포함)</Text>
                     </View>
                 </ScrollView>
