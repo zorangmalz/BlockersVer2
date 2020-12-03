@@ -551,20 +551,21 @@ function TabOne({ navigation }) {
             smokingTime = doc.data().SmokingTime
             setSmokingOrNot(doc.data().smoker)
         })
-        var a = moment().toArray()
-
-        if (a[1] === 12) {
-            a[1] = 1
-            a[0]=a[0]+1
-        } else {
-            a[1] = a[1] + 1
+        if(smokingTime[1]===1){
+            smokingTime[0]=smokingTime[0]-1
+            smokingTime[1]=12
+        }else{
+            smokingTime[1]=smokingTime[1]-1
         }
+        console.log(smokingTime,"this")
+        
+        var a = moment()
 
-        var x = moment(a)
+        
         var y = moment(smokingTime)
-        var durationMinute = moment.duration(x.diff(y)).asMinutes()
+        var durationMinute = moment.duration(a.diff(y)).asMinutes()
 
-
+        console.log(durationMinute,"dfqoiwefjpqwofjeo")
         if (durationMinute < 20) {
             setNum(0)
         } else if (durationMinute < 480) {

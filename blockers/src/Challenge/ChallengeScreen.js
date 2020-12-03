@@ -118,7 +118,7 @@ export default function Challenge({ navigation }) {
                 hi()
                 if (challenge) {
                     checkRate()
-                    console.log("hereaefae")
+                    console.log("hereaefadvfasdfasdae")
                 }
             } else {
                 setLogined(false)
@@ -261,7 +261,9 @@ export default function Challenge({ navigation }) {
             </View>
         )
     }
-
+    useEffect(()=>{
+        checkRate()
+    },[change])
     //로그인 띄울때 사용
     const loginview = () => {
         Alert.alert(
@@ -353,7 +355,13 @@ export default function Challenge({ navigation }) {
                 progressFor = doc.data().progress
             })
             console.log(time,"time")
-            
+            var a=moment().toArray()
+            if (a[1]===12){
+                a[1]=1
+                a[0]=a[0]+1
+            }else{
+                a[1]=a[1]+1
+            }
             if(time[1]===1){
                 time[0]=time[0]-1
                 time[1]=12
@@ -364,7 +372,7 @@ export default function Challenge({ navigation }) {
             var y = moment(time)
             var durationWeek = moment.duration(x.diff(y)).asWeeks()
             var durationMonth = moment.duration(x.diff(y)).asMonths()
-            console.log(progressFor)
+            console.log(progressFor,"ㅔprogressfor")
             // console.log(x)
             console.log(weekFire, monthFire,"firest")
             console.log(durationWeek, durationMonth,"secons")
@@ -555,6 +563,7 @@ export default function Challenge({ navigation }) {
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).update({
             mistake: mistake + 1,
         })
+        setMistake(mistake+1)
         const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
             requestNonPersonalizedAdsOnly: true,
         });
