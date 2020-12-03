@@ -168,7 +168,7 @@ export default function SolutionDTwo({ navigation ,route}) {
                     </View>
                 </View>
                 <ScrollView>
-                    <Text style={solution.largeText}>불안하고 긴장되면 담배를 파우시나요?</Text>
+                    <Text style={solution.largeText}>불안하고 긴장되면 담배를 피우시나요?</Text>
                     {one === false ?
                         <TouchableOpacity onPressIn={pushone} onPress={()=>setOne(!one)}>
                             <View style={solution.buttonBox}>
