@@ -14,7 +14,8 @@ import {
     FlatList, 
     RefreshControl,
     Modal,
-    Alert
+    Alert,
+    BackHandler
 } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
@@ -265,6 +266,24 @@ export default function CommunityHome({ navigation, route }) {
             });
         }
     }
+
+    //android 전용 뒤로가기 금지
+    useFocusEffect(
+        React.useCallback(() => {
+            if (route.params?.from) {
+                const onBackPress = () => {
+                    if (route.name === route.params?.from) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                };
+                BackHandler.addEventListener('hardwareBackPress', onBackPress);
+                return () =>
+                    BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+            }
+        }, [route.params?.from])
+    );
 
     return (
         <>

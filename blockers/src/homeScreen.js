@@ -16,6 +16,7 @@ import {
     Animated,
     Easing,
     Modal,
+    BackHandler
 } from 'react-native';
 import Swiper from 'react-native-swiper';
 import moment from "moment"
@@ -78,7 +79,7 @@ const wait = (timeout) => {
     });
 }
 
-export default function HomeScreen({ navigation}) {
+export default function HomeScreen({ navigation, route}) {
     const ref = firestore().collection("UserInfo");
     const [smokeProof, setSmokeProof] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
     const [smokeProofTwo, setSmokeProofTwo] = useState([0, 0, 0, 0, 0, 0, 0, 0, 0, 0,])
@@ -584,6 +585,38 @@ export default function HomeScreen({ navigation}) {
         } else {
             loginview()
         }
+    }
+
+    //android 전용 뒤로가기 금지
+    useFocusEffect(
+        React.useCallback(() => {
+            const onBackPress = () => {
+                if (route.name === "HomeScreen") {
+                    finish()
+                    return true;
+                } else {
+                    return false;
+                }
+            };
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+            return () =>
+                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+        }, [])
+    );
+
+    async function finish() {
+        Alert.alert(
+            '어플을 종료하겠습니까?',
+            '',
+            [
+                {
+                    text: '취소', onPress: () => console.log("cancel")
+                },
+                {
+                    text: '확인', onPress: () => BackHandler.exitApp()
+                }
+            ]
+        )
     }
 
     return (

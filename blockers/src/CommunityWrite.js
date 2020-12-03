@@ -153,7 +153,7 @@ export default function CommunityWrite({ navigation }) {
             '',
             [
                 {
-                    text: '확인', onPress: () => navigation.navigate("Home")
+                    text: '확인', onPress: () => navigation.navigate("CommunityScreen", { from: "CommunityScreen" })
                 }
             ]
         )
