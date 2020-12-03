@@ -12,25 +12,23 @@ import { useScreens } from 'react-native-screens';
 import auth, { firebase } from '@react-native-firebase/auth';
 
 export default function SplashScreen({ navigation }) {
-    const [user,setUser]=useState("")
+    const [user, setUser] = useState("")
     const [animating, setAnimating] = useState(true);
 
     useEffect(() => {
-        
         const USER = firebase.auth().currentUser
-        
-        if(USER){
+        if (USER) {
             setTimeout(() => {
                 setAnimating(false);
-                navigation.navigate('Home',{UID:user});
+                navigation.navigate('Home', { UID: user, from: "Mode" });
             }, 1000);
-        }else{
-            setTimeout(() =>  {
+        } else {
+            setTimeout(() => {
                 navigation.navigate('회원가입');
-            },1000)
+            }, 1000)
         }
     }, [])
-   
+
    
 
     return (

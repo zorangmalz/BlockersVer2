@@ -131,7 +131,7 @@ export default function LoginMain({ navigation }) {
     if (check) {
       console.log("old")
       setKakaoLoading(false)
-      navigation.navigate("Home")
+      navigation.navigate("Home", { from: "Mode" })
     } else {
       console.log("new")
       setKakaoLoading(false)
@@ -189,7 +189,7 @@ export default function LoginMain({ navigation }) {
     } else if (NewUser === false) {
       auth().signInWithCredential(googleCredential);
       setGmailLoading(false)
-      navigation.navigate("Home");
+      navigation.navigate("Home", { from: "Mode" });
     }
   }
   useEffect(() => {
@@ -204,7 +204,7 @@ export default function LoginMain({ navigation }) {
     console.log("here")
     auth().signInWithEmailAndPassword(email, password).then(() => {
       setAnonyLoading(false)
-      navigation.navigate("Home")
+      navigation.navigate("Home", { from: "Mode" })
     }).catch(error => {
       console.log("!!!")
       var errorCode = error.code;

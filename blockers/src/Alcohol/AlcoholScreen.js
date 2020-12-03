@@ -25,7 +25,7 @@ export function AThree ({navigation,route}) {
 
 export function AFour ({navigation,route}) {
     const result=route.params
-    const title = "지난 1년간, 술을 한 번 마시기 시작하면 멈출 수 없었던 때가 얼마나 자주있었습니까?";
+    const title = "지난 1년간, 술을 한 번 마시기 시작하면 멈출 수 없었던 때가 얼마나 자주 있었습니까?";
     return (
         <>
             <Alcohol navigation={navigation} Nextpage="AlcoholFive" Title={title} total={Number(JSON.stringify(result.result))} Kind={false} />

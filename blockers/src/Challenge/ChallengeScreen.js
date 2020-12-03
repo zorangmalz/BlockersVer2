@@ -2028,7 +2028,16 @@ export function ChallengeSupport({ navigation }) {
             navigation.navigate("Home")
         }
         else {
-            Alert.alert("링크를 공유해보세요")
+            Alert.alert(
+                "링크를 공유해보세요.", 
+                "",
+                [
+                    {
+                        text: "확인",
+                        onPress: () => console.log("확인")
+                    }
+                ]
+                )
         }
     }
     async function kakao() {

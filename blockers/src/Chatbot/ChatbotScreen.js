@@ -668,7 +668,7 @@ function TabOne({ navigation }) {
                             color: "#303030",
                             opacity: 0.7,
                             lineHeight: 26
-                        }}>건강이 나빠집니다 {`\n`}{`\n`}-심혈관 질환 증가{`\n`}-뇌졸증 위험 증가 {`\n`}- 호흡기 문제 {`\n`}- 임신 합병증 {`\n`}- 생식 건강 문제</Text>
+                        }}>건강이 나빠집니다 {`\n`}{`\n`}- 심혈관 질환 증가{`\n`}- 뇌졸증 위험 증가 {`\n`}- 호흡기 문제 {`\n`}- 임신 합병증 {`\n`}- 생식 건강 문제</Text>
                     </View>
                 </>
                 :
@@ -1448,7 +1448,7 @@ export function ChatbotWell({ navigation }) {
         })
         if(check==="well"||check==="cham"){
             Alert.alert(
-                '기존 복약 정보가 있습니다?',
+                '기존 복약 정보가 있습니다.',
                 '새로운 복약 정보를 등록하면 \n기존 정보가 사라집니다.',
                 [
                     {

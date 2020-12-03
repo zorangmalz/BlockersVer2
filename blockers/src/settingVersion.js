@@ -46,7 +46,7 @@ export default function SettingVersion({ navigation }) {
                         fontFamily: 'NunitoSans-Regular',
                         alignSelf: 'center',
                         color: '#303030'
-                    }}>최신버전입니다!</Text>
+                    }}>최신버전입니다.</Text>
                 </ScrollView>
             </SafeAreaView>
         </>
