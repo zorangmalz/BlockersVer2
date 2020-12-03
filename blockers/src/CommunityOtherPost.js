@@ -854,7 +854,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                             ]
                                         )
                                 }}>
-                                    <Ionicons name="send" size={15} color="#5cc27b" />
+                                    <Ionicons name="send" size={25} color="#5cc27b" />
                                 </TouchableOpacity>
                             </View>
                         </View>
