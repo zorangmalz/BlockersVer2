@@ -2328,7 +2328,6 @@ export function ChallengeSwear({ navigation }) {
                         </KeyboardAvoidingView>
                         <KeyboardAvoidingView>
                             <TextInput
-                                placeholder="텍스트 입력"
                                 placeholderTextColor="#ffffff"
                                 multiline={true}
                                 value={comment2}
@@ -2348,7 +2347,6 @@ export function ChallengeSwear({ navigation }) {
                         </KeyboardAvoidingView>
                         <KeyboardAvoidingView>
                             <TextInput
-                                placeholder="텍스트 입력"
                                 placeholderTextColor="#ffffff"
                                 multiline={true}
                                 value={comment3}

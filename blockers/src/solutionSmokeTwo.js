@@ -111,7 +111,7 @@ export default function SolutionSmokeTwo({ navigation,route }) {
         two === true ? count = count + 1 : count = count - 1;
         three === true ? count = count + 1 : count = count - 1;
         four === true ? count = count + 1 : count = count - 1;
-        if ((count <= 2) && (count >= 0)) {
+        if ((count <= 1) && (count >= 0)) {
             setClear(true);
             console.log(select)
         } else {
