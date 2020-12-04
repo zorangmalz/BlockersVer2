@@ -169,7 +169,7 @@ export default function SolutionBTwo({ navigation,route }) {
                     </View>
                 </View>
                 <ScrollView>
-                    <Text style={solution.largeText}>담배를 꺼내 불을 붙이고 연기를 들여마시고 내뿜고, 재떨이에 비벼끄는 과정을 즐기시나요?</Text>
+                    <Text style={solution.largeText}>담배를 꺼내 불을 붙이고 연기를 들이마시고 내뿜고, 재떨이에 비벼끄는 과정을 즐기시나요?</Text>
                     {one === false ?
                         <TouchableOpacity onPressIn={pushone} onPress={()=>setOne(!one)}>
                             <View style={solution.buttonBox}>

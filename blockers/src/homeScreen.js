@@ -923,7 +923,7 @@ export default function HomeScreen({ navigation, route}) {
                                 <Text style={{ fontSize: 16, fontFamily: 'NunitoSans-Bold', marginLeft: 8, color: '#303030' }}>금연일기</Text>
                             </View>
                             <Text style={{ marginLeft: 32 }}>
-                                <Text style={{ fontSize: 16, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>오늘의 금연 일기를 작성해보세요.</Text>
+                                <Text style={{ fontSize: 16, color: '#303030', fontFamily: 'NunitoSans-Regular' }}>오늘의 흡연 충동을 기록해보세요.</Text>
                             </Text>
                         </TouchableOpacity>
                     }

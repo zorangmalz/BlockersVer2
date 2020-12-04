@@ -931,7 +931,7 @@ export function ChallengeRegister({ navigation }) {
         } else if (month === 3) {
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
                 title: "금연활동 인증하기 (주1회)",
-                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
+                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는 것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
                 stats: false,
                 period: "once",
                 id: 9,
@@ -1001,7 +1001,7 @@ export function ChallengeRegister({ navigation }) {
             })
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("자기 효능감 평가(월1회)").set({
                 title: "자기 효능감 평가(월1회)",
-                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을체크하고 금연 성공하세요.",
+                content: "자기 효능감과 금연의 밀접한 관계, 나의 자기 효능감을 체크하고 금연 성공하세요.",
                 stats: false,
                 period: "monthly",
                 id: 2,
@@ -1042,7 +1042,7 @@ export function ChallengeRegister({ navigation }) {
         } else if (month === 6) {
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연활동 인증하기 (주1회)").set({
                 title: "금연활동 인증하기 (주1회)",
-                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
+                content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는 것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
                 stats: false,
                 period: "once",
                 id: 9,
@@ -1278,7 +1278,7 @@ export function ChallengeRegister({ navigation }) {
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("성공 후기 작성하기").set({
             title: "성공 후기 작성하기",
-            content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요.",
+            content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요. 작성된 후기는 커뮤니티에 공유됩니다.",
             period: "final",
             id: 11,
             navigate: "ChallengeSuccess",
@@ -1900,7 +1900,7 @@ export function ChallengeMission({ navigation, route }) {
         {
             number: 6,
             title: "6. 금연활동 인증하기 (주 1회)",
-            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
+            content: "금연방법은 다양합니다. 하지만 하나를 꾸준히 하면서 실천하는 것이 어렵죠. 다양한 금연 방법을 알아보고 본인의 방법으로 인증을 실천해 보세요.",
         },
         {
             number: 7,
@@ -1912,7 +1912,7 @@ export function ChallengeMission({ navigation, route }) {
         {
             number: 1,
             title: "1. 성공 후기 작성하기",
-            content: "금연 성공한 후 느낀점, 다른사람에게 하고싶은말, 지지자에게 고마움을 표현해 보세요.",
+            content: "금연 성공한 후 느낀점, 다른사람에게 하고 싶은 말, 지지자에게 고마움을 표현해 보세요. 작성된 후기는 커뮤니티에 공유됩니다.",
         },
     ]
     return (
@@ -2128,7 +2128,7 @@ export function ChallengeSupport({ navigation }) {
                             color: "#303030",
                             marginTop: 16,
                         }}>
-                            나의 지지자는 누구지?
+                            나의 지지자는 누군가요?
                         </Text>
                         <KeyboardAvoidingView>
                             <TextInput
@@ -3546,72 +3546,72 @@ export function ChallengeGDResult({ navigation }) {
         {
             id: 1,
             symptom: "갈증",
-            content: "얼음물 또는 주스를 한 모금씩 마시기,껌을 씹어 입마름을 해소하기,짜게 먹지 않기,양치질 하기."
+            content: "얼음물 또는 주스를 한 모금씩 마시기, 껌을 씹어 입마름을 해소하기,짜게 먹지 않기, 양치질 하기."
         },
         {
             id: 2,
             symptom: "소화장애",
-            content: "고지방 음식, 단 음식, 카페인 함량이 많은 음식을 피하기,자극적인 음식을 피하기,섬유소가 많은 음식 섭취하기."
+            content: "고지방 음식, 단 음식, 카페인 함량이 많은 음식을 피하기, 자극적인 음식을 피하기, 섬유소가 많은 음식 섭취하기."
         },
         {
             id: 3,
             symptom: "기침",
-            content: "물을 많이 마셔 기관지 점막을 부드럽게 하기,항생제를 사용하지 않을 것,가능한 기침을 약하게 하기."
+            content: "물을 많이 마셔 기관지 점막을 부드럽게 하기, 항생제를 사용하지 않을 것, 가능한 기침을 약하게 하기."
         },
         {
             id: 4,
             symptom: "두통",
-            content: "물을 많이 마시고, 커피를 줄인다,가벼운 운동하기,따뜻한 물로 샤워하기,신선한 공기를 위해 창문을 열거나 가벼운 산책하기,5분 간 누워서 휴식 취하기."
+            content: "물을 많이 마시고, 커피를 줄인다, 가벼운 운동하기,따뜻한 물로 샤워하기, 신선한 공기를 위해 창문을 열거나 가벼운 산책하기, 5분 간 누워서 휴식 취하기."
         },
         {
             id: 5,
             symptom: "배고픔",
-            content: "평소 세 끼의 식사를 적당한 양으로 규칙적으로 하기,칼로리가 낮은 스낵이나 음료 마시기 (물, 해바라기씨, 당근, 오이, 무가당 껌 등) ,체중관리를 위해 적당한 운동 병행하기."
+            content: "평소 세 끼의 식사를 적당한 양으로 규칙적으로 하기, 칼로리가 낮은 스낵이나 음료 마시기 (물, 해바라기씨, 당근, 오이, 무가당 껌 등), 체중관리를 위해 적당한 운동 병행하기."
         },
         {
             id: 6,
             symptom: "불면",
-            content: "이완운동하기,자기 전 무리한 운동하지 않기,명상하기,카페인 줄이기."
+            content: "이완운동하기, 자기 전 무리한 운동하지 않기,명상하기, 카페인 줄이기."
         },
         {
             id: 7,
             symptom: "불안감",
-            content: "온수로 목욕 또는 샤워, 가벼운 산책 또는 운동,누워서 쉬기,경험했던 조용하고 평화로운 장면 생각하기."
+            content: "온수로 목욕 또는 샤워, 가벼운 산책 또는 운동, 누워서 쉬기, 경험했던 조용하고 평화로운 장면 생각하기."
         },
         {
             id: 8,
             symptom: "우울감",
-            content: "운동을 하여 땀을 흘리고, 물 많이 마시기,몸을 편하게 눕히는 이완 운동하기,따뜻한 물로 샤워하기,과일 쥬스 마시기,즐거운 생각하기."
+            content: "운동을 하여 땀을 흘리고, 물 많이 마시기, 몸을 편하게 눕히는 이완 운동하기, 따뜻한 물로 샤워하기, 과일 쥬스 마시기, 즐거운 생각하기."
         },
         {
             id: 9,
             symptom: "신경과민",
-            content: "휴식을 취하고 신선한 공기를 마시며 산책하기,운동을 시작하거나 손으로 하는 다른 일에 집중하기,심호흡을 함으로써 긴장을 이완시키기,경험했던 조용하고 평화로운 장면 생각하기."
+            content: "휴식을 취하고 신선한 공기를 마시며 산책하기, 운동을 시작하거나 손으로 하는 다른 일에 집중하기, 심호흡을 함으로써 긴장을 이완시키기, 경험했던 조용하고 평화로운 장면 생각하기."
         },
         {
             id: 10,
             symptom: "쑤시는 느낌",
-            content: "따뜻한 물로 목욕하기,따끔거리는 곳을 마사지 해주기,가벼운 산책하기."
+            content: "따뜻한 물로 목욕하기, 따끔거리는 곳을 마사지 해주기, 가벼운 산책하기."
         },
         {
             id: 11,
             symptom: "입안의 통증",
-            content: "얼음물 또는 주스를 한 모금씩 마시기,껌을 씹어 입마름을 해소하기,짜게 먹지 않기,양치질 하기."
-        },
+            content: "얼음물 또는 주스를 한 모금씩 마시기, 껌을 씹어 입마름을 해소하기, 짜게 먹지 않기, 양치질 하기."
+        }, 
         {
-            id: 12,
-            symptom: "집중력 감소",
-            content: "휴식을 취하고 마음을 편히 갖고 심호흡을 하기,많이 힘들면 일을 중단하고 잠깐 눈 붙이기,명상을 통해 집중력 향상시키기."
+            id: 12, 
+            symptom: "집중력 감소", 
+            content: "휴식을 취하고 마음을 편히 갖고 심호흡을 하기, 많이 힘들면 일을 중단하고 잠깐 눈 붙이기, 명상을 통해 집중력 향상시키기."
         },
         {
             id: 13,
             symptom: "피로감",
-            content: "금단 증상이 심한 2주간은 무리한 일을 피하기,낮에 잠깐씩 눈을 붙이거나 밤에는 평소보다 숙면하도록 하기,미리 주변에 양해를 구하고 금단 증상과 함께 피로감이 올 수 있음을 알릴 것."
-        },
+            content: "금단 증상이 심한 2주간은 무리한 일을 피하기, 낮에 잠깐씩 눈을 붙이거나 밤에는 평소보다 숙면하도록 하기, 미리 주변에 양해를 구하고 금단 증상과 함께 피로감이 올 수 있음을 알릴 것."
+        }, 
         {
-            id: 14,
-            symptom: "현기증",
-            content: "현기증 나는 순간을 잠시 쉬면서 넘기기,야외로 나가서 바람쐬기,천천히 일어나고 앉기,평소에 간단한 운동하기."
+            id: 14, 
+            symptom: "현기증", 
+            content: "현기증 나는 순간을 잠시 쉬면서 넘기기, 야외로 나가서 바람쐬기, 천천히 일어나고 앉기,평소에 간단한 운동하기."
         },
     ]
     return (

@@ -434,7 +434,7 @@ const Tab = createMaterialTopTabNavigator();
 const states = [
     {
         id: "금연 직후",
-        stats: "-입냄새가 나지 않습니다\n-음식 맛이 좋아집니다\n-치아가 하얗고 건강해집니다\n -후각이 돌아옵니다\n -옷과 머리에 나쁜 냄새가 사라집니다\n -계단을 오를 때 숨이 덜 차게 됩니다\n -손가락의 착색이 사라집니다."
+        stats: "-입냄새가 나지 않습니다\n-음식 맛이 좋아집니다\n-치아가 하얗고 건강해집니다\n-후각이 돌아옵니다\n-옷과 머리에 나쁜 냄새가 사라집니다\n-계단을 오를 때 숨이 덜 차게 됩니다\n-손가락의 착색이 사라집니다"
     },
     {
         id: "금연한지 20분 경과",
@@ -657,7 +657,7 @@ function TabOne({ navigation }) {
                     marginBottom: 16
                 }}>
                     <View style={{ width: 8, height: 8, backgroundColor: "#303030", borderRadius: 4, marginRight: 8 }} />
-                    <Text style={{ fontFamily: "NunitoSans-Bold", fontSize: 14, color: "#303030" }}>흡연중입니다</Text>
+                    <Text style={{ fontFamily: "NunitoSans-Bold", fontSize: 14, color: "#303030" }}>흡연중 입니다</Text>
                 </View>
                 <View style={{
                         marginTop: 16,
@@ -1081,7 +1081,7 @@ function TabTwo({ navigation }) {
                                     color: "#303030",
                                     alignSelf: "center",
                                     marginTop: 8
-                                }}>자기효능감</Text>
+                                }}>자기 효능감</Text>
                             </ProgressCircle>
                             <ProgressCircle size={72} color={resultsS === "Good" ? "#5cc27b" : resultsS == "Normal" ? "#ffb83d" : "#fb5757"} borderWidth={0} thickness={5} unfilledColor="#E0E5EC" progress={resultS}>
                                 <Text style={{
@@ -1146,7 +1146,7 @@ function TabTwo({ navigation }) {
                         fontSize: 18,
                         fontFamily: "NunitoSans-Bold",
                         color: "#303030"
-                    }}>자기효능감 평가</Text>
+                    }}>자기 효능감 평가</Text>
                     <FlatList
                         style={{
                             marginLeft: 32,
