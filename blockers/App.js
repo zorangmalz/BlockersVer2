@@ -93,6 +93,7 @@ import NicotineResult from "./src/NicotineResult";
 import AlramScreen from './src/AlramScreen';
 import NotificationContents from './src/NotificationContents';
 import SettingMode, { SettingModeNonSmoker, SettingModeSelectSmoker } from './src/SettingMode';
+import GuideScreen from './src/Guide/GuideScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -1246,7 +1247,15 @@ const App = ({ navigation }) => {
             name="AlramScreen"
             component={AlramScreen}
             options={{
-              gestureDirection: "horizontal-inverted",
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+          <Stack.Screen 
+            name="GuideScreen"
+            component={GuideScreen}
+            options={{
+              gestureDirection: "vertical-inverted",
               headerShown: false
             }}
           />

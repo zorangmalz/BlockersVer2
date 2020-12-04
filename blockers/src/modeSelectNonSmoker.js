@@ -140,7 +140,7 @@ export default function ModeSelectNonSmoker({ navigation, route }) {
             smokingAmount: amount,
             smokingMg: mg
         })
-        navigation.navigate("Home")
+        navigation.navigate("GuideScreen", { from: "GuideScreen" })
     }
 
     //다음 버튼 눌렀는지 유무
