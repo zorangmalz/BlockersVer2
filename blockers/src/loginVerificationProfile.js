@@ -297,7 +297,6 @@ export default function LoginVerificationProfile({ navigation, route }) {
                                 containerStyle={{ width: "25%", height: 30 }}
                                 label="성별"
                                 data={GenderData}
-                                valueExtractor={({value}) => setGender(value)}
                                 onChangeText={({value}) => setGender(value)}
                             />
                             <TextInput keyboardType="number-pad" onChangeText={text => setBirthday(text)} style={[login.textinput, { width: "45%", marginLeft: "12%", alignSelf: "flex-start" }]} placeholder="생일(940524)" />
