@@ -164,7 +164,7 @@ export default function ModeSelectSmoker({ navigation, route }) {
                 navigation.addListener('beforeRemove', (e) => {
                     e.preventDefault();
                     Alert.alert(
-                        '회원가입을 중단하겠습니까??',
+                        '회원가입을 중단하겠습니까?',
                         '',
                         [
                             {
@@ -200,7 +200,7 @@ export default function ModeSelectSmoker({ navigation, route }) {
 
     async function finishLogin() {
         Alert.alert(
-            '회원가입을 중단하겠습니까??',
+            '회원가입을 중단하겠습니까?',
             '',
             [
                 {
