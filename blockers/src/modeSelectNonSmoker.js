@@ -129,7 +129,7 @@ export default function ModeSelectNonSmoker({ navigation, route }) {
             updateInfo(user.uid, select, several, mg)
         } else if (thirty == true) {
 
-            updateInfo(user.uid, select, num2, 0)
+            updateInfo(user.uid, select, num, 0)
         }
     }
 
@@ -388,6 +388,40 @@ export default function ModeSelectNonSmoker({ navigation, route }) {
                         :
                         <View />
                     }
+                     {thirty === true ?
+                        <>
+                            <Text style={[mode.largeText, { marginBottom: 0 }]}>하루에 담배를 몇 개피 피우셨었나요?</Text>
+                            <View style={{
+                                width: "35%",
+                                height: 50,
+                                borderBottomColor: '#5cc27b',
+                                borderBottomWidth: 2,
+                                alignSelf: 'flex-end',
+                                marginRight: '10%',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                flexDirection: 'row'
+                            }}>
+                                <TextInput keyboardType="numeric" style={{
+                                    fontSize: 21,
+                                    color: '#303030',
+                                    fontFamily: 'NunitoSans-Regular',
+                                    paddingBottom: 0,
+                                    width: 100
+                                }}
+                                    value={num}
+                                    onChangeText={text => setNum(text)}
+                                />
+                                <Text style={{
+                                    fontSize: 21,
+                                    color: '#303030',
+                                    fontFamily: 'NunitoSans-Regular'
+                                }}>개피</Text>
+                            </View>
+                        </>
+                        :
+                        <View />
+                    }
                 </ScrollView>
                 <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     {ten === true ?
@@ -416,6 +450,7 @@ export default function ModeSelectNonSmoker({ navigation, route }) {
                                 </View>
                             :
                             thirty === true ?
+                                num.length>0?
                                 <TouchableOpacity onPress={move}>
                                     <View style={{ width: "100%", height: 60, backgroundColor: '#5cc27b', justifyContent: 'center', alignItems: 'center' }}>
                                         <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
@@ -425,6 +460,8 @@ export default function ModeSelectNonSmoker({ navigation, route }) {
                                 <View style={{ width: "100%", height: 60, backgroundColor: '#c6c6c6', justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ fontSize: 18, color: '#ffffff' }}>확인</Text>
                                 </View>
+                            :
+                            <></>
                     }
                 </TouchableOpacity>
             </SafeAreaView>
