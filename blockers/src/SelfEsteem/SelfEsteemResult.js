@@ -100,7 +100,7 @@ export default function SelfEsteemResult({navigation,route}) {
                         color: "#5cc27b",
                         alignSelf: "center",
                         marginTop: 20
-                    }}>{name}님의 자기효능감 평가 결과</Text>
+                    }}>{name}님의 자기 효능감 평가 결과</Text>
                     <ProgressCircle
                         style={{
                             marginTop: 20,

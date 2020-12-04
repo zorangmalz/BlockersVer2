@@ -187,7 +187,7 @@ export default function SelfEsteem({ navigation, Nextpage, Title,total,name}) {
                         }}
                     >
                         <Text style={{ fontSize: 18 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자기효능감 평가</Text>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자기 효능감 평가</Text>
                         </Text>
                     </View>
                 </View>
@@ -335,7 +335,7 @@ export function SelfEsteemMain({ navigation,route }) {
                         }}
                     >
                         <Text style={{ fontSize: 18 }}>
-                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자기효능감 평가</Text>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>자기 효능감 평가</Text>
                         </Text>
                     </View>
                 </View>
@@ -448,8 +448,8 @@ export function SelfEsteemFinal({navigation,route}) {
         if(Number(result.result)>=45){
             resultWord="Good"
             setResults("Good")
-            content= "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!"
-            setResultcontent( "높은 자기효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!")
+            content= "높은 자기 효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!"
+            setResultcontent( "높은 자기 효능감을 가지고있군요! \n금연을 성공할 수 있는 자신감이있는 상태입니다. \n챗봇 & 건강리포트에서 내 상태 변화와 \n다양한 정보를 알아보세요!")
         }else if(35<=Number( result.result)){
             resultWord="Normal"
             setResults("Normal")
@@ -577,7 +577,7 @@ export function SelfEsteemFinal({navigation,route}) {
                         color: "#5cc27b",
                         alignSelf: "center",
                         marginTop: 20
-                    }}>{name}님의 자기효능감 평가 결과</Text>
+                    }}>{name}님의 자기 효능감 평가 결과</Text>
                     <ProgressCircle
                         style={{
                             marginTop: 20,
