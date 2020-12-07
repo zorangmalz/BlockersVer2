@@ -32,7 +32,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { utils } from '@react-native-firebase/app';
 
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-8262202601779055/8327183632';
-
+const adUnitIdInt = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8771472802759230/4285909965":'ca-app-pub-8771472802759230/7895990090' ) ;
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -568,7 +568,7 @@ export default function Challenge({ navigation }) {
             mistake: mistake + 1,
         })
         setMistake(mistake+1)
-        const interstitial = InterstitialAd.createForAdRequest(TestIds.INTERSTITIAL, {
+        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt.INTERSTITIAL, {
             requestNonPersonalizedAdsOnly: true,
         });
         interstitial.onAdEvent((type) => {
