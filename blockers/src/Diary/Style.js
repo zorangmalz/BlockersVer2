@@ -175,7 +175,7 @@ export function Create({ navigation }) {
     }
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
                 <Header navigation={navigation} Create={true} />
                 <KeyboardAwareScrollView>
@@ -425,7 +425,7 @@ export function List({ navigation }) {
     }
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
                 {loading ?
                     <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT - 20, left: WIDTH - 20 }} />

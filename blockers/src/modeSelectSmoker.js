@@ -98,6 +98,7 @@ export default function ModeSelectSmoker({ navigation, route }) {
     }
 
     useEffect(() => {
+        console.log("aksjfeopasji")
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
@@ -158,28 +159,28 @@ export default function ModeSelectSmoker({ navigation, route }) {
     const [ios, setIos] = useState(false);
     
     //ios 전용
-    useEffect(() => {
-        if (Platform.OS === "ios") {
-            if (ios === false) {
-                navigation.addListener('beforeRemove', (e) => {
-                    e.preventDefault();
-                    Alert.alert(
-                        '회원가입을 중단하겠습니까?',
-                        '',
-                        [
-                            {
-                                text: '취소', onPress: () => console.log("cancel")
-                            },
-                            {
-                                text: '확인',
-                                onPress: () => { navigation.dispatch(e.data.action), deletes() }
-                            },
-                        ]
-                    );
-                }), [navigation]
-            }
-        }
-    }, [ios]);
+    // useEffect(() => {
+    //     if (Platform.OS === "ios") {
+    //         if (ios === false) {
+    //             navigation.addListener('beforeRemove', (e) => {
+    //                 e.preventDefault();
+    //                 Alert.alert(
+    //                     '회원가입을 중단하겠습니까?',
+    //                     '',
+    //                     [
+    //                         {
+    //                             text: '취소', onPress: () => console.log("cancel;")
+    //                         },
+    //                         {
+    //                             text: '확인',
+    //                             onPress: () => { navigation.dispatch(e.data.action), deletes() }
+    //                         },
+    //                     ]
+    //                 );
+    //             }), [navigation]
+    //         }
+    //     }
+    // }, [ios]);
 
     //android 전용
     useFocusEffect(
@@ -204,7 +205,7 @@ export default function ModeSelectSmoker({ navigation, route }) {
             '',
             [
                 {
-                    text: '취소', onPress: () => console.log("cancel")
+                    text: '취소', onPress: () => console.log("cancell?smo fini")
                 },
                 {
                     text: '확인', onPress: () => deletes()
@@ -239,13 +240,18 @@ export default function ModeSelectSmoker({ navigation, route }) {
             })
         })
     }
+    async function iosdeletes() {
+        const user = firebase.auth().currentUser
+        user.delete()
+        
+    }
 
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                    <TouchableOpacity onPress={Platform.OS === "android" ? finishLogin : navigation.goBack()}>
+                    <TouchableOpacity onPress={finishLogin}>
                         <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
                     <View

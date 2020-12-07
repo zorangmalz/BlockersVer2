@@ -30,7 +30,7 @@ const setting = StyleSheet.create({
 export default function SettingQuestion({ navigation }) {
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>

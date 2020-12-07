@@ -70,7 +70,7 @@ export default function LoginVerificationProfile({ navigation, route }) {
     const [imageSource, setImageSource] = useState(undefined);
     const [isImage, setIsImage] = useState(false);
     const [haveProfile, setHaveProfile] = useState(false);
-
+    const [ios, setIos] = useState(false);
     const [totalUser, setTotalUser] = useState()
     const ref = firestore().collection("UserInfo");
 
@@ -110,6 +110,7 @@ export default function LoginVerificationProfile({ navigation, route }) {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
+        console.log("come in!!!!!!!??조")
     }, []);
 
     useEffect(() => {
@@ -176,62 +177,69 @@ export default function LoginVerificationProfile({ navigation, route }) {
     }
 
     //다음 버튼 눌렀는지 유무
-    const [ios, setIos] = useState(false);
+    
 
     //ios 전용
-    useEffect(() => {
-        if (Platform.OS === "ios") {
-            if (ios === false) {
-                navigation.addListener('beforeRemove', (e) => {
-                    e.preventDefault();
-                    Alert.alert(
-                        '회원가입을 중단하겠습니까?',
-                        '',
-                        [
-                            {
-                                text: '취소', onPress: () => console.log("cancel")
-                            },
-                            {
-                                text: '확인',
-                                onPress: () => { navigation.dispatch(e.data.action), iosdeletes() }
-                            },
-                        ]
-                    );
-                }), [navigation]
-            }
-        }
-    }, [ios]);
+    // useEffect(() => {
+    //     if (Platform.OS === "ios") {
+    //         if (ios === false) {
+    //             navigation.addListener('beforeRemove', (e) => {
+    //                 e.preventDefault();
+                    
+    //                 Alert.alert(
+    //                     '회원가입을 중단하겠습니까?',
+    //                     '',
+    //                     [
+    //                         {
+    //                             text: '취소', onPress: () => console.log("cancell??")
+    //                         },
+    //                         {
+    //                             text: '확인',
+    //                             onPress: () => { navigation.dispatch(e.data.action), iosdeletes() }
+    //                         },
+    //                     ]
+    //                 );
+    //             }), [navigation]
+    //         }
+    //     }
+    // }, [ios]);
 
     //ios전용 함수
-    async function iosdeletes() {
-        const user = firebase.auth().currentUser
-        user.delete()
-    }
+    // async function iosdeletes() {
+    //     const user = firebase.auth().currentUser
+    //     user.delete()
+    // }
 
     //android 전용
     useFocusEffect(
+        
         React.useCallback(() => {
-            const onBackPress = () => {
-                if (route.name === "프로필 설정") {
-                    finishLogin()
-                    return true;
-                } else {
-                    return false;
-                }
-            };
-            BackHandler.addEventListener('hardwareBackPress', onBackPress);
-            return () =>
-                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+            if(Platform.OS==="android"){
+                const onBackPress = () => {
+                    if (route.name === "프로필 설정") {
+                        finishLogin()
+                        return true;
+                    } else {
+                        return false;
+                    }
+                };
+                BackHandler.addEventListener('hardwareBackPress', onBackPress);
+                return () =>
+                    BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+            }
+            
         }, [])
     );
 
-    async function finishLogin() {
+    async function finishLogin() 
+    {
+        console.log("?")
         Alert.alert(
             '회원가입을 중단하겠습니까?',
             '',
             [
                 {
-                    text: '취소', onPress: () => console.log("cancel")
+                    text: '취소', onPress: () => console.log("cancell? loginVeri")
                 },
                 {
                     text: '확인', onPress: () => deletes()
@@ -251,10 +259,10 @@ export default function LoginVerificationProfile({ navigation, route }) {
 
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                    <TouchableOpacity onPress={Platform.OS === "android" ? finishLogin : navigation.goBack()}>
+                    <TouchableOpacity onPress={finishLogin}>
                         <Ionicons name="chevron-back" size={25} />
                     </TouchableOpacity>
                     <View

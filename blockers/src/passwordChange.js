@@ -233,7 +233,7 @@ export default function PasswordChange({ navigation }) {
 
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <ScrollView style={{ marginBottom: 70 }}>
                     <View style={{ marginTop: 32 }}>

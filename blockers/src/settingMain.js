@@ -44,7 +44,7 @@ export default function SettingMain({ navigation }) {
     }
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
                 {loading ?
                     <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />

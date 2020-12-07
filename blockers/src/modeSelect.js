@@ -9,7 +9,8 @@ import {
     StyleSheet,
     TouchableOpacity,
     BackHandler,
-    Alert
+    Alert,
+    Platform
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import firestore from '@react-native-firebase/firestore';
@@ -139,35 +140,41 @@ export default function ModeSelect({ navigation, route }) {
     const [ios, setIos] = useState(false);
     
     //ios 전용
-    useEffect(() => {
-        if (Platform.OS === "ios") {
-            if (ios === false) {
-                navigation.addListener('beforeRemove', (e) => {
-                    e.preventDefault();
-                    Alert.alert(
-                        '회원가입을 중단하겠습니까?',
-                        '',
-                        [
-                            {
-                                text: '취소', onPress: () => console.log("cancel")
-                            },
-                            {
-                                text: '확인',
-                                onPress: () => { navigation.dispatch(e.data.action), deletes() }
-                            },
-                        ]
-                    );
-                }), [navigation]
-            }
-        }
-    }, [ios]);
+    // useEffect(() => {
+    //     if (Platform.OS === "ios") {
+    //         if (ios === false) {
+    //             navigation.addListener('beforeRemove', (e) => {
+    //                 e.preventDefault();
+    //                 console.log("hh")
+    //                 Alert.alert(
+    //                     '회원가입을 중단하겠습니까?',
+    //                     '',
+    //                     [
+    //                         {
+    //                             text: '취소', onPress: () => console.log("cancell?Mode ioswjsdyd")
+    //                         },
+    //                         {
+    //                             text: '확인',
+    //                             onPress: () => { navigation.dispatch(e.data.action), deletes() }
+    //                         },
+    //                     ]
+    //                 );
+    //             }), [navigation]
+    //         }
+    //     }
+    // }, [ios]);
 
     //android 전용
     useFocusEffect(
         React.useCallback(() => {
+            
+            if(Platform.OS==="android"){
+                console.log("wow")
+            
             const onBackPress = () => {
                 if (route.name === "ModeSelect") {
                     finishLogin()
+                    console.log("backbutton")
                     return true;
                 } else {
                     return false;
@@ -176,16 +183,18 @@ export default function ModeSelect({ navigation, route }) {
             BackHandler.addEventListener('hardwareBackPress', onBackPress);
             return () =>
                 BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+            }
         }, [])
     );
 
     async function finishLogin() {
+        console.log("finish??")
         Alert.alert(
             '회원가입을 중단하겠습니까?',
             '',
             [
                 {
-                    text: '취소', onPress: () => console.log("cancel")
+                    text: '취소', onPress: () => console.log("cancell?mode finisg")
                 },
                 {
                     text: '확인', onPress: () => deletes()
@@ -223,7 +232,7 @@ export default function ModeSelect({ navigation, route }) {
 
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <ScrollView>
                     <Text style={mode.title}>Welcome Blockers</Text>

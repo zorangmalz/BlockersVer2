@@ -8,7 +8,8 @@ import {
     Text,
     StyleSheet,
     TouchableOpacity,
-    BackHandler
+    BackHandler,
+    Platform
 } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { useFocusEffect } from "@react-navigation/native"
@@ -48,18 +49,22 @@ export default function GuideScreen({ navigation, route }) {
     //android 전용 뒤로가기 금지
     useFocusEffect(
         React.useCallback(() => {
-            if (route.params?.from) {
-                const onBackPress = () => {
-                    if (route.name === route.params?.from) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                };
-                BackHandler.addEventListener('hardwareBackPress', onBackPress);
-                return () =>
-                    BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+            if(Platform.OS==="android"){
+                console.log("??")
+                if (route.params?.from) {
+                    const onBackPress = () => {
+                        if (route.name === route.params?.from) {
+                            return false;
+                        } else {
+                            return true;
+                        }
+                    };
+                    BackHandler.addEventListener('hardwareBackPress', onBackPress);
+                    return () =>
+                        BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+                }
             }
+            
         }, [route.params?.from])
     );
     return (

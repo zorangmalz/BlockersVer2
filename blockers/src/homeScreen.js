@@ -124,7 +124,7 @@ export default function HomeScreen({ navigation, route}) {
           content:"재흡연은 예방할 수 있어요"   
       },
       {
-          content:"아침 식사를 거르지 말고 규칙적으로 식사하는 습관을 기르세요"   
+          content:"아침 식사를 규칙적으로 하는 습관을 기르세요"   
       },
       {
           content:"운동이나 취미생활을  시작해 보세요"   
@@ -460,7 +460,8 @@ export default function HomeScreen({ navigation, route}) {
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
         })
-        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt.INTERSTITIAL, {
+        console.log(adUnitIdInt,"hihihi")
+        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt, {
             requestNonPersonalizedAdsOnly: true,
         });
         interstitial.onAdEvent((type) => {
@@ -506,7 +507,8 @@ export default function HomeScreen({ navigation, route}) {
 
     //금연 시작시에
     async function changeToNonSmoker() {
-        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt.INTERSTITIAL, {
+        console.log(adUnitIdInt,"hihihi")
+        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt, {
             requestNonPersonalizedAdsOnly: true,
         });
         interstitial.onAdEvent((type) => {
@@ -610,7 +612,7 @@ export default function HomeScreen({ navigation, route}) {
             '',
             [
                 {
-                    text: '취소', onPress: () => console.log("cancel")
+                    text: '취소', onPress: () => console.log("cancel?")
                 },
                 {
                     text: '확인', onPress: () => BackHandler.exitApp()
@@ -621,7 +623,7 @@ export default function HomeScreen({ navigation, route}) {
 
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
                     <View

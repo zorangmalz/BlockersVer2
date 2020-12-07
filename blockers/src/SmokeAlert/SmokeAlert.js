@@ -74,7 +74,7 @@ const Header = ({ navigation }) => {
     )
 }
 function goBackWithAd(navigation){
-    const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt.INTERSTITIAL, {
+    const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt, {
         requestNonPersonalizedAdsOnly: true,
     });
     interstitial.onAdEvent((type) => {
@@ -177,7 +177,7 @@ function useInterval(callback, delay) {
 export default function SmokeAlertOne({ navigation }) {
 
     function goBackWithAd(){
-        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt.INTERSTITIAL, {
+        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt, {
             requestNonPersonalizedAdsOnly: true,
         });
         interstitial.onAdEvent((type) => {
@@ -294,7 +294,7 @@ export default function SmokeAlertOne({ navigation }) {
 
 export function SmokeAlertTwo({ navigation }) {
     function goBackWithAd(){
-        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt.INTERSTITIAL, {
+        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt, {
             requestNonPersonalizedAdsOnly: true,
         });
         interstitial.onAdEvent((type) => {
@@ -416,7 +416,7 @@ export function SmokeAlertTwo({ navigation }) {
 
 export function SmokeAlertThree({ navigation }) {
     function goBackWithAd(){
-        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt.INTERSTITIAL, {
+        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt, {
             requestNonPersonalizedAdsOnly: true,
         });
         interstitial.onAdEvent((type) => {
@@ -537,7 +537,7 @@ export function SmokeAlertThree({ navigation }) {
 export function SmokeAlertFour({ navigation }) {
     const [user,setUser]=useState("")
     function goBackWithAd(){
-        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt.INTERSTITIAL, {
+        const interstitial = InterstitialAd.createForAdRequest(adUnitIdInt, {
             requestNonPersonalizedAdsOnly: true,
         });
         interstitial.onAdEvent((type) => {

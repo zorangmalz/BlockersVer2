@@ -55,7 +55,7 @@ export default function SettingExitComplete({ navigation }) {
 
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
                 <ScrollView>
                     <Image 

@@ -291,7 +291,7 @@ export default function NotificationContents({ route, navigation }) {
 
     return (
         <>
-            <StatusBar barStyle="light-content" />
+            <StatusBar barStyle="default" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
                 {userLoading && textLoading && picLoading && replyLoading ?
                     <>
