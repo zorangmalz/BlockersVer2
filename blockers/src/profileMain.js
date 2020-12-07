@@ -139,7 +139,12 @@ export default function ProfileMain({ navigation }) {
             setUserName(documentSnapshot.data().name)
             setuserBirth(documentSnapshot.data().birth)
             setHaveProfile(documentSnapshot.data().gotProfile)
-            setSex(documentSnapshot.data().sex)
+            if(documentSnapshot.data().sex){
+                setSex(documentSnapshot.data().sex)
+            }else{
+                setSex("미설정")
+            }
+            
         })
     }
 
