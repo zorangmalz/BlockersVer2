@@ -179,7 +179,7 @@ export default function SolutionSmokeResult({navigation,route}) {
                 </ScrollView>
             </SafeAreaView>
             <SafeAreaView style={{ flex: 0 }}>
-                <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+                <TouchableOpacity onPress={() => navigation.goBack()}>
                     <View style={{
                         width: "100%",
                         height: 60,

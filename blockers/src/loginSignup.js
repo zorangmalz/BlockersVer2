@@ -19,6 +19,7 @@ import KakaoLogins, { KAKAO_AUTH_TYPES } from '@react-native-seoul/kakao-login';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { firebase } from '@react-native-firebase/functions';
 import { useFocusEffect } from '@react-navigation/native';
+import { appleAuth } from '@invertase/react-native-apple-authentication'
 // import { kakaoCustomAuth } from '../functions';
 
 const WIDTH = Dimensions.get("screen").width;
@@ -397,11 +398,45 @@ export default function LoginSignup({ navigation }) {
       setSignUpState(false)
     }
   })
+
+  const [appleloading, setappleloading] = useState(false)
+  async function onAppleButtonPress() {
+    setappleloading(true)
+    console.log("con")
+    // Start the sign-in request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+  
+    // Ensure Apple returned a user identityToken
+    if (!appleAuthRequestResponse.identityToken) {
+      throw 'Apple Sign-In failed - no identify token returned';
+    }
+  
+    // Create a Firebase credential from the response
+    const { identityToken, nonce } = appleAuthRequestResponse;
+    const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
+    const NewUser = (await auth().signInWithCredential(appleCredential)).additionalUserInfo.isNewUser
+    // Sign-in the user with the credential
+    if (NewUser === true) {
+      auth().signInWithCredential(appleCredential);
+      setappleloading(false)
+      navigation.navigate("프로필 설정");
+    } else if (NewUser === false) {
+      auth().signInWithCredential(appleCredential);
+      setappleloading(false)
+      navigation.navigate("Home");
+    }
+    // Sign the user in with the credential
+    return 
+  }
+
   return (
     <>
       <StatusBar barStyle="default" />
       <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-        {kakaoloading || gmailLoading || anonyLoading ?
+        {kakaoloading || gmailLoading || anonyLoading ||appleloading ?
           <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
           :
           <>
@@ -414,9 +449,7 @@ export default function LoginSignup({ navigation }) {
               :
               <>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
-                  <TouchableOpacity onPress={() => navigation.goBack()}>
-                    <Ionicons name="chevron-back" size={25} />
-                  </TouchableOpacity>
+              
                   <View
                     style={{
                       height: 44,
@@ -460,6 +493,15 @@ export default function LoginSignup({ navigation }) {
                   <TouchableOpacity isLoading={loginLoading} onPress={() => kakaoLogin()} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#f6e14b' }]}>
                     <Text style={[login.buttontext, { color: '#303030' }]}>Kakaotalk으로 시작하기</Text>
                   </TouchableOpacity>
+                  {Platform.OS=="ios" ?
+
+<TouchableOpacity onPress={onAppleButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#000000' }]}>
+<Text style={[login.buttontext, { color: '#ffffff' }]}>Apple로 로그인</Text>
+</TouchableOpacity>
+:
+<>
+</>
+}
                 </ScrollView>
               </>
             }

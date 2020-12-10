@@ -1841,7 +1841,7 @@ export function ChatbotCham({ navigation }) {
         })
         if(check==="well"||check==="cham"){
             Alert.alert(
-                '기존 복약 정보가 있습니다?',
+                '기존 복약 정보가 있습니다',
                 '새로운 복약 정보를 등록하면 \n기존 정보가 사라집니다',
                 [
                     {

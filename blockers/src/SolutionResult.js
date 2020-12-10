@@ -168,7 +168,6 @@ setSub2Str(sg)
         <>
             <StatusBar barStyle="dark-content" />
             <SafeAreaView style={{flex: 1, backgroundColor: "#ffffff"}}>
-                <ScrollView>
             <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
                         <Ionicons name="chevron-back" size={25} />
@@ -187,6 +186,8 @@ setSub2Str(sg)
                         </Text>
                     </View>
                 </View>
+                <ScrollView>
+           
                 <View style={{
                     marginHorizontal: "9%"
                 }}>

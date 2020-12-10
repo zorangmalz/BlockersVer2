@@ -37,7 +37,7 @@ import MypageMyWriting from './src/MypageMyWriting';
 import LoginSignup from './src/LoginSignup';
 import LoginMain from './src/LoginMain';
 import LoginVerification from './src/LoginVerification';
-import Challenge, { ChallengeVeriResult,ChallengeMotivationResult,ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowhow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport, ChallengeSwear, ChallengeVeri, ChallengeVeriImage,ChallengeSwearResult } from './src/Challenge/ChallengeScreen';
+import Challenge, { ChallengeGDFinal,ChallengeVeriResult,ChallengeMotivationResult,ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowhow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport,ChallengeSupportResult, ChallengeSwear, ChallengeVeri, ChallengeVeriImage,ChallengeSwearResult } from './src/Challenge/ChallengeScreen';
 import ProfileNickname from './src/ProfileNickname';
 import LoginVerificationProfile from './src/LoginVerificationProfile';
 import LoginPassword from "./src/LoginPassword";
@@ -89,6 +89,7 @@ import SolutionSmokeTwo from './src/SolutionSmokeTwo';
 import SolutionSmokeThree from './src/SolutionSmokeThree';
 import SolutionSmokeResult from './src/SolutionSmokeResult';
 import SolutionResult from './src/SolutionResult';
+import SolutionResultReal from './src/SolutionResultReal';
 import NicotineResult from "./src/NicotineResult";
 import AlramScreen from './src/AlramScreen';
 import NotificationContents from './src/NotificationContents';
@@ -787,6 +788,14 @@ const App = ({ navigation }) => {
               headerShown: false
             }}
           />
+              <Stack.Screen 
+            name="ChallengeSupportResult"
+            component={ChallengeSupportResult}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
           <Stack.Screen 
             name="ChallengeSwear"
             component={ChallengeSwear}
@@ -902,6 +911,14 @@ const App = ({ navigation }) => {
           <Stack.Screen 
             name="ChallengeGDResult"
             component={ChallengeGDResult}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+            <Stack.Screen 
+            name="ChallengeGDFinal"
+            component={ChallengeGDFinal}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false
@@ -1230,6 +1247,14 @@ const App = ({ navigation }) => {
           <Stack.Screen 
             name="SolutionResult"
             component={SolutionResult}
+            options={{
+              gestureDirection: "vertical-inverted",
+              headerShown: false
+            }}
+          />
+                <Stack.Screen 
+            name="SolutionResultReal"
+            component={SolutionResultReal}
             options={{
               gestureDirection: "vertical-inverted",
               headerShown: false

@@ -112,7 +112,7 @@ export default function HomeScreen({ navigation, route}) {
     const [fake,setFake]=useState("")
   const tip=[
       {
-          content:"금단증상은 우리 몸에 해를 미치는 증상이 아니에요"
+          content:"금단증상은 우리 몸에 해를 끼치는 증상이 아니에요"
       },
       {
           content:"천천히, 규칙적으로, 깊은 복식 호흡을 하세요"
@@ -588,7 +588,7 @@ export default function HomeScreen({ navigation, route}) {
             loginview()
         }
     }
-
+ 
     //android 전용 뒤로가기 금지
     useFocusEffect(
         React.useCallback(() => {
@@ -672,34 +672,8 @@ export default function HomeScreen({ navigation, route}) {
                 <ScrollView refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                     {smoker ?
                         <Swiper dotStyle={{ borderColor: '#5CC27B', borderWidth: 1, backgroundColor: '#FFFFFF' }} activeDotColor='#5CC27B' style={{ height: 250 }}>
-                            <View>
-                                <View style={{ zIndex: 0 }}>
-                                    <>
-                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 16, marginBottom: 16 }}>
-                                            <View style={resource.container}>
-                                                <Text style={resource.smallText}>얼마나 피웠지?</Text>
-                                                <Text style={resource.largeText}>{smokingSmoker}대</Text>
-                                            </View>
-                                            <View style={resource.container}>
-                                                <Text style={resource.smallText}>얼마나 썼지?</Text>
-
-                                                <Text style={resource.largeText}>{smokingSmokerMoney}원</Text>
-                                            </View>
-                                        </View>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                            <Image resizeMode="contain"  source={require('./icon/RealChicken.png')} />
-                                            <Text style={{
-                                                fontFamily: 'NunitoSans-Bold',
-                                                fontSize: 16,
-                                                color: '#303030',
-                                                opacity: 0.8,
-                                                marginLeft: 16
-                                            }}>치킨이 날아갑니다.</Text>
-                                        </View>
-                                       
-                                    </>
-                                </View>
-                            </View>
+                           <View style={{ zIndex: 0 }}>
+                                    
                             <View style={{ width: "100%" }}>
                                 <>
                                     <View style={{ marginTop: 24 }}>
@@ -749,6 +723,33 @@ export default function HomeScreen({ navigation, route}) {
                                         }}>담배 +1</Text>
                                     </TouchableOpacity>
                                 </>
+                            </View>
+                            </View>
+                            <View>
+                                
+                                        <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center', marginTop: 16, marginBottom: 16 }}>
+                                            <View style={resource.container}>
+                                                <Text style={resource.smallText}>얼마나 피웠지?</Text>
+                                                <Text style={resource.largeText}>{smokingSmoker}대</Text>
+                                            </View>
+                                            <View style={resource.container}>
+                                                <Text style={resource.smallText}>얼마나 썼지?</Text>
+
+                                                <Text style={resource.largeText}>{smokingSmokerMoney}원</Text>
+                                            </View>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                            <Image resizeMode="contain"  source={require('./icon/RealChicken.png')} />
+                                            <Text style={{
+                                                fontFamily: 'NunitoSans-Bold',
+                                                fontSize: 16,
+                                                color: '#303030',
+                                                opacity: 0.8,
+                                                marginLeft: 16
+                                            }}>치킨이 날아갑니다.</Text>
+                                        </View>
+                                       
+                                  
                             </View>
                         </Swiper>
                         :
@@ -834,15 +835,29 @@ export default function HomeScreen({ navigation, route}) {
                         justifyContent: 'space-evenly',
                         marginTop: 32,
                     }}>
-                        <TouchableOpacity style={{
+                        {smoker ? 
+                         <TouchableOpacity style={{
                             alignItems: "center",
                         }} onPress={login ?
                             () => { navigation.navigate('Calendar') }
                             :
                             loginview}>
                             <MaterialCommunityIcons size={60} color="#5cc27b" name="calendar-blank" />
-                            <Text style={{ fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 8 }}>금연달력</Text>
-                        </TouchableOpacity>
+                            <Text style={{ fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 8 }}>흡연달력</Text>
+                        </TouchableOpacity> 
+                    :
+                    <TouchableOpacity style={{
+                        alignItems: "center",
+                    }} onPress={login ?
+                        () => { navigation.navigate('Calendar') }
+                        :
+                        loginview}>
+                        <MaterialCommunityIcons size={60} color="#5cc27b" name="calendar-blank" />
+                        <Text style={{ fontSize: 14, fontFamily: "NunitoSans-Regular", color: "#303030", marginTop: 8 }}>금연달력</Text>
+                    </TouchableOpacity>
+                    }
+                      
+
                         <TouchableOpacity style={{
                             alignItems: "center",
                         }} onPress={login ?

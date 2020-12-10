@@ -9,7 +9,8 @@ import {
   StatusBar,
   StyleSheet,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
+  Platform
 } from 'react-native';
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
@@ -19,6 +20,7 @@ import KakaoLogins, { KAKAO_AUTH_TYPES } from '@react-native-seoul/kakao-login';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { firebase } from '@react-native-firebase/functions';
 import { Extrapolate } from 'react-native-reanimated';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -220,6 +222,38 @@ export default function LoginMain({ navigation }) {
     });
 
   }
+  const [appleloading, setappleloading] = useState(false)
+  async function onAppleButtonPress() {
+    setappleloading(true)
+    console.log("con")
+    // Start the sign-in request
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [appleAuth.Scope.EMAIL, appleAuth.Scope.FULL_NAME],
+    });
+  
+    // Ensure Apple returned a user identityToken
+    if (!appleAuthRequestResponse.identityToken) {
+      throw 'Apple Sign-In failed - no identify token returned';
+    }
+  
+    // Create a Firebase credential from the response
+    const { identityToken, nonce } = appleAuthRequestResponse;
+    const appleCredential = auth.AppleAuthProvider.credential(identityToken, nonce);
+    const NewUser = (await auth().signInWithCredential(appleCredential)).additionalUserInfo.isNewUser
+    // Sign-in the user with the credential
+    if (NewUser === true) {
+      auth().signInWithCredential(appleCredential);
+      setappleloading(false)
+      navigation.navigate("프로필 설정");
+    } else if (NewUser === false) {
+      auth().signInWithCredential(appleCredential);
+      setappleloading(false)
+      navigation.navigate("Home");
+    }
+    // Sign the user in with the credential
+    return 
+  }
   // async function onFacebookButtonPress() {
 
   //     const result = await LoginManager.logInWithPermissions(['public_profile', 'email', 'user_friends']);
@@ -246,7 +280,7 @@ export default function LoginMain({ navigation }) {
     <>
       <StatusBar barStyle="default" />
       <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-        {kakaoLoading || gmailLoading || anonyLoading ?
+        {kakaoLoading || gmailLoading || anonyLoading ||appleloading ?
           <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
           :
           <>
@@ -299,6 +333,16 @@ export default function LoginMain({ navigation }) {
               <TouchableOpacity onPress={kakaoLogin} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#f6e14b' }]}>
                 <Text style={[login.buttontext, { color: '#000000' }]}>Kakaotalk으로 로그인</Text>
               </TouchableOpacity>
+              {Platform.OS=="ios" ?
+
+              <TouchableOpacity onPress={onAppleButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#000000' }]}>
+              <Text style={[login.buttontext, { color: '#ffffff' }]}>Apple로 로그인</Text>
+            </TouchableOpacity>
+              :
+              <>
+              </>
+              }
+              
             </ScrollView>
           </>
         }

@@ -89,7 +89,7 @@ export default function Challenge({ navigation }) {
     const [name, setName] = useState("");
     const [long, setLong] = useState("");
     const [mistake, setMistake] = useState("");
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState(""); 
     const [progress, setProgress] = useState(0);
     const [change, setChange] = useState("")
 
@@ -105,6 +105,12 @@ export default function Challenge({ navigation }) {
 
     useFocusEffect(
         useCallback(() => {
+            try{
+                console.log("here")
+                checkRate()
+            }catch{
+                console.log("pass")
+            }
             //포커싱 되었을 떄
             // auth().onAuthStateChanged(userAuth => {
             //     setUser(userAuth)
@@ -118,7 +124,7 @@ export default function Challenge({ navigation }) {
                 hi()
                 if (challenge) {
                     checkRate()
-                    console.log("hereaefadvfasdfasdae")
+                    console.log("hereaefadvfasdfasdaed요고요고")
                 }
             } else {
                 setLogined(false)
@@ -1253,7 +1259,7 @@ export function ChallengeRegister({ navigation }) {
             id: 7,
             navigate: "ChallengeSupport",
             visible: true,
-            resNavi: "ChallengeSupport"
+            resNavi: "ChallengeSupportResult"
         })
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("내 흡연유형 파악하기").set({
             title: "내 흡연유형 파악하기",
@@ -1263,7 +1269,7 @@ export function ChallengeRegister({ navigation }) {
             id: 8,
             navigate: "SolutionAOne",
             visible: true,
-            resNavi: "SolutionResult"
+            resNavi: "SolutionResultReal"
         })
 
         firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금단증상 확인하기").set({
@@ -1372,7 +1378,7 @@ export function ChallengeRegister({ navigation }) {
                                         alignItems: "center",
                                         justifyContent: "center"
                                     }}>
-                                        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: month === 1 ? "#5cc27b" : "#ffffff" }} />
+                                        <View style={{ width: 12, height: 12, borderRadius: 4, backgroundColor: month === 1 ? "#5cc27b" : "#ffffff" }} />
                                     </TouchableOpacity>
                                     <Text style={{
                                         marginLeft: 4,
@@ -1391,7 +1397,7 @@ export function ChallengeRegister({ navigation }) {
                                         alignItems: "center",
                                         justifyContent: "center"
                                     }}>
-                                        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: month === 3 ? "#5cc27b" : "#ffffff" }} />
+                                        <View style={{ width: 12, height: 12, borderRadius: 4, backgroundColor: month === 3 ? "#5cc27b" : "#ffffff" }} />
                                     </TouchableOpacity>
                                     <Text style={{
                                         marginLeft: 4,
@@ -1410,7 +1416,7 @@ export function ChallengeRegister({ navigation }) {
                                         alignItems: "center",
                                         justifyContent: "center"
                                     }}>
-                                        <View style={{ width: 8, height: 8, borderRadius: 4, backgroundColor: month === 6 ? "#5cc27b" : "#ffffff" }} />
+                                        <View style={{ width: 12, height: 12, borderRadius: 4, backgroundColor: month === 6 ? "#5cc27b" : "#ffffff" }} />
                                     </TouchableOpacity>
                                     <Text style={{
                                         marginLeft: 4,
@@ -2217,7 +2223,153 @@ export function ChallengeSupport({ navigation }) {
         </>
     )
 }
+export function ChallengeSupportResult({ navigation }) {
+    const login=StyleSheet.create({
+        buttontext: {
+            fontSize: 17,
+            fontFamily: 'NunitoSans-Bold',
+            color: '#ffffff'
+          },
+          buttonbox: {
+            width: "70%",
+            height: 40,
+            borderRadius: 15,
+            backgroundColor: '#5cc27b',
+            justifyContent: 'center',
+            alignItems: 'center',
+            alignSelf: 'center'
+          },
+    })
+    const title = "금연지지자 정하기";
+    const [name, setName] = useState("");
+    const [help, setHelp] = useState("");
+    const [user, setUser] = useState("");
+    const [nick, setNick] = useState("")
+    const [day, setDay] = useState([])
+    const [link, setLink] = useState(false);
 
+    useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+
+        })
+    })
+    useEffect(()=>{
+        if(user){
+            
+            getInfo()
+        }
+    },[user])
+  async function getInfo(){
+    var total
+    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
+        total = querySnapshot.size - 1
+    })
+    
+    await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금연 지지자 정하기").get().then(doc=>{
+        setName(doc.data().supporter)
+        setHelp(doc.data().resContent)
+    }
+    )
+  }
+    return (
+        <>
+            <StatusBar barStyle="dark-content" />
+            <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                <ChallengeHeader navigation={navigation} Title={title} />
+                <ScrollView>
+                    <View style={{
+                        paddingLeft: "8%",
+                        paddingRight: "8%"
+                    }}>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "NunitoSans-Bold",
+                            color: "#303030",
+                            marginTop: 32,
+                        }}>
+                            금연지지자를 정해보세요.
+                        </Text>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "NunitoSans-Bold",
+                            color: "#303030",
+                            marginTop: 8,
+                        }}>
+                            금연 할 때 나를 지지해주는 사람이 있다는 것은
+                        </Text>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "NunitoSans-Bold",
+                            color: "#303030",
+                            marginTop: 8,
+                        }}>
+                            정신적으로 많은 도움을 줍니다.
+                        </Text>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "NunitoSans-Bold",
+                            color: "#303030",
+                            marginTop: 8,
+                        }}>
+                            금연은 혼자만의 싸움이 아닙니다!
+                        </Text>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "NunitoSans-Regular",
+                            color: "#303030",
+                            marginTop: 16,
+                        }}>
+                            나의 지지자는 누군가요?
+                        </Text>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "NunitoSans-Regular",
+                            color: "#303030",
+                            marginTop: 16,
+                        }}>
+                            {name}
+                        </Text>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "NunitoSans-Regular",
+                            color: "#303030",
+                            marginTop: 48,
+                        }}>
+                            나에게 어떤 도움을 줬으면 좋겠나요?
+                        </Text>
+                        <Text style={{
+                            fontSize: 16,
+                            fontFamily: "NunitoSans-Regular",
+                            color: "#303030",
+                            marginTop: 16,
+                        }}>
+                            {help}
+                        </Text>
+                  
+                      
+
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+            <SafeAreaView style={{ flex: 0 }}>
+             
+                    <TouchableOpacity onPress={()=>navigation.goBack()}>
+                        <View style={{
+                            width: "100%",
+                            height: 60,
+                            backgroundColor: "#5cc27b",
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                        </View>
+                    </TouchableOpacity>
+                
+            </SafeAreaView>
+        </>
+    )
+}
 export function ChallengeSwear({ navigation }) {
     const [user, setUser] = useState("");
     const [nick, setNick] = useState("")
@@ -2506,66 +2658,10 @@ export function ChallengeSwearResult({ navigation }) {
                                 나<Text style={{ fontFamily: "NunitoSans-Bold" }}> {nick}</Text> 오늘부터 다음과 같은 이유로 금연할 것을 약속합니다.
                             </Text>
                         </View>
-                        <KeyboardAvoidingView>
-                            <TextInput
-                                placeholder="텍스트 입력"
-                                placeholderTextColor="#ffffff"
-                                multiline={true}
-                                value={comment1}
-                                onChangeText={text => setComment1(text)}
-                                style={{
-                                    width: "100%",
-                                    height: 64,
-                                    borderRadius: 10,
-                                    backgroundColor: "#e9e9e9",
-                                    marginTop: 16,
-                                    padding: 8,
-                                    fontSize: 12,
-                                    color: "#303030",
-                                    fontFamily: "NunitoSans-Regular"
-                                }}
-                            />
-                        </KeyboardAvoidingView>
-                        <KeyboardAvoidingView>
-                            <TextInput
-                                placeholder="텍스트 입력"
-                                placeholderTextColor="#ffffff"
-                                multiline={true}
-                                value={comment2}
-                                onChangeText={text => setComment2(text)}
-                                style={{
-                                    width: "100%",
-                                    height: 64,
-                                    borderRadius: 10,
-                                    backgroundColor: "#e9e9e9",
-                                    marginTop: 24,
-                                    padding: 8,
-                                    fontSize: 12,
-                                    color: "#303030",
-                                    fontFamily: "NunitoSans-Regular"
-                                }}
-                            />
-                        </KeyboardAvoidingView>
-                        <KeyboardAvoidingView>
-                            <TextInput
-                                placeholder="텍스트 입력"
-                                placeholderTextColor="#ffffff"
-                                multiline={true}
-                                value={comment3}
-                                onChangeText={text => setComment3(text)}
-                                style={{
-                                    width: "100%",
-                                    height: 64,
-                                    borderRadius: 10,
-                                    backgroundColor: "#e9e9e9",
-                                    marginTop: 24,
-                                    padding: 8,
-                                    fontSize: 12,
-                                    color: "#303030",
-                                    fontFamily: "NunitoSans-Regular"
-                                }}
-                            />
-                        </KeyboardAvoidingView>
+                        <Text style={{ fontSize: 14, color: "#303030", width: "80%", fontFamily: "NunitoSans-Regular" }}>{comment1}</Text>
+                        <Text style={{ fontSize: 14, color: "#303030", width: "80%", fontFamily: "NunitoSans-Regular" }}>{comment2}</Text>
+                        <Text style={{ fontSize: 14, color: "#303030", width: "80%", fontFamily: "NunitoSans-Regular" }}>{comment3}</Text>
+                    
                         <View style={{
                             flexDirection: "row",
                             alignItems: "center",
@@ -3377,7 +3473,7 @@ console.log(zero)
                 challenge: "미션 진행"
             }))
         setLoading(false)
-        navigation.navigate("ChallengeGDResult")
+        navigation.navigate("ChallengeGDFinal")
     }
 
     return (
@@ -3494,7 +3590,7 @@ console.log(zero)
     )
 }
 
-export function ChallengeGDResult({ navigation }) {
+export function ChallengeGDFinal({ navigation }) {
     const [user, setUser] = useState("")
     const [detail, setDetail] = useState([])
     var total
@@ -3681,6 +3777,170 @@ export function ChallengeGDResult({ navigation }) {
     )
 }
 
+export function ChallengeGDResult({ navigation }) {
+    const [user, setUser] = useState("")
+    const [detail, setDetail] = useState([])
+    var total
+    const [loading, setLoading] = useState(false)
+    useEffect(() => {
+        auth().onAuthStateChanged(userAuth => {
+            setUser(userAuth)
+        })
+        if (user) {
+            setLoading(true)
+            getInfo()
+        }
+    }, [user])
+
+    async function getInfo() {
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").get().then(querySnapshot => {
+            total = querySnapshot.size - 1
+        })
+        await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금단증상 확인하기").get().then(doc => {
+            setDetail(doc.data().detail)
+        })
+        console.log(detail.length, "hh")
+        setLoading(false)
+    }
+   
+    const data = [
+        {
+            id: 1,
+            symptom: "갈증",
+            content: "얼음물 또는 주스를 한 모금씩 마시기, 껌을 씹어 입마름을 해소하기,짜게 먹지 않기, 양치질 하기."
+        },
+        {
+            id: 2,
+            symptom: "소화장애",
+            content: "고지방 음식, 단 음식, 카페인 함량이 많은 음식을 피하기, 자극적인 음식을 피하기, 섬유소가 많은 음식 섭취하기."
+        },
+        {
+            id: 3,
+            symptom: "기침",
+            content: "물을 많이 마셔 기관지 점막을 부드럽게 하기, 항생제를 사용하지 않을 것, 가능한 기침을 약하게 하기."
+        },
+        {
+            id: 4,
+            symptom: "두통",
+            content: "물을 많이 마시고, 커피를 줄인다, 가벼운 운동하기,따뜻한 물로 샤워하기, 신선한 공기를 위해 창문을 열거나 가벼운 산책하기, 5분 간 누워서 휴식 취하기."
+        },
+        {
+            id: 5,
+            symptom: "배고픔",
+            content: "평소 세 끼의 식사를 적당한 양으로 규칙적으로 하기, 칼로리가 낮은 스낵이나 음료 마시기 (물, 해바라기씨, 당근, 오이, 무가당 껌 등), 체중관리를 위해 적당한 운동 병행하기."
+        },
+        {
+            id: 6,
+            symptom: "불면",
+            content: "이완운동하기, 자기 전 무리한 운동하지 않기,명상하기, 카페인 줄이기."
+        },
+        {
+            id: 7,
+            symptom: "불안감",
+            content: "온수로 목욕 또는 샤워, 가벼운 산책 또는 운동, 누워서 쉬기, 경험했던 조용하고 평화로운 장면 생각하기."
+        },
+        {
+            id: 8,
+            symptom: "우울감",
+            content: "운동을 하여 땀을 흘리고, 물 많이 마시기, 몸을 편하게 눕히는 이완 운동하기, 따뜻한 물로 샤워하기, 과일 쥬스 마시기, 즐거운 생각하기."
+        },
+        {
+            id: 9,
+            symptom: "신경과민",
+            content: "휴식을 취하고 신선한 공기를 마시며 산책하기, 운동을 시작하거나 손으로 하는 다른 일에 집중하기, 심호흡을 함으로써 긴장을 이완시키기, 경험했던 조용하고 평화로운 장면 생각하기."
+        },
+        {
+            id: 10,
+            symptom: "쑤시는 느낌",
+            content: "따뜻한 물로 목욕하기, 따끔거리는 곳을 마사지 해주기, 가벼운 산책하기."
+        },
+        {
+            id: 11,
+            symptom: "입안의 통증",
+            content: "얼음물 또는 주스를 한 모금씩 마시기, 껌을 씹어 입마름을 해소하기, 짜게 먹지 않기, 양치질 하기."
+        }, 
+        {
+            id: 12, 
+            symptom: "집중력 감소", 
+            content: "휴식을 취하고 마음을 편히 갖고 심호흡을 하기, 많이 힘들면 일을 중단하고 잠깐 눈 붙이기, 명상을 통해 집중력 향상시키기."
+        },
+        {
+            id: 13,
+            symptom: "피로감",
+            content: "금단 증상이 심한 2주간은 무리한 일을 피하기, 낮에 잠깐씩 눈을 붙이거나 밤에는 평소보다 숙면하도록 하기, 미리 주변에 양해를 구하고 금단 증상과 함께 피로감이 올 수 있음을 알릴 것."
+        }, 
+        {
+            id: 14, 
+            symptom: "현기증", 
+            content: "현기증 나는 순간을 잠시 쉬면서 넘기기, 야외로 나가서 바람쐬기, 천천히 일어나고 앉기,평소에 간단한 운동하기."
+        },
+    ]
+    return (
+        <>
+            <StatusBar barStyle="dark-content" />
+            {loading ?
+                <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
+                :
+                <>
+                    <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff" }}>
+                        <ChallengeHeader navigation={navigation} Title="금단증상 대처방안" />
+                        <ScrollView>
+                            <View style={{
+                                width: "90%",
+                                marginHorizontal: 32,
+                                marginTop: 32
+                            }}>
+                                <Text style={{ marginBottom: 32, fontSize: 18, color: "#303030", fontFamily: 'NunitoSans-Bold' }}>
+                                    금연을 시작하게 되면 평균 4주 정도 금단증상을 겪게 됩니다! 갑작스러운 신체변화에 두려워하지마시고 Blockers와 함께 이겨내보도록 합시다!
+                      </Text>
+                                <FlatList
+                                    data={data}
+                                    keyExtractor={item => item.id}
+                                    renderItem={({ item }) => (
+                                        <>
+                                            {detail.includes(item.symptom) ?
+                                                <>
+                                                    <Text style={{
+                                                        fontFamily: "NunitoSans-Bold",
+                                                        fontSize: 18,
+                                                        marginBottom: 16,
+                                                        color: "#303030"
+                                                    }}>금단증상 {item.id} : {item.symptom}</Text>
+                                                    <Text style={{
+                                                        fontFamily: "NuitoSans-Regular",
+                                                        fontSize: 16,
+                                                        color: "#303030",
+                                                        lineHeight: 33,
+                                                        marginBottom: 16
+                                                    }}>{item.content}</Text>
+                                                </>
+                                                :
+                                                <></>
+                                            }
+                                        </>
+                                    )}
+                                />
+                            </View>
+                        </ScrollView>
+                    </SafeAreaView>
+                    <SafeAreaView style={{ flex: 0 }}>
+                        <TouchableOpacity onPress={()=>navigation.goBack()}>
+                            <View style={{
+                                width: "100%",
+                                height: 60,
+                                backgroundColor: '#5cc27b',
+                                justifyContent: 'center',
+                                alignItems: 'center'
+                            }}>
+                                <Text style={{ fontSize: 18, color: '#ffffff', fontFamily: 'NunitoSans-Bold' }}>완료</Text>
+                            </View>
+                        </TouchableOpacity>
+                    </SafeAreaView>
+                </>
+            }
+        </>
+    )
+}
 const veri = StyleSheet.create({
     largeText: {
         fontSize: 16,
@@ -4421,6 +4681,24 @@ export function ChallengeVeriResult({ navigation, route }) {
         <>
             <StatusBar barStyle="dark-content" />
             <SafeAreaView style={{ flex: 1, backgroundColor: "#ffffff", alignItems: "center", justifyContent: "center" }}>
+            <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
+                    <TouchableOpacity onPress={() => navigation.goBack()}>
+                        <Ionicons name="chevron-back" size={25} />
+                    </TouchableOpacity>
+                    <View
+                        style={{
+                            height: 44,
+                            flexDirection: 'row',
+                            justifyContent: "flex-start",
+                            alignItems: 'center',
+                            marginLeft: 20
+                        }}
+                    >
+                        <Text style={{ fontSize: 18 }}>
+                            <Text style={{ fontFamily: 'NunitoSans-Bold', color: '#303030' }}>금연활동 인증하기</Text>
+                        </Text>
+                    </View>
+                </View>
                 <ScrollView>
                     <View>
                         <FlatList data={items}

@@ -18,7 +18,7 @@ import auth from '@react-native-firebase/auth';
 import { LoginManager } from 'react-native-fbsdk';
 import storage from '@react-native-firebase/storage';
 import { useFocusEffect } from "@react-navigation/native";
-
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 const mode = StyleSheet.create({
     largeText: {
         fontSize: 20,
@@ -252,7 +252,7 @@ export default function ModeSelectNonSmoker({ navigation, route }) {
                         </Text>
                     </View>
                 </View>
-                <ScrollView>
+                <KeyboardAwareScrollView>
                     <Text style={mode.largeText}>어떤 종류의 담배를 피우셨었나요?</Text>
                     {ten === false ?
                         <TouchableOpacity onPressIn={pushten} onPress={() => setTen(!ten)}>
@@ -423,7 +423,7 @@ export default function ModeSelectNonSmoker({ navigation, route }) {
                         :
                         <View />
                     }
-                </ScrollView>
+                </KeyboardAwareScrollView>
                 <TouchableOpacity style={{ position: 'absolute', bottom: 0, right: 0, left: 0 }}>
                     {ten === true ?
                         num.length > 0 ?

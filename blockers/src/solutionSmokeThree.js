@@ -154,7 +154,7 @@ export default function SolutionSmokeThree({ navigation,route }) {
                     </View>
                 </View>
                 <ScrollView>
-                    <Text style={solution.largeText}>아침 일어나 언제 담배를 피우시나요?</Text>
+                    <Text style={solution.largeText}>언제 담배를 더 많이 피우시나요</Text>
                     <View style={{
                         flexDirection: 'row',
                         marginLeft: 20,
@@ -193,7 +193,7 @@ export default function SolutionSmokeThree({ navigation,route }) {
                             </TouchableOpacity>
                         }
                     </View>
-                    <Text style={solution.largeText}>아침 일어나 언제 담배를 피우시나요?</Text>
+                    <Text style={solution.largeText}>담배 맛이 가장 좋을 떄는 언제인가요?</Text>
                     <View style={{
                         flexDirection: 'row',
                         marginLeft: 20,
