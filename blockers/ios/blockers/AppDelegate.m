@@ -4,6 +4,7 @@
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
+#import <KakaoOpenSDK/KakaoOpenSDK.h>
 
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
@@ -13,7 +14,7 @@
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
 
-#import <KakaoOpenSDK/KakaoOpenSDK.h>
+
 
 
 static void InitializeFlipper(UIApplication *application) {
@@ -43,7 +44,7 @@ static void InitializeFlipper(UIApplication *application) {
                                             initialProperties:nil];
   
   
-//  [KOSession sharedSession].automaticPeriodicRefresh = YES;
+  [KOSession sharedSession].automaticPeriodicRefresh = YES;
   
   
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
@@ -83,10 +84,10 @@ static void InitializeFlipper(UIApplication *application) {
 {
     [KOSession handleDidBecomeActive];
 }
-//- (void)applicationDidEnterBackground:(UIApplication *)application {
-//    
-//    [KOSession handleDidEnterBackground];
-//}
+- (void)applicationDidEnterBackground:(UIApplication *)application {
+    
+    [KOSession handleDidEnterBackground];
+}
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
 {

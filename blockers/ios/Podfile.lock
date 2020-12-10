@@ -270,9 +270,6 @@ PODS:
   - Firebase/Functions (6.30.0):
     - Firebase/CoreOnly
     - FirebaseFunctions (~> 2.8.0)
-  - Firebase/Messaging (6.30.0):
-    - Firebase/CoreOnly
-    - FirebaseMessaging (~> 4.6.1)
   - Firebase/Storage (6.30.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 3.9.0)
@@ -319,19 +316,6 @@ PODS:
     - GoogleUtilities/Environment (~> 6.7)
     - GoogleUtilities/UserDefaults (~> 6.7)
     - PromisesObjC (~> 1.2)
-  - FirebaseInstanceID (4.8.0):
-    - FirebaseCore (~> 6.10)
-    - FirebaseInstallations (~> 1.6)
-    - GoogleUtilities/Environment (~> 6.7)
-    - GoogleUtilities/UserDefaults (~> 6.7)
-  - FirebaseMessaging (4.6.2):
-    - FirebaseCore (~> 6.10)
-    - FirebaseInstanceID (~> 4.6)
-    - GoogleUtilities/AppDelegateSwizzler (~> 6.7)
-    - GoogleUtilities/Environment (~> 6.7)
-    - GoogleUtilities/Reachability (~> 6.7)
-    - GoogleUtilities/UserDefaults (~> 6.7)
-    - Protobuf (>= 3.9.2, ~> 3.9)
   - FirebaseStorage (3.9.1):
     - FirebaseCore (~> 6.10)
     - GTMSessionFetcher/Core (~> 1.1)
@@ -490,7 +474,6 @@ PODS:
   - OpenSSL-Universal/Static (1.0.2.20)
   - PersonalizedAdConsent (1.0.5)
   - PromisesObjC (1.2.11)
-  - Protobuf (3.13.0)
   - RCTRequired (0.63.1)
   - RCTTypeSafety (0.63.1):
     - FBLazyVector (= 0.63.1)
@@ -769,11 +752,6 @@ PODS:
     - Firebase/Functions (~> 6.30.0)
     - React-Core
     - RNFBApp
-  - RNFBMessaging (7.7.2):
-    - Firebase/Analytics (~> 6.30.0)
-    - Firebase/Messaging (~> 6.30.0)
-    - React
-    - RNFBApp
   - RNFBStorage (7.3.1):
     - Firebase/Storage (~> 6.30.0)
     - React
@@ -865,7 +843,6 @@ DEPENDENCIES:
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - "RNFBFirestore (from `../node_modules/@react-native-firebase/firestore`)"
   - "RNFBFunctions (from `../node_modules/@react-native-firebase/functions`)"
-  - "RNFBMessaging (from `../node_modules/@react-native-firebase/messaging`)"
   - "RNFBStorage (from `../node_modules/@react-native-firebase/storage`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-community/google-signin`)"
@@ -896,8 +873,6 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseFunctions
     - FirebaseInstallations
-    - FirebaseInstanceID
-    - FirebaseMessaging
     - FirebaseStorage
     - Flipper
     - Flipper-DoubleConversion
@@ -922,7 +897,6 @@ SPEC REPOS:
     - OpenSSL-Universal
     - PersonalizedAdConsent
     - PromisesObjC
-    - Protobuf
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -1012,8 +986,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/firestore"
   RNFBFunctions:
     :path: "../node_modules/@react-native-firebase/functions"
-  RNFBMessaging:
-    :path: "../node_modules/@react-native-firebase/messaging"
   RNFBStorage:
     :path: "../node_modules/@react-native-firebase/storage"
   RNGestureHandler:
@@ -1057,8 +1029,6 @@ SPEC CHECKSUMS:
   FirebaseFirestore: ff82cd15f8ed3b417c307eb729e3e2e68aad0bdd
   FirebaseFunctions: e0694e614a5e3300120a10d925e2cd3be60a9c81
   FirebaseInstallations: 466c7b4d1f58fe16707693091da253726a731ed2
-  FirebaseInstanceID: bd3ffc24367f901a43c063b36c640b345a4a5dd1
-  FirebaseMessaging: 82d75b3770a78bbce470769a6980429608b4c407
   FirebaseStorage: 15e0f15ef3c7fec3d1899d68623e47d4447066b4
   Flipper: 33585e2d9810fe5528346be33bcf71b37bb7ae13
   Flipper-DoubleConversion: 38631e41ef4f9b12861c67d17cb5518d06badc41
@@ -1087,7 +1057,6 @@ SPEC CHECKSUMS:
   OpenSSL-Universal: ff34003318d5e1163e9529b08470708e389ffcdd
   PersonalizedAdConsent: dbecabb3467df967c16d9cebc2ef4a8890e4bbd8
   PromisesObjC: 8c196f5a328c2cba3e74624585467a557dcb482f
-  Protobuf: 3dac39b34a08151c6d949560efe3f86134a3f748
   RCTRequired: d9b1a9e6fa097744ca3ede59f86a35096df7202b
   RCTTypeSafety: c227cd061983e9e964115afbc4e8730d6a6f1395
   React: 86e972a20967ee4137aa19dc48319405927c2e94
@@ -1123,7 +1092,6 @@ SPEC CHECKSUMS:
   RNFBAuth: 9391f098b73fa50a270a9009a64b66ee14336346
   RNFBFirestore: e13f8ce2337247200f4e3a45193919ad8572a765
   RNFBFunctions: db82a1c996b8a8a63bf0c0027c579d4abd200982
-  RNFBMessaging: 256456c098c435f420878450bf655460ae61c866
   RNFBStorage: b57b9ad0c58f1c4b039fb1a2404cf6dc6fdcca29
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
   RNGoogleSignin: ccf71ee4b6cfd324fd788a41e457e2043838c0d9
