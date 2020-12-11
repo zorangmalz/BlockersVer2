@@ -1,6 +1,14 @@
 {
-    "react-native": {
-      "admob_android_app_id": "ca-app-pub-8771472802759230~1851318318",
-      "admob_ios_app_id": "ca-app-pub-8771472802759230~1797485609"
-    }
+  "react-native": {
+    "admob_android_app_id": "ca-app-pub-8771472802759230~1851318318",
+    "admob_ios_app_id": "ca-app-pub-8771472802759230~1797485609"
+  },
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
   }
+}
