@@ -12,6 +12,7 @@ import {
     TextInput,
     Alert,
     ActivityIndicator,
+    Keyboard,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import firestore from '@react-native-firebase/firestore';
@@ -20,6 +21,7 @@ import moment from "moment"
 import storage from '@react-native-firebase/storage';
 import { utils } from '@react-native-firebase/app';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get("screen").height;
@@ -108,7 +110,8 @@ export default function CommunityWrite({ navigation }) {
         setFilename(title + nick + a)
 
         const reference = storage().ref("community1/" + title + nick + a);
-        const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
+        // const uploadUri = Platform.OS === 'android' ? uri.replace('file://', '') : uri;
+        const uploadUri = uri.replace('file://', '') 
 
         await reference.putFile(uploadUri);
         setPicture(true)
@@ -205,6 +208,7 @@ export default function CommunityWrite({ navigation }) {
                 <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
                 :
                 <>
+                
                     <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                         <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', height: 50, paddingTop: 8, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                             <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -249,7 +253,9 @@ export default function CommunityWrite({ navigation }) {
                                 </TouchableOpacity>
                             </View>
                         </ScrollView>
+                        
                     </SafeAreaView>
+                    
                     <SafeAreaView style={{ flex: 0 }}>
                         <TouchableOpacity onPress={
                             (title.length > 0) && (content.length > 0) ? () => writePost() : errorview}>
@@ -258,6 +264,7 @@ export default function CommunityWrite({ navigation }) {
                             </View>
                         </TouchableOpacity>
                     </SafeAreaView>
+                    
                 </>
             }
         </>

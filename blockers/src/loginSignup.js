@@ -422,7 +422,7 @@ export default function LoginSignup({ navigation }) {
     if (NewUser === true) {
       auth().signInWithCredential(appleCredential);
       setappleloading(false)
-      navigation.navigate("프로필 설정");
+      navigation.navigate("LoginVerificationProfileApple");
     } else if (NewUser === false) {
       auth().signInWithCredential(appleCredential);
       setappleloading(false)
@@ -496,7 +496,7 @@ export default function LoginSignup({ navigation }) {
                   {Platform.OS=="ios" ?
 
 <TouchableOpacity onPress={onAppleButtonPress} activeOpacity={0.3} style={[login.buttonbox, { marginTop: 16, backgroundColor: '#000000' }]}>
-<Text style={[login.buttontext, { color: '#ffffff' }]}>Apple로 로그인</Text>
+<Text style={[login.buttontext, { color: '#ffffff' }]}>Apple로 시작하기</Text>
 </TouchableOpacity>
 :
 <>

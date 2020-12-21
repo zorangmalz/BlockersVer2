@@ -67,8 +67,10 @@ export default function ProfileNickname({ navigation }) {
                 } 
             })
         })
+        console.log(check,"this should be true")
         const user = firebase.auth().currentUser
         if (check) {
+            console.log("and come here")
             Alert.alert(
                 "중복된 닉네임입니다.",
                 "",

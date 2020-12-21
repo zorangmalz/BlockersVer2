@@ -24,7 +24,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import storage from '@react-native-firebase/storage';
 import { useFocusEffect } from "@react-navigation/native";
 import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
-const adUnitId = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8771472802759230/9484403934":'ca-app-pub-8771472802759230/7951846321' ) ;
+const adUnitId = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8262202601779055/7325930870":'ca-app-pub-8262202601779055/8327183632' ) ;
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;

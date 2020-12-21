@@ -10,7 +10,7 @@ import {
     TextInput,
 } from 'react-native';
 import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
-const adUnitId = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8771472802759230/9484403934":'ca-app-pub-8771472802759230/7951846321' ) ;
+const adUnitId = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8262202601779055/7325930870":'ca-app-pub-8262202601779055/8327183632' ) ;
 
 const solution = StyleSheet.create({
     largeText: {

@@ -37,6 +37,7 @@ import MypageMyWriting from './src/MypageMyWriting';
 import LoginSignup from './src/LoginSignup';
 import LoginMain from './src/LoginMain';
 import LoginVerification from './src/LoginVerification';
+import LoginVerificationProfileApple from './src/LoginVerificationProfileApple';
 import Challenge, { ChallengeGDFinal,ChallengeVeriResult,ChallengeMotivationResult,ChallengeGD, ChallengeGDResult, ChallengeHistory, ChallengeKnowhow, ChallengeMission, ChallengeMotivation, ChallengeRegister, ChallengeReview, ChallengeSuccess, ChallengeSupport,ChallengeSupportResult, ChallengeSwear, ChallengeVeri, ChallengeVeriImage,ChallengeSwearResult } from './src/Challenge/ChallengeScreen';
 import ProfileNickname from './src/ProfileNickname';
 import LoginVerificationProfile from './src/LoginVerificationProfile';
@@ -282,6 +283,14 @@ const App = ({ navigation }) => {
         <Stack.Screen
           name="프로필 설정"
           component={LoginVerificationProfile}
+          options={{
+            gestureDirection: 'vertical-inverted',
+            headerShown: false
+          }}
+        />
+         <Stack.Screen
+          name="LoginVerificationProfileApple"
+          component={LoginVerificationProfileApple}
           options={{
             gestureDirection: 'vertical-inverted',
             headerShown: false

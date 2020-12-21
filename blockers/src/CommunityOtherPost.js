@@ -25,6 +25,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useFocusEffect } from "@react-navigation/native";
 import ImagePicker from 'react-native-image-picker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import {KeyboardAvoidingView} from 'react-native';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -616,6 +618,7 @@ export default function CommunityOtherPost({ route, navigation }) {
             <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
                 {userLoading && textLoading && picLoading && replyLoading ?
                     <>
+                        <KeyboardAvoidingView behavior="position">
                         <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                             <TouchableOpacity onPress={() => navigation.goBack()}>
                                 <Ionicons name="chevron-back" size={25} />
@@ -634,6 +637,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 </Text>
                             </View>
                         </View>
+                        
                         <ScrollView style={{ marginBottom: 50 }} refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}>
                             <View style={{
                                 flexDirection: "row",
@@ -811,8 +815,10 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 />
                             </View>
                         </ScrollView>
+                        
+                        
                         <View>
-                            <View style={{
+                            <KeyboardAvoidingView style={{
                                 position: "absolute",
                                 bottom: 0, height: 40, right: 0, left: 0, flexDirection: "row",
                                 borderRadius: 10,
@@ -823,15 +829,14 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 paddingRight: 8,
                                 margin: 8
                             }}>
+                                
                                 <TextInput
                                     value={comment}
                                     onChangeText={text => setComment(text)}
-
                                     placeholder="댓글을 입력하세요."
                                     placeholderTextColor="#707070"
                                     textAlign="left"
                                     ref={textbox}
-
                                     onSubmitEditing={Keyboard.dismiss}
                                     style={{
                                         width: "90%",
@@ -857,8 +862,10 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 }}>
                                     <Ionicons name="send" size={25} color="#5cc27b" />
                                 </TouchableOpacity>
-                            </View>
+                            </KeyboardAvoidingView>
                         </View>
+                        
+                        </KeyboardAvoidingView>
                     </>
                     :
                     <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT/2 - 20, left: WIDTH/2 - 20, backgroundColor: "#ffffff" }} />

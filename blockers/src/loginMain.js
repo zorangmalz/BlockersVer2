@@ -245,7 +245,7 @@ export default function LoginMain({ navigation }) {
     if (NewUser === true) {
       auth().signInWithCredential(appleCredential);
       setappleloading(false)
-      navigation.navigate("프로필 설정");
+      navigation.navigate("LoginVerificationProfileApple");
     } else if (NewUser === false) {
       auth().signInWithCredential(appleCredential);
       setappleloading(false)

@@ -15,7 +15,7 @@ import auth, { firebase } from '@react-native-firebase/auth';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from "moment";
 import { AdEventType, InterstitialAd, BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
-const adUnitIdInt = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8771472802759230/4285909965":'ca-app-pub-8771472802759230/7895990090' ) ;
+const adUnitIdInt = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8262202601779055/7162279346":'ca-app-pub-8262202601779055/7915752533' ) ;
 
 const setting = StyleSheet.create({
     largeText: {

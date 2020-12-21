@@ -32,7 +32,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { utils } from '@react-native-firebase/app';
 
 const adUnitId = __DEV__ ? TestIds.BANNER : 'ca-app-pub-8262202601779055/8327183632';
-const adUnitIdInt = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8771472802759230/4285909965":'ca-app-pub-8771472802759230/7895990090' ) ;
+const adUnitIdInt = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8262202601779055/7162279346":'ca-app-pub-8262202601779055/7915752533' ) ;
 
 const WIDTH = Dimensions.get("window").width;
 const HEIGHT = Dimensions.get("window").height;
@@ -347,20 +347,21 @@ export default function Challenge({ navigation }) {
             var monthFire
             var long
             var progressFor
-            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).get().then(doc => {
-                setChallenge(doc.data().ongoing)
-                setName(doc.data().name)
-                setMistake(doc.data().mistake)
-                setTitle(doc.data().title)
-                setLong(doc.data().long)
-                setProgress(doc.data().progress)
-                time = doc.data().challengePeriod
-                weekFire = doc.data().week
-                monthFire = doc.data().month
-                long = doc.data().long
-                progressFor = doc.data().progress
+            
+            await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).get().then(documentSnapshot => {
+                setChallenge(documentSnapshot.data().ongoing)
+                setName(documentSnapshot.data().name)
+                setMistake(documentSnapshot.data().mistake)
+                setTitle(documentSnapshot.data().title)
+                setLong(documentSnapshot.data().long)
+                setProgress(documentSnapshot.data().progress)
+                time = documentSnapshot.data().challengePeriod
+                weekFire = documentSnapshot.data().week
+                monthFire = documentSnapshot.data().month
+                long = documentSnapshot.data().long
+                progressFor = documentSnapshot.data().progress
             })
-            console.log(time,"time")
+            console.log(time,weekFire,monthFire,"time")
             var a=moment().toArray()
             if (a[1]===12){
                 a[1]=1
@@ -795,16 +796,7 @@ export default function Challenge({ navigation }) {
                         justifyContent: "center",
                     }}
                 >
-                    <BannerAd
-                        unitId={adUnitId}
-                        size={BannerAdSize.SMART_BANNER}
-                        requestOptions={{
-                            requestNonPersonalizedAdsOnly: true,
-                        }}
-                        onAdFailedToLoad={(error) => {
-                            console.error('Advert failed to load: ', error);
-                        }}
-                    />
+           
                 </View>
             </SafeAreaView>
         </>

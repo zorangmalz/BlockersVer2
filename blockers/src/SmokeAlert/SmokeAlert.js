@@ -22,8 +22,8 @@ import moment from "moment"
 import firestore from '@react-native-firebase/firestore';
 import auth, { firebase } from '@react-native-firebase/auth';
 
-const adUnitId = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8771472802759230/9484403934":'ca-app-pub-8771472802759230/7951846321' ) ;
-const adUnitIdInt = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8771472802759230/4285909965":'ca-app-pub-8771472802759230/7895990090' ) ;
+const adUnitId = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8262202601779055/7325930870":'ca-app-pub-8262202601779055/8327183632' ) ;
+const adUnitIdInt = __DEV__ ? TestIds.BANNER :(Platform.OS==='ios' ? "ca-app-pub-8262202601779055/7162279346":'ca-app-pub-8262202601779055/7915752533' ) ;
 
 const WIDTH = Dimensions.get("screen").width;
 const HEIGHT = Dimensions.get("screen").height;
