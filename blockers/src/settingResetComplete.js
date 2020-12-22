@@ -12,7 +12,7 @@ import {
 export default function SettingResetComplete({navigation}) {
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{backgroundColor: '#FFFFFF', flex: 1}}>
                 <ScrollView>
                     <Image 

@@ -103,7 +103,7 @@ export default function ProfileNickname({ navigation }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 {isLoading ? 
                  <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />

@@ -29,7 +29,7 @@ export function DiaryList({navigation}) {
 export function DiaryComplete({navigation}) {
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{backgroundColor: '#FFFFFF', flex: 1}}>
                 <ScrollView>
                     <Image 

@@ -135,7 +135,7 @@ export default function SettingMode({ navigation, route }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <ScrollView>
                     <Text style={mode.title}>Welcome Blockers</Text>
@@ -346,7 +346,7 @@ export function SettingModeNonSmoker({ navigation, route }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -682,7 +682,7 @@ export function SettingModeSelectSmoker({ navigation, route }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>

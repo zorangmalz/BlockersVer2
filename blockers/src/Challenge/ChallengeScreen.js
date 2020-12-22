@@ -326,12 +326,49 @@ export default function Challenge({ navigation }) {
             SmokingTime: a,
             smokeDaily: 0,
         })
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+
+
+
+
+if(a[1]<10){
+    if(a[2]<10){
+
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).update({
             smoke: "금연 모드로 전환"
         }).catch(() =>
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).set({
                 smoke: "금연 모드로 전환"
             }))
+    }else{
+
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).update({
+            smoke: "금연 모드로 전환"
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).set({
+                smoke: "금연 모드로 전환"
+            }))
+    }
+}else{
+if(a[2]<10){
+
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).update({
+        smoke: "금연 모드로 전환"
+    }).catch(() =>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).set({
+            smoke: "금연 모드로 전환"
+        }))
+}else{
+
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+        smoke: "금연 모드로 전환"
+    }).catch(() =>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+            smoke: "금연 모드로 전환"
+        }))
+}
+}
+
+
         navigation.navigate("ChallengeRegister")
     }
     async function hi() {
@@ -2030,12 +2067,48 @@ export function ChallengeSupport({ navigation }) {
                 stats: true,
                 visible:false
             })
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+
+
+
+if(a[1]<10){
+    if(a[2]<10){
+
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).update({
+            challenge: "미션 진행"
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).set({
                 challenge: "미션 진행"
-            }).catch(() =>
-                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
-                    challenge: "미션 진행"
-                }))
+            }))
+    }else{
+
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).update({
+            challenge: "미션 진행"
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).set({
+                challenge: "미션 진행"
+            }))
+    }
+}else{
+if(a[2]<10){
+
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).update({
+        challenge: "미션 진행"
+    }).catch(() =>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).set({
+            challenge: "미션 진행"
+        }))
+}else{
+
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+        challenge: "미션 진행"
+    }).catch(() =>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+            challenge: "미션 진행"
+        }))
+}
+}
+
+
             navigation.navigate("Home")
         }
         else {
@@ -2403,12 +2476,44 @@ export function ChallengeSwear({ navigation }) {
         } else {
             a[1] = a[1] + 1
         }
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+
+
+
+if(a[1]<10){
+    if(a[2]<10){
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).update({
             challenge: "미션 진행"
         }).catch(() =>
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).set({
                 challenge: "미션 진행"
             }))
+    }else{
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).update({
+            challenge: "미션 진행"
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).set({
+                challenge: "미션 진행"
+            }))
+    }
+}else{
+if(a[2]<10){
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).update({
+        challenge: "미션 진행"
+    }).catch(() =>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).set({
+            challenge: "미션 진행"
+        }))
+}else{
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+        challenge: "미션 진행"
+    }).catch(() =>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+            challenge: "미션 진행"
+        }))
+}
+}
+
+      
         navigation.navigate("Home")
     }
 
@@ -2869,12 +2974,41 @@ export function ChallengeMotivation({ navigation }) {
             stats: true,
             visible: false
         })
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+
+if(a[1]<10){
+    if(a[2]<10){
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).update({
             challenge: "미션 진행"
         }).catch(() =>
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).set({
                 challenge: "미션 진행"
             }))
+    }else{
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).update({
+            challenge: "미션 진행"
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).set({
+                challenge: "미션 진행"
+            }))
+    }
+}else{
+if(a[2]<10){
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).update({
+        challenge: "미션 진행"
+    }).catch(() =>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).set({
+            challenge: "미션 진행"
+        }))
+}else{
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+        challenge: "미션 진행"
+    }).catch(() =>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+            challenge: "미션 진행"
+        }))
+}
+}
+
         navigation.navigate("Home")
     }
     return (
@@ -3458,12 +3592,50 @@ console.log(zero)
         await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge" + total).collection("ChallengeDetail").doc("금단증상 확인하기").update({
             detail: GD
         })
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+
+
+
+if(a[1]<10){
+    if(a[2]<10){
+
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).update({
             challenge: "미션 진행"
         }).catch(() =>
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).set({
                 challenge: "미션 진행"
             }))
+    }else{
+
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).update({
+            challenge: "미션 진행"
+        }).catch(() =>
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).set({
+                challenge: "미션 진행"
+            }))
+    }
+}else{
+if(a[2]<10){
+
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).update({
+        challenge: "미션 진행"
+    }).catch(() =>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).set({
+            challenge: "미션 진행"
+        }))
+}else{
+
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+        challenge: "미션 진행"
+    }).catch(() =>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+            challenge: "미션 진행"
+        }))
+}
+}
+       
+
+
+       
         setLoading(false)
         navigation.navigate("ChallengeGDFinal")
     }
@@ -4580,7 +4752,7 @@ export function ChallengeSuccess({ navigation }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 {isLoading === true ?
                     <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />

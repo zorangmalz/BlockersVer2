@@ -74,12 +74,41 @@ async function uploadInfo(){
         sub2:sub2,
         sub2Str:sub2str
     })
-    firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-        challenge:"미션 진행"
-    }).catch(()=>
-    firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-        challenge:"미션 진행"
-    }))
+    if(a[1]<10){
+        if(a[2]<10){
+            firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
+                challenge:"미션 진행"
+            }).catch(()=>
+            firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
+                challenge:"미션 진행"
+            }))
+        }else{
+            firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
+                challenge:"미션 진행"
+            }).catch(()=>
+            firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
+                challenge:"미션 진행"
+            }))
+        }
+}else{
+    if(a[2]<10){
+        firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
+            challenge:"미션 진행"
+        }))
+    }else{
+        firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(UID).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+            challenge:"미션 진행"
+        }))
+    }
+} 
+
+   
     navigation.navigate("Home")}
    
 

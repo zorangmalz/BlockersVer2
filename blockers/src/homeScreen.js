@@ -270,19 +270,54 @@ export default function HomeScreen({ navigation, route}) {
                     smokeToday: a[2],
                     smokeStats: firebase.firestore.FieldValue.arrayUnion(a + "/흡연량:" + smokingDaily)
                 })
-                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-                    smoke:String(smokingDaily)+"개피",
-                    smoketotal:smokingDaily
-                }).catch(()=>
-                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-                    smoke:String(smokingDaily)+"개피",
-                    smoketotal:smokingDaily
-                }))
+                if(a[1]<10){
+                    if(a[2]<10){
+                        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
+                            smoke:String(smokingDaily)+"개피",
+                            smoketotal:smokingDaily
+                        }).catch(()=>
+                        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
+                            smoke:String(smokingDaily)+"개피",
+                            smoketotal:smokingDaily
+                        }))
+                    }else{
+                        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
+                            smoke:String(smokingDaily)+"개피",
+                            smoketotal:smokingDaily
+                        }).catch(()=>
+                        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
+                            smoke:String(smokingDaily)+"개피",
+                            smoketotal:smokingDaily
+                        }))
+                    }
+            }else{
+                if(a[2]<10){
+                    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
+                        smoke:String(smokingDaily)+"개피",
+                        smoketotal:smokingDaily
+                    }).catch(()=>
+                    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
+                        smoke:String(smokingDaily)+"개피",
+                        smoketotal:smokingDaily
+                    }))
+                }else{
+                    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+                        smoke:String(smokingDaily)+"개피",
+                        smoketotal:smokingDaily
+                    }).catch(()=>
+                    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                        smoke:String(smokingDaily)+"개피",
+                        smoketotal:smokingDaily
+                    }))
+                }
+            }
+                
                 setToday(false)
             }
         })
 
     }
+   
     async function howMuch(){
         var total=0
         await ref.doc(user.uid).collection("Calendar").get().then(querySnapshot=>{
@@ -496,15 +531,46 @@ export default function HomeScreen({ navigation, route}) {
             ongoing: false,
             success: 1,
         })
-        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-            smoke:"흡연 모드로 전환"
-        }).catch(
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+        if(a[1]<10){
+            if(a[2]<10){
+                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
+                    smoke:"흡연 모드로 전환"
+                }).catch(
+                    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
+                        smoke:"흡연 모드로 전환"
+                    })
+                )
+            }else{
+                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
+                    smoke:"흡연 모드로 전환"
+                }).catch(
+                    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
+                        smoke:"흡연 모드로 전환"
+                    })
+                )
+            }
+    }else{
+        if(a[2]<10){
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
                 smoke:"흡연 모드로 전환"
-            })
-        )
+            }).catch(
+                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
+                    smoke:"흡연 모드로 전환"
+                })
+            )
+        }else{
+            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+                smoke:"흡연 모드로 전환"
+            }).catch(
+                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+                    smoke:"흡연 모드로 전환"
+                })
+            )
+        }
     }
-
+        
+    }
+ 
     //금연 시작시에
     async function changeToNonSmoker() {
         console.log(adUnitIdInt,"hihihi")
@@ -536,15 +602,46 @@ export default function HomeScreen({ navigation, route}) {
         await firestore().collection("UserInfo").doc(user.uid).get().then(doc => {
             setSmoker(doc.data().smoker)
         })
-        await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
-            smoke: "금연 모드로 전환"
-        }).catch(
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+        if(a[1]<10){
+            if(a[2]<10){
+                await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).update({
+                    smoke: "금연 모드로 전환"
+                }).catch(
+                    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-0" + a[2]).set({
+                        smoke: "금연 모드로 전환"
+                    })
+                )
+            }else{
+                await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).update({
+                    smoke: "금연 모드로 전환"
+                }).catch(
+                    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-0" + a[1] + "-" + a[2]).set({
+                        smoke: "금연 모드로 전환"
+                    })
+                )
+            }
+    }else{
+        if(a[2]<10){
+            await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).update({
                 smoke: "금연 모드로 전환"
-            })
-        )
+            }).catch(
+                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-0" + a[2]).set({
+                    smoke: "금연 모드로 전환"
+                })
+            )
+        }else{
+            await firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).update({
+                smoke: "금연 모드로 전환"
+            }).catch(
+                firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0] + "-" + a[1] + "-" + a[2]).set({
+                    smoke: "금연 모드로 전환"
+                })
+            )
+        }
     }
-
+        
+    }
+  
     const ChallengeParticipate = () => Alert.alert(
         "챌린지를 진행하시겠습니까?",
         "금연모드로 전환됩니다.",
@@ -623,7 +720,7 @@ export default function HomeScreen({ navigation, route}) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ backgroundColor: '#FFFFFF', flex: 1 }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "5%", paddingRight: "5%" }}>
                     <View

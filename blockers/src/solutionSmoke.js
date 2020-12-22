@@ -126,7 +126,7 @@ export default function SolutionSmoke({ navigation,route }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: "100%", paddingLeft: "5%", paddingRight: "5%", marginBottom: 12 }}>
                     <View

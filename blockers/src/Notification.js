@@ -38,7 +38,7 @@
 // export default function Notification({ navigation }) {
 //     return (
 //         <>
-//             <StatusBar barStyle="default" />
+//             <StatusBar  />
 //             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
 //                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
 //                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -267,7 +267,7 @@ export default function Notification({ navigation, route }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 {loading ?
                     <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />

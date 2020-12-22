@@ -203,7 +203,7 @@ export default function CommunityWrite({ navigation }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             {isLoading === true ?
                 <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
                 :

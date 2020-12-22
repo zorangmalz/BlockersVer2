@@ -12,7 +12,7 @@ export default function SolutionScreen({navigation}) {
     const userStatus="스트레스성 흡연자"
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView>
                 <View>
                     <Text>{username}님은</Text>

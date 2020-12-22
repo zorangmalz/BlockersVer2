@@ -195,10 +195,58 @@ export default function LoginSignup({ navigation }) {
       });
   };
 
-  const [emailLoading, setEmailLoading] = useState(false);
-  const [anonyLoading, setAnonyLoading] = useState(false);
+  //잠시 ios용 블록
+  // const [emailLoading, setEmailLoading] = useState(false);
+  // const [anonyLoading, setAnonyLoading] = useState(false);
+  // async function signup() {
+  //   setAnonyLoading(true)
+  //   try {
+  //     await ref.where("email", "==", email).get().then(function (querySnapshot) {
+  //       querySnapshot.forEach(function (doc) {
+  //         alert("Email already existed. type another one")
+  //       })
+  //     })
+  //   } catch {
+  //     await auth()
+  //       .createUserWithEmailAndPassword(email, password)
+  //       .catch(error => {
+  //         setAnonyLoading(false)
+  //         if (error.code === 'auth/email-already-in-use') {
+  //           console.log('That email address is already in use!');
+  //           navigation.navigate("로그인")
+  //           Alert.alert(
+  //             "이미 존재하는 아이디입니다.",
+  //             [
+  //               {
+  //                 text: "OK", onPress: () => navigation.navigate("로그인")
+  //               }
+  //             ]
+  //           )
+  //         }
+  //         if (error.code === 'auth/invalid-email') {
+  //           console.log('That email address is invalid!');
+  //         }
+  //         console.error(error);
+  //       })
+  //       var unsubscribe=firebase.auth().onAuthStateChanged(function (user) {
+    
+  //       if (user) {
+  //         console.log(user)
+  //         setAnonyLoading(false)
+  //         console.log(user.emailVerified,"emailverified")
+  //         user.sendEmailVerification()
+  //         setEmailLoading(true)
+  //       } else {
+  //         setAnonyLoading(false)
+  //         console.log("없어용~")
+  //       }
+  //       })
+  //       unsubscribe()
+  //   }
+  // }
+
+
   async function signup() {
-    setAnonyLoading(true)
     try {
       await ref.where("email", "==", email).get().then(function (querySnapshot) {
         querySnapshot.forEach(function (doc) {
@@ -206,10 +254,13 @@ export default function LoginSignup({ navigation }) {
         })
       })
     } catch {
-      await auth()
+      auth()
         .createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          console.log('User account created & signed in!');
+          navigation.navigate("프로필 설정")
+        })
         .catch(error => {
-          setAnonyLoading(false)
           if (error.code === 'auth/email-already-in-use') {
             console.log('That email address is already in use!');
             navigation.navigate("로그인")
@@ -222,26 +273,15 @@ export default function LoginSignup({ navigation }) {
               ]
             )
           }
+
           if (error.code === 'auth/invalid-email') {
             console.log('That email address is invalid!');
           }
+
           console.error(error);
-        })
-        var unsubscribe=firebase.auth().onAuthStateChanged(function (user) {
-    
-        if (user) {
-          console.log(user)
-          setAnonyLoading(false)
-          console.log(user.emailVerified,"emailverified")
-          user.sendEmailVerification()
-          setEmailLoading(true)
-        } else {
-          setAnonyLoading(false)
-          console.log("없어용~")
-        }
-        })
-        unsubscribe()
+        });
     }
+
   }
 // async function EmailVeri() {
   //   await auth().signInWithEmailAndPassword(email, password).then(() => {
@@ -279,44 +319,46 @@ export default function LoginSignup({ navigation }) {
   //   })
   // }
 
-  async function EmailVeri() {
-    console.log("이메일 검사입니다 한번만 떠야되는데 ?")
-    await auth().currentUser.reload()
-    var unsubscribe=firebase.auth().onAuthStateChanged((user) => {
-      console.log("흠.;..일단여기 첫ㅂ너째")
-      if (user) {
-        console.log(user.emailVerified)
-        if (user.emailVerified) {
-          setEmailLoading(false)
-          console.log('User account created & signed in!');
-          navigation.navigate("프로필 설정")
-        } else {
-          console.log(emailLoading,"이게 진짜 true면 레전드")
-          setEmailLoading(false)
-          console.log("why here!!!!!!!??!sfaesfaefase")
-          Alert.alert(
-            "이메일 인증",
-            "이메일 인증이 되지 않았습니다.",
-            [
-              {
-                text: "취소",
-                onPress: () => console.log("취소")
-              },
-              {
-                text: "확인",
-                onPress: () => (user.delete(),navigation.navigate("Home"))
-              }
-            ],
-            { cancelable: false }
-          )
+
+  //이부분도 블록
+  // async function EmailVeri() {
+  //   console.log("이메일 검사입니다 한번만 떠야되는데 ?")
+  //   await auth().currentUser.reload()
+  //   var unsubscribe=firebase.auth().onAuthStateChanged((user) => {
+  //     console.log("흠.;..일단여기 첫ㅂ너째")
+  //     if (user) {
+  //       console.log(user.emailVerified)
+  //       if (user.emailVerified) {
+  //         setEmailLoading(false)
+  //         console.log('User account created & signed in!');
+  //         navigation.navigate("프로필 설정")
+  //       } else {
+  //         console.log(emailLoading,"이게 진짜 true면 레전드")
+  //         setEmailLoading(false)
+  //         console.log("why here!!!!!!!??!sfaesfaefase")
+  //         Alert.alert(
+  //           "이메일 인증",
+  //           "이메일 인증이 되지 않았습니다.",
+  //           [
+  //             {
+  //               text: "취소",
+  //               onPress: () => console.log("취소")
+  //             },
+  //             {
+  //               text: "확인",
+  //               onPress: () => (user.delete(),navigation.navigate("Home"))
+  //             }
+  //           ],
+  //           { cancelable: false }
+  //         )
         
-        }
-      } else {
-        console.log("사용자가 없음")
-      }
-    })
-    unsubscribe()
-  }
+  //       }
+  //     } else {
+  //       console.log("사용자가 없음")
+  //     }
+  //   })
+  //   unsubscribe()
+  // }
 
   const [gmailLoading, setGmailLoading] = useState(false)
   async function onGoogleButtonPress() {
@@ -431,12 +473,12 @@ export default function LoginSignup({ navigation }) {
     // Sign the user in with the credential
     return 
   }
-
+const [emailLoading,setEmailLoading]=useState(false)
   return (
     <>
-      <StatusBar barStyle="default" />
+      <StatusBar  />
       <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
-        {kakaoloading || gmailLoading || anonyLoading ||appleloading ?
+        {kakaoloading || gmailLoading  ||appleloading ?
           <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
           :
           <>

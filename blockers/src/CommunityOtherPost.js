@@ -614,11 +614,11 @@ export default function CommunityOtherPost({ route, navigation }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
                 {userLoading && textLoading && picLoading && replyLoading ?
                     <>
-                        <KeyboardAvoidingView behavior="position">
+                        
                         <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: 'center', height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%" }}>
                             <TouchableOpacity onPress={() => navigation.goBack()}>
                                 <Ionicons name="chevron-back" size={25} />
@@ -815,12 +815,13 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 />
                             </View>
                         </ScrollView>
-                        
-                        
-                        <View>
-                            <KeyboardAvoidingView style={{
+                        <KeyboardAvoidingView 
+   style={{position: 'absolute', left: 0, right: 0, bottom: 0}}
+   behavior="position"
+ >
+                            <View style={{
                                 position: "absolute",
-                                bottom: 0, height: 40, right: 0, left: 0, flexDirection: "row",
+                                bottom: 10, height: 40, right: 0, left: 0, flexDirection: "row",
                                 borderRadius: 10,
                                 backgroundColor: '#E5E5E5',
                                 alignItems: 'center',
@@ -829,7 +830,6 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 paddingRight: 8,
                                 margin: 8
                             }}>
-                                
                                 <TextInput
                                     value={comment}
                                     onChangeText={text => setComment(text)}
@@ -862,10 +862,8 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 }}>
                                     <Ionicons name="send" size={25} color="#5cc27b" />
                                 </TouchableOpacity>
+                            </View>
                             </KeyboardAvoidingView>
-                        </View>
-                        
-                        </KeyboardAvoidingView>
                     </>
                     :
                     <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT/2 - 20, left: WIDTH/2 - 20, backgroundColor: "#ffffff" }} />
@@ -1016,7 +1014,7 @@ export function CommunityReWrite({ navigation, route }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             {isLoading === true ?
                 <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
                 :

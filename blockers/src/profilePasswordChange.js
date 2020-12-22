@@ -257,7 +257,7 @@ export default function ProfilePasswordChange({ navigation }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <ScrollView style={{ marginBottom: 70 }}>
                     <Text

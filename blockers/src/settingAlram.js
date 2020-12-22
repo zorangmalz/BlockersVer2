@@ -37,7 +37,7 @@ const alram = divide === 1 ? false : true;
 function alramOne({ navigation }) {
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -181,7 +181,7 @@ function alramTwo({ navigation }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>

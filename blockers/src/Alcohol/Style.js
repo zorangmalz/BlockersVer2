@@ -155,7 +155,7 @@ export default function Alcohol({ navigation, Nextpage, Title, Kind,total }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{flex: 1, backgroundColor: "#ffffff"}}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -321,7 +321,7 @@ export function AlcoholThree({ navigation, Nextpage, Title,total }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{flex: 1, backgroundColor: "#ffffff"}}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -432,7 +432,7 @@ export function AlcoholMain({ navigation,route }) {
     ]
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{flex: 1, backgroundColor: "#ffffff"}}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -618,12 +618,43 @@ export function AlcoholFinal({navigation,route}) {
                 
                 month:thisMonth+1
             })
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-                challenge:"미션 진행"
-            }).catch(()=>
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-                challenge:"미션 진행"
-            }))
+
+
+
+if(a[1]<10){
+    if(a[2]<10){
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
+            challenge:"미션 진행"
+        }))
+    }else{
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
+            challenge:"미션 진행"
+        }))
+    }
+}else{
+if(a[2]<10){
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
+        challenge:"미션 진행"
+    }).catch(()=>
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
+        challenge:"미션 진행"
+    }))
+}else{
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+        challenge:"미션 진행"
+    }).catch(()=>
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+        challenge:"미션 진행"
+    }))
+}
+}
+            
         }else{
             await firestore().collection("UserInfo").doc(user.uid).collection("Challenge").doc("challenge"+total).collection("ChallengeDetail").doc("알콜중독 평가(월1회)").collection("alcohol").doc(String(thisMonth)).update({
                 stats:true,
@@ -643,15 +674,47 @@ export function AlcoholFinal({navigation,route}) {
                 visible:false,
                 month:thisMonth+1
             })
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
-                challenge:"미션 진행"
-            }).catch(()=>
-            firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
-                challenge:"미션 진행"
-            }))
+
+
+
+if(a[1]<10){
+    if(a[2]<10){
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-0"+a[2]).set({
+            challenge:"미션 진행"
+        }))
+    }else{
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).update({
+            challenge:"미션 진행"
+        }).catch(()=>
+        firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-0"+a[1]+"-"+a[2]).set({
+            challenge:"미션 진행"
+        }))
+    }
+}else{
+if(a[2]<10){
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).update({
+        challenge:"미션 진행"
+    }).catch(()=>
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-0"+a[2]).set({
+        challenge:"미션 진행"
+    }))
+}else{
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).update({
+        challenge:"미션 진행"
+    }).catch(()=>
+    firestore().collection("UserInfo").doc(user.uid).collection("Calendar").doc(a[0]+"-"+a[1]+"-"+a[2]).set({
+        challenge:"미션 진행"
+    }))
+}
+}
+          
         }
         
     }
+
     useEffect(()=>{
         auth().onAuthStateChanged(userAuth => {
             setUser(userAuth)
@@ -659,7 +722,7 @@ export function AlcoholFinal({navigation,route}) {
     })
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{flex: 1, backgroundColor: "#ffffff"}}>
                 <View accessibilityRole="header" style={{ flexDirection: 'row', alignItems: "center", height: 50, paddingTop: 5, width: "100%", paddingLeft: "3%", paddingRight: "3%", backgroundColor: '#ffffff' }}>
                     <TouchableOpacity onPress={() => navigation.goBack()}>

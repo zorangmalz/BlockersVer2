@@ -262,7 +262,7 @@ export default function MyPageScreen({ navigation }) {
     ]
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 {isLoading === false ?
                     <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT / 2 - 20, left: WIDTH / 2 - 20 }} />
@@ -414,6 +414,7 @@ export default function MyPageScreen({ navigation }) {
                                         { key: '개인정보', name: '개인정보' },
                                         { key: '공지사항', name: '공지사항' },
                                         { key: '내가 쓴 글', name: '내가 쓴 글' },
+                                        { key: '정보', name: '정보' },
                                     ]}
                                     renderItem={({ item }) => (
                                         <>

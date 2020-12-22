@@ -287,7 +287,7 @@ export default function CommunityHome({ navigation, route }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                     <>
                         <View accessibilityRole="header" style={{

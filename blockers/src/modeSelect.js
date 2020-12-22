@@ -232,7 +232,7 @@ export default function ModeSelect({ navigation, route }) {
 
     return (
         <>
-            <StatusBar barStyle="default" />
+            <StatusBar  />
             <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
                 <ScrollView>
                     <Text style={mode.title}>Welcome Blockers</Text>
