@@ -507,7 +507,7 @@ const [emailLoading,setEmailLoading]=useState(false)
                   </View>
                 </View>
                 <ScrollView style={{ paddingTop: 20 }}>
-                  <TextInput value={email} onChangeText={text => setEmail(text)} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="이메일 주소" placeholderTextColor="#999999" />
+                  {/* <TextInput value={email} onChangeText={text => setEmail(text)} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="이메일 주소" placeholderTextColor="#999999" />
                   <Text style={login.text}>{emailLong}</Text>
                   <TextInput value={newpassword} onChangeText={text => setNewpassword(text)} textContentType="newPassword" secureTextEntry={true} style={[login.textinput, { borderBottomColor: emailtouch }]} placeholder="비밀번호(영문, 숫자 포함 6자리)" placeholderTextColor="#999999" />
                   <Text style={login.text}>{passLong}</Text>
@@ -521,7 +521,7 @@ const [emailLoading,setEmailLoading]=useState(false)
                     <TouchableOpacity activeOpacity={0.3} style={[login.notbuttonbox, { marginTop: 16 }]}>
                       <Text style={login.buttontext}>회원가입</Text>
                     </TouchableOpacity>
-                  }
+                  } */}
                   <TouchableOpacity onPress={() => navigation.navigate('로그인')}>
                     <Text style={login.signtext}>이미 회원이신가요?</Text>
                   </TouchableOpacity>

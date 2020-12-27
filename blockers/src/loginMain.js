@@ -303,7 +303,7 @@ export default function LoginMain({ navigation }) {
               </View>
             </View>
             <ScrollView style={{ paddingTop: 20 }}>
-              <TextInput value={email} onChangeText={text => setEmail(text)} style={login.textinput} placeholder="이메일 주소" placeholderTextColor="#999999" />
+              {/* <TextInput value={email} onChangeText={text => setEmail(text)} style={login.textinput} placeholder="이메일 주소" placeholderTextColor="#999999" />
               <Text style={login.text}>유효한 이메일을 입력해 주세요.</Text>
               <TextInput value={password} onChangeText={text => setPassword(text)} textContentType="password" secureTextEntry={true} style={login.textinput} placeholder="비밀번호(영문, 숫자 포함 6자리)" placeholderTextColor="#999999" />
               <Text style={login.text}>6자리 이상 입력해주세요.</Text>
@@ -318,7 +318,7 @@ export default function LoginMain({ navigation }) {
               }
               <TouchableOpacity onPress={() => navigation.navigate('본인인증')}>
                 <Text style={login.signtext}>비밀번호 찾기</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
               <TouchableOpacity onPress={() => navigation.navigate('회원가입')}>
                 <Text style={login.signtext}>회원가입</Text>
