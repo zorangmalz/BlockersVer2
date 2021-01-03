@@ -185,9 +185,9 @@ export default function HomeScreen({ navigation, route}) {
 
     async function updateInfo(code) {
         var a = moment().toArray()
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0]=a[0]+1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -252,12 +252,13 @@ export default function HomeScreen({ navigation, route}) {
     async function timeCheck() {
         var a = moment().toArray()
         
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0]=a[0]+1
+            
         } else {
             a[1] = a[1] + 1
         }
+
         console.log(a)
         await ref.doc(user.uid).get().then(documentSnapshot => {
             if (a[2] === documentSnapshot.data().smokeToday) {
@@ -399,14 +400,15 @@ export default function HomeScreen({ navigation, route}) {
             
         }).catch(err => console.log(err))
         console.log("s")    
-        console.log(fullTime)
-        if(fullTime[1]===1){
+        console.log(fullTime,"Full")
+        // console.log(fullTime)
+        if(fullTime[1]===0){
             fullTime[0]=fullTime[0]-1
             fullTime[1]=12
         }else{
             fullTime[1]=fullTime[1]-1
         }
-        console.log(fullTime,"this")
+        // console.log(fullTime,"this")
         var b=moment(fullTime)
         console.log(b,"b")
         if (fullTime) {
@@ -507,9 +509,9 @@ export default function HomeScreen({ navigation, route}) {
 
         interstitial.load();
         var a = moment().toArray()
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0]=a[0]+1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -585,9 +587,9 @@ export default function HomeScreen({ navigation, route}) {
 
         interstitial.load();
         var a = moment().toArray()
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }

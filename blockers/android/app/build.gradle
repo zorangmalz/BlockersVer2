@@ -138,8 +138,8 @@ android {
         applicationId "com.blockers"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 11
-        versionName "11"
+        versionCode 12
+        versionName "12"
         multiDexEnabled true
     }
     splits {

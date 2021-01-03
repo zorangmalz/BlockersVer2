@@ -1522,8 +1522,8 @@ export function ChatbotWell({ navigation }) {
         })
         var a = moment().toArray()
 
-        if (a[1] === 12) {
-            a[0]=a[0]+1
+        if (a[1] === 0) {
+            
             a[1] = 1
             
         } else {
@@ -1536,8 +1536,8 @@ export function ChatbotWell({ navigation }) {
             a=moment().add(i,"days")
             
             a=a.toArray()
-            if (a[1] === 12) {
-                a[0]=a[0]+1
+            if (a[1] === 0) {
+                
                 a[1] = 1
             } else {
                 a[1] = a[1] + 1
@@ -1613,8 +1613,8 @@ export function ChatbotWell({ navigation }) {
         
         var a = moment().toArray()
 
-        if (a[1] === 12) {
-            a[0]=a[0]+1
+        if (a[1] === 0) {
+            
             a[1] = 1
         } else {
             a[1] = a[1] + 1
@@ -1628,8 +1628,8 @@ export function ChatbotWell({ navigation }) {
             a=moment().add(i,"days")
               
             a=a.toArray()
-            if (a[1] === 12) {
-                a[0]=a[0]+1
+            if (a[1] === 0) {
+                
                 a[1] = 1
             } else {
                 a[1] = a[1] + 1
@@ -1861,8 +1861,8 @@ export function ChatbotCham({ navigation }) {
         firestore().collection("UserInfo").doc(USER.uid).update({
             drug:"cham"
         })
-        if (a[1] === 12) {
-            a[0]=a[0]+1
+        if (a[1] === 0) {
+            
             a[1] = 1
         } else {
             a[1] = a[1] + 1
@@ -1874,8 +1874,8 @@ export function ChatbotCham({ navigation }) {
             a=moment().add(i,"days")
               
             a=a.toArray()
-            if (a[1] === 12) {
-                a[0]=a[0]+1
+            if (a[1] === 0) {
+                
                 a[1] = 1
             } else {
                 a[1] = a[1] + 1
@@ -1945,8 +1945,8 @@ export function ChatbotCham({ navigation }) {
     async function drugOff(USER){
         var a = moment().toArray()
 
-        if (a[1] === 12) {
-            a[0]=a[0]+1
+        if (a[1] === 0) {
+            
             a[1] = 1
         } else {
             a[1] = a[1] + 1
@@ -1960,8 +1960,8 @@ export function ChatbotCham({ navigation }) {
             a=moment().add(i,"days")
               
             a=a.toArray()
-            if (a[1] === 12) {
-                a[0]=a[0]+1
+            if (a[1] === 0) {
+                
                 a[1] = 1
             } else {
                 a[1] = a[1] + 1

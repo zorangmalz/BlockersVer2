@@ -314,9 +314,9 @@ export default function Challenge({ navigation }) {
     async function changeToNonSmoker() {
         console.log("nonsmoker")
         var a = moment().toArray()
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -402,7 +402,7 @@ if(a[2]<10){
             var a=moment().toArray()
             if (a[1]===12){
                 a[1]=1
-                a[0]=a[0]+1
+                
             }else{
                 a[1]=a[1]+1
             }
@@ -894,9 +894,9 @@ export function ChallengeRegister({ navigation }) {
         var a = moment().toArray()
         console.log(a)
 
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -2047,9 +2047,9 @@ export function ChallengeSupport({ navigation }) {
 
         console.log(a)
 
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -2470,9 +2470,9 @@ export function ChallengeSwear({ navigation }) {
 
         console.log(a)
 
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -2525,9 +2525,9 @@ if(a[2]<10){
 
         console.log(a)
 
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -2718,9 +2718,9 @@ export function ChallengeSwearResult({ navigation }) {
 
         console.log(a)
 
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -2960,9 +2960,9 @@ export function ChallengeMotivation({ navigation }) {
     async function uploadInfo() {
         var a = moment().toArray()
         console.log(a)
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -3580,9 +3580,9 @@ console.log(zero)
         var a = moment().toArray()
         console.log(a)
 
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -3785,9 +3785,9 @@ export function ChallengeGDFinal({ navigation }) {
         var a = moment().toArray()
         console.log(a)
 
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -4293,9 +4293,9 @@ export function ChallengeVeriImage({ navigation, route }) {
         var a = moment().toArray()
         console.log(a)
 
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -4663,9 +4663,9 @@ export function ChallengeSuccess({ navigation }) {
         var a = moment().toArray()
 
 
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }

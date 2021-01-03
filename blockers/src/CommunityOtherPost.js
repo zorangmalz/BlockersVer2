@@ -184,9 +184,9 @@ export default function CommunityOtherPost({ route, navigation }) {
     async function writepost(b) {
         var a = moment().toArray()
         console.log(b)
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0]=a[0]+1
+            
         } else {
             a[1] = a[1] + 1
         }
@@ -815,7 +815,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                 />
                             </View>
                         </ScrollView>
-                        <KeyboardAvoidingView 
+                        <View
    style={{position: 'absolute', left: 0, right: 0, bottom: 0}}
    behavior="position"
  >
@@ -863,7 +863,7 @@ export default function CommunityOtherPost({ route, navigation }) {
                                     <Ionicons name="send" size={25} color="#5cc27b" />
                                 </TouchableOpacity>
                             </View>
-                            </KeyboardAvoidingView>
+                            </View>
                     </>
                     :
                     <ActivityIndicator size="large" color="#5cc27b" style={{ position: "absolute", top: HEIGHT/2 - 20, left: WIDTH/2 - 20, backgroundColor: "#ffffff" }} />
@@ -943,9 +943,9 @@ export function CommunityReWrite({ navigation, route }) {
         var a = moment().toArray()
 
 
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0] = a[0] + 1
+            
         } else {
             a[1] = a[1] + 1
         }

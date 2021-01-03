@@ -177,9 +177,9 @@ export default function CommunityHome({ navigation, route }) {
     async function load() {
         const list = [];
         var a = moment().toArray()
-        if (a[1] === 12) {
+        if (a[1] === 0) {
             a[1] = 1
-            a[0]=a[0]+1
+            
         } else {
             a[1] = a[1] + 1
         }

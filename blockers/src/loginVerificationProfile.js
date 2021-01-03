@@ -295,7 +295,7 @@ export default function LoginVerificationProfile({ navigation, route }) {
                             :
                             <Text style={{ marginBottom: 28 }}></Text>
                         }
-                        <View style={{ marginLeft: "10%", flexDirection: 'row', justifyContent: 'flex-start', alignItems: "flex-end" }}>
+                        {/* <View style={{ marginLeft: "10%", flexDirection: 'row', justifyContent: 'flex-start', alignItems: "flex-end" }}>
                             <Dropdown
                                 baseColor="#5cc27b"
                                 itemTextStyle={{ fontSize: 30, fontFamily: 'NunitoSans-Bold', color: "#303030" }}
@@ -308,7 +308,7 @@ export default function LoginVerificationProfile({ navigation, route }) {
                                 onChangeText={({value}) => setGender(value)}
                             />
                             <TextInput keyboardType="number-pad" onChangeText={text => setBirthday(text)} style={[login.textinput, { width: "45%", marginLeft: "12%", alignSelf: "flex-start" }]} placeholder="생일(940524)" />
-                        </View>
+                        </View> */}
                     </View>
                     <View style={{ marginTop: "70%" }}>
                         <Text style={login.rule}>
